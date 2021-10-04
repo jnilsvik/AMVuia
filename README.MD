@@ -1,4 +1,4 @@
-# Java base skeleton for web application
+# JaVa base skeleton for web application
 This application uses Docker to manage maven, tomcat and mariadb to build and host a web application using Java.
 It should serve as a base for further development throughout the course.
 
