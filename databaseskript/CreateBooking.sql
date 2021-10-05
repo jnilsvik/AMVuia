@@ -1,7 +1,7 @@
 create database if not exists AMVDatabase;
 use AMVDatabase;
 
-create table if not exists CreateBooking
+create table if not exists Booking
 (
     bookingID integer unique auto_increment,
     userID integer not null,
