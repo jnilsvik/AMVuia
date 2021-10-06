@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.LinkedList;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +23,7 @@ public class DetailedToolServlet extends HttpServlet{
         try {
             ToolModel tool = getToolFromDB(request.getParameter("toolID"), out);
             LocalDateTime[] usedDates = getUsedDates(tool.getId(), out);
+            printData(tool, usedDates, out);
         } catch (SQLException e) {
             //Error in the database
             printError(e, out);
@@ -82,6 +82,19 @@ public class DetailedToolServlet extends HttpServlet{
             dates.add(start);
             start.plusDays(1);
         }
+    }
+
+    private void printData(ToolModel tool, LocalDateTime[] days, PrintWriter out){
+        printHeader(out);
+        out.println("<h2>Name: "+tool.getName()+"</h2>");
+        out.println("<p>ToolType: "+tool.getToolType()+"</p>");
+        out.println("<p>Location: "+tool.getLocation()+"</p>");
+        out.println("<p>Status: "+tool.getStatus()+"</p>");
+        out.println("<h3>UsedDates:</h3>");
+        for(LocalDateTime day: days){
+            out.println("<p>"+day.getDayOfMonth()+"."+day.getMonth()+"</p>");
+        }
+        printFooter(out);
     }
 
     private void printWrongIndex(PrintWriter out){
