@@ -1,6 +1,8 @@
 package bacit.web.bacit_web;
 
 import bacit.web.bacit_models.ToolModel;
+import jdk.javadoc.internal.doclets.formats.html.markup.Head;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.LinkedList;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +36,11 @@ public class DetailedToolServlet extends HttpServlet{
             printWrongIndex(out);
         }
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
     }
 
     private ToolModel getToolFromDB(String toolID, PrintWriter out)throws SQLException,IllegalArgumentException{
@@ -81,7 +89,7 @@ public class DetailedToolServlet extends HttpServlet{
     }
 
     private void printData(ToolModel tool, LinkedList<LocalDateTime> days, PrintWriter out){
-        printHeader(out);
+        HeaderFooter.printHeader(out);
         out.println("<h2>Name: "+tool.getName()+"</h2>");
         out.println("<p>ToolType: "+tool.getToolType()+"</p>");
         out.println("<p>Location: "+tool.getLocation()+"</p>");
@@ -90,31 +98,21 @@ public class DetailedToolServlet extends HttpServlet{
         for(LocalDateTime day: days){
             out.println("<p>"+day.getDayOfMonth()+"."+day.getMonth()+"</p>");
         }
-        printFooter(out);
+        HeaderFooter.printFooter(out);
     }
 
     private void printWrongIndex(PrintWriter out){
-        printHeader(out);
+        HeaderFooter.printHeader(out);
         out.println("<h2>There is no data stored for this item</h2>");
         out.println("<p>Try to refresh the page or enter another index in order to get information");
-        printFooter(out);
-    }
-
-    private void printHeader(PrintWriter out){
-        out.println("<html>");
-        out.println("<body>");
-    }
-
-    private void printFooter(PrintWriter out){
-        out.println("</body>");
-        out.println("</html>");
+        HeaderFooter.printFooter(out);
     }
 
     private void printError(Exception e, PrintWriter out){
-        printHeader(out);
+        HeaderFooter.printHeader(out);
         out.println("<h2>An internal Error happend</h2>");
         out.println("<p>" + e.getMessage() + "</p>");
-        printFooter(out);
+        HeaderFooter.printFooter(out);
     }
 
     private Connection getConnection(PrintWriter out){
