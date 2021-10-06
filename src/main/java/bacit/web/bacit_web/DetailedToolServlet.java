@@ -20,9 +20,10 @@ public class DetailedToolServlet extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         PrintWriter out = response.getWriter();
+        String toolID = request.getParameter("toolID");
         try {
-            ToolModel tool = getToolFromDB(request.getParameter("toolID"), out);
-            LocalDateTime[] usedDates = getUsedDates(tool.getId(), out);
+            ToolModel tool = getToolFromDB(toolID, out);
+            LinkedList<LocalDateTime> usedDates = getUsedDates(tool.getId(), out);
             printData(tool, usedDates, out);
         } catch (SQLException e) {
             //Error in the database
@@ -48,7 +49,7 @@ public class DetailedToolServlet extends HttpServlet{
 
     private String getToolType(int toolTypeID, PrintWriter out) throws SQLException {
         Connection dbConnection = getConnection(out);
-        String query = "select * form ToolType where toolTypeIS = ?;";
+        String query = "select * from ToolType where toolTypeID = ?;";
         PreparedStatement statement = dbConnection.prepareStatement(query);
         statement.setInt(1, toolTypeID);
         ResultSet rs = statement.executeQuery();
@@ -56,7 +57,7 @@ public class DetailedToolServlet extends HttpServlet{
         return rs.getString("toolTypeName");
     }
 
-    private LocalDateTime[] getUsedDates(int toolID, PrintWriter out) throws SQLException{
+    private LinkedList<LocalDateTime> getUsedDates(int toolID, PrintWriter out) throws SQLException{
         Connection dbConnection = getConnection(out);
         String query = "SELECT startDate, endDate FROM Booking WHERE toolID = ?;";
         PreparedStatement statement = dbConnection.prepareStatement(query);
@@ -64,27 +65,22 @@ public class DetailedToolServlet extends HttpServlet{
         LinkedList<LocalDateTime> dayDates = new LinkedList<>();
         ResultSet rs = statement.executeQuery();
         while(rs.next()){
-            LocalDateTime start = convertToLocalDateTimeViaInstant(rs.getDate("startDate"));
-            LocalDateTime end = convertToLocalDateTimeViaInstant(rs.getDate("endDate"));
+            LocalDateTime start = rs.getTimestamp("startDate").toLocalDateTime();
+            LocalDateTime end = rs.getTimestamp("endDate").toLocalDateTime();
             addDatesToLinkedList(dayDates, start, end);
         }
-        return dayDates.toArray(new LocalDateTime[dayDates.size()]);
-    }
-
-    private LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
-        return dateToConvert.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+        out.println(dayDates.size());
+        return dayDates;
     }
 
     private void addDatesToLinkedList(LinkedList<LocalDateTime> dates, LocalDateTime start, LocalDateTime end){
-        while(!start.isAfter(end)){
+        while(start.isBefore(end)){
+            start = start.plusDays(1);
             dates.add(start);
-            start.plusDays(1);
         }
     }
 
-    private void printData(ToolModel tool, LocalDateTime[] days, PrintWriter out){
+    private void printData(ToolModel tool, LinkedList<LocalDateTime> days, PrintWriter out){
         printHeader(out);
         out.println("<h2>Name: "+tool.getName()+"</h2>");
         out.println("<p>ToolType: "+tool.getToolType()+"</p>");

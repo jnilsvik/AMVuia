@@ -13,3 +13,10 @@ create table if not exists Booking
     CONSTRAINT CreateBooking_FK1 foreign key (userID) references User(userID),
     CONSTRAINT CreateBooking_FK2 foreign key (toolID) references Tool(toolID)
 );
+
+INSERT INTO Booking(
+                    userID, toolID, startDate, endDate
+)
+VALUES (
+        1, 1, DATE '2021-10-06', DATE '2021-10-17'
+       );

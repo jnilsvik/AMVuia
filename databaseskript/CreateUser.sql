@@ -12,3 +12,9 @@ create table if not exists User
     email varchar(255),
     CONSTRAINT User_PK primary key (userID)
 );
+
+INSERT INTO User(
+                 firstname, lastname, password, phoneNumber, unionMember, email
+) values(
+         'Paul', 'Feichtenschlager', '12345', '12345', false, 'test@mail'
+        );
