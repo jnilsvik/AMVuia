@@ -12,3 +12,10 @@ create table if not exists ToolType
     CONSTRAINT ToolType_PK primary key (toolTypeID),
     CONSTRAINT ToolType_FK foreign key (certificateID) references ToolCertificate(certificateID)
 );
+
+INSERT INTO ToolType(
+        toolTypeName, priceFirstDay, priceAfterFirstDay, category, certificateID
+        )
+VALUES(
+       'Hammer',0.0, 5, 'small tools',null
+      );
