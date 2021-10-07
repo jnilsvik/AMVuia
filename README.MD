@@ -3,7 +3,7 @@ This application uses Docker to manage maven, tomcat and mariadb to build and ho
 It should serve as a base for further development throughout the course.
 
 <br>
-test
+test Test THIS IS TEST
 ## Notice
 Please read and understand how the dockerfile works. 
 Understand that all scripts used (`build.*` & `startDb.*`) can be run in the terminal without the scripts.
