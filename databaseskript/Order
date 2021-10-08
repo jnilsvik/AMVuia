@@ -1,0 +1,16 @@
+by Joachim
+___
+
+Run the dbs in the following order:
+(btw you can right click the scripts to run them in project folder )
+---
+CreateUser.sql
+CreateAdmin.sql
+CreateToolCertificate.sql
+CreateToolType.sql
+CreateTool.sql
+---
+This cant be ran atm... dunno why:
+---
+CreateUserCertificate.sql
+CreateBooking.sql
