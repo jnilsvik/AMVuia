@@ -9,6 +9,7 @@ create table if not exists User
     password varchar(32),
     phoneNumber varchar(16),
     unionMember boolean,
+    isAdmin boolean,
     email varchar(255),
     CONSTRAINT User_PK primary key (userID)
 );

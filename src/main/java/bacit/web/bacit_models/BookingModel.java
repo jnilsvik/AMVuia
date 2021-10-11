@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.Period;
 
 public class BookingModel {
@@ -15,11 +15,10 @@ public class BookingModel {
     private int bookingID;
     private int userID;
     private int toolID;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private double totalPrice;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public BookingModel(int bookingID, int userID, int toolID, LocalDateTime startDate, LocalDateTime endDate) {
+    public BookingModel(int bookingID, int userID, int toolID, LocalDate startDate, LocalDate endDate) {
         this.bookingID = bookingID;
         this.userID = userID;
         this.toolID = toolID;
@@ -51,46 +50,70 @@ public class BookingModel {
         this.toolID = toolID;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public double getTotalPrice(PrintWriter out) throws SQLException {
-        Connection db = getConnection(out);
-        String query = "SELECT ToolType.priceAfterFirstDay, ToolType.priceFirstDay\n" +
-                        "FROM ToolType\n" +
-                        "INNER JOIN Tool\n" +
-                        "ON Tool.toolID = "+toolID+" && Tool.toolTypeID = ToolType.toolTypeID;";
-        PreparedStatement statement = db.prepareStatement(query);
-        ResultSet rs = statement.executeQuery();
-        if(!rs.next()) throw new SQLException("No tool could be found");
-        double priceFirstDay = rs.getDouble("priceFirstDay");
-        double priceAfterFirstDay = rs.getDouble("priceAfterFirstDay");
-        return calculateTotalPrice(priceFirstDay, priceAfterFirstDay);
+    public double getTotalPrice(PrintWriter out){
+        double totalPrice = 0;
+        try {
+            Connection db = getConnection(out);
+            String query = "SELECT ToolType.priceAfterFirstDay, ToolType.priceFirstDay\n" +
+                    "FROM ToolType\n" +
+                    "INNER JOIN Tool\n" +
+                    "ON Tool.toolID = ? && Tool.toolTypeID = ToolType.toolTypeID;";
+            PreparedStatement statement = db.prepareStatement(query);
+            statement.setInt(1, toolID);
+            ResultSet rs = statement.executeQuery();
+            if (!rs.next()) throw new SQLException("No tool could be found");
+            double priceFirstDay = rs.getDouble("priceFirstDay");
+            double priceAfterFirstDay = rs.getDouble("priceAfterFirstDay");
+            totalPrice = calculateTotalPrice(priceFirstDay, priceAfterFirstDay);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return totalPrice;
     }
 
     private double calculateTotalPrice(double priceFirstDay, double priceAfterFirstDay){
-        Period period = Period.between(startDate.toLocalDate(), endDate.toLocalDate());
+        Period period = Period.between(startDate, endDate);
         period.minusDays(1);
         return priceAfterFirstDay + priceAfterFirstDay * period.getDays();
+    }
+
+    public String getToolName(PrintWriter out){
+        String toolName = "";
+        try {
+            Connection db = getConnection(out);
+            String query = "SELECT toolName FROM Tool WHERE toolID = ?;";
+            PreparedStatement statement = db.prepareStatement(query);
+            statement.setInt(1, toolID);
+            ResultSet rs = statement.executeQuery();
+            if (!rs.next()) throw new SQLException("No tool could be found");
+            toolName = rs.getString("toolName");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        //Currently, there is no toolName stored in the db will be added
+        return "currently no toolName stored";
     }
 
     private Connection getConnection(PrintWriter out){
         Connection dbConnection = null;
         try{
-            dbConnection = DBUtils.getINSTANCE().getConnection(out);
+            dbConnection = DBUtils.getINSTANCE().getConnection();
         } catch (SQLException | ClassNotFoundException sqlException){
             out.println(sqlException);
         }
