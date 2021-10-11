@@ -28,7 +28,7 @@ public class DBUtils {
      * @return connection to db
      * @throws SQLException if the connection fails
      */
-    public Connection getConnection(PrintWriter out) throws SQLException, ClassNotFoundException {
+    public Connection getConnection() throws SQLException, ClassNotFoundException {
         Connection toReturn = null;
         Class.forName("org.mariadb.jdbc.Driver");
         try {
@@ -40,7 +40,7 @@ public class DBUtils {
                     "12345");
         } catch (SQLException e) {
             e.printStackTrace();
-            out.println("SQL Exception " + e);
+            System.out.println("SQL Exception " + e);
         }
         return toReturn;
     }

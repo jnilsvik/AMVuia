@@ -1,13 +1,12 @@
 package bacit.web.bacit_web;
 
+import bacit.web.bacit_headerFooter.HeaderFooter;
 import bacit.web.bacit_models.ToolModel;
-import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 import javax.servlet.ServletException;
@@ -25,8 +24,8 @@ public class DetailedToolServlet extends HttpServlet{
         PrintWriter out = response.getWriter();
         String toolID = request.getParameter("toolID");
         try {
-            ToolModel tool = getToolFromDB(toolID, out);
-            LinkedList<LocalDateTime> usedDates = getUsedDates(tool.getId(), out);
+            ToolModel tool = ToolModel.getToolModel(toolID);
+            LinkedList<LocalDate> usedDates = tool.getUsedDates(out);
             printData(tool, usedDates, out);
         } catch (SQLException e) {
             //Error in the database
@@ -43,20 +42,8 @@ public class DetailedToolServlet extends HttpServlet{
         super.doPost(req, resp);
     }
 
-    private ToolModel getToolFromDB(String toolID, PrintWriter out)throws SQLException,IllegalArgumentException{
-        Connection dbConnection = getConnection(out);
-        String query ="select * from Tool where toolID = ?;";
-        PreparedStatement statement= dbConnection.prepareStatement(query);
-        statement.setString(1, toolID);
-        ResultSet rs = statement.executeQuery();
-        ToolModel tool = null;
-        if(!rs.next()) throw new IllegalArgumentException("No tool with this ID");
-        tool = new ToolModel(rs.getInt("toolID"), "Tool name will be added to database", getToolType(rs.getInt("toolTypeID"), out), rs.getString("location"), rs.getString("status"));
-        return tool;
-    }
-
     private String getToolType(int toolTypeID, PrintWriter out) throws SQLException {
-        Connection dbConnection = getConnection(out);
+        Connection dbConnection = getConnection();
         String query = "select * from ToolType where toolTypeID = ?;";
         PreparedStatement statement = dbConnection.prepareStatement(query);
         statement.setInt(1, toolTypeID);
@@ -65,63 +52,40 @@ public class DetailedToolServlet extends HttpServlet{
         return rs.getString("toolTypeName");
     }
 
-    private LinkedList<LocalDateTime> getUsedDates(int toolID, PrintWriter out) throws SQLException{
-        Connection dbConnection = getConnection(out);
-        String query = "SELECT startDate, endDate FROM Booking WHERE toolID = ?;";
-        PreparedStatement statement = dbConnection.prepareStatement(query);
-        statement.setInt(1, toolID);
-        LinkedList<LocalDateTime> dayDates = new LinkedList<>();
-        ResultSet rs = statement.executeQuery();
-        while(rs.next()){
-            LocalDateTime start = rs.getTimestamp("startDate").toLocalDateTime();
-            LocalDateTime end = rs.getTimestamp("endDate").toLocalDateTime();
-            addDatesToLinkedList(dayDates, start, end);
-        }
-        out.println(dayDates.size());
-        return dayDates;
-    }
-
-    private void addDatesToLinkedList(LinkedList<LocalDateTime> dates, LocalDateTime start, LocalDateTime end){
-        while(start.isBefore(end)){
-            start = start.plusDays(1);
-            dates.add(start);
-        }
-    }
-
-    private void printData(ToolModel tool, LinkedList<LocalDateTime> days, PrintWriter out){
-        HeaderFooter.printHeader(out);
+    private void printData(ToolModel tool, LinkedList<LocalDate> days, PrintWriter out){
+        HeaderFooter.printHeader("Detailed Tool Information", out);
         out.println("<h2>Name: "+tool.getName()+"</h2>");
         out.println("<p>ToolType: "+tool.getToolType()+"</p>");
         out.println("<p>Location: "+tool.getLocation()+"</p>");
         out.println("<p>Status: "+tool.getStatus()+"</p>");
         out.println("<h3>UsedDates:</h3>");
-        for(LocalDateTime day: days){
+        for(LocalDate day: days){
             out.println("<p>"+day.getDayOfMonth()+"."+day.getMonth()+"</p>");
         }
         HeaderFooter.printFooter(out);
     }
 
     private void printWrongIndex(PrintWriter out){
-        HeaderFooter.printHeader(out);
+        HeaderFooter.printHeader("Detailed Tool Information", out);
         out.println("<h2>There is no data stored for this item</h2>");
-        out.println("<p>Try to refresh the page or enter another index in order to get information");
+        out.println("<p>Try to refresh the page or enter another index in order to get information</p>");
         HeaderFooter.printFooter(out);
     }
 
     private void printError(Exception e, PrintWriter out){
-        HeaderFooter.printHeader(out);
+        HeaderFooter.printHeader("Detailed Tool Information", out);
         out.println("<h2>An internal Error happend</h2>");
         out.println("<p>" + e.getMessage() + "</p>");
         HeaderFooter.printFooter(out);
     }
 
-    private Connection getConnection(PrintWriter out){
+    private Connection getConnection(){
         Connection dbConnection = null;
 
         try{
-            dbConnection = DBUtils.getINSTANCE().getConnection(out);
+            dbConnection = DBUtils.getINSTANCE().getConnection();
         } catch (SQLException | ClassNotFoundException sqlException){
-            out.println(sqlException);
+            sqlException.printStackTrace();
         }
         return dbConnection;
     }
