@@ -41,7 +41,9 @@ create table if not exists Users
         not null,
 	unionMember boolean
 	    not null
-	    default '0'
+	    default '0',
+	admin boolean
+        default '0'
 );  
 
 create table if not exists ToolsCertificate
@@ -130,4 +132,5 @@ values ('Hei', 'joachimn@uia.no', null, 'Joachim', 'Nilsvik','0'),
        ('Hei', 'mariusbn@uia.no', null, 'Marius Berg', 'Nordbø', '0'),
        ('hei', 'roelandc@uia.no', null, 'Roeland', 'Camps', '0'),
        ('hei', 'paulfe@uia.no', null, 'Paul', 'Feichtenschlager', '0'),
-       ('hei', 'johannao@uia.no', null, 'Johanna', 'Ockenfels', '0');
+       ('hei', 'johannao@uia.no', null, 'Johanna', 'Ockenfels', '0'),
+       ('hei', 'idkwhatbriansmailsis@uia.no', null, 'Brian "Cheuk Long"', 'Chan','0');
