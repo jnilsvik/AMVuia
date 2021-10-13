@@ -1,4 +1,4 @@
-package bacit.web.dilan.prosjekt;
+package bacit.web.bacit_database;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -6,7 +6,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBUtils {
@@ -17,7 +16,7 @@ public class DBUtils {
         return INSTANCE;
     }
 
-    public Connection getConnection(PrintWriter out) throws SQLException {
+    private Connection getConnection(PrintWriter out) throws SQLException {
         try{
             Context initCtx = new InitialContext();
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
@@ -30,6 +29,16 @@ public class DBUtils {
             out.println(ex.getMessage());
         }
         return null;
+    }
+
+    public static Connection getNoErrorConnection(PrintWriter out){
+        Connection dbConnection = null;
+        try{
+            dbConnection = DBUtils.getINSTANCE().getConnection(out);
+        } catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+        return dbConnection;
     }
 }
 

@@ -2,6 +2,7 @@ package bacit.web.bacit_web;
 
 //by Paul
 
+import bacit.web.bacit_database.DBUtils;
 import bacit.web.bacit_headerFooter.HeaderFooter;
 import bacit.web.bacit_models.ToolModel;
 
@@ -26,7 +27,7 @@ public class DetailedToolServlet extends HttpServlet{
         PrintWriter out = response.getWriter();
         String toolID = request.getParameter("toolID");
         try {
-            ToolModel tool = ToolModel.getToolModel(toolID);
+            ToolModel tool = ToolModel.getToolModel(toolID, out);
             LinkedList<LocalDate> usedDates = tool.getUsedDates(out);
             printData(tool, usedDates, out);
         } catch (SQLException e) {
@@ -42,16 +43,6 @@ public class DetailedToolServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
-    }
-
-    private String getToolType(int toolTypeID, PrintWriter out) throws SQLException {
-        Connection dbConnection = getConnection();
-        String query = "select * from ToolType where toolTypeID = ?;";
-        PreparedStatement statement = dbConnection.prepareStatement(query);
-        statement.setInt(1, toolTypeID);
-        ResultSet rs = statement.executeQuery();
-        if(!rs.next()) throw new IllegalArgumentException("No tool type with this ID");
-        return rs.getString("toolTypeName");
     }
 
     private void printData(ToolModel tool, LinkedList<LocalDate> days, PrintWriter out){
@@ -79,16 +70,4 @@ public class DetailedToolServlet extends HttpServlet{
         out.println("<p>" + e.getMessage() + "</p>");
         HeaderFooter.printFooter(out);
     }
-
-    private Connection getConnection(){
-        Connection dbConnection = null;
-
-        try{
-            dbConnection = DBUtils.getINSTANCE().getConnection();
-        } catch (SQLException | ClassNotFoundException sqlException){
-            sqlException.printStackTrace();
-        }
-        return dbConnection;
-    }
-
 }

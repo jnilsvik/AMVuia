@@ -2,6 +2,7 @@ package bacit.web.bacit_web;
 
 //By Paul
 
+import bacit.web.bacit_database.DBUtils;
 import bacit.web.bacit_headerFooter.HeaderFooter;
 import bacit.web.bacit_models.ToolModel;
 
@@ -47,11 +48,12 @@ public class CreateNewBookingServlet extends HttpServlet{
 
         //unsure how UserID and ToolID will be added to this request
         String userID = "1";
+
         String toolID = "1";
 
         LinkedList<LocalDate> usedDates = null;
         try {
-            ToolModel tool = ToolModel.getToolModel(toolID);
+            ToolModel tool = ToolModel.getToolModel(toolID, out);
             usedDates = tool.getUsedDates(out);
 
             //unsure how to reach the right datatype
@@ -62,9 +64,9 @@ public class CreateNewBookingServlet extends HttpServlet{
             LocalDate endDate = LocalDate.parse(endDateString, formatter);
 
             if(!checkValidDates(startDate, endDate, usedDates)) printInvalidBooking("The Tool is not free for the period", toolID, userID, out);
-            else if(!checkCertificate(userID, toolID)) printInvalidBooking("The user is not authorized for the tool",toolID, userID, out);
+            else if(!checkCertificate(userID, toolID, out)) printInvalidBooking("The user is not authorized for the tool",toolID, userID, out);
             else{
-                placeNewBooking(userID, toolID, startDate, endDate);
+                placeNewBooking(userID, toolID, startDate, endDate, out);
                 printBookingSucceed(userID, toolID, startDate, endDate, out);
             }
         } catch (SQLException e) {
@@ -108,8 +110,8 @@ public class CreateNewBookingServlet extends HttpServlet{
         return true;
     }
 
-    private boolean checkCertificate(String userID, String toolID){
-        Connection db = getConnection();
+    private boolean checkCertificate(String userID, String toolID, PrintWriter out){
+        Connection db = DBUtils.getNoErrorConnection(out);
         //Not sure how the database will be like
         String query = "";
         try{
@@ -122,8 +124,8 @@ public class CreateNewBookingServlet extends HttpServlet{
         return false;
     }
 
-    private void placeNewBooking(String userID, String toolID, LocalDate startDate, LocalDate endDate) throws SQLException {
-        Connection db = getConnection();
+    private void placeNewBooking(String userID, String toolID, LocalDate startDate, LocalDate endDate, PrintWriter out) throws SQLException {
+        Connection db = DBUtils.getNoErrorConnection(out);
         String query = "INSERT INTO Booking (userID, toolID, startDate, endDate) VALUES (?,?,?,?);";
         PreparedStatement statement = db.prepareStatement(query);
         statement.setString(1, userID);
@@ -131,16 +133,5 @@ public class CreateNewBookingServlet extends HttpServlet{
         statement.setObject(3, startDate);
         statement.setObject(4, endDate);
         statement.executeUpdate();
-    }
-
-    private Connection getConnection(){
-        Connection dbConnection = null;
-
-        try{
-            dbConnection = DBUtils.getINSTANCE().getConnection();
-        } catch (SQLException | ClassNotFoundException sqlException){
-            sqlException.printStackTrace();
-        }
-        return dbConnection;
     }
 }

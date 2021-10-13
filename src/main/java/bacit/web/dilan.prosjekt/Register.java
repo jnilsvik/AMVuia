@@ -1,10 +1,11 @@
 package bacit.web.dilan.prosjekt;
 
+import bacit.web.bacit_database.DBUtils;
+
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.io.*;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -71,8 +72,8 @@ public class Register extends HttpServlet {
 
             PrintWriter out = response.getWriter();
 
-            Connection db = DBUtils.getINSTANCE().getConnection(out);
-            String insertUserCommand = "insert into Users (email, passwordHash, firstName, lastName, phoneNumber, unionMember, userAdmin) values(?, ?, ?, ?, ?, ?, ?)";
+            Connection db = DBUtils.getNoErrorConnection(out);
+            String insertUserCommand = "insert into AMVUser (email, passwordHash, firstName, lastName, phoneNumber, unionMember, userAdmin) values(?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = db.prepareStatement(insertUserCommand);
             statement.setString(1, user.getEmail());
             statement.setString(2, hashedPassword);

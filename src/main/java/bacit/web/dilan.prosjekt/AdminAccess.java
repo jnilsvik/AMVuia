@@ -9,7 +9,7 @@ public class  AdminAccess {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase","root","12345");
-            PreparedStatement ps = con.prepareStatement("select userAdmin from Users where email=?");
+            PreparedStatement ps = con.prepareStatement("select userAdmin from AMVUser where email=?");
             ps.setString(1, email);
             ResultSet rs =ps.executeQuery();
 

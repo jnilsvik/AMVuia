@@ -1,5 +1,6 @@
 package bacit.web.bacit_web;
 
+import bacit.web.bacit_database.DBUtils;
 import bacit.web.bacit_headerFooter.HeaderFooter;
 import bacit.web.bacit_models.BookingModel;
 
@@ -40,7 +41,7 @@ public class UserHistoryServlet extends HttpServlet{
     }
 
     private LinkedList<BookingModel> getBookingFromDB(String userID, PrintWriter out) throws SQLException {
-        Connection dbConnection = getConnection();
+        Connection dbConnection = DBUtils.getNoErrorConnection(out);
         String query = "SELECT * FROM Booking WHERE userID = ?;";
         PreparedStatement statement = dbConnection.prepareStatement(query);
         statement.setString(1, userID);
@@ -50,17 +51,6 @@ public class UserHistoryServlet extends HttpServlet{
             bookings.add(new BookingModel(rs.getInt("bookingID"), rs.getInt("userID"), rs.getInt("toolID"), rs.getTimestamp("startDate").toLocalDateTime().toLocalDate(), rs.getTimestamp("endDate").toLocalDateTime().toLocalDate()));
         }
         return bookings;
-    }
-
-    private Connection getConnection(){
-        Connection dbConnection = null;
-
-        try{
-            dbConnection = DBUtils.getINSTANCE().getConnection();
-        } catch (SQLException | ClassNotFoundException sqlException){
-            sqlException.printStackTrace();
-        }
-        return dbConnection;
     }
 
     private void writeError(PrintWriter out, Exception e){

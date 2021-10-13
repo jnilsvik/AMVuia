@@ -2,7 +2,7 @@ package bacit.web.bacit_models;
 
 //By Paul
 
-import bacit.web.bacit_web.DBUtils;
+import bacit.web.bacit_database.DBUtils;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -32,8 +32,8 @@ public class ToolModel {
         this.certificateID = certificateID;
     }
 
-    public static ToolModel getToolModel(String toolID) throws SQLException {
-        Connection dbConnection = getConnection();
+    public static ToolModel getToolModel(String toolID, PrintWriter out) throws SQLException {
+        Connection dbConnection = DBUtils.getNoErrorConnection(out);
         String query ="select * from Tool where toolID = ?;";
         PreparedStatement statement= dbConnection.prepareStatement(query);
         statement.setString(1, toolID);
@@ -107,7 +107,7 @@ public class ToolModel {
     }
 
     public LinkedList<LocalDate> getUsedDates(PrintWriter out) throws SQLException {
-        Connection dbConnection = getConnection();
+        Connection dbConnection = DBUtils.getNoErrorConnection(out);
         String query = "SELECT startDate, endDate FROM Booking WHERE toolID = ?;";
         PreparedStatement statement = dbConnection.prepareStatement(query);
         statement.setInt(1, toolID);
@@ -126,16 +126,5 @@ public class ToolModel {
             start = start.plusDays(1);
             dates.add(start);
         }
-    }
-
-    private static Connection getConnection(){
-        Connection dbConnection = null;
-
-        try{
-            dbConnection = DBUtils.getINSTANCE().getConnection();
-        } catch (SQLException | ClassNotFoundException sqlException){
-            sqlException.printStackTrace();
-        }
-        return dbConnection;
     }
 }

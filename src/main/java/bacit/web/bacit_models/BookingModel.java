@@ -1,6 +1,8 @@
 package bacit.web.bacit_models;
 
-import bacit.web.bacit_web.DBUtils;
+//by Paul
+
+import bacit.web.bacit_database.DBUtils;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -69,11 +71,10 @@ public class BookingModel {
     public double getTotalPrice(PrintWriter out){
         double totalPrice = 0;
         try {
-            Connection db = getConnection(out);
-            String query = "SELECT ToolType.priceAfterFirstDay, ToolType.priceFirstDay\n" +
-                    "FROM ToolType\n" +
-                    "INNER JOIN Tool\n" +
-                    "ON Tool.toolID = ? && Tool.toolTypeID = ToolType.toolTypeID;";
+            Connection db = DBUtils.getNoErrorConnection(out);
+            String query = "SELECT Tool.priceAfter, Tool.priceFirst\n" +
+                    "FROM Tool\n" +
+                    " WHERE Tool.toolID = ?;";
             PreparedStatement statement = db.prepareStatement(query);
             statement.setInt(1, toolID);
             ResultSet rs = statement.executeQuery();
@@ -96,7 +97,7 @@ public class BookingModel {
     public String getToolName(PrintWriter out){
         String toolName = "";
         try {
-            Connection db = getConnection(out);
+            Connection db = DBUtils.getNoErrorConnection(out);
             String query = "SELECT toolName FROM Tool WHERE toolID = ?;";
             PreparedStatement statement = db.prepareStatement(query);
             statement.setInt(1, toolID);
@@ -108,15 +109,5 @@ public class BookingModel {
         }
         //Currently, there is no toolName stored in the db will be added
         return "currently no toolName stored";
-    }
-
-    private Connection getConnection(PrintWriter out){
-        Connection dbConnection = null;
-        try{
-            dbConnection = DBUtils.getINSTANCE().getConnection();
-        } catch (SQLException | ClassNotFoundException sqlException){
-            out.println(sqlException);
-        }
-        return dbConnection;
     }
 }
