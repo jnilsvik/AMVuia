@@ -41,8 +41,8 @@ CREATE OR REPLACE TABLE Booking (
     userID int NOT NULL,
     toolID int NOT NULL,
     PRIMARY KEY (orderID),
-    FOREIGN KEY (userID) REFERENCES AMVUser(userID) on delete set null,
-    FOREIGN KEY (toolID) REFERENCES Tool(toolID) on delete set null
+    FOREIGN KEY (userID) REFERENCES AMVUser(userID),
+    FOREIGN KEY (toolID) REFERENCES Tool(toolID)
 );
 
 
