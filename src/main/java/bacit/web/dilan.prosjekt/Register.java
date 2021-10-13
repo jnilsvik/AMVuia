@@ -1,6 +1,7 @@
 package bacit.web.dilan.prosjekt;
 
 import bacit.web.bacit_database.DBUtils;
+import bacit.web.bacit_models.UserModel;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -9,6 +10,8 @@ import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+
+// by Dilan
 @WebServlet(name = "Register", value = "/register")
 public class Register extends HttpServlet {
 
@@ -62,8 +65,8 @@ public class Register extends HttpServlet {
             user.setUserAdmin(request.getParameter("userAdmin") != null);
 
 
-            user.setFirstName(request.getParameter("firstname"));
-            user.setLastName(request.getParameter("lastname"));
+            user.setFirstname(request.getParameter("firstname"));
+            user.setLastname(request.getParameter("lastname"));
             user.setPassword(request.getParameter("password"));
             user.setPhoneNumber(request.getParameter("phone"));
             user.setEmail(request.getParameter("email"));
@@ -77,8 +80,8 @@ public class Register extends HttpServlet {
             PreparedStatement statement = db.prepareStatement(insertUserCommand);
             statement.setString(1, user.getEmail());
             statement.setString(2, hashedPassword);
-            statement.setString(3, user.getFirstName());
-            statement.setString(4, user.getLastName());
+            statement.setString(3, user.getFirstname());
+            statement.setString(4, user.getLastname());
             statement.setString(5, user.getPhoneNumber());
             statement.setBoolean(6, user.isUnionMember());
             statement.setBoolean(7, user.isUserAdmin());

@@ -10,16 +10,22 @@ public class UserModel {
     String password;
     String phoneNumber;
     boolean unionMember;
+    boolean userAdmin;
     String email;
 
-    public UserModel(int userID, String firstname, String lastname, String password, String phoneNumber, boolean unionMember, String email) {
+    public UserModel(int userID, String firstname, String lastname, String password, String phoneNumber, boolean unionMember, boolean userAdmin,  String email) {
         this.userID = userID;
         this.firstname = firstname;
         this.lastname = lastname;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.unionMember = unionMember;
+        this.userAdmin = userAdmin;
         this.email = email;
+    }
+
+    public UserModel() {
+
     }
 
     public int getUserID() {
@@ -69,6 +75,15 @@ public class UserModel {
     public void setUnionMember(boolean unionMember) {
         this.unionMember = unionMember;
     }
+
+    public boolean isUserAdmin() {
+        return userAdmin;
+    }
+
+    public void setUserAdmin(boolean userAdmin) {
+        this.userAdmin = userAdmin;
+    }
+
 
     public String getEmail() {
         return email;

@@ -1,5 +1,7 @@
 package bacit.web.dilan.prosjekt;
 import java.sql.*;
+
+// by Dilan
 public class Validate {
     public static boolean checkUser(String email,String pass)
     {

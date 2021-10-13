@@ -3,41 +3,5 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Administration</web-resource-name>
-            <url-pattern>/admin/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>administrator</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <!-- transport-guarantee can be CONFIDENTIAL, INTEGRAL, or NONE -->
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>All</web-resource-name>
-            <url-pattern>/test/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>user</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <!-- transport-guarantee can be CONFIDENTIAL, INTEGRAL, or NONE -->
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <form-login-config>
-            <form-login-page>/login.html</form-login-page>
-            <form-error-page>/login-failed.html</form-error-page>
-        </form-login-config>
-    </login-config>
+
 </web-app>

@@ -1,7 +1,7 @@
-
 package bacit.web.dilan.prosjekt;
 import java.sql.*;
 
+// by Dilan
 public class  AdminAccess {
 
     public static boolean accessRights(String email)   {

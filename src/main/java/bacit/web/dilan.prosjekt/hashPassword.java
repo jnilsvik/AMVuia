@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+// by Dilan
 public class hashPassword {
 
     public static String encryptThisString(String input)
