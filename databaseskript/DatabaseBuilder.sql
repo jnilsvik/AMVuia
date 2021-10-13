@@ -62,9 +62,6 @@ INSERT INTO ToolCertificate(certificateName)
 VALUES ('none'),
        ('Aerial Work Platform');
 
-
-
-
 INSERT INTO Tool(toolName, pricefirst, priceAfter, toolCategory, certificateID, maintenance)
 VALUES ('Orbital Sander', 0, 20, 'Various Tools', '1', '0'),
        ('Belt Sander', 0, 20, 'Various Tools', '1', '0'),
