@@ -109,3 +109,64 @@ VALUES ('1','1','2021-10-10'),
        ('6','2','2021-10-15'),
        ('7','1','2021-10-16');
 
+
+INSERT INTO Booking (startDate, endDate, totalPrice, userID, toolID)
+VALUES
+    ('2021-01-20', '2021-01-24', 80, 1, 2),
+    ('2021-01-25', '2021-01-26', 20, 4, 5),
+    ('2020-05-10', '2020-05-15', 250, 3, 10),
+    ('2021-09-05', '2021-09-07', 40, 6, 4),
+    ('2021-08-11', '2021-08-13', 100, 1, 13),
+    ('2021-10-09', '2021-10-14', 100, 5, 18),
+    ('2020-07-14', '2020-07-18', 200, 7, 20),
+    ('2020-12-01', '2020-12-01', 0, 2, 9),
+    ('2021-11-22', '2021-11-25', 300, 5, 24),
+    ('2021-03-17', '2021-03-21', 80, 3, 6),
+    ('2021-10-10', '2021-10-21', 80, 3, 6);
+
+-- List all equipment in the system with their type
+-- works
+Select toolName, toolCategory
+from Tool;
+
+-- List all the available (at the moment – not already borrowed) equipment
+-- doesn't work, 2nd try below
+select toolName
+from Tool as t, Booking as b
+where t.toolID = b.toolID and not b.startDate < CURRENT_DATE() < b.endDate;
+
+-- List all the available (at the moment – not already borrowed) equipment, 2nd try
+-- works
+select toolName, b.toolID
+from Tool as t, Booking as b
+where t.toolID = b.toolID and b.toolID not in
+(select t.toolID from Tool t, Booking b
+where t.toolID=b.toolID
+  and b.startDate<=current_date()
+  and b.endDate>=current_date());
+
+-- List the names and number of borrows of the three users with most equipment borrowed, sorted by number of borrows
+-- works
+select firstName, lastName, count(*) as 'number of borrows'
+from AMVUser as u, Booking as b
+where u.userID = b.userID
+group by b.userID
+order by `number of borrows` desc
+limit 3;
+
+-- List all the equipment borrowed by the user with the highest number of equipment borrowed, sorted by date/time
+-- works
+select toolName, startDate
+from Tool as t, Booking as b
+where t.toolID = b.toolID and b.userID = (select userID from Booking as b group by b.userID order by count(*) desc limit 1)
+Order by startDate DESC;
+
+-- List all equipment that is borrowed at the moment
+-- works
+select t.toolID, t.toolName
+from Tool t, Booking b
+where t.toolID=b.toolID
+  and b.startDate<=current_date()
+  and b.endDate>=current_date();
+
+
