@@ -1,4 +1,7 @@
 package bacit.web.bacit_headerFooter;
+
+//by Paul
+
 import java.io.PrintWriter;
 
 public class HeaderFooter {

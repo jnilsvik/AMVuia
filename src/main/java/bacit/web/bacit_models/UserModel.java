@@ -1,5 +1,7 @@
 package bacit.web.bacit_models;
 
+//by Paul
+
 public class UserModel {
 
     int userID;

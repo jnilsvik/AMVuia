@@ -1,5 +1,7 @@
 package bacit.web.bacit_web;
 
+//by Paul
+
 import bacit.web.bacit_headerFooter.HeaderFooter;
 import bacit.web.bacit_models.ToolModel;
 
@@ -54,10 +56,9 @@ public class DetailedToolServlet extends HttpServlet{
 
     private void printData(ToolModel tool, LinkedList<LocalDate> days, PrintWriter out){
         HeaderFooter.printHeader("Detailed Tool Information", out);
-        out.println("<h2>Name: "+tool.getName()+"</h2>");
-        out.println("<p>ToolType: "+tool.getToolType()+"</p>");
-        out.println("<p>Location: "+tool.getLocation()+"</p>");
-        out.println("<p>Status: "+tool.getStatus()+"</p>");
+        out.println("<h2>Name: "+tool.getToolName()+"</h2>");
+        out.println("<p>ToolType: "+tool.getToolCategory()+"</p>");
+        out.println("<p>Is Broken: "+tool.isMaintenance()+"</p>");
         out.println("<h3>UsedDates:</h3>");
         for(LocalDate day: days){
             out.println("<p>"+day.getDayOfMonth()+"."+day.getMonth()+"</p>");

@@ -7,7 +7,7 @@ Run the dbs in the following order:
 CreateUser.sql
 CreateAdmin.sql
 CreateToolCertificate.sql
-CreateToolType.sql
+CreateCategory.sql
 CreateTool.sql
 ---
 This cant be ran atm... dunno why:

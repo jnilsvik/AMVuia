@@ -1,5 +1,7 @@
 package bacit.web.bacit_web;
 
+//By Paul
+
 import bacit.web.bacit_headerFooter.HeaderFooter;
 import bacit.web.bacit_models.ToolModel;
 
@@ -51,23 +53,24 @@ public class CreateNewBookingServlet extends HttpServlet{
         try {
             ToolModel tool = ToolModel.getToolModel(toolID);
             usedDates = tool.getUsedDates(out);
+
+            //unsure how to reach the right datatype
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String startDateString = req.getParameter("startDate");
+            LocalDate startDate = LocalDate.parse(startDateString, formatter);
+            String endDateString = req.getParameter("endDate");
+            LocalDate endDate = LocalDate.parse(endDateString, formatter);
+
+            if(!checkValidDates(startDate, endDate, usedDates)) printInvalidBooking("The Tool is not free for the period", toolID, userID, out);
+            else if(!checkCertificate(userID, toolID)) printInvalidBooking("The user is not authorized for the tool",toolID, userID, out);
+            else{
+                placeNewBooking(userID, toolID, startDate, endDate);
+                printBookingSucceed(userID, toolID, startDate, endDate, out);
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            printError(e, out);
         }
 
-        //unsure how to reach the right datatype
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String startDateString = req.getParameter("startDate");
-        LocalDate startDate = LocalDate.parse(startDateString, formatter);
-        String endDateString = req.getParameter("endDate");
-        LocalDate endDate = LocalDate.parse(endDateString, formatter);
-
-        if(!checkValidDates(startDate, endDate, usedDates)) printInvalidBooking("The Tool is not free for the period", toolID, userID, out);
-        else if(!checkCertificate(userID, toolID)) printInvalidBooking("The user is not authorized for the tool",toolID, userID, out);
-        else{
-            placeNewBooking(userID, toolID, startDate, endDate);
-            printBookingSucceed(userID, toolID, startDate, endDate, out);
-        }
         HeaderFooter.printFooter(out);
     }
 
@@ -89,6 +92,11 @@ public class CreateNewBookingServlet extends HttpServlet{
     private void printBookingSucceed(String userID, String toolID, LocalDate startDate, LocalDate endDate, PrintWriter out){
         out.println("<h1>Booking successfully placed</h3>");
         out.println("<p>"+userID+" got "+toolID+" form "+startDate.toString()+" to "+endDate.toString()+"</p>");
+    }
+
+    private void printError(Exception e, PrintWriter out){
+        out.println("<h2>An internal error happened</h2>");
+        out.println("<p>"+e.getMessage()+"</p>");
     }
 
     private boolean checkValidDates(LocalDate start, LocalDate end, LinkedList<LocalDate> usedDates){
@@ -114,13 +122,15 @@ public class CreateNewBookingServlet extends HttpServlet{
         return false;
     }
 
-    private void placeNewBooking(String userID, String toolID, LocalDate startDate, LocalDate endDate){
+    private void placeNewBooking(String userID, String toolID, LocalDate startDate, LocalDate endDate) throws SQLException {
         Connection db = getConnection();
         String query = "INSERT INTO Booking (userID, toolID, startDate, endDate) VALUES (?,?,?,?);";
-        PreparedStatement statement = db.prepareStatement();
-        statement.setString(userID);
-        statement.setString(toolID);
-        statement.setObject();
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setString(1, userID);
+        statement.setString(2, toolID);
+        statement.setObject(3, startDate);
+        statement.setObject(4, endDate);
+        statement.executeUpdate();
     }
 
     private Connection getConnection(){
