@@ -124,13 +124,32 @@ VALUES
     ('2021-03-17', '2021-03-21', 80, 3, 6),
     ('2021-10-10', '2021-10-21', 80, 3, 6);
 
+-- Listing the 5 first rows of the 5 most important tables (your judgement), sorted.
+select *
+from ToolCertificate order by certificateID
+limit 5;
+
+select *
+from Tool order by toolID
+limit 5;
+
+select *
+from AMVUser order by userID
+limit 5;
+
+select *
+from UsersCertificate order by userID
+limit 5;
+
+select *
+from Booking order by orderID
+limit 5;
+
 -- List all equipment in the system with their type
--- works
 Select toolName, toolCategory
 from Tool;
 
 -- List all the available (at the moment – not already borrowed) equipment
--- works
 select toolName, b.toolID
 from Tool as t, Booking as b
 where t.toolID = b.toolID and b.toolID not in
@@ -140,7 +159,6 @@ where t.toolID=b.toolID
   and b.endDate>=current_date());
 
 -- List the names and number of borrows of the three users with most equipment borrowed, sorted by number of borrows
--- works
 select firstName, lastName, count(*) as 'number of borrows'
 from AMVUser as u, Booking as b
 where u.userID = b.userID
@@ -149,14 +167,12 @@ order by `number of borrows` desc
 limit 3;
 
 -- List all the equipment borrowed by the user with the highest number of equipment borrowed, sorted by date/time
--- works
 select toolName, startDate
 from Tool as t, Booking as b
 where t.toolID = b.toolID and b.userID = (select userID from Booking as b group by b.userID order by count(*) desc limit 1)
 Order by startDate DESC;
 
 -- List all equipment that is borrowed at the moment
--- works
 select t.toolID, t.toolName
 from Tool t, Booking b
 where t.toolID=b.toolID
