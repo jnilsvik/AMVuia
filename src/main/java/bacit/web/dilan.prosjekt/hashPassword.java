@@ -1,4 +1,4 @@
-package dilan.prosjekt;
+package bacit.web.dilan.prosjekt;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

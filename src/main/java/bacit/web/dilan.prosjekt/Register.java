@@ -1,4 +1,4 @@
-package dilan.prosjekt;
+package bacit.web.dilan.prosjekt;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -72,7 +72,7 @@ public class Register extends HttpServlet {
             PrintWriter out = response.getWriter();
 
             Connection db = DBUtils.getINSTANCE().getConnection(out);
-            String insertUserCommand = "insert into Users (email, userPass, firstName, lastName, phoneNumber, unionMember, userAdmin) values(?, ?, ?, ?, ?, ?, ?)";
+            String insertUserCommand = "insert into Users (email, passwordHash, firstName, lastName, phoneNumber, unionMember, userAdmin) values(?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = db.prepareStatement(insertUserCommand);
             statement.setString(1, user.getEmail());
             statement.setString(2, hashedPassword);

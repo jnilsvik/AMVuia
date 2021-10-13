@@ -1,5 +1,5 @@
 
-package dilan.prosjekt;
+package bacit.web.dilan.prosjekt;
 import java.sql.*;
 
 public class  AdminAccess {
