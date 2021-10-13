@@ -1,4 +1,4 @@
-package dilan.prosjekt;
+package bacit.web.dilan.prosjekt;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

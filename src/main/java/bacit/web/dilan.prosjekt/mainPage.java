@@ -1,4 +1,4 @@
-package dilan.prosjekt;
+package bacit.web.dilan.prosjekt;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
