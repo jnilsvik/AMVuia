@@ -1,13 +1,13 @@
 create database if not exists AMVDatabase;
 use AMVDatabase;
 
-CREATE TABLE ToolCertificate (
+CREATE OR REPLACE TABLE ToolCertificate(
     certificateID int NOT NULL auto_increment,
     certificateName VARCHAR(50) NOT NULL,
     PRIMARY KEY (certificateID)
 );
 
-CREATE TABLE Tools (
+CREATE OR REPLACE TABLE Tool (
     toolID int NOT NULL auto_increment,
     toolName VARCHAR(50) NOT NULL,
     maintenance boolean NOT NULL,
@@ -18,10 +18,10 @@ CREATE TABLE Tools (
     PRIMARY KEY (toolID),
     FOREIGN KEY (certificateID) REFERENCES ToolCertificate(certificateID),
     CHECK(toolCategory in
-          ('Various small equipment', 'Nailguns', 'Woodcutting equipment', 'Car trailers', 'Larger equipment'))
+          ('Various Tools', 'Nailguns', 'Woodcutting', 'Car Trailers', 'Large Equipment'))
 );
 
-CREATE TABLE Users (
+CREATE OR REPLACE TABLE AMVUser (
     userID INT NOT NULL auto_increment,
     email VARCHAR(50) NOT NULL,
     passwordHash VARCHAR(250) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE Users (
     PRIMARY KEY (userID)
 );
 
-CREATE TABLE Bookings (
+CREATE OR REPLACE TABLE Booking (
     orderID int NOT NULL auto_increment,
     startDate date NOT NULL,
     endDate date NOT NULL,
@@ -41,16 +41,16 @@ CREATE TABLE Bookings (
     userID int NOT NULL,
     toolID int NOT NULL,
     PRIMARY KEY (orderID),
-    FOREIGN KEY (userID) REFERENCES Users(userID) on delete set null,
-    FOREIGN KEY (toolID) REFERENCES Tools(toolID) on delete set null
+    FOREIGN KEY (userID) REFERENCES AMVUser(userID) on delete set null,
+    FOREIGN KEY (toolID) REFERENCES Tool(toolID) on delete set null
 );
 
 
-CREATE TABLE UsersCertificate (
+CREATE OR REPLACE TABLE UsersCertificate (
     userID int NOT NULL,
     certificateID int NOT NULL,
     accomplishDate date NOT NULL,
     Primary key (userID, certificateID, accomplishDate),
-    FOREIGN KEY (userID) REFERENCES Users(userID),
+    FOREIGN KEY (userID) REFERENCES AMVUser(userID) on delete cascade ,
     FOREIGN KEY (certificateID) REFERENCES ToolCertificate(certificateID) on delete cascade
 );
