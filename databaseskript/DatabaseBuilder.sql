@@ -130,12 +130,6 @@ Select toolName, toolCategory
 from Tool;
 
 -- List all the available (at the moment – not already borrowed) equipment
--- doesn't work, 2nd try below
-select toolName
-from Tool as t, Booking as b
-where t.toolID = b.toolID and not b.startDate < CURRENT_DATE() < b.endDate;
-
--- List all the available (at the moment – not already borrowed) equipment, 2nd try
 -- works
 select toolName, b.toolID
 from Tool as t, Booking as b
