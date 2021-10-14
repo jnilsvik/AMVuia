@@ -31,11 +31,11 @@ public class Register extends HttpServlet {
         out.println("<label for = 'lastname'>Last Name: </label><br>");
         out.println("<input type = 'text' name = 'lastname'><br>");
         out.println("<label for = 'password'>Password: </label><br>");
-        out.println("<input type = 'text' name = 'password'><br>");
+        out.println("<input type = 'password' name = 'password'><br>");
         out.println("<label for = 'email'>Email: </label><br>");
         out.println("<input type = 'text' name = 'email'><br>");
         out.println("<label for = 'phone'>Phone: </label><br>");
-        out.println("<input type = 'text' name = 'phone'><br>");
+        out.println("<input type = 'tel' name = 'phone'><br>");
         out.println("<label for = 'unionmember'>Union Member: </label><br>");
         out.println("<input type = 'checkbox' name = 'unionmember' value = 'true'><br>");
         out.println("<label for = 'userAdmin'>Admin: </label><br>");

@@ -37,7 +37,6 @@ public class DetailedToolServlet extends HttpServlet{
             //For the index no data in the database could be found
             printWrongIndex(out);
         }
-
     }
 
     @Override

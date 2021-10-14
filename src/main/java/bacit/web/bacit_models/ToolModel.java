@@ -33,14 +33,19 @@ public class ToolModel {
     }
 
     public static ToolModel getToolModel(String toolID, PrintWriter out) throws SQLException {
+        //opens connections
         Connection dbConnection = DBUtils.getNoErrorConnection(out);
+        //generates Q
         String query ="select * from Tool where toolID = ?;";
         PreparedStatement statement= dbConnection.prepareStatement(query);
         statement.setString(1, toolID);
+
         ResultSet rs = statement.executeQuery();
         ToolModel tool = null;
+
         if(!rs.next()) throw new IllegalArgumentException("No tool with this ID");
-        tool = new ToolModel(rs.getInt("toolID"),
+        tool = new ToolModel(
+                rs.getInt("toolID"),
                 rs.getString("toolName"),
                 rs.getString("category"),
                 rs.getBoolean("maintenance"),

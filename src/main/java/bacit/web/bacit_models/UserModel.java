@@ -84,7 +84,6 @@ public class UserModel {
         this.userAdmin = userAdmin;
     }
 
-
     public String getEmail() {
         return email;
     }
