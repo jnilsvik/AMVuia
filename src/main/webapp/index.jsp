@@ -12,5 +12,9 @@
     <a href="login">Login </a>
     <br>
     <a href="register">Register</a>
+    <br>
+    <a href="findTool">find tool</a>
+    <br>
+    <a href="tl">tool list</a>
 </body>
 </html>

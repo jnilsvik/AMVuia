@@ -5,8 +5,8 @@ import java.io.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(name = "landing", value = "/landing")
-public class Landing_page extends HttpServlet {
+@WebServlet(name = "findTool", value = "/findTool")
+public class FindTool extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
@@ -16,7 +16,7 @@ public class Landing_page extends HttpServlet {
         out.println("<html><body>");
         out.println("<h1></h1>");
         out.println("<h1>Find Tool in the database :-)</h1>");
-        out.println("<form action='DetailedToolServlet' method='GET'>");
+        out.println("<form action='GetTools' method='GET'>");
         out.println("  <label for='toolID'>Tool ID:</label>");
         out.println("  <input type='number' name='toolID'/>");
         out.println("  <input type='submit' />");
