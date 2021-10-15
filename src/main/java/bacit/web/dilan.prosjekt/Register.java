@@ -35,7 +35,7 @@ public class Register extends HttpServlet {
         out.println("<label for = 'email'>Email: </label><br>");
         out.println("<input type = 'email' name = 'email' required><br>");
         out.println("<label for = 'phone'>Phone: </label><br>");
-        out.println("<input type = 'tel' name = 'phone' required><br>");
+        out.println("<input type = 'tel' name = 'phone' required minlength=\"5\" pattern=\"[0-9]{5}\"><br>"); //jn: ive set the min. amount to 5 for now
         out.println("<label for = 'unionmember'>Union Member: </label><br>");
         out.println("<input type = 'checkbox' name = 'unionmember' value = 'true'><br>");
         out.println("<label for = 'userAdmin'>Admin: </label><br>");
