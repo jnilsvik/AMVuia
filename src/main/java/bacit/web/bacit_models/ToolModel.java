@@ -33,9 +33,7 @@ public class ToolModel {
     }
 
     public static ToolModel getToolModel(String toolID, PrintWriter out) throws SQLException {
-        //opens connections
         Connection dbConnection = DBUtils.getNoErrorConnection(out);
-        //generates Q
         String query ="select * from Tool where toolID = ?;";
         PreparedStatement statement= dbConnection.prepareStatement(query);
         statement.setString(1, toolID);
@@ -79,7 +77,7 @@ public class ToolModel {
         this.toolCategory = toolCategory;
     }
 
-    public boolean isMaintenance() {
+    public boolean getMaintenance() {
         return maintenance;
     }
 

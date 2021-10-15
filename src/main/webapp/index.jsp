@@ -7,7 +7,7 @@
 <body>
     <h1>Some stuff is missing here :)</h1>
     <br/>
-    <a href="landing">Tool search</a>
+    <a href="findTool">Tool search</a>
     <br>
     <a href="login">Login </a>
     <br>

@@ -23,9 +23,8 @@ public class DetailedToolServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        PrintWriter out = response.getWriter();
         String toolID = request.getParameter("toolID");
+        PrintWriter out = response.getWriter();
         try {
             ToolModel tool = ToolModel.getToolModel(toolID, out);
             LinkedList<LocalDate> usedDates = tool.getUsedDates(out);
@@ -48,7 +47,7 @@ public class DetailedToolServlet extends HttpServlet{
         HeaderFooter.printHeader("Detailed Tool Information", out);
         out.println("<h2>Name: "+tool.getToolName()+"</h2>");
         out.println("<p>ToolType: "+tool.getToolCategory()+"</p>");
-        out.println("<p>Is Broken: "+tool.isMaintenance()+"</p>");
+        out.println("<p>Is Broken: "+tool.getMaintenance()+"</p>");
         out.println("<h3>UsedDates:</h3>");
         for(LocalDate day: days){
             out.println("<p>"+day.getDayOfMonth()+"."+day.getMonth()+"</p>");
