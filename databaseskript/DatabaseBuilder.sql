@@ -3,13 +3,13 @@ create database if not exists AMVDatabase;
 use AMVDatabase;
 
 CREATE OR REPLACE TABLE ToolCertificate(
-    certificateID int NOT NULL auto_increment,
+    certificateID int NOT NULL auto_increment unique,
     certificateName VARCHAR(50) NOT NULL,
     PRIMARY KEY (certificateID)
 );
 
 CREATE OR REPLACE TABLE Tool (
-    toolID int NOT NULL auto_increment,
+    toolID int NOT NULL auto_increment unique,
     toolName VARCHAR(50) NOT NULL,
     maintenance boolean NOT NULL,
     priceFirst int NOT NULL,
@@ -23,8 +23,8 @@ CREATE OR REPLACE TABLE Tool (
 );
 
 CREATE OR REPLACE TABLE AMVUser (
-    userID INT NOT NULL auto_increment,
-    email VARCHAR(50) NOT NULL,
+    userID INT NOT NULL auto_increment unique,
+    email VARCHAR(50) NOT NULL unique,
     passwordHash VARCHAR(250) NOT NULL,
     firstName VARCHAR(50),
     lastName VARCHAR(50) NOT NULL,
@@ -35,7 +35,7 @@ CREATE OR REPLACE TABLE AMVUser (
 );
 
 CREATE OR REPLACE TABLE Booking (
-    orderID int NOT NULL auto_increment,
+    orderID int NOT NULL auto_increment unique,
     startDate date NOT NULL,
     endDate date NOT NULL,
     totalPrice int NOT NULL,
@@ -111,18 +111,17 @@ VALUES ('1','1','2021-10-10'),
 
 
 INSERT INTO Booking (startDate, endDate, totalPrice, userID, toolID)
-VALUES
-    ('2021-01-20', '2021-01-24', 80, 1, 2),
-    ('2021-01-25', '2021-01-26', 20, 4, 5),
-    ('2020-05-10', '2020-05-15', 250, 3, 10),
-    ('2021-09-05', '2021-09-07', 40, 6, 4),
-    ('2021-08-11', '2021-08-13', 100, 1, 13),
-    ('2021-10-09', '2021-10-14', 100, 5, 18),
-    ('2020-07-14', '2020-07-18', 200, 7, 20),
-    ('2020-12-01', '2020-12-01', 0, 2, 9),
-    ('2021-11-22', '2021-11-25', 300, 5, 24),
-    ('2021-03-17', '2021-03-21', 80, 3, 6),
-    ('2021-10-10', '2021-10-21', 80, 3, 6);
+VALUES ('2021-01-20', '2021-01-24', 80, 1, 2),
+       ('2021-01-25', '2021-01-26', 20, 4, 5),
+       ('2020-05-10', '2020-05-15', 250, 3, 10),
+       ('2021-09-05', '2021-09-07', 40, 6, 4),
+       ('2021-08-11', '2021-08-13', 100, 1, 13),
+       ('2021-10-09', '2021-10-14', 100, 5, 18),
+       ('2020-07-14', '2020-07-18', 200, 7, 20),
+       ('2020-12-01', '2020-12-01', 0, 2, 9),
+       ('2021-11-22', '2021-11-25', 300, 5, 24),
+       ('2021-03-17', '2021-03-21', 80, 3, 6),
+       ('2021-10-10', '2021-10-21', 80, 3, 6);
 
 -- Listing the 5 first rows of the 5 most important tables (your judgement), sorted.
 select *
