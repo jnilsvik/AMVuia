@@ -94,7 +94,7 @@ public class Register extends HttpServlet {
             out.print("<head>");
             out.print("</head>");
             out.println("<body>");
-            out.println("<a href=\"login\"><h1>Registration successful! Click here to login</a></h1></a>)");
+            out.println("<a href=\"login\"><h1>Registration successful! Click here to login</a></h1></a>");
             out.println("</body>");
             out.println("</html>");
 
