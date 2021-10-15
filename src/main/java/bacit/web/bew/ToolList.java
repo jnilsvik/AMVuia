@@ -52,9 +52,9 @@ public class ToolList extends HttpServlet {
                         "        <tr bgcolor=\"grey\">" +
                         "            <th width=100>toolName</th>" +
                         "            <th width=100>category</th>" +
-                        "            <th width=100>maintenance</th>" +
                         "            <th width=100>priceFirst</th>" +
                         "            <th width=100>priceAfter</th>" +
+                        "            <th width=100>maintenance</th>" +
                         "            <th width=100>certificateID</th>" +
                         "        </tr>");
             //create a tool model as lond as there are RS's left
