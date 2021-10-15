@@ -5,16 +5,12 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1>
-    <%= "Some stuff is missing here :)" %>
-</h1>
-<br/>
-
-<a href="../java/web/jstuff/Landing_page">Tool search</a>
-<br>
-<a href="src/main/java/bacit/web/dilan.prosjekt/Register.java">Login </a>
-<br>
-<a href="Register">Register</a>
-
+    <h1>Some stuff is missing here :)</h1>
+    <br/>
+    <a href="landing">Tool search</a>
+    <br>
+    <a href="login">Login </a>
+    <br>
+    <a href="register">Register</a>
 </body>
 </html>

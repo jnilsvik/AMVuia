@@ -33,7 +33,7 @@ public class Register extends HttpServlet {
         out.println("<label for = 'password'>Password: </label><br>");
         out.println("<input type = 'password' name = 'password'><br>");
         out.println("<label for = 'email'>Email: </label><br>");
-        out.println("<input type = 'text' name = 'email'><br>");
+        out.println("<input type = 'email' name = 'email'><br>");
         out.println("<label for = 'phone'>Phone: </label><br>");
         out.println("<input type = 'tel' name = 'phone'><br>");
         out.println("<label for = 'unionmember'>Union Member: </label><br>");
@@ -94,7 +94,7 @@ public class Register extends HttpServlet {
             out.print("<head>");
             out.print("</head>");
             out.println("<body>");
-            out.println("<h1>Registration successful! Click here to login</a></h1>");
+            out.println("<a href=\"login\"><h1>Registration successful! Click here to login</a></h1></a>)");
             out.println("</body>");
             out.println("</html>");
 
