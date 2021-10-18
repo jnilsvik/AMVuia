@@ -106,6 +106,33 @@ public class ToolBooking extends HttpServlet {
             st.setString(1, (request.getParameter("tools")));
             ResultSet rs = st.executeQuery();
 
+            PreparedStatement st1 = db
+                    .prepareStatement("SELECT * FROM AMVUser WHERE email = ?");
+            st1.setString(1, (request.getParameter("email")));
+            ResultSet rs1 = st1.executeQuery();
+
+            int userID = 0;
+            while (rs1.next()) {
+                 userID = rs1.getInt("userID");
+            }
+
+            PreparedStatement st2 = db
+                    .prepareStatement("SELECT * FROM Tool WHERE toolID = ?");
+            st2.setString(1, (request.getParameter("tools")));
+            ResultSet rs2 = st2.executeQuery();
+
+
+            int priceFirst = 0;
+            int priceAfter = 0;
+            int totalPrice = 0;
+            int toolID = 0;
+
+            while(rs2.next()) {
+                 priceFirst = rs2.getInt("priceFirst");
+                 priceAfter = rs2.getInt("priceAfter");
+                 toolID = rs2.getInt("toolID");
+            }
+
             boolean taken = false;
 
             while (rs.next() && !taken) {
@@ -157,14 +184,29 @@ public class ToolBooking extends HttpServlet {
 
             }
 
+            if (request.getParameter("days").equals("1")) {
+                totalPrice = priceFirst;
+            }
+
+            if (request.getParameter("days").equals("2")) {
+                totalPrice = priceFirst + priceAfter;
+            }
+
+            if (request.getParameter("days").equals("3")) {
+                totalPrice = priceFirst + priceAfter + priceAfter;
+            }
+
 
             if (taken == false) {
+
 
                 out.println("<html>");
                 out.print("<head>");
                 out.print("</head>");
                 out.println("<body>");
+                out.print(totalPrice);
                 out.println("<h1> That tool is available</h1>");
+                out.print(userID);
                 out.println("</body>");
                 out.println("</html>");
 
@@ -175,6 +217,8 @@ public class ToolBooking extends HttpServlet {
 
 
             st.close();
+            st1.close();
+            st2.close();
             db.close();
 
 
@@ -182,6 +226,7 @@ public class ToolBooking extends HttpServlet {
             e.printStackTrace();
         }
     }
+
 }
 
 
