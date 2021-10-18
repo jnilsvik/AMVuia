@@ -16,5 +16,7 @@
     <a href="findTool">find tool</a>
     <br>
     <a href="tl">tool list</a>
+    <br>
+    <a href="toolcategories">Tool Categories</a>
 </body>
 </html>
