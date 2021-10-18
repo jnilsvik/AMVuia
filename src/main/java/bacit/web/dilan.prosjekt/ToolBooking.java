@@ -48,7 +48,7 @@ public class ToolBooking extends HttpServlet {
             out.print("</head>");
             out.println("<body>");
 
-            out.print("<form action = 'toollist' method = 'POST'");
+            out.print("<form action = 'toolbooking' method = 'POST'");
             out.print("<label for = 'tools'> Choose a tool:</label>");
             out.print("<select name = 'tools' id = 'tools'><br>");
 
