@@ -135,21 +135,17 @@ public class ToolBooking extends HttpServlet {
 
             boolean taken = false;
 
+
             while (rs.next() && !taken) {
 
                 Date dataBaseStartDate = rs.getDate("startDate");
                 Date dataBaseEndDate = rs.getDate("endDate");
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-                String strDate = dateFormat.format(dataBaseStartDate);
-                String strDate1 = dateFormat.format(dataBaseEndDate);
+                LocalDate dateStart = LocalDate.parse(dateFormat.format(dataBaseStartDate));
+                LocalDate dateEnd = LocalDate.parse(dateFormat.format(dataBaseEndDate));
 
-                String inputDate = request.getParameter("date");
-
-                LocalDate dateStart = LocalDate.parse(strDate);
-                LocalDate dateEnd = LocalDate.parse(strDate1);
-
-                LocalDate StartDateWanted = LocalDate.parse(inputDate);
+                LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
 
                 List<LocalDate> totalDates = new ArrayList<>();
                 while (!dateStart.isAfter(dateEnd)) {
@@ -196,17 +192,42 @@ public class ToolBooking extends HttpServlet {
                 totalPrice = priceFirst + priceAfter + priceAfter;
             }
 
+            LocalDate startDateInsert = LocalDate.parse(request.getParameter("date"));
+            LocalDate endDateInsert = startDateInsert;
+
+            if (request.getParameter("days").equals("1")) {
+                endDateInsert = startDateInsert.plusDays(1);
+            }
+
+            if (request.getParameter("days").equals("2")) {
+                endDateInsert = startDateInsert.plusDays(2);
+            }
+
+            if (request.getParameter("days").equals("3")) {
+                endDateInsert = startDateInsert.plusDays(3);
+            }
+
 
             if (taken == false) {
+
+                PreparedStatement statement2 =
+                        db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
+                statement2.setObject(1, startDateInsert);
+                statement2.setObject(2, endDateInsert);
+                statement2.setInt(3, totalPrice);
+                statement2.setInt(4, userID);
+                statement2.setInt(5, toolID);
+                statement2.executeUpdate();
 
 
                 out.println("<html>");
                 out.print("<head>");
                 out.print("</head>");
                 out.println("<body>");
-                out.print(totalPrice);
-                out.println("<h1> That tool is available</h1>");
-                out.print(userID);
+                out.println("<br>");
+                out.print("<br>");
+                out.println("<br>");
+                out.println("<h1> Tool has been booked</h1>");
                 out.println("</body>");
                 out.println("</html>");
 
@@ -214,7 +235,6 @@ public class ToolBooking extends HttpServlet {
 
                 out.println("<h1>Srry, that tool is already taken on that date, pls choose another one</h1>");
             }
-
 
             st.close();
             st1.close();
