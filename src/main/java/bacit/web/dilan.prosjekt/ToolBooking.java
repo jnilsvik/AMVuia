@@ -9,9 +9,6 @@ import java.text.DateFormat;
 import java.time.*;
 
 import bacit.web.bacit_database.DBUtils;
-import bacit.web.bacit_models.UserModel;
-import bacit.web.dilan.prosjekt.hashPassword;
-import jdk.vm.ci.meta.Local;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -116,6 +113,22 @@ public class ToolBooking extends HttpServlet {
                  userID = rs1.getInt("userID");
             }
 
+            PreparedStatement st3 = db
+                    .prepareStatement("SELECT * FROM UsersCertificate WHERE userID = ?");
+            st3.setInt(1, userID);
+            ResultSet rs3 = st3.executeQuery();
+
+
+            List<Integer> totalCertificateID = new ArrayList<>();
+            int certificateID = 0;
+
+            while (rs3.next()) {
+                certificateID = rs3.getInt("certificateID");
+                totalCertificateID.add(certificateID);
+
+            }
+
+
             PreparedStatement st2 = db
                     .prepareStatement("SELECT * FROM Tool WHERE toolID = ?");
             st2.setString(1, (request.getParameter("tools")));
@@ -126,11 +139,20 @@ public class ToolBooking extends HttpServlet {
             int priceAfter = 0;
             int totalPrice = 0;
             int toolID = 0;
+            int toolCertificateID = 0;
+
+            boolean hasTheCertificate = false;
 
             while(rs2.next()) {
                  priceFirst = rs2.getInt("priceFirst");
                  priceAfter = rs2.getInt("priceAfter");
                  toolID = rs2.getInt("toolID");
+                toolCertificateID = rs2.getInt("certificateID");
+
+            }
+
+            if (totalCertificateID.contains(toolCertificateID)) {
+                hasTheCertificate = true;
             }
 
             boolean taken = false;
@@ -208,7 +230,7 @@ public class ToolBooking extends HttpServlet {
             }
 
 
-            if (taken == false) {
+            if (taken == false && hasTheCertificate == true) {
 
                 PreparedStatement statement2 =
                         db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
@@ -233,7 +255,7 @@ public class ToolBooking extends HttpServlet {
 
             } else {
 
-                out.println("<h1>Srry, that tool is already taken on that date, pls choose another one</h1>");
+                out.println("<h1>Srry, that tool is already taken or you dont have the needed ID./h1>");
             }
 
             st.close();
