@@ -96,7 +96,6 @@ public class ToolBooking extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-
         try {
             Connection db = DBUtils.getNoErrorConnection(out);
             PreparedStatement st1 = db
@@ -109,27 +108,6 @@ public class ToolBooking extends HttpServlet {
                  userID = rs1.getInt("userID");
             }
 
-            PreparedStatement st3 = db
-                    .prepareStatement("SELECT * FROM UsersCertificate WHERE userID = ?");
-            st3.setInt(1, userID);
-            ResultSet rs3 = st3.executeQuery();
-
-            List<Integer> totalCertificateID = new ArrayList<>();
-            int userCertificateID = 0;
-
-            while (rs3.next()) {
-                userCertificateID = rs3.getInt("certificateID");
-                totalCertificateID.add(userCertificateID);
-            }
-
-            int priceFirst = 0;
-            int priceAfter = 0;
-
-            int toolID = 0;
-            int toolCertificateID = 0;
-
-            boolean hasTheCertificate = false;
-            boolean taken = false;
 
             LocalDate startDateInsert = LocalDate.parse(request.getParameter("date"));
             String inputDays = request.getParameter("days");
@@ -139,6 +117,7 @@ public class ToolBooking extends HttpServlet {
             st.setString(1, (request.getParameter("tools")));
             ResultSet rs = st.executeQuery();
 
+            boolean taken = false;
             while (rs.next() && !taken) {
 
                 Date dataBaseStartDate = rs.getDate("startDate");
@@ -183,11 +162,15 @@ public class ToolBooking extends HttpServlet {
 
             }
 
-
             PreparedStatement st2 = db
                     .prepareStatement("SELECT * FROM Tool WHERE toolID = ?");
             st2.setString(1, (request.getParameter("tools")));
             ResultSet rs2 = st2.executeQuery();
+
+            int priceFirst = 0;
+            int priceAfter = 0;
+            int toolID = 0;
+            int toolCertificateID = 0;
 
             while(rs2.next()) {
                 priceFirst = rs2.getInt("priceFirst");
@@ -197,7 +180,21 @@ public class ToolBooking extends HttpServlet {
 
             }
 
-            //This checks if the users has the needed certificationID for the tool.
+            PreparedStatement st3 = db
+                    .prepareStatement("SELECT * FROM UsersCertificate WHERE userID = ?");
+            st3.setInt(1, userID);
+            ResultSet rs3 = st3.executeQuery();
+
+            List<Integer> totalCertificateID = new ArrayList<>();
+            int userCertificateID;
+
+            while (rs3.next()) {
+                userCertificateID = rs3.getInt("certificateID");
+                totalCertificateID.add(userCertificateID);
+            }
+
+            //This checks if the user has the needed certificationID for the tool.
+            boolean hasTheCertificate = false;
             if (totalCertificateID.contains(toolCertificateID)) {
                 hasTheCertificate = true;
             }
@@ -207,11 +204,6 @@ public class ToolBooking extends HttpServlet {
 
             //getTotalPrice class calculates the total price.
             int totalPrice = getTotalPrice.checkTotalPrice(inputDays, priceFirst, priceAfter);
-
-
-
-
-
 
             if (taken == false && hasTheCertificate == true) {
 
