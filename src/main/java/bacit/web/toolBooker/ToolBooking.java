@@ -1,4 +1,4 @@
-package bacit.web.dilan.prosjekt;
+package bacit.web.toolBooker;
 
 
 import java.text.SimpleDateFormat;
@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.time.*;
 
 import bacit.web.bacit_database.DBUtils;
+import jdk.vm.ci.meta.Local;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -98,11 +99,6 @@ public class ToolBooking extends HttpServlet {
 
         try {
             Connection db = DBUtils.getNoErrorConnection(out);
-            PreparedStatement st = db
-                    .prepareStatement("SELECT * FROM Booking WHERE toolID = ?");
-            st.setString(1, (request.getParameter("tools")));
-            ResultSet rs = st.executeQuery();
-
             PreparedStatement st1 = db
                     .prepareStatement("SELECT * FROM AMVUser WHERE email = ?");
             st1.setString(1, (request.getParameter("email")));
@@ -118,45 +114,30 @@ public class ToolBooking extends HttpServlet {
             st3.setInt(1, userID);
             ResultSet rs3 = st3.executeQuery();
 
-
             List<Integer> totalCertificateID = new ArrayList<>();
-            int certificateID = 0;
+            int userCertificateID = 0;
 
             while (rs3.next()) {
-                certificateID = rs3.getInt("certificateID");
-                totalCertificateID.add(certificateID);
-
+                userCertificateID = rs3.getInt("certificateID");
+                totalCertificateID.add(userCertificateID);
             }
-
-
-            PreparedStatement st2 = db
-                    .prepareStatement("SELECT * FROM Tool WHERE toolID = ?");
-            st2.setString(1, (request.getParameter("tools")));
-            ResultSet rs2 = st2.executeQuery();
-
 
             int priceFirst = 0;
             int priceAfter = 0;
-            int totalPrice = 0;
+
             int toolID = 0;
             int toolCertificateID = 0;
 
             boolean hasTheCertificate = false;
-
-            while(rs2.next()) {
-                 priceFirst = rs2.getInt("priceFirst");
-                 priceAfter = rs2.getInt("priceAfter");
-                 toolID = rs2.getInt("toolID");
-                toolCertificateID = rs2.getInt("certificateID");
-
-            }
-
-            if (totalCertificateID.contains(toolCertificateID)) {
-                hasTheCertificate = true;
-            }
-
             boolean taken = false;
 
+            LocalDate startDateInsert = LocalDate.parse(request.getParameter("date"));
+            String inputDays = request.getParameter("days");
+
+            PreparedStatement st = db
+                    .prepareStatement("SELECT * FROM Booking WHERE toolID = ?");
+            st.setString(1, (request.getParameter("tools")));
+            ResultSet rs = st.executeQuery();
 
             while (rs.next() && !taken) {
 
@@ -202,32 +183,34 @@ public class ToolBooking extends HttpServlet {
 
             }
 
-            if (request.getParameter("days").equals("1")) {
-                totalPrice = priceFirst;
+
+            PreparedStatement st2 = db
+                    .prepareStatement("SELECT * FROM Tool WHERE toolID = ?");
+            st2.setString(1, (request.getParameter("tools")));
+            ResultSet rs2 = st2.executeQuery();
+
+            while(rs2.next()) {
+                priceFirst = rs2.getInt("priceFirst");
+                priceAfter = rs2.getInt("priceAfter");
+                toolID = rs2.getInt("toolID");
+                toolCertificateID = rs2.getInt("certificateID");
+
             }
 
-            if (request.getParameter("days").equals("2")) {
-                totalPrice = priceFirst + priceAfter;
+            //This checks if the users has the needed certificationID for the tool.
+            if (totalCertificateID.contains(toolCertificateID)) {
+                hasTheCertificate = true;
             }
 
-            if (request.getParameter("days").equals("3")) {
-                totalPrice = priceFirst + priceAfter + priceAfter;
-            }
+            //getEndDate class finds the end date.
+            LocalDate endingDate = getEndDate.checkUser(startDateInsert, inputDays);
 
-            LocalDate startDateInsert = LocalDate.parse(request.getParameter("date"));
-            LocalDate endDateInsert = startDateInsert;
+            //getTotalPrice class calculates the total price.
+            int totalPrice = getTotalPrice.checkTotalPrice(inputDays, priceFirst, priceAfter);
 
-            if (request.getParameter("days").equals("1")) {
-                endDateInsert = startDateInsert.plusDays(1);
-            }
 
-            if (request.getParameter("days").equals("2")) {
-                endDateInsert = startDateInsert.plusDays(2);
-            }
 
-            if (request.getParameter("days").equals("3")) {
-                endDateInsert = startDateInsert.plusDays(3);
-            }
+
 
 
             if (taken == false && hasTheCertificate == true) {
@@ -235,7 +218,7 @@ public class ToolBooking extends HttpServlet {
                 PreparedStatement statement2 =
                         db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
                 statement2.setObject(1, startDateInsert);
-                statement2.setObject(2, endDateInsert);
+                statement2.setObject(2, endingDate);
                 statement2.setInt(3, totalPrice);
                 statement2.setInt(4, userID);
                 statement2.setInt(5, toolID);
