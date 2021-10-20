@@ -23,8 +23,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 // by Dilan
-@WebServlet(name = "ToolBooking", value = "/toolbooking")
-public class ToolBooking extends HttpServlet {
+@WebServlet(name = "ToolBookingServlet", value = "/toolbooking")
+public class ToolBookingServlet extends HttpServlet {
 
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
