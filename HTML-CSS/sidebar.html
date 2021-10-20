@@ -12,27 +12,30 @@
 
 <body>
     <header>
-        <h1>PAGE TITEL GOES HERE</h1>
+        <h1>Booking</h1>
     </header>
 
     <nav class="sidebar">
-        <img class="amvlogo" src="img/amv.png" alt="AMV logo"></li>
-        <a hfref='#'><i class="fas fa-user"></i>Ola Nordman</a></li>
+        <img src="img/amv.png" alt="AMV logo"></li>
+        <a hfref='#'><i class="fa fa-user"></i>Ola Nordman</a></li>
         <a hfref='#'><i class="fa fa-tools"></i>Tools and equipment</a></li>
-        <a hfref='#'><i class="fas fa-receipt"></i>My rentals</a></li>
-        <a hfref='#'><i class="fas fa-question-circle"></i>Help</a></li>
-        <a hfref='#'><i class="fas fa-clipboard"></i>Reports</a></li>
+        <a hfref='#'><i class="fa fa-receipt"></i>My rentals</a></li>
+        <a hfref='#'><i class="fa fa-clipboard"></i>Reports</a></li>
+        <a hfref='#'><i class="fa fa-question-circle"></i>Help</a></li>
     </nav>    
-
-    Body goes here!
+    <!-- Page content goes here -->
     <section class="main"> 
-        <h1>Bodystuff</h1>
 
         <form class="search" action='GetTools' method='GET'>
-            <label for='toolID'>Tool ID:</label>
-            <input type='number' name='toolID'/>
-            <input type='submit' />
+            <input type='number' name='toolID' placeholder='Tool ID'/>
+            <input type='submit' name='' id='' value='Search'/>
         </form>
+        
+        <form class="search2" action='GetTools' method='GET'>
+            <input type="text" name="toolID" placeholder="Search..">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
 
         <div class="imgcontainer">
             <!--

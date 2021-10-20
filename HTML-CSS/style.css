@@ -1,50 +1,51 @@
 ul {
     list-style-type: none;
 }
-
 header, footer{
-    margin-left: 250px;
-    font-size: 30px;
+    font-size: 25px;
+}
+header, footer, .main{ /* gives space for the sidebar */
+    margin-left: 280px;
     padding-left: 20px;
-    text-align: center;
 }
 
 /* Sidebar segment*/
-.sidebar{
+.sidebar{ /*Keeps content to the top left, and makes sure its above anything else*/
     height: 100%;
-    width: 250px;
+    width: 280px;
     position: fixed;
-    z-index: 1;
     top: 0;
     left: 0;
+    z-index: 1;
     overflow-x: hidden;
-    padding-top: 20px;
     background-color: #ffb300;
 }
-.sidebar a {
-    padding: 5px 20px 5px 40px; /*top rigth bottom left */
+.sidebar a{
+    padding: 5px 20px 5px 20px; /*top rigth bottom left */
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: bold;
     color: #11165a;
     display: block;
 }
-.sidebar a:hover {
+
+.sidebar i{ /*Adjusts icons size */
+    font-size: 24px;
+}
+.sidebar a:hover { /* Makes items half opasity when hovering */
     opacity: 0.5;
 }
-
-.amvlogo{
+.sidebar img{ /*Keeps the logo image centered in the sidebar*/
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    background-repeat: no-repeat;
+    margin: auto;
+    width: 60%;
+    padding-top: 30px;
+    padding-bottom: 20px;
 }
 /*New segment - Main*/
 .main{
-    margin-left: 250px;
     font-size: 20px;
-    padding-left: 20px;
 }
 /*part of main - image container (flexbox)*/
 .imgcontainer{
@@ -56,7 +57,6 @@ header, footer{
     justify-content: space-between;
 } 
 
-
 .imgcontainer figure{
     padding: 0 0px 20px 0px;
     margin: auto;
@@ -66,27 +66,29 @@ header, footer{
 @media screen and (max-width:1400px){
     
 }
-/*
-.imgcontainer figure img{
-    height: 100px;
-    width: 100px;
-}
-*/
-.search label, input{
-    height: 48px;
-    width:fit-content;
-    font-size: 40px;
-}
+/* im just p+laying aroudn with search bar desigs here*/
 .search input{
     margin-bottom: 20px;
-    flex-grow: 1;
+    padding: 10px 20px 10px 20px;
     border: 1;
-    padding: 8px 36px 8px 8px;
-    color: red;
-    border: 1px solid black;
-    border-radius: 4px;
-    clear: both;
+    border: 1px solid grey;
+    background-color: rgb(235, 235, 235);
+    border-radius: 4px;    
+    font-size: 40px;
 }
+
 .search input:hover{
-    border-color: aqua;
+background-color: rgb(216, 216, 216);}
+
+.search2 input, button{
+    margin-bottom: 20px;
+    padding: 10px 20px 10px 20px;
+    border: 1;
+    border: 1px solid grey;
+    background-color: rgb(235, 235, 235);
+    border-radius: 4px;    
+    font-size: 40px;
 }
+
+.search2 input:hover,button:hover{
+background-color: rgb(216, 216, 216);}
