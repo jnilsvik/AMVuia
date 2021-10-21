@@ -183,8 +183,8 @@ where t.toolID=b.toolID
 -- List all overdue equipment with their borrowers
 select toolName, u.userID, firstName, lastName
 from AMVUser u, Tool t, Booking b
-where t.toolID=b.toolID
-  and b.endDate<=current_date
+where t.toolID=b.toolID and b.userID = u.userID
+  and b.endDate<current_date()
   and b.toolReturnDate is null;
 
 
