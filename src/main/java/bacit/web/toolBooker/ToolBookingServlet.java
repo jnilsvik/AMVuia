@@ -29,65 +29,6 @@ public class ToolBookingServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
-        try {
-            HttpSession session = request.getSession(false);
-            String email = (String) session.getAttribute("email");
-
-            Class.forName("org.mariadb.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-
-            PreparedStatement ps = con.prepareStatement("select * from Tool");
-            ResultSet rs = ps.executeQuery();
-
-            out.println("<html>");
-            out.print("<head>");
-            out.print("</head>");
-            out.println("<body>");
-
-            out.print("<form action = 'toolbooking' method = 'POST'");
-            out.print("<label for = 'tools'> Choose a tool:</label>");
-            out.print("<select name = 'tools' id = 'tools'><br>");
-
-
-            while (rs.next()) {
-
-                String nm = rs.getString("toolName");
-                int n = rs.getInt("toolID");
-
-
-                out.print("<option value = '" + n + "'> " + nm + " </option>");
-
-            }
-
-
-            out.print("</select>");
-
-            out.print("<label for = 'date'> Set a date:</label>");
-            out.print("<input type = 'date' id = 'date' name = 'date'><br>");
-            out.println("<br>");
-
-
-            out.println(" <label for='days'>Choose how many days:</label>");
-            out.println("<select id='days' name = 'days'>");
-            out.print("<option value='1'> 1 Day</option>");
-            out.print("<option value='2'> 2 Days</option>");
-            out.print("<option value='3'> 3 Days</option>");
-            out.print("</select>");
-
-            out.print("<input type = 'text' value = '" + email + "' name = 'email' readonly>");
-
-            out.print("<input type = 'submit' value = 'Submit'>");
-            out.println("</form>");
-
-            out.println("</body>");
-            out.println("</html>");
-
-            con.close();
-        } catch (Exception e) {
-            out.println("error");
-        }
     }
 
 

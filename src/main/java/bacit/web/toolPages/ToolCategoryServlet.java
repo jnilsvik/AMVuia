@@ -28,6 +28,10 @@ public class ToolCategoryServlet extends HttpServlet {
             PreparedStatement ps = con.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs = ps.executeQuery();
 
+            out.println("<html>");
+            out.println("<head>");
+            out.println("</head>");
+            out.println("<body>");
             out.print("<form action = 'toollistservlet' method = 'GET'");
             out.print("<label for = 'category'> Choose a tool:</label>");
             out.print("<select name = 'category' id = 'category'><br>");

@@ -53,10 +53,12 @@ public class Login extends HttpServlet {
             out.println("<body>");
 
             out.println("<header>");
-            out.println("<h2> Dilans Page</h2>");
+            out.println("<h2> Welcome </h2>");
             out.println("</header>");
 
             out.println("Welcome " + email);
+            out.println("<br>");
+            out.println("<a href = 'http://localhost:8081/bacit-web-1.0-SNAPSHOT/toolcategories'> Browse Tools</a>");
             out.println("<br>");
             out.println("<a href = 'http://localhost:8081/bacit-web-1.0-SNAPSHOT/logout'> Log out</a>");
 

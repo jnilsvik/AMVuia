@@ -29,7 +29,11 @@ public class ToolListServlet extends HttpServlet {
             ps.setString(1, (request.getParameter("category")));
             ResultSet rs = ps.executeQuery();
 
-            out.print("<form action = 'details' method = 'GET'");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("</head>");
+            out.println("<body>");
+            out.print("<form action = 'tooldetail' method = 'GET'");
             out.print("<label for = 'tool'> Choose a tool:</label>");
             out.print("<select name = 'tool' id = 'tool'><br>");
 
