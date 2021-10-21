@@ -40,14 +40,13 @@ CREATE OR REPLACE TABLE Booking (
     startDate date NOT NULL,
     endDate date NOT NULL,
     totalPrice int NOT NULL,
-    userID int NOT NULL,
-    toolID int NOT NULL,
+    userID int ,
+    toolID int ,
     toolReturnDate date,
     PRIMARY KEY (orderID),
-    FOREIGN KEY (userID) REFERENCES AMVUser(userID),
-    FOREIGN KEY (toolID) REFERENCES Tool(toolID)
+    FOREIGN KEY (userID) REFERENCES AMVUser(userID) on delete set null,
+    FOREIGN KEY (toolID) REFERENCES Tool(toolID) on delete set null
 );
-
 
 CREATE OR REPLACE TABLE UsersCertificate (
     userID int NOT NULL,
