@@ -151,12 +151,14 @@ Select toolName, toolCategory
 from Tool;
 
 -- List all the available (at the moment – not already borrowed) equipment
-select toolName, b.toolID
-from Tool as t, Booking as b
-where t.toolID = b.toolID and b.toolID not in
-(select t.toolID from Tool t, Booking b
+select toolName, t.toolID
+from Tool t
+where t.toolID not in
+(select t.toolID
+from Tool t, Booking b
 where t.toolID=b.toolID
-  and b.toolReturnDate IS NULL);
+  and b.startDate<=current_date()
+  and b.toolReturnDate is null);
 
 -- List the names and number of borrows of the three users with most equipment borrowed, sorted by number of borrows
 select firstName, lastName, count(*) as 'number of borrows'
