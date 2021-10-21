@@ -156,8 +156,7 @@ from Tool as t, Booking as b
 where t.toolID = b.toolID and b.toolID not in
 (select t.toolID from Tool t, Booking b
 where t.toolID=b.toolID
-  and b.startDate<=current_date()
-  and b.endDate>=current_date());
+  and b.toolReturnDate IS NULL);
 
 -- List the names and number of borrows of the three users with most equipment borrowed, sorted by number of borrows
 select firstName, lastName, count(*) as 'number of borrows'
@@ -177,7 +176,6 @@ Order by startDate DESC;
 select t.toolID, t.toolName
 from Tool t, Booking b
 where t.toolID=b.toolID
-  and b.startDate<=current_date()
-  and b.endDate>=current_date();
+  and b.toolReturnDate IS NULL;
 
 
