@@ -42,6 +42,7 @@ CREATE OR REPLACE TABLE Booking (
     totalPrice int NOT NULL,
     userID int NOT NULL,
     toolID int NOT NULL,
+    available boolean NOT NULL,
     PRIMARY KEY (orderID),
     FOREIGN KEY (userID) REFERENCES AMVUser(userID),
     FOREIGN KEY (toolID) REFERENCES Tool(toolID)
