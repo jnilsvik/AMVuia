@@ -52,6 +52,7 @@ public class ToolRegister extends HttpServlet {
                 out.println("<label for = 'priceafter'>Price After First Day: </label><br>");
                 out.println("<input type = 'text' name = 'priceafter'><br>");
 
+                out.println("<label for = 'category'>Tool Category: </label><br>");
                 out.print("<select name = 'category' id = 'category'><br>");
 
                 while (rs.next()) {
@@ -61,7 +62,10 @@ public class ToolRegister extends HttpServlet {
 
                 }
                 out.print("</select>");
+                out.println("<br>");
+                out.println("<br>");
 
+                out.println("<label for = 'toolcertificate'>Tool Certificate: </label><br>");
                 out.print("<select name = 'toolcertificate' id = 'toolcertificate'><br>");
 
                 while (rs1.next()) {
@@ -72,6 +76,8 @@ public class ToolRegister extends HttpServlet {
 
                 }
                 out.print("</select>");
+                out.println("<br>");
+                out.println("<br>");
 
                 out.println("<label for = 'tooldesc'>Tool Description: </label><br>");
                 out.println("<input type = 'text' name = 'tooldesc'><br>");
