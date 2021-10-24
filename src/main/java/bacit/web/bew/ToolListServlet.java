@@ -79,7 +79,7 @@ public class ToolListServlet extends HttpServlet {
             }
             out.println("</table>" +
                     "</body>" +
-                    "</html>);");
+                    "</html>");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
