@@ -45,7 +45,8 @@ public class DetailedToolServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    }
 
     //yes this is supposed to be elsewhere. i have it here to to test... also bc its private ... its also breaks when i try to use the other code
     //takes inn the tool ID, searches the db for any tool with a matching toolID, return all info about this tool
@@ -70,31 +71,4 @@ public class DetailedToolServlet extends HttpServlet {
         }
         return model;
     }
-
-    //copypaste form paul bc its private :/
-    private void printData(ToolModel tool, LinkedList<LocalDate> days, PrintWriter out){
-        HeaderFooter.printHeader("Detailed Tool Information", out);
-        out.println("<h2>Name: "+tool.getToolName()+"</h2>");
-        out.println("<p>ToolType: "+tool.getToolCategory()+"</p>");
-        out.println("<p>Is Broken: "+tool.getMaintenance()+"</p>");
-        out.println("<h3>UsedDates:</h3>");
-        for(LocalDate day: days){
-            out.println("<p>"+day.getDayOfMonth()+"."+day.getMonth()+"</p>");
-        }
-        HeaderFooter.printFooter(out);
-    }
-    private void printWrongIndex(PrintWriter out){
-        HeaderFooter.printHeader("Detailed Tool Information", out);
-        out.println("<h2>There is no data stored for this item</h2>");
-        out.println("<p>Try to refresh the page or enter another index in order to get information</p>");
-        HeaderFooter.printFooter(out);
-    }
-
-    private void printError(Exception e, PrintWriter out){
-        HeaderFooter.printHeader("Detailed Tool Information", out);
-        out.println("<h2>An internal Error happend</h2>");
-        out.println("<p>" + e.getMessage() + "</p>");
-        HeaderFooter.printFooter(out);
-    }
 }
-

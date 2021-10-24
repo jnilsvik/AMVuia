@@ -66,11 +66,10 @@ header, footer, .main{ /* gives space for the sidebar */
 .imgcontainer img{
     border-radius: 10px 10px 0px 0px;
 }
-/* im just p+laying aroudn with search bar desigs here*/
+/* im just playing around with search bar desigs here*/
 .search input{
     margin-bottom: 20px;
     padding: 10px 20px 10px 20px;
-    border: 1;
     border: 1px solid grey;
     background-color: rgb(235, 235, 235);
     border-radius: 4px;    
@@ -83,7 +82,6 @@ background-color: rgb(216, 216, 216);}
 .search2 input, button{
     margin-bottom: 20px;
     padding: 10px 20px 10px 20px;
-    border: 1;
     border: 1px solid grey;
     background-color: rgb(235, 235, 235);
     border-radius: 4px;    

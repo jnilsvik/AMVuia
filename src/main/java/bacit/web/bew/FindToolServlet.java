@@ -12,7 +12,6 @@ public class FindToolServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        // Hello
         out.println("<html><body>");
         out.println("<h1></h1>");
         out.println("<h1>Find Tool in the database :-)</h1>");
