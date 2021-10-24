@@ -1,4 +1,4 @@
-package bacit.web.bew;
+package bacit.web.bacit_headerFooter;
 
 import java.io.PrintWriter;
 
