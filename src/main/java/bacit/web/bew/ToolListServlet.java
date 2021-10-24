@@ -29,10 +29,9 @@ public class ToolListServlet extends HttpServlet {
         try {
             Navbar.sidebar(out);
 
-            Connection dbConnecton = DBUtils.getNoErrorConnection(out);
+            Connection dbConnection = DBUtils.getNoErrorConnection(out);
             String toolQ = "select * from Tool order by toolID ";
-            //could probably change the "toolID" with some variable to have different ordering
-            PreparedStatement statement = dbConnecton.prepareStatement(toolQ);
+            PreparedStatement statement = dbConnection.prepareStatement(toolQ);
             ResultSet rs = statement.executeQuery();
             ToolModel model = null;
 
@@ -52,8 +51,8 @@ public class ToolListServlet extends HttpServlet {
                         "            <th>priceFirst</th>" +
                         "            <th>priceAfter</th>" +
                         "            <th>maintenance</th>" +
-                        "            <th>certificateID</th>" +
-                        "        </tr>");
+                        "            <th>certificateID</th>");
+
             //create a tool model as long as there are RS's left
             while (rs.next()) {
                 model = new ToolModel(
@@ -65,6 +64,7 @@ public class ToolListServlet extends HttpServlet {
                         rs.getInt("priceAfter"),
                         rs.getInt("certificateID"));
                 //prints them to the table
+                out.println("<tr>");
                 out.println("<td>" + model.getToolName() + "</th>");
                 out.println("<td>" + model.getToolCategory() + "</th>");
                 out.println("<td>" + model.getPriceFirst() + "</th>");
