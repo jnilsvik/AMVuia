@@ -101,7 +101,7 @@ public class Navbar {
                 "background-color: rgb(216, 216, 216);}" +
                 "</style>" +
                 "<nav class=\"sidebar\">" +
-                "   <img src=\"HTMLCSSJS/img/amv.png\" alt=\"AMV logo\"></li>" +
+                "   <img src=\"https://images.squarespace-cdn.com/content/v1/5bcf4baf90f904e66e8eb8bf/1571139220977-8Y75FILX6E39M4ZH8REW/Logo-eng-web-blue.png?format=1500w\" alt=\"AMV logo\"></li>" +
                 "   <a hfref='#'><i class=\"fa fa-user\"></i>Ola Nordman</a></li>" +
                 "   <a hfref='#'><i class=\"fa fa-tools\"></i>Tools and equipment</a></li>" +
                 "   <a hfref='#'><i class=\"fa fa-receipt\"></i>My rentals</a></li>" +
