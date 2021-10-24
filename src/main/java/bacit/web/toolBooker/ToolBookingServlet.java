@@ -9,12 +9,11 @@ import java.text.DateFormat;
 import java.time.*;
 
 import bacit.web.bacit_database.DBUtils;
-import jdk.vm.ci.meta.Local;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.io.*;
-import java.sql.DriverManager;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;

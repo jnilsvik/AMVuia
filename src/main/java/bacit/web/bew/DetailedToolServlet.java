@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
     gets a tool id from landing page and prints all information about it
 */
 @WebServlet(name = "GetTool", value = "/GetTool")
-public class GetTool extends HttpServlet {
+public class DetailedToolServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String toolID = request.getParameter("toolID");
