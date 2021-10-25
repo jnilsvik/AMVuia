@@ -101,6 +101,8 @@ public class Register extends HttpServlet {
         }
         catch (Exception e) {
             e.printStackTrace();
+            PrintWriter out = response.getWriter();
+            out.print("test");
         }
     }
 

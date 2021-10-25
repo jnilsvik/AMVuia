@@ -51,7 +51,8 @@ public class ToolListServlet extends HttpServlet {
                         "            <th>priceFirst</th>" +
                         "            <th>priceAfter</th>" +
                         "            <th>maintenance</th>" +
-                        "            <th>certificateID</th>");
+                        "            <th>certificateID</th>" +
+                        "        </tr>");
 
             //create a tool model as long as there are RS's left
             while (rs.next()) {

@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 /*  by Joachim (though its all copypaste pretty much :/ )
 
-    gets a tool id from landing page and prints all information about it
+    returns a list of tools with a name that correlates with what the user specified in the calling method
 */
 @WebServlet(name = "GetTool2", value = "/GetTool2")
 public class GetToolsByNameServlet extends HttpServlet {
@@ -37,8 +37,6 @@ public class GetToolsByNameServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 
-    //yes this is supposed to be elsewhere. i have it here to to test... also bc its private ... its also breaks when i try to use the other code
-    //takes inn the tool ID, searches the db for any tool with a matching toolID, return all info about this tool
     private ToolModel getToolModel(String toolName, PrintWriter out) throws SQLException {
         Connection dbConnection = DBUtils.getNoErrorConnection(out);
         String toolQ = "select * from Tool where toolName like ?";
