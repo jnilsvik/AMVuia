@@ -65,32 +65,13 @@ public class ToolBookingServlet extends HttpServlet {
 
             }
 
-            PreparedStatement st3 = db
-                    .prepareStatement("SELECT * FROM UsersCertificate WHERE userID = ?");
-            st3.setInt(1, userID);
-            ResultSet rs3 = st3.executeQuery();
-
-            List<Integer> totalCertificateID = new ArrayList<>();
-            int userCertificateID;
-
-            while (rs3.next()) {
-                userCertificateID = rs3.getInt("certificateID");
-                totalCertificateID.add(userCertificateID);
-            }
-
-            //This checks if the user has the needed certificationID for the tool.
-            boolean hasTheCertificate = false;
-            if (totalCertificateID.contains(toolCertificateID)) {
-                hasTheCertificate = true;
-            }
-
             //getEndDate class finds the end date.
             LocalDate endingDate = getEndDate.checkUser(StartDateWanted, inputDays);
 
             //getTotalPrice class calculates the total price.
             int totalPrice = getTotalPrice.checkTotalPrice(inputDays, priceFirst, priceAfter);
 
-            if (checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) == false && hasTheCertificate == true) {
+            if (checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) == false && checkCertificate.hasCertificate(db, userID, toolCertificateID) == true) {
 
                 PreparedStatement statement2 =
                         db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
