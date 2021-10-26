@@ -37,10 +37,11 @@ public class ToolBookingServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+            //Here the connection is set up
             Connection db = DBUtils.getNoErrorConnection(out);
 
             String email = request.getParameter("email");
-            int userID = getUser(db, email);
+            int userID = getUserID(db, email);
 
             LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
             String inputDays = request.getParameter("days");
@@ -71,7 +72,7 @@ public class ToolBookingServlet extends HttpServlet {
             //getTotalPrice class calculates the total price.
             int totalPrice = getTotalPrice.checkTotalPrice(inputDays, priceFirst, priceAfter);
 
-            if (checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) == false && checkCertificate.hasCertificate(db, userID, toolCertificateID) == true) {
+            if (!checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) && checkCertificate.hasCertificate(db, userID, toolCertificateID)) {
 
                 PreparedStatement statement2 =
                         db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
@@ -108,7 +109,7 @@ public class ToolBookingServlet extends HttpServlet {
         }
     }
 
-    public static int getUser(Connection db, String email)
+    public static int getUserID(Connection db, String email)
     {
         int userID = 0;
         try {
