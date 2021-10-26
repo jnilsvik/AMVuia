@@ -1,4 +1,4 @@
-package bacit.web.dilan.prosjekt;
+package bacit.web.LoginRegister;
 import java.sql.*;
 
 // by Dilan

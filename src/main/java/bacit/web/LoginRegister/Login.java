@@ -1,9 +1,8 @@
-package bacit.web.dilan.prosjekt;
+package bacit.web.LoginRegister;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import java.sql.*;
 
 // by Dilan
 @WebServlet(name = "Login", value = "/login")

@@ -1,4 +1,4 @@
-package bacit.web.dilan.prosjekt;
+package bacit.web.LoginRegister;
 
 // by Dilan
 import java.io.PrintWriter;

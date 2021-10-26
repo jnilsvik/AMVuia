@@ -1,4 +1,4 @@
-package bacit.web.dilan.prosjekt;
+package bacit.web.LoginRegister;
 
 import bacit.web.bacit_database.DBUtils;
 import bacit.web.bacit_models.UserModel;

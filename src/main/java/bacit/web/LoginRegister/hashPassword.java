@@ -1,4 +1,4 @@
-package bacit.web.dilan.prosjekt;
+package bacit.web.LoginRegister;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
