@@ -60,12 +60,8 @@ public class ToolBookingServlet extends HttpServlet {
             boolean taken = false;
             while (rs.next() && !taken) {
 
-                Date dataBaseStartDate = rs.getDate("startDate");
-                Date dataBaseEndDate = rs.getDate("endDate");
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-                LocalDate dateStart = LocalDate.parse(dateFormat.format(dataBaseStartDate));
-                LocalDate dateEnd = LocalDate.parse(dateFormat.format(dataBaseEndDate));
+                LocalDate dateStart = rs.getDate("startDate").toLocalDate();
+                LocalDate dateEnd = rs.getDate("endDate").toLocalDate();
 
                 LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
 
