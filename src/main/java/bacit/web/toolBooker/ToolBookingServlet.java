@@ -38,6 +38,8 @@ public class ToolBookingServlet extends HttpServlet {
             LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
             String inputDays = request.getParameter("days");
             String tool = request.getParameter("tools");
+
+            //getUserID method retrieves the userID from the email in the session ID.
             int userID = getUserID(db, email);
 
             //Info of the tool is retrieved
