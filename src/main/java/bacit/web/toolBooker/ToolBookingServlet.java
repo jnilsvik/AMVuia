@@ -1,6 +1,4 @@
 package bacit.web.toolBooker;
-
-
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
@@ -20,34 +18,29 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-
-// by Dilan
 @WebServlet(name = "ToolBookingServlet", value = "/toolbooking")
 public class ToolBookingServlet extends HttpServlet {
-
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
     }
 
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
 
         try {
-            //Here the connection is set up
+            //Connection is set up
             Connection db = DBUtils.getNoErrorConnection(out);
 
+            //Values from the booking form is retrieved
             String email = request.getParameter("email");
-            int userID = getUserID(db, email);
-
             LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
             String inputDays = request.getParameter("days");
             String tool = request.getParameter("tools");
+            int userID = getUserID(db, email);
 
-
+            //Info of the tool is retrieved
             PreparedStatement st2 = db
                     .prepareStatement("SELECT * FROM Tool WHERE toolID = ?");
             st2.setString(1, (request.getParameter("tools")));
@@ -72,6 +65,7 @@ public class ToolBookingServlet extends HttpServlet {
             //getTotalPrice class calculates the total price.
             int totalPrice = getTotalPrice.checkTotalPrice(inputDays, priceFirst, priceAfter);
 
+            //checkDate class sees if the wanted booked days are already taken. The checkCertificate class checks if the user has the needed certificate.
             if (!checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) && checkCertificate.hasCertificate(db, userID, toolCertificateID)) {
 
                 PreparedStatement statement2 =
@@ -96,14 +90,8 @@ public class ToolBookingServlet extends HttpServlet {
                 out.println("</html>");
 
             } else {
-
                 out.println("<h1>Srry, that tool is already taken or you dont have the needed ID./h1>");
             }
-
-            st2.close();
-            db.close();
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
