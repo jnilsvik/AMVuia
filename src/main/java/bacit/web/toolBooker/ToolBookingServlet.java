@@ -38,65 +38,14 @@ public class ToolBookingServlet extends HttpServlet {
 
         try {
             Connection db = DBUtils.getNoErrorConnection(out);
-            PreparedStatement st1 = db
-                    .prepareStatement("SELECT * FROM AMVUser WHERE email = ?");
-            st1.setString(1, (request.getParameter("email")));
-            ResultSet rs1 = st1.executeQuery();
 
-            int userID = 0;
-            while (rs1.next()) {
-                 userID = rs1.getInt("userID");
-            }
+            String email = request.getParameter("email");
+            int userID = getUser(db, email);
 
-
-            LocalDate startDateInsert = LocalDate.parse(request.getParameter("date"));
+            LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
             String inputDays = request.getParameter("days");
+            String tool = request.getParameter("tools");
 
-            PreparedStatement st = db
-                    .prepareStatement("SELECT * FROM Booking WHERE toolID = ?");
-            st.setString(1, (request.getParameter("tools")));
-            ResultSet rs = st.executeQuery();
-
-            boolean taken = false;
-            while (rs.next() && !taken) {
-
-                LocalDate dateStart = rs.getDate("startDate").toLocalDate();
-                LocalDate dateEnd = rs.getDate("endDate").toLocalDate();
-
-                LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
-
-                List<LocalDate> totalDates = new ArrayList<>();
-                while (!dateStart.isAfter(dateEnd)) {
-                    totalDates.add(dateStart);
-                    dateStart = dateStart.plusDays(1);
-                }
-
-                if (request.getParameter("days").equals("1")) {
-                    LocalDate EndDateWanted = StartDateWanted.plusDays(1);
-                    if (totalDates.contains(StartDateWanted) || totalDates.contains(EndDateWanted)) {
-                        taken = true;
-
-                    }
-                }
-
-                if (request.getParameter("days").equals("2")) {
-                    LocalDate EndDateWanted = StartDateWanted.plusDays(2);
-                    if (totalDates.contains(StartDateWanted) || totalDates.contains(EndDateWanted)) {
-                        taken = true;
-
-                    }
-                }
-
-                if (request.getParameter("days").equals("3")) {
-
-                    LocalDate EndDateWanted = StartDateWanted.plusDays(3);
-                    if (totalDates.contains(StartDateWanted) || totalDates.contains(EndDateWanted)) {
-                        taken = true;
-
-                    }
-                }
-
-            }
 
             PreparedStatement st2 = db
                     .prepareStatement("SELECT * FROM Tool WHERE toolID = ?");
@@ -136,16 +85,16 @@ public class ToolBookingServlet extends HttpServlet {
             }
 
             //getEndDate class finds the end date.
-            LocalDate endingDate = getEndDate.checkUser(startDateInsert, inputDays);
+            LocalDate endingDate = getEndDate.checkUser(StartDateWanted, inputDays);
 
             //getTotalPrice class calculates the total price.
             int totalPrice = getTotalPrice.checkTotalPrice(inputDays, priceFirst, priceAfter);
 
-            if (taken == false && hasTheCertificate == true) {
+            if (checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) == false && hasTheCertificate == true) {
 
                 PreparedStatement statement2 =
                         db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
-                statement2.setObject(1, startDateInsert);
+                statement2.setObject(1, StartDateWanted);
                 statement2.setObject(2, endingDate);
                 statement2.setInt(3, totalPrice);
                 statement2.setInt(4, userID);
@@ -169,8 +118,6 @@ public class ToolBookingServlet extends HttpServlet {
                 out.println("<h1>Srry, that tool is already taken or you dont have the needed ID./h1>");
             }
 
-            st.close();
-            st1.close();
             st2.close();
             db.close();
 
@@ -178,6 +125,28 @@ public class ToolBookingServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getUser(Connection db, String email)
+    {
+        int userID = 0;
+        try {
+            PreparedStatement st1 = db
+                    .prepareStatement("SELECT * FROM AMVUser WHERE email = ?");
+            st1.setString(1, email);
+            ResultSet rs1 = st1.executeQuery();
+
+            while (rs1.next()) {
+                userID = rs1.getInt("userID");
+
+            }
+            return userID;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return userID;
     }
 
 }
