@@ -57,7 +57,7 @@ public class Profile extends HttpServlet {
 
                     out.println("<tr>");
                     out.println("<td>" + OrderID + "</td> ");
-                    out.println("<td>" + toolName + "</td> ");
+                    out.println("<td>" + toolName.replaceAll("_", " ") + "</td> ");
                     out.println("<td>" + startDate + "</td> ");
                     out.println("<td>" + endDate + "</td> ");
                     out.println("<td>" + totalPrice + "</td> ");

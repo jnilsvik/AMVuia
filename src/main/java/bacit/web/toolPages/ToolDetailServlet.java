@@ -61,7 +61,7 @@ public class ToolDetailServlet extends HttpServlet {
                 out.print("<label for = 'tools'> Your chosen tool:</label>");
                 out.print("<select name = 'tools' id = 'tools'><br>");
 
-                out.print("<option value = '" + toolID + "'> " + toolName + " </option>");
+                out.print("<option value = '" + toolID + "'> " + toolName.replaceAll("_", " ") + " </option>");
 
                 out.print("</select>");
 
