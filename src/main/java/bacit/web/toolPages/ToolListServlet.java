@@ -39,9 +39,15 @@ public class ToolListServlet extends HttpServlet {
 
                 String toolName = rs.getString("toolName");
                 int toolID = rs.getInt("toolID");
+
+                out.println("<br>");
                 out.println("<input type = 'radio' id = " + toolName + " name = 'tool' value = " + toolID + ">");
                 out.println("<label for = " + toolName + "> " + toolName.replaceAll("_", " ") + ":</label>");
                 out.println("<br>");
+                out.println("<img src = testPicture.png");
+                out.println("<br>");
+
+
             }
 
 
