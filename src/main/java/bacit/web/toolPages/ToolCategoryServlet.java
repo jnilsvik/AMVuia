@@ -38,7 +38,7 @@ public class ToolCategoryServlet extends HttpServlet {
 
                 String categoryName = rs.getString("toolCategory");
                 out.println("<input type = 'radio' id = " + categoryName + " name = 'category' value = " + categoryName + ">");
-                out.println("<label for = " + categoryName + "> " + categoryName + ":</label>");
+                out.println("<label for = " + categoryName + "> " + categoryName.replaceAll("_", " ") + ":</label>");
                 out.println("<br>");
             }
 
