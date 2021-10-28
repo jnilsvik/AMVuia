@@ -34,19 +34,17 @@ public class ToolListServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.print("<form action = 'tooldetail' method = 'GET'");
-            out.print("<label for = 'tool'> Choose a tool:</label>");
-            out.print("<select name = 'tool' id = 'tool'><br>");
-
 
             while (rs.next()) {
 
                 String toolName = rs.getString("toolName");
                 int toolID = rs.getInt("toolID");
-                out.print("<option value = '" + toolID + "'> " + toolName + " </option>");
-
+                out.println("<input type = 'radio' id = " + toolName + " name = 'tool' value = " + toolID + ">");
+                out.println("<label for = " + toolName + "> " + toolName.replaceAll("_", " ") + ":</label>");
+                out.println("<br>");
             }
 
-            out.print("</select>");
+
             out.println("<input type = 'submit' value = 'Submit'>");
             out.println("</form>");
             out.println("</body>");
