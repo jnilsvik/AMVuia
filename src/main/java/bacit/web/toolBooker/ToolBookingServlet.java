@@ -44,7 +44,7 @@ public class ToolBookingServlet extends HttpServlet {
 
             //Info of the tool is retrieved
             PreparedStatement st2 = db
-                    .prepareStatement("SELECT * FROM Tool WHERE toolID = ?");
+                    .prepareStatement("SELECT * FROM Tool INNER JOIN ToolCertificate ON Tool.certificateID = ToolCertificate.certificateID WHERE toolID = ?");
             st2.setString(1, (request.getParameter("tools")));
             ResultSet rs2 = st2.executeQuery();
 
@@ -52,12 +52,14 @@ public class ToolBookingServlet extends HttpServlet {
             int priceAfter = 0;
             int toolID = 0;
             int toolCertificateID = 0;
+            String toolCertificateName = null;
 
             while(rs2.next()) {
                 priceFirst = rs2.getInt("priceFirst");
                 priceAfter = rs2.getInt("priceAfter");
                 toolID = rs2.getInt("toolID");
                 toolCertificateID = rs2.getInt("certificateID");
+                toolCertificateName = rs2.getString("certificateName");
 
             }
 
@@ -68,7 +70,7 @@ public class ToolBookingServlet extends HttpServlet {
             int totalPrice = getTotalPrice.checkTotalPrice(inputDays, priceFirst, priceAfter);
 
             //checkDate class sees if the wanted booked days are already taken. The checkCertificate class checks if the user has the needed certificate.
-            if (!checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) && checkCertificate.hasCertificate(db, userID, toolCertificateID)) {
+            if (!checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) && checkCertificate.hasCertificate(db, userID, toolCertificateID, toolCertificateName)) {
 
                 PreparedStatement statement2 =
                         db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");

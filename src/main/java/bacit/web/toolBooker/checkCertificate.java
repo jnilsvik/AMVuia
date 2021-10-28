@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class checkCertificate {
-    public static boolean hasCertificate(Connection db, int userID, int toolCertificateID) {
+    public static boolean hasCertificate(Connection db, int userID, int toolCertificateID, String toolCertificateName) {
 
         boolean hasTheCertificate = false;
 
@@ -26,7 +26,7 @@ public class checkCertificate {
 
            //This checks if the user has the needed certificationID for the tool.
 
-           if (totalCertificateID.contains(toolCertificateID)) {
+           if (totalCertificateID.contains(toolCertificateID) || toolCertificateName.equals("none")) {
                hasTheCertificate = true;
            }
 
