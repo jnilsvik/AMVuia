@@ -67,7 +67,8 @@ public class DetailedToolServlet extends HttpServlet {
                     rs.getBoolean("maintenance"),
                     rs.getInt("priceFirst"),
                     rs.getInt("priceAfter"),
-                    rs.getInt("certificateID"));
+                    rs.getInt("certificateID"),
+                    rs.getString("description"));
         }
         return model;
     }

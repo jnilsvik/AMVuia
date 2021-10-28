@@ -70,7 +70,8 @@ public class GetToolsByNameServlet extends HttpServlet {
                     rs.getBoolean("maintenance"),
                     rs.getInt("priceFirst"),
                     rs.getInt("priceAfter"),
-                    rs.getInt("certificateID"));
+                    rs.getInt("certificateID"),
+                    rs.getString("description"));
 
             out.println("<tr>");
             out.println("<td>" + model.getToolName() + "</th>");

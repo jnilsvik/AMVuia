@@ -63,7 +63,8 @@ public class ToolListServlet extends HttpServlet {
                         rs.getBoolean("maintenance"),
                         rs.getInt("priceFirst"),
                         rs.getInt("priceAfter"),
-                        rs.getInt("certificateID"));
+                        rs.getInt("certificateID"),
+                        rs.getString("description"));
                 //prints them to the table
                 out.println("<tr>");
                 out.println("<td>" + model.getToolName() + "</th>");

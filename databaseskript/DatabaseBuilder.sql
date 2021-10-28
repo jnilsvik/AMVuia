@@ -17,6 +17,7 @@ CREATE OR REPLACE TABLE Tool (
     toolCategory VARCHAR(50) NOT NULL,
     certificateID int NOT NULL,
     toolDescription VARCHAR(2000) DEFAULT 'No description',
+    picturePath varchar(50),
     PRIMARY KEY (toolID),
     FOREIGN KEY (certificateID) REFERENCES ToolCertificate(certificateID),
     CHECK(toolCategory in

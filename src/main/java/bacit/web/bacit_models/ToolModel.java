@@ -21,8 +21,10 @@ public class ToolModel {
     private int priceFirst;
     private int priceAfter;
     private int certificateID;
+    private String description;
+    private String picturePath;
 
-    public ToolModel(int id, String name, String category, boolean maintenance, int priceFirst, int priceAfter, int certificateID) {
+    public ToolModel(int id, String name, String category, boolean maintenance, int priceFirst, int priceAfter, int certificateID, String description) {
         this.toolID = id;
         this.toolName = name;
         this.toolCategory = category;
@@ -30,6 +32,7 @@ public class ToolModel {
         this.priceFirst = priceFirst;
         this.priceAfter = priceAfter;
         this.certificateID = certificateID;
+        this.description = description;
     }
 
     public static ToolModel getToolModel(String toolID, PrintWriter out) throws SQLException {
@@ -49,7 +52,8 @@ public class ToolModel {
                 rs.getBoolean("maintenance"),
                 rs.getInt("priceFirst"),
                 rs.getInt("priceAfter"),
-                rs.getInt("certificateID"));
+                rs.getInt("certificateID"),
+                rs.getString("description"));
         return tool;
     }
 
@@ -107,6 +111,22 @@ public class ToolModel {
 
     public void setCertificateID(int certificateID) {
         this.certificateID = certificateID;
+    }
+
+    public String getDescription(){
+        return getDescription();
+    }
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public String getPicturePath(){
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath){
+        this.picturePath = picturePath;
     }
 
     public LinkedList<LocalDate> getUsedDates(PrintWriter out) throws SQLException {
