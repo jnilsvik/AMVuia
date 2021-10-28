@@ -11,12 +11,12 @@ CREATE OR REPLACE TABLE ToolCertificate(
 CREATE OR REPLACE TABLE Tool (
     toolID int NOT NULL auto_increment unique,
     toolName VARCHAR(50) NOT NULL,
-    maintenance boolean NOT NULL,
+    maintenance boolean NOT NULL DEFAULT '0',
     priceFirst int NOT NULL,
     priceAfter int NOT NULL,
     toolCategory VARCHAR(50) NOT NULL,
     certificateID int NOT NULL,
-    toolDescription VARCHAR(2000),
+    toolDescription VARCHAR(2000) DEFAULT 'No description',
     PRIMARY KEY (toolID),
     FOREIGN KEY (certificateID) REFERENCES ToolCertificate(certificateID),
     CHECK(toolCategory in
