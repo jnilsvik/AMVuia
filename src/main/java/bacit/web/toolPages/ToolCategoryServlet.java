@@ -32,19 +32,17 @@ public class ToolCategoryServlet extends HttpServlet {
             out.println("<head>");
             out.println("</head>");
             out.println("<body>");
-            out.print("<form action = 'toollistservlet' method = 'GET'");
-            out.print("<label for = 'category'> Choose a tool:</label>");
-            out.print("<select name = 'category' id = 'category'><br>");
-
+            out.print("<form action = 'toollistservlet' method = 'GET'>");
 
             while (rs.next()) {
 
                 String categoryName = rs.getString("toolCategory");
-                out.print("<option value = '" + categoryName + "'> " + categoryName + " </option>");
-
+                out.println("<input type = 'radio' id = " + categoryName + " name = 'category' value = " + categoryName + ">");
+                out.println("<label for = " + categoryName + "> " + categoryName + ":</label>");
+                out.println("<br>");
             }
 
-            out.print("</select>");
+
             out.println("<input type = 'submit' value = 'Submit'>");
             out.println("</form>");
             out.println("</body>");
