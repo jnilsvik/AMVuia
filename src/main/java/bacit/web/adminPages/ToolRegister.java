@@ -41,7 +41,7 @@ public class ToolRegister extends HttpServlet {
                 out.println("<title>Register Tool</title>");
                 out.println("</head>");
 
-                out.println("<h2>Register User</h2>");
+                out.println("<h2>Register Tool</h2>");
                 out.println("<form action = 'toolregister' method = 'POST'> ");
                 out.println("<label for = 'toolname'>Tool Name: </label><br>");
                 out.println("<input type = 'text' name = 'toolname'><br>");
