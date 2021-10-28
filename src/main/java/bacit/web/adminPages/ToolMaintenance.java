@@ -33,7 +33,7 @@ public class ToolMaintenance extends HttpServlet {
                 out.println("</head>");
 
                 out.println("<h2>Put a tool in maintenance</h2>");
-                out.println("<form action = 'toolmaintenancein' method = 'POST'> ");
+                out.println("<form action = 'toolmaintenancein' method = 'POST'>");
                 out.println("<label for = 'toolID'>Tool ID: </label><br>");
                 out.println("<input type = 'text' name = 'toolID'><br>");
                 out.println("<input type = 'submit' value = 'Submit'>");

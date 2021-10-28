@@ -31,21 +31,26 @@ public class ToolCategoryServlet extends HttpServlet {
             out.println("<html>");
             out.println("<head>");
             out.println("</head>");
+            out.println("<style>");
+            out.println("table, th, td {border: 1px solid black;}");
+            out.println("</style>");
             out.println("<body>");
             out.print("<form action = 'toollistservlet' method = 'GET'>");
+            out.println("<table>");
 
             while (rs.next()) {
 
                 String categoryName = rs.getString("toolCategory");
 
-                out.println("<br>");
-                out.println("<input type = 'radio' id = " + categoryName + " name = 'category' value = " + categoryName + ">");
-                out.println("<label for = " + categoryName + "> " + categoryName.replaceAll("_", " ") + ":</label>");
-                out.println("<br>");
-                out.println("<img src = testPicture.png");
-                out.println("<br>");
+                out.println("<tr>");
+                out.println("<td><label for = " + categoryName + "> " + categoryName.replaceAll("_", " ") + ":</label></td>");
+                out.println("<td><img src = 'testPicture.png' width = '156' heigth = '151'></td>");
+                out.println("<td><input type = 'radio' id = " + categoryName + " name = 'category' value = " + categoryName + "></td>");
+                out.println("</tr>");
 
             }
+            out.println("</table>");
+
 
 
             out.println("<input type = 'submit' value = 'Submit'>");

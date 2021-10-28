@@ -49,7 +49,7 @@ public class ToolDetailServlet extends HttpServlet {
 
                 out.println("<h1> " + toolName + " from the Category: " + toolCategory + "</h1>");
                 out.println("<br>");
-                out.print("<img src = testPicture.png>");
+                out.println("<img src = 'testPicture.png' width = '156' heigth = '151'>");
                 out.println("<h2>Price the first day: " + priceFirst + "</h2>");
                 out.println("<h2>Price after the first day: " + priceAfter + "</h2>");
                 out.println("<br>");
@@ -57,7 +57,7 @@ public class ToolDetailServlet extends HttpServlet {
                 out.println("<br>");
                 out.println("<br>");
 
-                out.print("<form action = 'toolbooking' method = 'POST'");
+                out.print("<form action = 'toolbooking' method = 'POST'>");
                 out.print("<label for = 'tools'> Your chosen tool:</label>");
                 out.print("<select name = 'tools' id = 'tools'><br>");
 
