@@ -48,6 +48,8 @@ public class ToolDetailServlet extends HttpServlet {
 
 
                 out.println("<h1> " + toolName + " from the Category: " + toolCategory + "</h1>");
+                out.println("<br>");
+                out.print("<img src = testPicture.png>");
                 out.println("<h2>Price the first day: " + priceFirst + "</h2>");
                 out.println("<h2>Price after the first day: " + priceAfter + "</h2>");
                 out.println("<br>");
