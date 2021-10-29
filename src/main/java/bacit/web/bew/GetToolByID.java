@@ -1,19 +1,11 @@
 package bacit.web.bew;
 
 import bacit.web.DBQ;
-import bacit.web.bacit_database.DBUtils;
-import bacit.web.bacit_headerFooter.HeaderFooter;
 import bacit.web.bacit_models.ToolModel;
-import bacit.web.bacit_models.UserModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.LinkedList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
