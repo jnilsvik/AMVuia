@@ -1,7 +1,7 @@
 package bacit.web.bew;
 
-import bacit.web.DBUtils;
-import bacit.web.PageElem;
+import bacit.web.bacit_database.DBUtils;
+import bacit.web.bacit_headerFooter.PageElements;
 import bacit.web.bacit_models.UserModel;
 
 import javax.servlet.ServletException;
@@ -27,7 +27,7 @@ public class ListEmployee extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try {
-            PageElem.sidebar(out);
+            PageElements.printSidebar(out);
             out.println("<!DOCTYPE html>" +
                         "<head>" +
                         "  <title>Sorting Tables w/ JavaScript</title>" +

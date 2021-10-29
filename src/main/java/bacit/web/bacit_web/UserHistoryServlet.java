@@ -1,7 +1,7 @@
 package bacit.web.bacit_web;
 
 import bacit.web.bacit_database.DBUtils;
-import bacit.web.bacit_headerFooter.HeaderFooter;
+import bacit.web.bacit_headerFooter.PageElements;
 import bacit.web.bacit_models.BookingModel;
 
 import java.io.IOException;
@@ -54,25 +54,25 @@ public class UserHistoryServlet extends HttpServlet{
     }
 
     private void writeError(PrintWriter out, Exception e){
-        HeaderFooter.printHeader("UserHistory", out);
+        PageElements.printHeader("UserHistory", out);
         out.println("<h2>An internal error happened</h2>");
         out.println("<p>"+e.getMessage()+"</p>");
-        HeaderFooter.printFooter(out);
+        PageElements.printFooter(out);
     }
 
     private void writeBooking(BookingModel booking, PrintWriter out){
-        HeaderFooter.printHeader("UserHistory",out);
+        PageElements.printHeader("UserHistory",out);
         out.println("<h3>Item: "+booking.getToolName(out)+"</h3>");
         out.println("<p>From: "+writeDate(booking.getStartDate())+"</p>");
         out.println("<p>To: "+writeDate(booking.getEndDate())+"</p>");
         out.println("<p>For the price of: "+booking.getTotalPrice(out)+"NOK</p>");
-        HeaderFooter.printFooter(out);
+        PageElements.printFooter(out);
     }
 
     private void writeNoBookings(PrintWriter out){
-        HeaderFooter.printHeader("UserHistory",out);
+        PageElements.printHeader("UserHistory",out);
         out.println("<h3>This user has not made any bookings</h3>");
-        HeaderFooter.printFooter(out);
+        PageElements.printFooter(out);
     }
 
     private String writeDate(LocalDate date){

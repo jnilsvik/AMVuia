@@ -1,15 +1,12 @@
 package bacit.web.toolPages;
 
-import bacit.web.bacit_headerFooter.HeaderFooter;
-import bacit.web.bacit_headerFooter.Navbar;
-import jdk.javadoc.internal.doclets.formats.html.markup.Head;
+import bacit.web.bacit_headerFooter.PageElements;
 
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
@@ -31,7 +28,7 @@ public class ToolCategoryServlet extends HttpServlet {
 
             PreparedStatement ps = con.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs = ps.executeQuery();
-            Navbar.sidebar(out);
+            PageElements.printSidebar(out);
             out.println("<html>");
             out.println("<head>");
             out.println("</head>");

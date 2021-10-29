@@ -1,13 +1,12 @@
 package bacit.web.toolPages;
 
-import bacit.web.bacit_headerFooter.Navbar;
+import bacit.web.bacit_headerFooter.PageElements;
 
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
@@ -39,7 +38,7 @@ public class ToolDetailServlet extends HttpServlet {
             out.println("<head>");
             out.println("</head>");
             out.println("<body>");
-            Navbar.sidebar(out);
+            PageElements.printSidebar(out);
 
             while (rs.next()) {
 

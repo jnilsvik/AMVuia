@@ -1,5 +1,6 @@
 package bacit.web;
 
+import bacit.web.bacit_database.DBUtils;
 import bacit.web.bacit_models.ToolModel;
 
 import java.io.PrintWriter;

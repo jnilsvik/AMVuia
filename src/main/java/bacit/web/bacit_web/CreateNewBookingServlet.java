@@ -3,7 +3,7 @@ package bacit.web.bacit_web;
 //By Paul
 
 import bacit.web.bacit_database.DBUtils;
-import bacit.web.bacit_headerFooter.HeaderFooter;
+import bacit.web.bacit_headerFooter.PageElements;
 import bacit.web.bacit_models.ToolModel;
 
 import java.io.IOException;
@@ -35,16 +35,16 @@ public class CreateNewBookingServlet extends HttpServlet{
         String userEmail = "testMail";
         String toolID = req.getParameter("toolID");
 
-        HeaderFooter.printHeader("Place new Bookings", out);
+        PageElements.printHeader("Place new Bookings", out);
         writeNewBookingForm(toolID, userEmail, out);
-        HeaderFooter.printFooter(out);
+        PageElements.printFooter(out);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         PrintWriter out = resp.getWriter();
-        HeaderFooter.printHeader("Booking result", out);
+        PageElements.printHeader("Booking result", out);
 
         //unsure how UserID and ToolID will be added to this request
         String userID = "1";
@@ -73,7 +73,7 @@ public class CreateNewBookingServlet extends HttpServlet{
             printError(e, out);
         }
 
-        HeaderFooter.printFooter(out);
+        PageElements.printFooter(out);
     }
 
     private void writeNewBookingForm(String toolName, String userName, PrintWriter out){
