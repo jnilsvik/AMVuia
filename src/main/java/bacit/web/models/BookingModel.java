@@ -1,8 +1,8 @@
-package bacit.web.bacit_models;
+package bacit.web.models;
 
 //by Paul
 
-import bacit.web.bacit_database.DBUtils;
+import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;
 import java.sql.Connection;

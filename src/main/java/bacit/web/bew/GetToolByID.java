@@ -1,7 +1,7 @@
 package bacit.web.bew;
 
-import bacit.web.DBQ;
-import bacit.web.bacit_models.ToolModel;
+import bacit.web.utils.DBQ;
+import bacit.web.models.ToolModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -1,12 +1,8 @@
 package bacit.web.toolBooker;
-import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.text.DateFormat;
 import java.time.*;
 
-import bacit.web.bacit_database.DBUtils;
+import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -14,7 +10,6 @@ import java.io.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

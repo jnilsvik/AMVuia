@@ -1,7 +1,6 @@
-package bacit.web;
+package bacit.web.utils;
 
-import bacit.web.bacit_database.DBUtils;
-import bacit.web.bacit_models.ToolModel;
+import bacit.web.models.ToolModel;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -45,7 +44,8 @@ public class DBQ {
                     rs.getInt("priceFirst"),
                     rs.getInt("priceAfter"),
                     rs.getInt("certificateID"),
-                    rs.getString("description"));
+                    rs.getString("toolDescription"),
+                    rs.getString("picturePath"));
 
             out.println("<tr>");
             out.println("<td>" + model.getToolName() + "</th>");
@@ -77,7 +77,8 @@ public class DBQ {
                     rs.getInt("priceFirst"),
                     rs.getInt("priceAfter"),
                     rs.getInt("certificateID"),
-                    rs.getString("description"));
+                    rs.getString("toolDescription"),
+                    rs.getString("picturePath"));
         }
         return model;
     }

@@ -1,8 +1,8 @@
 package bacit.web.bacit_web;
 
-import bacit.web.bacit_database.DBUtils;
-import bacit.web.bacit_headerFooter.PageElements;
-import bacit.web.bacit_models.BookingModel;
+import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageElements;
+import bacit.web.models.BookingModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;

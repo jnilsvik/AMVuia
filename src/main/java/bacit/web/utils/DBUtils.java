@@ -1,4 +1,4 @@
-package bacit.web.bacit_database;
+package bacit.web.utils;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

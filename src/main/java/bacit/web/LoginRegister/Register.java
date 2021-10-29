@@ -1,7 +1,7 @@
 package bacit.web.LoginRegister;
 
-import bacit.web.bacit_database.DBUtils;
-import bacit.web.bacit_models.UserModel;
+import bacit.web.utils.DBUtils;
+import bacit.web.models.UserModel;
 
 import java.io.PrintWriter;
 import java.sql.Connection;

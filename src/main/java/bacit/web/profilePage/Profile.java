@@ -1,12 +1,8 @@
 package bacit.web.profilePage;
 
-import bacit.web.bacit_database.DBUtils;
-import bacit.web.LoginRegister.AdminAccess;
-
 import java.io.PrintWriter;
 import java.sql.*;
 import java.io.*;
-import java.time.LocalDate;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

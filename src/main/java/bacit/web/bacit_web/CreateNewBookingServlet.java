@@ -2,9 +2,9 @@ package bacit.web.bacit_web;
 
 //By Paul
 
-import bacit.web.bacit_database.DBUtils;
-import bacit.web.bacit_headerFooter.PageElements;
-import bacit.web.bacit_models.ToolModel;
+import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageElements;
+import bacit.web.models.ToolModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -1,6 +1,6 @@
 package bacit.web.toolPages;
 
-import bacit.web.bacit_headerFooter.PageElements;
+import bacit.web.utils.PageElements;
 
 import java.io.*;
 import java.sql.Connection;
@@ -49,7 +49,7 @@ public class ToolListServlet extends HttpServlet {
 
                 out.println("<tr>");
                 out.println("<td><label for = " + toolName + "> " + toolName.replaceAll("_", " ") + ":</label></td>");
-                out.println("<td><img src = 'testPicture.png' width = '156' heigth = '151'></td>");
+                out.println("<td><img src = 'img/amv.png' width = '156' heigth = '151'></td>");
                 out.println("<td><input type = 'radio' id = " + toolName + " name = 'tool' value = " + toolID + "></td>");
                 out.println("</tr>");
 

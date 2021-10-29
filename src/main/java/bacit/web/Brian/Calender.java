@@ -1,7 +1,7 @@
 package bacit.web.Brian;
 
 
-import bacit.web.bacit_database.DBUtils;
+import bacit.web.utils.DBUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 @WebServlet(name = "c", value = "/c")
 public class Calender extends HttpServlet {

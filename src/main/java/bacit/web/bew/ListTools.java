@@ -1,8 +1,8 @@
 package bacit.web.bew;
 
-import bacit.web.bacit_database.DBUtils;
-import bacit.web.bacit_headerFooter.PageElements;
-import bacit.web.bacit_models.ToolModel;
+import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageElements;
+import bacit.web.models.ToolModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,22 +36,28 @@ public class ListTools extends HttpServlet {
             ToolModel model = null;
 
             //HTML SPAM!
-            out.println("<!DOCTYPE html>" +
+            out.println(
+                    "<!DOCTYPE html>" +
                     "<head>" +
                     "  <title>Sorting Tables w/ JavaScript</title>" +
                     "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" +
                     "  <meta charset=\"utf-8\" />" +
+                    "  <link rel=\"stylesheet\" href=\"CSS/tabelsort.css\">" +
                     "</head>" +
                     "<body>" +
                     "    <h3>Tool Stuff</h3>" +
-                    "    <table>" +
+                    "    <table class=\"table-sortable\">" +
+                    "    <thead>"+
                     "        <tr>" +
                     "            <th>toolName</th>" +
                     "            <th>category</th>" +
                     "            <th>priceFirst</th>" +
                     "            <th>priceAfter</th>" +
                     "            <th>maintenance</th>" +
-                    "            <th>certificateID</th>");
+                    "            <th>certificateID</th>"+
+                    "        </tr>"+
+                    "</thead>"+
+                    "<tbody>");
 
             //create a tool model as long as there are RS's left
             while (rs.next()) {
@@ -63,6 +69,7 @@ public class ListTools extends HttpServlet {
                         rs.getInt("priceFirst"),
                         rs.getInt("priceAfter"),
                         rs.getInt("certificateID"),
+                        rs.getString("toolDescription"),
                         rs.getString("picturePath"));
                 //prints them to the table
                 out.println("<tr>");
@@ -74,7 +81,8 @@ public class ListTools extends HttpServlet {
                 out.println("<td>" + model.getCertificateID() + "</th>");
                 out.println("</tr>");
             }
-            out.println("</table>" +
+            out.println("</tbody></table>" +
+                    "<script src=\"JS/tabelsort.js\"></script>" +
                     "</body>" +
                     "</html>");
 

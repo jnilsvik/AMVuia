@@ -1,4 +1,4 @@
-package bacit.web.bacit_models;
+package bacit.web.models;
 
 //by Paul
 

@@ -1,8 +1,8 @@
 package bacit.web.bew;
 
-import bacit.web.bacit_database.DBUtils;
-import bacit.web.bacit_headerFooter.PageElements;
-import bacit.web.bacit_models.UserModel;
+import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageElements;
+import bacit.web.models.UserModel;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,10 +33,12 @@ public class ListEmployee extends HttpServlet {
                         "  <title>Sorting Tables w/ JavaScript</title>" +
                         "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" +
                         "  <meta charset=\"utf-8\" />" +
+                        "  <link rel=\"stylesheet\" href=\"CSS/tabelsort.css\">" +
                         "</head>" +
                         "<body>" +
                         "    <h3>User Stuff</h3>" +
-                        "    <table>" +
+                        "    <table class=\"table-sortable\">" +
+                        "    <thead>"+
                         "        <tr>" +
                         "            <th>User ID</th>" +
                         "            <th>Firstname</th>" +
@@ -44,7 +46,9 @@ public class ListEmployee extends HttpServlet {
                         "            <th>Phone nmbr</th>" +
                         "            <th>Union</th>" +
                         "            <th>Admin</th>" +
-                        "        </tr>");
+                        "        </tr>"+
+                        "</thead>"+
+                        "<tbody>");
 
             Connection dbConnection = DBUtils.getNoErrorConnection(out);
             String userQ = "select * from AMVUser order by userID ";
@@ -72,7 +76,8 @@ public class ListEmployee extends HttpServlet {
                 out.println("<td>" + model.isUserAdmin() + "</th>");
                 out.println("</tr>");
             }
-            out.println("</table>" +
+            out.println("</tbody></table>" +
+                    "<script src=\"tabelsort.js\"></script>" +
                     "</body>" +
                     "</html>");
 

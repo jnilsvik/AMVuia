@@ -6,7 +6,6 @@ import java.security.NoSuchAlgorithmException;
 
 // by Dilan
 public class hashPassword {
-
     public static String encryptThisString(String input)
     {
         try {

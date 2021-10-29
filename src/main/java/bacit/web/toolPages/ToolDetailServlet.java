@@ -1,6 +1,6 @@
 package bacit.web.toolPages;
 
-import bacit.web.bacit_headerFooter.PageElements;
+import bacit.web.utils.PageElements;
 
 import java.io.*;
 import java.sql.Connection;
@@ -48,10 +48,9 @@ public class ToolDetailServlet extends HttpServlet {
                 int priceFirst = rs.getInt("priceFirst");
                 int priceAfter = rs.getInt("priceAfter");
 
-
                 out.println("<h1> " + toolName + " from the Category: " + toolCategory + "</h1>");
                 out.println("<br>");
-                out.println("<img src = 'testPicture.png' width = '156' heigth = '151'>");
+                out.println("<img src = 'img/amv.png' width = '156' heigth = '151'>");
                 out.println("<h2>Price the first day: " + priceFirst + "</h2>");
                 out.println("<h2>Price after the first day: " + priceAfter + "</h2>");
                 out.println("<br>");
@@ -71,7 +70,6 @@ public class ToolDetailServlet extends HttpServlet {
                 out.print("<input type = 'date' id = 'date' name = 'date'><br>");
                 out.println("<br>");
 
-
                 out.println(" <label for='days'>Choose how many days:</label>");
                 out.println("<select id='days' name = 'days'>");
                 out.print("<option value='1'> 1 Day</option>");
@@ -83,9 +81,7 @@ public class ToolDetailServlet extends HttpServlet {
 
                 out.print("<input type = 'submit' value = 'Submit'>");
                 out.println("</form>");
-
             }
-
             out.println("</body>");
             out.println("</html>");
 

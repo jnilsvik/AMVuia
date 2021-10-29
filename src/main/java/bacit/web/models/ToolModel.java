@@ -1,8 +1,8 @@
-package bacit.web.bacit_models;
+package bacit.web.models;
 
 //By Paul
 
-import bacit.web.bacit_database.DBUtils;
+import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -24,7 +24,7 @@ public class ToolModel {
     private String description;
     private String picturePath;
 
-    public ToolModel(int id, String name, String category, boolean maintenance, int priceFirst, int priceAfter, int certificateID, String description) {
+    public ToolModel(int id, String name, String category, boolean maintenance, int priceFirst, int priceAfter, int certificateID, String description, String picturePath) {
         this.toolID = id;
         this.toolName = name;
         this.toolCategory = category;
@@ -33,6 +33,7 @@ public class ToolModel {
         this.priceAfter = priceAfter;
         this.certificateID = certificateID;
         this.description = description;
+        this.picturePath = picturePath;
     }
 
     public static ToolModel getToolModel(String toolID, PrintWriter out) throws SQLException {
@@ -53,7 +54,8 @@ public class ToolModel {
                 rs.getInt("priceFirst"),
                 rs.getInt("priceAfter"),
                 rs.getInt("certificateID"),
-                rs.getString("description"));
+                rs.getString("toolDescription"),
+                rs.getString("picturePath"));
         return tool;
     }
 
