@@ -115,13 +115,13 @@ public class PageElements {
                 ".search2 input:hover,button:hover{" +
                 "background-color: rgb(216, 216, 216);}" +
                 "</style>" +
-                "<nav class=\"sidebar\">" +
-                "   <img src=\"https://images.squarespace-cdn.com/content/v1/5bcf4baf90f904e66e8eb8bf/1571139220977-8Y75FILX6E39M4ZH8REW/Logo-eng-web-blue.png?format=1500w\" alt=\"AMV logo\"></li>" +
-                "   <a hfref='#'><i class=\"fa fa-user\"></i>Ola Nordman</a></li>" +
-                "   <a hfref='#'><i class=\"fa fa-tools\"></i>Tools and equipment</a></li>" +
-                "   <a hfref='#'><i class=\"fa fa-receipt\"></i>My rentals</a></li>" +
-                "   <a hfref='#'><i class=\"fa fa-clipboard\"></i>Reports</a></li>" +
-                "   <a hfref='#'><i class=\"fa fa-question-circle\"></i>Help</a></li>" +
+                "<nav class=\"sidebar\">\n" +
+                "    <img src=\"img/amv.png\" alt=\"AMV logo\"></li>\n" +
+                "    <a hfref='/profile'><i class=\"fa fa-user\"></i>Ola Nordman</a></li>\n" +
+                "    <a hfref='/toolcategories'><i class=\"fa fa-tools\"></i>Tools and equipment</a></li>\n" +
+                "    <a hfref='/profile'><i class=\"fa fa-receipt\"></i>My rentals</a></li>\n" +
+                "    <a hfref='/tl'><i class=\"fa fa-clipboard\"></i>Reports</a></li>\n" +
+                "    <a hfref='#'><i class=\"fa fa-question-circle\"></i>Help</a></li>\n" +
                 "</nav>");
     }
 }

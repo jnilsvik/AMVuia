@@ -1,4 +1,4 @@
-package bacit.web.bew;
+package bacit.web.lists;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageElements;
@@ -33,7 +33,7 @@ public class ListTools extends HttpServlet {
             String toolQ = "select * from Tool order by toolID ";
             PreparedStatement statement = dbConnection.prepareStatement(toolQ);
             ResultSet rs = statement.executeQuery();
-            ToolModel model = null;
+            ToolModel model;
 
             //HTML SPAM!
             out.println(

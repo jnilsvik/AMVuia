@@ -6,7 +6,7 @@
     <title>Index</title>
 </head>
 <body>
-    <jsp:include page="/CSS/sidebar.jsp"/>
+    <jsp:include page="/sidebar.jsp"/>
     <!--content goes here-->
     <section class="main">
         <h1>Some stuff is missing here :)</h1>

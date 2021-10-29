@@ -1,8 +1,7 @@
-package bacit.web.bew;
+package bacit.web.lists;
 
 import bacit.web.models.ToolModel;
 import bacit.web.utils.DBUtils;
-import bacit.web.utils.PageElements;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +18,7 @@ import java.sql.SQLException;
 /*
 by Joachim
 
-prints all the tools
+prints all the tools NOW WITH IMAGES!
 */
 @WebServlet(name = "tlb", value = "/tlb")
 public class ListToolsBetter extends HttpServlet {
@@ -43,7 +42,6 @@ public class ListToolsBetter extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<section class=\"main\">");
-            out.println("    <h3>Tool Stuff</h3>");
             out.println("    <section class='featured-products'>");
 
 
@@ -62,7 +60,7 @@ public class ListToolsBetter extends HttpServlet {
 
                 out.println("<div class='featured-product-item'>");
                 out.println("    <div");
-                out.println("        style='background-image: url(img/"+model.getPicturePath().replaceAll(" ","%20")+");'");
+                out.println("        style='background-image: url(img/"+model.getPicturePath().replaceAll(" ","%20").replaceAll("æ","%C3%A6").replaceAll("ø","%C3%B8").replaceAll("å","%C3%A5")+");'");
                 out.println("        class='featured-product-item-image'");
                 out.println("    ></div>");
                 out.println("    <p class='title'>");

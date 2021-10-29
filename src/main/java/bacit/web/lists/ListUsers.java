@@ -1,4 +1,4 @@
-package bacit.web.bew;
+package bacit.web.lists;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageElements;
@@ -19,10 +19,10 @@ import java.sql.SQLException;
 /*
 by Joachim
 
-prints all the tools
+prints all the users
 */
 @WebServlet(name = "el", value = "/el")
-public class ListEmployee extends HttpServlet {
+public class ListUsers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
@@ -54,7 +54,7 @@ public class ListEmployee extends HttpServlet {
             String userQ = "select * from AMVUser order by userID ";
             PreparedStatement statement = dbConnection.prepareStatement(userQ);
             ResultSet rs = statement.executeQuery();
-            UserModel model = null;
+            UserModel model;
             //create a user model as long as there are RS's left
             while (rs.next()) {
                 model = new UserModel(
