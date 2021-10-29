@@ -1,5 +1,9 @@
 package bacit.web.toolPages;
 
+import bacit.web.bacit_headerFooter.HeaderFooter;
+import bacit.web.bacit_headerFooter.Navbar;
+import jdk.javadoc.internal.doclets.formats.html.markup.Head;
+
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,7 +31,7 @@ public class ToolCategoryServlet extends HttpServlet {
 
             PreparedStatement ps = con.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs = ps.executeQuery();
-
+            Navbar.sidebar(out);
             out.println("<html>");
             out.println("<head>");
             out.println("</head>");
@@ -50,9 +54,6 @@ public class ToolCategoryServlet extends HttpServlet {
 
             }
             out.println("</table>");
-
-
-
             out.println("<input type = 'submit' value = 'Submit'>");
             out.println("</form>");
             out.println("</body>");

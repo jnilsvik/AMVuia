@@ -1,5 +1,7 @@
 package bacit.web.toolPages;
 
+import bacit.web.bacit_headerFooter.Navbar;
+
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,6 +38,7 @@ public class ToolListServlet extends HttpServlet {
             out.println("table, th, td {border: 1px solid black;}");
             out.println("</style>");
             out.println("<body>");
+            Navbar.sidebar(out);
             out.println("<form action = 'tooldetail' method = 'GET'>");
             out.println("<table>");
 
