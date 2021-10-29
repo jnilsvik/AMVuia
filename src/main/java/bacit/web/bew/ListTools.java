@@ -22,20 +22,12 @@ by Joachim
 prints all the tools
 */
 @WebServlet(name = "tl", value = "/tl")
-public class ToolListServlet extends HttpServlet {
+public class ListTools extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try {
             Navbar.sidebar(out);
-
-            Connection dbConnection = DBUtils.getNoErrorConnection(out);
-            String toolQ = "select * from Tool order by toolID ";
-            PreparedStatement statement = dbConnection.prepareStatement(toolQ);
-            ResultSet rs = statement.executeQuery();
-            ToolModel model = null;
-
-            //HTML SPAM!
             out.println("<!DOCTYPE html>" +
                         "<head>" +
                         "  <title>Sorting Tables w/ JavaScript</title>" +
@@ -54,6 +46,11 @@ public class ToolListServlet extends HttpServlet {
                         "            <th>certificateID</th>" +
                         "        </tr>");
 
+            Connection dbConnection = DBUtils.getNoErrorConnection(out);
+            String toolQ = "select * from Tool order by toolID ";
+            PreparedStatement statement = dbConnection.prepareStatement(toolQ);
+            ResultSet rs = statement.executeQuery();
+            ToolModel model = null;
             //create a tool model as long as there are RS's left
             while (rs.next()) {
                 model = new ToolModel(

@@ -23,20 +23,12 @@ by Joachim
 prints all the tools
 */
 @WebServlet(name = "el", value = "/el")
-public class EmployeeListServlet extends HttpServlet {
+public class ListEmployee extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try {
             Navbar.sidebar(out);
-
-            Connection dbConnection = DBUtils.getNoErrorConnection(out);
-            String userQ = "select * from AMVUser order by userID ";
-            PreparedStatement statement = dbConnection.prepareStatement(userQ);
-            ResultSet rs = statement.executeQuery();
-            UserModel model = null;
-
-            //HTML SPAM!
             out.println("<!DOCTYPE html>" +
                         "<head>" +
                         "  <title>Sorting Tables w/ JavaScript</title>" +
@@ -55,6 +47,11 @@ public class EmployeeListServlet extends HttpServlet {
                         "            <th>Admin</th>" +
                         "        </tr>");
 
+            Connection dbConnection = DBUtils.getNoErrorConnection(out);
+            String userQ = "select * from AMVUser order by userID ";
+            PreparedStatement statement = dbConnection.prepareStatement(userQ);
+            ResultSet rs = statement.executeQuery();
+            UserModel model = null;
             //create a user model as long as there are RS's left
             while (rs.next()) {
                 model = new UserModel(

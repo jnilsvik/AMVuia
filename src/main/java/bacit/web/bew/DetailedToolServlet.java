@@ -31,7 +31,7 @@ public class DetailedToolServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            ToolModel tool = getToolmodel(toolID, out);//prints the information!!!!
+            ToolModel tool = getToolModel(toolID, out);//prints the information!!!!
             out.println(tool.getToolName());
             out.println(tool.getToolCategory());
             out.println(tool.getPriceFirst());
@@ -50,7 +50,7 @@ public class DetailedToolServlet extends HttpServlet {
 
     //yes this is supposed to be elsewhere. i have it here to to test... also bc its private ... its also breaks when i try to use the other code
     //takes inn the tool ID, searches the db for any tool with a matching toolID, return all info about this tool
-    private ToolModel getToolmodel(String toolID, PrintWriter out) throws SQLException {
+    private ToolModel getToolModel(String toolID, PrintWriter out) throws SQLException {
         Connection dbConnecton = DBUtils.getNoErrorConnection(out);
         String toolQ = "select * from Tool where ToolID = ?";
         PreparedStatement statement = dbConnecton.prepareStatement(toolQ);

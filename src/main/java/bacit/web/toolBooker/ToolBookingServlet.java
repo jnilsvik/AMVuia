@@ -94,7 +94,7 @@ public class ToolBookingServlet extends HttpServlet {
                 out.println("</html>");
 
             } else {
-                out.println("<h1>Srry, that tool is already taken or you dont have the needed ID./h1>");
+                out.println("<h1>Sorry, that tool is already taken or you dont have the needed ID./h1>");
             }
         } catch (Exception e) {
             e.printStackTrace();
