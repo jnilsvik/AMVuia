@@ -28,29 +28,31 @@ public class ListTools extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             Navbar.sidebar(out);
-            out.println("<!DOCTYPE html>" +
-                        "<head>" +
-                        "  <title>Sorting Tables w/ JavaScript</title>" +
-                        "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" +
-                        "  <meta charset=\"utf-8\" />" +
-                        "</head>" +
-                        "<body>" +
-                        "    <h3>Tool Stuff</h3>" +
-                        "    <table>" +
-                        "        <tr>" +
-                        "            <th>toolName</th>" +
-                        "            <th>category</th>" +
-                        "            <th>priceFirst</th>" +
-                        "            <th>priceAfter</th>" +
-                        "            <th>maintenance</th>" +
-                        "            <th>certificateID</th>" +
-                        "        </tr>");
 
             Connection dbConnection = DBUtils.getNoErrorConnection(out);
             String toolQ = "select * from Tool order by toolID ";
             PreparedStatement statement = dbConnection.prepareStatement(toolQ);
             ResultSet rs = statement.executeQuery();
             ToolModel model = null;
+
+            //HTML SPAM!
+            out.println("<!DOCTYPE html>" +
+                    "<head>" +
+                    "  <title>Sorting Tables w/ JavaScript</title>" +
+                    "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" +
+                    "  <meta charset=\"utf-8\" />" +
+                    "</head>" +
+                    "<body>" +
+                    "    <h3>Tool Stuff</h3>" +
+                    "    <table>" +
+                    "        <tr>" +
+                    "            <th>toolName</th>" +
+                    "            <th>category</th>" +
+                    "            <th>priceFirst</th>" +
+                    "            <th>priceAfter</th>" +
+                    "            <th>maintenance</th>" +
+                    "            <th>certificateID</th>");
+
             //create a tool model as long as there are RS's left
             while (rs.next()) {
                 model = new ToolModel(
@@ -61,7 +63,7 @@ public class ListTools extends HttpServlet {
                         rs.getInt("priceFirst"),
                         rs.getInt("priceAfter"),
                         rs.getInt("certificateID"),
-                        rs.getString("description"));
+                        rs.getString("picturePath"));
                 //prints them to the table
                 out.println("<tr>");
                 out.println("<td>" + model.getToolName() + "</th>");
