@@ -28,7 +28,7 @@ public class Register extends HttpServlet {
                         "<form action = 'register' method = 'POST'> " +
                             "<label for = 'firstname'>First Name: </label><br>" +
                             "<input type = 'text' name = 'firstname' required><br>" +
-                            "<label for = 'lastname' required>Last Name: </label><br>" +
+                            "<label for = 'lastname'>Last Name: </label><br>" +
                             "<input type = 'text' name = 'lastname' required><br>" +
                             "<label for = 'password'>Password: </label><br>" +
                             "<input type = 'password' name = 'password' required><br>" +

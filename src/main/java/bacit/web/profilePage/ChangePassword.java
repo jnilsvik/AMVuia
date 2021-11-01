@@ -30,11 +30,11 @@ public class ChangePassword extends HttpServlet {
                 out.println("<h2>Change Password</h2>");
                 out.println("<form action = 'changepassword' method = 'POST'> ");
                 out.println("<label for = 'oldpass'>Old password: </label><br>");
-                out.println("<input type = 'text' name = 'oldpass'><br>");
+                out.println("<input type = 'text' name = 'oldpass' required><br>");
                 out.println("<label for = 'newpass1'>New password: </label><br>");
-                out.println("<input type = 'text' name = 'newpass1'><br>");
+                out.println("<input type = 'text' name = 'newpass1' required><br>");
                 out.println("<label for = 'newpass2'>Repeat new password: </label><br>");
-                out.println("<input type = 'text' name = 'newpass2'><br>");
+                out.println("<input type = 'text' name = 'newpass2' required><br>");
                 out.println("<input type = 'submit' value = 'Change Password'>");
                 out.println("</form>");
 
