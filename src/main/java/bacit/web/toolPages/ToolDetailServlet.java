@@ -1,5 +1,6 @@
 package bacit.web.toolPages;
 
+import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageElements;
 
 import java.io.*;
@@ -25,14 +26,14 @@ public class ToolDetailServlet extends HttpServlet {
             HttpSession session = request.getSession(false);
             String email = (String) session.getAttribute("email");
 
+            Connection db = DBUtils.getNoErrorConnection(out);
+
             int toolID = Integer.parseInt(request.getParameter("tool"));
 
-            Class.forName("org.mariadb.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Tool WHERE toolID = ?");
-            ps.setInt(1, toolID);
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement st1 = db
+                    .prepareStatement("SELECT * FROM Tool WHERE toolID = ?");
+            st1.setInt(1, toolID);
+            ResultSet rs1 = st1.executeQuery();
 
             out.println("<html>");
             out.println("<head>");
@@ -40,15 +41,15 @@ public class ToolDetailServlet extends HttpServlet {
             out.println("<body>");
             PageElements.printSidebar(out);
 
-            while (rs.next()) {
+            while (rs1.next()) {
 
-                String toolName = rs.getString("toolName");
-                String toolDescription = rs.getString("toolDescription");
-                String toolCategory = rs.getString("toolCategory");
-                int priceFirst = rs.getInt("priceFirst");
-                int priceAfter = rs.getInt("priceAfter");
+                String toolName = rs1.getString("toolName");
+                String toolDescription = rs1.getString("toolDescription");
+                String toolCategory = rs1.getString("toolCategory");
+                int priceFirst = rs1.getInt("priceFirst");
+                int priceAfter = rs1.getInt("priceAfter");
 
-                out.println("<h1> " + toolName + " from the Category: " + toolCategory + "</h1>");
+                out.println("<h1> " + toolName.replaceAll("_", " ") + " from the Category: " + toolCategory.replaceAll("_", " ") + "</h1>");
                 out.println("<br>");
                 out.println("<img src = 'img/amv.png' width = '156' heigth = '151'>");
                 out.println("<h2>Price the first day: " + priceFirst + "</h2>");
@@ -82,6 +83,8 @@ public class ToolDetailServlet extends HttpServlet {
                 out.print("<input type = 'submit' value = 'Submit'>");
                 out.println("</form>");
             }
+
+
             out.println("</body>");
             out.println("</html>");
 
