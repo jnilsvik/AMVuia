@@ -136,7 +136,7 @@ public class ToolDetailServlet extends HttpServlet {
             out.println("</tr>");
             out.println("<tr>");
 
-                while (days <= 60) {
+                while (days <= 120) {
                     String status = "Available";
 
                     if (totalDates.contains(currentDate)) {
