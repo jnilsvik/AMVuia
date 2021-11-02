@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
@@ -37,6 +40,10 @@ public class ToolDetailServlet extends HttpServlet {
 
             out.println("<html>");
             out.println("<head>");
+            out.println("<style>");
+            out.println("table, th, td {border: 1px solid black;}");
+            out.println("th, td {padding: 0 5px;}");
+            out.println("</style>");
             out.println("</head>");
             out.println("<body>");
             PageElements.printSidebar(out);
@@ -66,6 +73,8 @@ public class ToolDetailServlet extends HttpServlet {
                 out.print("<option value = '" + toolID + "'> " + toolName.replaceAll("_", " ") + " </option>");
 
                 out.print("</select>");
+                out.println("<br>");
+                out.println("<br>");
 
                 out.print("<label for = 'date'> Choose start date:</label>");
                 out.print("<input type = 'date' id = 'date' name = 'date'><br>");
@@ -77,12 +86,68 @@ public class ToolDetailServlet extends HttpServlet {
                 out.print("<option value='2'> 2 Days</option>");
                 out.print("<option value='3'> 3 Days</option>");
                 out.print("</select>");
+                out.println("<br>");
+                out.println("<br>");
 
+                out.println(" <label for='name'>You're booking as:</label>");
                 out.print("<input type = 'text' value = '" + email + "' name = 'email' readonly>");
 
                 out.print("<input type = 'submit' value = 'Submit'>");
                 out.println("</form>");
             }
+
+            PreparedStatement st2 = db
+                    .prepareStatement("SELECT * FROM Booking WHERE toolID = ? AND toolReturnDate IS NULL");
+            st2.setInt(1, toolID);
+            ResultSet rs2 = st2.executeQuery();
+
+            List<LocalDate> totalDates = new ArrayList<>();
+            while(rs2.next()) {
+
+                LocalDate dateStart = rs2.getDate("startDate").toLocalDate();
+                LocalDate dateEnd = rs2.getDate("endDate").toLocalDate();
+
+                while (!dateStart.isAfter(dateEnd)) {
+                    totalDates.add(dateStart);
+                    dateStart = dateStart.plusDays(1);
+                }
+            }
+
+
+                LocalDate currentDate = LocalDate.now();
+                int days = 0;
+                int resetWeek = 1;
+            out.println("<h2>Available dates</h2>");
+            out.println("<table>");
+            out.println("<tr>");
+
+                while (days <= 60) {
+                    String status = "Available";
+
+
+                    if (totalDates.contains(currentDate)) {
+                        status = "Booked";
+                    }
+
+                    out.println("<td>" + currentDate + "<br>" + status + "</td>");
+
+                    if(resetWeek == 7) {
+                        out.println("</tr>");
+                        out.println("<tr>");
+                        resetWeek = 1;
+                    }
+
+                    currentDate = currentDate.plusDays(1);
+                    days++;
+                    resetWeek++;
+                }
+
+            out.println("</tr>");
+            out.println("</table>");
+
+
+
+
 
 
             out.println("</body>");
