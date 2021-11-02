@@ -9,15 +9,15 @@ public class getEndDate {
         LocalDate endDateInsert = null;
 
         if (inputDays.equals("1")) {
-             endDateInsert = startDateInsert.plusDays(1);
+             endDateInsert = startDateInsert;
         }
 
         if (inputDays.equals("2")) {
-             endDateInsert = startDateInsert.plusDays(2);
+             endDateInsert = startDateInsert.plusDays(1);
         }
 
         if (inputDays.equals("3")) {
-             endDateInsert = startDateInsert.plusDays(3);
+             endDateInsert = startDateInsert.plusDays(2);
         }
         return endDateInsert;
     }

@@ -28,7 +28,7 @@ public class checkDate {
                 }
 
                 if (inputDays.equals("1")) {
-                    LocalDate EndDateWanted = StartDateWanted.plusDays(1);
+                    LocalDate EndDateWanted = StartDateWanted;
                     if (totalDates.contains(StartDateWanted) || totalDates.contains(EndDateWanted)) {
                         taken = true;
 
@@ -36,7 +36,7 @@ public class checkDate {
                 }
 
                 if (inputDays.equals("2")) {
-                    LocalDate EndDateWanted = StartDateWanted.plusDays(2);
+                    LocalDate EndDateWanted = StartDateWanted.plusDays(1);
                     if (totalDates.contains(StartDateWanted) || totalDates.contains(EndDateWanted)) {
                         taken = true;
 
@@ -45,7 +45,7 @@ public class checkDate {
 
                 if (inputDays.equals("3")) {
 
-                    LocalDate EndDateWanted = StartDateWanted.plusDays(3);
+                    LocalDate EndDateWanted = StartDateWanted.plusDays(2);
                     if (totalDates.contains(StartDateWanted) || totalDates.contains(EndDateWanted)) {
                         taken = true;
 
