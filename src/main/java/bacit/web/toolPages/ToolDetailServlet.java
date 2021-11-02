@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
@@ -120,6 +121,8 @@ public class ToolDetailServlet extends HttpServlet {
                 currentDate = currentDate.with(DayOfWeek.MONDAY);
                 int days = 0;
                 int resetWeek = 1;
+                DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
             out.println("<h2>Available dates</h2>");
             out.println("<table>");
             out.println("<tr>");
@@ -139,8 +142,8 @@ public class ToolDetailServlet extends HttpServlet {
                     if (totalDates.contains(currentDate)) {
                         status = "Booked";
                     }
-
-                    out.println("<td>" + currentDate + "<br>" + status + "</td>");
+                    String currentDateFormat = currentDate.format(formatters);
+                    out.println("<td>" + currentDateFormat + "<br>" + status + "</td>");
 
                     if(resetWeek == 7) {
                         out.println("</tr>");
