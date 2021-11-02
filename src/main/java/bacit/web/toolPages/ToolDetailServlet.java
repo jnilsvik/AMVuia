@@ -96,6 +96,8 @@ public class ToolDetailServlet extends HttpServlet {
                 out.println("</form>");
             }
 
+
+            //Calendar of available and booked dates
             PreparedStatement st2 = db
                     .prepareStatement("SELECT * FROM Booking WHERE toolID = ? AND toolReturnDate IS NULL");
             st2.setInt(1, toolID);
@@ -113,7 +115,6 @@ public class ToolDetailServlet extends HttpServlet {
                 }
             }
 
-
                 LocalDate currentDate = LocalDate.now();
                 int days = 0;
                 int resetWeek = 1;
@@ -123,7 +124,6 @@ public class ToolDetailServlet extends HttpServlet {
 
                 while (days <= 60) {
                     String status = "Available";
-
 
                     if (totalDates.contains(currentDate)) {
                         status = "Booked";
@@ -144,12 +144,6 @@ public class ToolDetailServlet extends HttpServlet {
 
             out.println("</tr>");
             out.println("</table>");
-
-
-
-
-
-
             out.println("</body>");
             out.println("</html>");
 
