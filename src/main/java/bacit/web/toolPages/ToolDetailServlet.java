@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,10 +117,20 @@ public class ToolDetailServlet extends HttpServlet {
             }
 
                 LocalDate currentDate = LocalDate.now();
+                currentDate = currentDate.with(DayOfWeek.MONDAY);
                 int days = 0;
                 int resetWeek = 1;
             out.println("<h2>Available dates</h2>");
             out.println("<table>");
+            out.println("<tr>");
+            out.println("<th>Monday</th>");
+            out.println("<th>Tuesday</th>");
+            out.println("<th>Wednesday</th>");
+            out.println("<th>Thursday</th>");
+            out.println("<th>Friday</th>");
+            out.println("<th>Saturday</th>");
+            out.println("<th>Sunday</th>");
+            out.println("</tr>");
             out.println("<tr>");
 
                 while (days <= 60) {
@@ -134,7 +145,7 @@ public class ToolDetailServlet extends HttpServlet {
                     if(resetWeek == 7) {
                         out.println("</tr>");
                         out.println("<tr>");
-                        resetWeek = 1;
+                        resetWeek = 0;
                     }
 
                     currentDate = currentDate.plusDays(1);
