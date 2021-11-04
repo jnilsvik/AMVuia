@@ -30,9 +30,7 @@ public class Profile extends HttpServlet {
                 out.println("<title>Give a user a certificate</title>");
                 out.println("</head>");
                 out.println("<style>");
-
                 out.println("table, th, td { border:1px solid black;}");
-
                 out.println("</style>");
 
                 out.print("<h2>Your current bookings</h2>");
@@ -43,6 +41,7 @@ public class Profile extends HttpServlet {
                 out.println("<th>Start Date</th>");
                 out.println("<th>End Date</th>");
                 out.println("<th>Total Price</th>");
+                out.println("</tr>");
 
                 while(rs.next()) {
                     int OrderID = rs.getInt("orderID");
