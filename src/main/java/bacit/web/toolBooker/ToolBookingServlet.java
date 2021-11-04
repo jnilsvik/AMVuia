@@ -32,6 +32,7 @@ public class ToolBookingServlet extends HttpServlet {
             String email = request.getParameter("email");
             LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
             String inputDays = request.getParameter("days");
+            int inputDays1 = Integer.parseInt(request.getParameter("days"));
             String tool = request.getParameter("tools");
 
             //getUserID method retrieves the userID from the email in the session ID.
@@ -59,7 +60,7 @@ public class ToolBookingServlet extends HttpServlet {
             }
 
             //getEndDate class finds the end date.
-            LocalDate endingDate = getEndDate.checkUser(StartDateWanted, inputDays);
+            LocalDate endingDate = getEndDate(StartDateWanted, inputDays1);
 
             //getTotalPrice class calculates the total price.
             int totalPrice = getTotalPrice.checkTotalPrice(inputDays, priceFirst, priceAfter);
@@ -116,6 +117,15 @@ public class ToolBookingServlet extends HttpServlet {
         }
 
         return userID;
+    }
+
+    public  LocalDate getEndDate(LocalDate startDateInsert, int inputDays1)
+    {
+        LocalDate endDateInsert;
+        inputDays1 = inputDays1 - 1;
+
+       endDateInsert = startDateInsert.plusDays(inputDays1);
+        return endDateInsert;
     }
 
 }
