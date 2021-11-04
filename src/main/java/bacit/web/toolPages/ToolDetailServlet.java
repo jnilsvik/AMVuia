@@ -127,12 +127,15 @@ public class ToolDetailServlet extends HttpServlet {
 
                 while (days <= 120) {
                     String status = "Available";
+                    String color = "#00FF00";
 
                     if (totalDates.contains(currentDate)) {
                         status = "Booked";
+                         color = "#FF0000";
                     }
+
                     String currentDateFormat = currentDate.format(formatters);
-                    out.println("<td>" + currentDateFormat + "<br>" + status + "</td>");
+                    out.println("<td bgcolor="+ color +">" + currentDateFormat + "<br>" + status + "</td>");
 
                     if(resetWeek == 7) {
                         out.println("</tr>");
