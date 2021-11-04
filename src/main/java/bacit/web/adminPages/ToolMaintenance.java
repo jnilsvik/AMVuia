@@ -23,6 +23,7 @@ public class ToolMaintenance extends HttpServlet {
                 out.println("<head>");
                 out.println("<title>Tool maintenance</title>");
                 out.println("</head>");
+                out.println("<body>");
 
                 out.println("<h2>Put a tool in maintenance</h2>");
                 out.println("<form action = 'toolmaintenancein' method = 'POST'>");

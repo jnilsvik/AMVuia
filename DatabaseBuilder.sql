@@ -44,6 +44,7 @@ CREATE OR REPLACE TABLE Booking (
     userID int ,
     toolID int ,
     toolReturnDate date,
+    paid boolean default '0',
     PRIMARY KEY (orderID),
     FOREIGN KEY (userID) REFERENCES AMVUser(userID) on delete set null,
     FOREIGN KEY (toolID) REFERENCES Tool(toolID) on delete set null

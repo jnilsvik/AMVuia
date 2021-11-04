@@ -65,14 +65,7 @@ public class ToolDetailServlet extends HttpServlet {
                 out.println("<br>");
 
                 out.print("<form action = 'toolbooking' method = 'POST'>");
-                out.print("<label for = 'tools'> Your chosen tool:</label>");
-                out.print("<select name = 'tools' id = 'tools'><br>");
-
-                out.print("<option value = '" + toolID + "'> " + toolName.replaceAll("_", " ") + " </option>");
-
-                out.print("</select>");
-                out.println("<br>");
-                out.println("<br>");
+                out.print("<input type = 'hidden' value = '" + toolID + "' name = 'tools' readonly>");
 
                 out.print("<label for = 'date'> Choose start date:</label>");
                 out.print("<input type = 'date' id = 'date' name = 'date'><br>");
@@ -87,8 +80,8 @@ public class ToolDetailServlet extends HttpServlet {
                 out.println("<br>");
                 out.println("<br>");
 
-                out.println(" <label for='name'>You're booking as:</label>");
-                out.print("<input type = 'text' value = '" + email + "' name = 'email' readonly>");
+
+                out.print("<input type = 'hidden' value = '" + email + "' name = 'email' readonly>");
 
                 out.print("<input type = 'submit' value = 'Submit'>");
                 out.println("</form>");
@@ -134,12 +127,15 @@ public class ToolDetailServlet extends HttpServlet {
 
                 while (days <= 120) {
                     String status = "Available";
+                    String color = "#00FF00";
 
                     if (totalDates.contains(currentDate)) {
                         status = "Booked";
+                         color = "#FF0000";
                     }
+
                     String currentDateFormat = currentDate.format(formatters);
-                    out.println("<td>" + currentDateFormat + "<br>" + status + "</td>");
+                    out.println("<td bgcolor="+ color +">" + currentDateFormat + "<br>" + status + "</td>");
 
                     if(resetWeek == 7) {
                         out.println("</tr>");
