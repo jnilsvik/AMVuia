@@ -4,6 +4,7 @@ import java.time.*;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageElements;
+import jdk.javadoc.internal.tool.Start;
 import jdk.vm.ci.meta.Local;
 
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import java.io.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -170,10 +172,13 @@ public class ToolBookingServlet extends HttpServlet {
     }
 
     public void printBookingDetails(PrintWriter out, LocalDate StartDateWanted, String tool, LocalDate endingDate, int totalPrice, String email) {
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        String StartDateWantedFormat = StartDateWanted.format(formatters);
+        String EndingDateForm = endingDate.format(formatters);
         out.println("<h1> Tool has been booked. Here is your the order details:</h1>");
         out.println("<p>Tool: " + tool + "</p>");
-        out.println("<p>Start Date: " + StartDateWanted + "</p>");
-        out.println("<p>Start Date: " + endingDate + "</p>");
+        out.println("<p>Start Date: " + StartDateWantedFormat + "</p>");
+        out.println("<p>Start Date: " + EndingDateForm + "</p>");
         out.println("<p>Total price: " + totalPrice + "</p>");
         out.println("<p>Booked as: " + email + "</p>");
     }
