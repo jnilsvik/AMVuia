@@ -3,6 +3,8 @@ package bacit.web.toolBooker;
 import java.time.*;
 
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageElements;
+import jdk.vm.ci.meta.Local;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -58,7 +60,6 @@ public class ToolBookingServlet extends HttpServlet {
                 toolID = rs2.getInt("toolID");
                 toolCertificateID = rs2.getInt("certificateID");
                 toolCertificateName = rs2.getString("certificateName");
-
             }
 
             //getEndDate class finds the end date.
@@ -71,16 +72,10 @@ public class ToolBookingServlet extends HttpServlet {
             if (!checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) && hasCertificate(db, userID, toolCertificateID, toolCertificateName)) {
                 registerBooking(db, StartDateWanted, endingDate, totalPrice, userID, toolID);
 
-                out.println("<html>");
-                out.print("<head>");
-                out.print("</head>");
-                out.println("<body>");
-                out.println("<br>");
-                out.print("<br>");
-                out.println("<br>");
-                out.println("<h1> Tool has been booked</h1>");
-                out.println("</body>");
-                out.println("</html>");
+                String title = "Booking";
+                PageElements.printHeader(title, out);
+                printBookingDetails(out, StartDateWanted, tool, endingDate, totalPrice, email);
+                PageElements.printFooter(out);
 
             } else {
                 out.println("<h1>Sorry, that tool is already taken or you dont have the needed ID./h1>");
@@ -172,8 +167,15 @@ public class ToolBookingServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-
+    public void printBookingDetails(PrintWriter out, LocalDate StartDateWanted, String tool, LocalDate endingDate, int totalPrice, String email) {
+        out.println("<h1> Tool has been booked. Here is your the order details:</h1>");
+        out.println("<p>Tool: " + tool + "</p>");
+        out.println("<p>Start Date: " + StartDateWanted + "</p>");
+        out.println("<p>Start Date: " + endingDate + "</p>");
+        out.println("<p>Total price: " + totalPrice + "</p>");
+        out.println("<p>Booked as: " + email + "</p>");
     }
 
 }
