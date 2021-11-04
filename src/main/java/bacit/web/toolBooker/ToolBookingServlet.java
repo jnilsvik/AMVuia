@@ -67,18 +67,9 @@ public class ToolBookingServlet extends HttpServlet {
             //getTotalPrice class calculates the total price.
             int totalPrice = checkTotalPrice(inputDays, priceFirst, priceAfter);
 
-            //checkDate class sees if the wanted booked days are already taken. The checkCertificate class checks if the user has the needed certificate.
+            //checkDate class sees if the wanted booked days are already taken. The hasCertificate method checks if the user has the needed certificate.
             if (!checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) && hasCertificate(db, userID, toolCertificateID, toolCertificateName)) {
-
-                PreparedStatement statement2 =
-                        db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
-                statement2.setObject(1, StartDateWanted);
-                statement2.setObject(2, endingDate);
-                statement2.setInt(3, totalPrice);
-                statement2.setInt(4, userID);
-                statement2.setInt(5, toolID);
-                statement2.executeUpdate();
-
+                registerBooking(db, StartDateWanted, endingDate, totalPrice, userID, toolID);
 
                 out.println("<html>");
                 out.print("<head>");
@@ -143,15 +134,12 @@ public class ToolBookingServlet extends HttpServlet {
     }
 
     public  boolean hasCertificate(Connection db, int userID, int toolCertificateID, String toolCertificateName) {
-
         boolean hasTheCertificate = false;
-
         try {
             PreparedStatement st3 = db
                     .prepareStatement("SELECT * FROM UsersCertificate WHERE userID = ?");
             st3.setInt(1, userID);
             ResultSet rs3 = st3.executeQuery();
-
             List<Integer> totalCertificateID = new ArrayList<>();
             int userCertificateID;
 
@@ -159,9 +147,7 @@ public class ToolBookingServlet extends HttpServlet {
                 userCertificateID = rs3.getInt("certificateID");
                 totalCertificateID.add(userCertificateID);
             }
-
             //This checks if the user has the needed certificationID for the tool.
-
             if (totalCertificateID.contains(toolCertificateID) || toolCertificateName.equals("none")) {
                 hasTheCertificate = true;
             }
@@ -170,6 +156,24 @@ public class ToolBookingServlet extends HttpServlet {
             e.printStackTrace();
         }
         return hasTheCertificate;
+    }
+
+    public void registerBooking(Connection db, LocalDate StartDateWanted, LocalDate endingDate, int totalPrice, int userID, int toolID ) {
+        try {
+            PreparedStatement statement2 =
+                    db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
+            statement2.setObject(1, StartDateWanted);
+            statement2.setObject(2, endingDate);
+            statement2.setInt(3, totalPrice);
+            statement2.setInt(4, userID);
+            statement2.setInt(5, toolID);
+            statement2.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }
