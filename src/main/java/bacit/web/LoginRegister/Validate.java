@@ -1,6 +1,8 @@
 package bacit.web.LoginRegister;
 import java.sql.*;
 
+// TODO: 04.11.2021 move into login
+
 // by Dilan
 public class Validate {
     public static boolean checkUser(String email,String pass)

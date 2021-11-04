@@ -16,12 +16,8 @@ import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-//Marius wrote this code
-
 @WebServlet(name = "ToolDetailServlet", value = "/tooldetail")
 public class ToolDetailServlet extends HttpServlet {
-
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");

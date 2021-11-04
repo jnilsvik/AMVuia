@@ -1,4 +1,4 @@
-package bacit.web.LoginRegister;
+package bacit.web.scraped;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

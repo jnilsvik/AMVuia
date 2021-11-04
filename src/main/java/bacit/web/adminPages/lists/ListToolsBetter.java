@@ -1,4 +1,4 @@
-package bacit.web.lists;
+package bacit.web.adminPages.lists;
 
 import bacit.web.models.ToolModel;
 import bacit.web.utils.DBUtils;

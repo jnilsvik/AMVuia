@@ -1,7 +1,5 @@
 package bacit.web.adminPages;
 
-import bacit.web.LoginRegister.AdminAccess;
-
 import java.io.PrintWriter;
 import java.io.*;
 import javax.servlet.ServletException;

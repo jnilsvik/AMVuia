@@ -1,4 +1,4 @@
-package bacit.web.bacit_web;
+package bacit.web.scraped;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageElements;
@@ -21,9 +21,9 @@ public class UserHistoryServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         PrintWriter out = resp.getWriter();
         String userID = req.getParameter("userID");
+
         try {
             LinkedList<BookingModel> bookings = getBookingFromDB(userID, out);
             if(bookings.size() == 0) writeNoBookings(out);

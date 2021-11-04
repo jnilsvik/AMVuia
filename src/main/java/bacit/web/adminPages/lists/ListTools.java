@@ -1,4 +1,4 @@
-package bacit.web.lists;
+package bacit.web.adminPages.lists;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageElements;

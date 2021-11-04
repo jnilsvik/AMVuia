@@ -1,4 +1,4 @@
-package bacit.web.LoginRegister;
+package bacit.web.adminPages;
 import java.sql.*;
 
 // by Dilan

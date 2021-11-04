@@ -1,4 +1,4 @@
-package bacit.web.bacit_web;
+package bacit.web.scraped;
 
 //By Paul
 

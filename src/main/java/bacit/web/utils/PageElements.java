@@ -115,6 +115,7 @@ public class PageElements {
                 ".search2 input:hover,button:hover{" +
                 "background-color: rgb(216, 216, 216);}" +
                 "</style>" +
+                        // TODO: 04.11.2021 make if statement to print diffrent if were admins
                 "<nav class=\"sidebar\">\n" +
                 "    <img src=\"img/amv.png\" alt=\"AMV logo\"></li>\n" +
                 "    <a hfref='/profile'><i class=\"fa fa-user\"></i>Ola Nordman</a></li>\n" +
