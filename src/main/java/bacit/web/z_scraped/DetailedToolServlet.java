@@ -1,9 +1,9 @@
-package bacit.web.scraped;
+package bacit.web.z_scraped;
 
 //by Paul
 
 import bacit.web.utils.PageElements;
-import bacit.web.models.ToolModel;
+import bacit.web.a_models.ToolModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;

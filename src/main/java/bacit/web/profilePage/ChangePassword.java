@@ -1,6 +1,6 @@
 package bacit.web.profilePage;
 
-import bacit.web.LoginRegister.hashPassword;
+import bacit.web.utils.hashPassword;
 import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;

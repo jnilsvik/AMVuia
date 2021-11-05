@@ -1,4 +1,4 @@
-package bacit.web.LoginRegister;
+package bacit.web.utils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

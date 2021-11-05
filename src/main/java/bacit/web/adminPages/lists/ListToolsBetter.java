@@ -1,6 +1,6 @@
 package bacit.web.adminPages.lists;
 
-import bacit.web.models.ToolModel;
+import bacit.web.a_models.ToolModel;
 import bacit.web.utils.DBUtils;
 
 import javax.servlet.ServletException;

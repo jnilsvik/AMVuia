@@ -1,4 +1,4 @@
-package bacit.web.scraped;
+package bacit.web.z_scraped;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

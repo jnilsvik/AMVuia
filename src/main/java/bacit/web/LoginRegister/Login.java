@@ -1,70 +1,76 @@
 package bacit.web.LoginRegister;
-import java.io.*;
-import javax.servlet.*;
+
+import bacit.web.utils.hashPassword;
+
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-// by Dilan
-@WebServlet(name = "Login", value = "/login")
+@WebServlet(name = "login", value = "/login")
 public class Login extends HttpServlet {
-
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-
-        PrintWriter out = response.getWriter();
-        out.println("<html>");
-        out.println("<head>");
-        out.println("   <title>Register user form</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("   <form action = 'login' method = 'POST'>");
-        out.println("       <label for = 'email' required>Email: </label><br>");
-        out.println("       <input type = 'email' name = 'email'><br>");
-        out.println("       <label for = 'pass' required>Password: </label><br>");
-        out.println("       <input type = 'password' name = 'pass'><br>");
-        out.println("       <input type = 'submit' value = 'Login User'><br>");
-        out.println("       <a href='register'>Don't have an account already? Register here!</a>");
-        out.println("   </form>");
-        out.println("</body>");
-        out.println("</html>");
+        try {
+            request.getRequestDispatcher("/login.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
         String email = request.getParameter("email");
-        String pass = hashPassword.encryptThisString(request.getParameter("pass"));
-
-        if(Validate.checkUser(email, pass))
-        {
+        String password = hashPassword.encryptThisString(request.getParameter("password"));
+        if(Validation(email,password)){
             HttpSession session=request.getSession();
-            session.setAttribute("email", email);
-
-            out.println("<html>");
-            out.print("<head>");
-            out.print("</head>");
-            out.println("<body>");
-            out.println("<header>");
-            out.println("<h2> Welcome </h2>");
-            out.println("</header>");
-            out.println("Welcome " + email);
-            out.println("<br>");
-            out.println("<a href = 'http://localhost:8081/bacit-web-1.0-SNAPSHOT/toolcategories'> Browse Tools</a>");
-            out.println("<br>");
-            out.println("<a href = 'http://localhost:8081/bacit-web-1.0-SNAPSHOT/logout'> Log out</a>");
-
-            out.println("</body>");
-            out.println("</html>");
-
-        }
-        else
-        {
-            out.println("Username or Password incorrect");
-
+            session.setAttribute("email", email); //TODO a way to set attributes
+            try {
+                request.getRequestDispatcher("/landing.jsp").forward(request,response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
+        } else {
+            out.print("Invalid email or password");
         }
     }
+    public boolean Validation(String email, String pw){
+        boolean exists = false;
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            Connection con = DriverManager.getConnection(
+                    "jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
+            PreparedStatement ps = con.prepareStatement(
+                    "select * from AMVUser where email=? and passwordHash=?");
+            ps.setString(1, email);
+            ps.setString(2, pw);
+            ResultSet rs1 = ps.executeQuery();
+            exists = rs1.next();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return exists;
+    }
+    // no clue how to call this...
+    void Logout(HttpServletRequest request,HttpServletResponse response){
+        HttpSession session = request.getSession(false);
+        session.invalidate();
+        try {
+            request.getRequestDispatcher("/login.jsp").forward(request,response);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
 
-
+    }
 }

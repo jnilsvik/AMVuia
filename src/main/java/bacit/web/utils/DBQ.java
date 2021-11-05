@@ -1,6 +1,6 @@
 package bacit.web.utils;
 
-import bacit.web.models.ToolModel;
+import bacit.web.a_models.ToolModel;
 
 import java.io.PrintWriter;
 import java.sql.Connection;

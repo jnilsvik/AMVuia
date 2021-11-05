@@ -1,8 +1,8 @@
-package bacit.web.scraped;
+package bacit.web.z_scraped;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageElements;
-import bacit.web.models.BookingModel;
+import bacit.web.a_models.BookingModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;

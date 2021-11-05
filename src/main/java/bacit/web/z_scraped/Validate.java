@@ -1,4 +1,4 @@
-package bacit.web.LoginRegister;
+package bacit.web.z_scraped;
 import java.sql.*;
 
 // TODO: 04.11.2021 move into login
