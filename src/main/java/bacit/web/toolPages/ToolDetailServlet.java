@@ -87,72 +87,78 @@ public class ToolDetailServlet extends HttpServlet {
                 out.println("</form>");
             }
 
-
             //Calendar of available and booked dates
-            PreparedStatement st2 = db
-                    .prepareStatement("SELECT * FROM Booking WHERE toolID = ? AND toolReturnDate IS NULL");
-            st2.setInt(1, toolID);
-            ResultSet rs2 = st2.executeQuery();
+            Calendar(out, db, toolID);
 
-            List<LocalDate> totalDates = new ArrayList<>();
-            while(rs2.next()) {
-
-                LocalDate dateStart = rs2.getDate("startDate").toLocalDate();
-                LocalDate dateEnd = rs2.getDate("endDate").toLocalDate();
-
-                while (!dateStart.isAfter(dateEnd)) {
-                    totalDates.add(dateStart);
-                    dateStart = dateStart.plusDays(1);
-                }
-            }
-
-                LocalDate currentDate = LocalDate.now();
-                currentDate = currentDate.with(DayOfWeek.MONDAY);
-                int days = 0;
-                int resetWeek = 1;
-                DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
-            out.println("<h2>Available dates</h2>");
-            out.println("<table>");
-            out.println("<tr>");
-            out.println("<th>Monday</th>");
-            out.println("<th>Tuesday</th>");
-            out.println("<th>Wednesday</th>");
-            out.println("<th>Thursday</th>");
-            out.println("<th>Friday</th>");
-            out.println("<th>Saturday</th>");
-            out.println("<th>Sunday</th>");
-            out.println("</tr>");
-            out.println("<tr>");
-
-                while (days <= 120) {
-                    String status = "Available";
-                    String color = "#00FF00";
-
-                    if (totalDates.contains(currentDate)) {
-                        status = "Booked";
-                         color = "#FF0000";
-                    }
-
-                    String currentDateFormat = currentDate.format(formatters);
-                    out.println("<td bgcolor="+ color +">" + currentDateFormat + "<br>" + status + "</td>");
-
-                    if(resetWeek == 7) {
-                        out.println("</tr>");
-                        out.println("<tr>");
-                        resetWeek = 0;
-                    }
-
-                    currentDate = currentDate.plusDays(1);
-                    days++;
-                    resetWeek++;
-                }
-
-            out.println("</tr>");
-            out.println("</table>");
             out.println("</body>");
             out.println("</html>");
 
+        } catch (Exception e) {
+            out.println("error");
+        }
+    }
+
+    public void Calendar(PrintWriter out, Connection db, int toolID) {
+        try {
+        PreparedStatement st2 = db
+                .prepareStatement("SELECT * FROM Booking WHERE toolID = ? AND toolReturnDate IS NULL");
+        st2.setInt(1, toolID);
+        ResultSet rs2 = st2.executeQuery();
+
+        List<LocalDate> totalDates = new ArrayList<>();
+        while(rs2.next()) {
+
+            LocalDate dateStart = rs2.getDate("startDate").toLocalDate();
+            LocalDate dateEnd = rs2.getDate("endDate").toLocalDate();
+
+            while (!dateStart.isAfter(dateEnd)) {
+                totalDates.add(dateStart);
+                dateStart = dateStart.plusDays(1);
+            }
+        }
+        LocalDate currentDate = LocalDate.now();
+        currentDate = currentDate.with(DayOfWeek.MONDAY);
+        int days = 0;
+        int resetWeek = 1;
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        out.println("<h2>Available dates</h2>");
+        out.println("<table>");
+        out.println("<tr>");
+        out.println("<th>Monday</th>");
+        out.println("<th>Tuesday</th>");
+        out.println("<th>Wednesday</th>");
+        out.println("<th>Thursday</th>");
+        out.println("<th>Friday</th>");
+        out.println("<th>Saturday</th>");
+        out.println("<th>Sunday</th>");
+        out.println("</tr>");
+        out.println("<tr>");
+
+        while (days <= 120) {
+            String status = "Available";
+            String color = "#00FF00";
+
+            if (totalDates.contains(currentDate)) {
+                status = "Booked";
+                color = "#FF0000";
+            }
+
+            String currentDateFormat = currentDate.format(formatters);
+            out.println("<td bgcolor="+ color +">" + currentDateFormat + "<br>" + status + "</td>");
+
+            if(resetWeek == 7) {
+                out.println("</tr>");
+                out.println("<tr>");
+                resetWeek = 0;
+            }
+
+            currentDate = currentDate.plusDays(1);
+            days++;
+            resetWeek++;
+        }
+
+        out.println("</tr>");
+        out.println("</table>");
         } catch (Exception e) {
             out.println("error");
         }
