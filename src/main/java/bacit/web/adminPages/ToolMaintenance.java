@@ -1,7 +1,11 @@
 package bacit.web.adminPages;
 
+import bacit.web.utils.DBUtils;
+
 import java.io.PrintWriter;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -25,20 +29,23 @@ public class ToolMaintenance extends HttpServlet {
                 out.println("</head>");
                 out.println("<body>");
 
-                out.println("<h2>Put a tool in maintenance</h2>");
-                out.println("<form action = 'toolmaintenancein' method = 'POST'>");
+                out.println("<form action = 'toolmaintenance' method = 'POST'>");
+
+                out.println("<label for = 'toolmaintenance'>Put tool in maintenance</label></td>");
+                out.println("<input type = 'radio' id = 'toolmaintenance'  name = 'toolmaintenance' value = 'ToolInMaintenanceIn'>");
+                out.println("<br>");
+
+                out.println("<label for = 'toolmaintenance'>Put tool out of maintenance</label>");
+                out.println("<input type = 'radio' id = 'toolmaintenance'  name = 'toolmaintenance' value = 'ToolInMaintenanceOut'>");
+                out.println("<br>");
+
                 out.println("<label for = 'toolID'>Tool ID: </label><br>");
                 out.println("<input type = 'text' name = 'toolID'><br>");
+                out.println("<br>");
                 out.println("<input type = 'submit' value = 'Submit'>");
                 out.println("</form>");
                 out.println("<br>");
 
-                out.println("<h2>Put a tool out of maintenance</h2>");
-                out.println("<form action = 'toolmaintenanceout' method = 'POST'> ");
-                out.println("<label for = 'toolID'>Tool ID: </label><br>");
-                out.println("<input type = 'text' name = 'toolID'><br>");
-                out.println("<input type = 'submit' value = 'Submit'>");
-                out.println("</form>");
 
                 out.println("</body>");
                 out.println("</html>");
@@ -54,6 +61,48 @@ public class ToolMaintenance extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+
+        try {
+            Connection db = DBUtils.getNoErrorConnection(out);
+
+            if (request.getParameter("toolmaintenance").equals("ToolInMaintenanceIn")) {
+                String insertUserCommand = "UPDATE Tool SET maintenance = true WHERE toolID = ?";
+                PreparedStatement st1 = db.prepareStatement(insertUserCommand);
+                st1.setString(1, request.getParameter("toolID"));
+                st1.executeUpdate();
+
+                out.println("<html>");
+                out.print("<head>");
+                out.print("</head>");
+                out.println("<body>");
+                out.println("<h1> Tool successfully put in maintenance</h1>");
+                out.println("</body>");
+                out.println("</html>");
+            }
+
+            if (request.getParameter("toolmaintenance").equals("ToolInMaintenanceOut")) {
+                String insertUserCommand = "UPDATE Tool SET maintenance = false WHERE toolID = ?";
+                PreparedStatement st2 = db.prepareStatement(insertUserCommand);
+                st2.setString(1, request.getParameter("toolID"));
+                st2.executeUpdate();
+
+                out.println("<html>");
+                out.print("<head>");
+                out.print("</head>");
+                out.println("<body>");
+                out.println("<h1> Tool successfully put out of maintenance</h1>");
+                out.println("</body>");
+                out.println("</html>");
+            }
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
