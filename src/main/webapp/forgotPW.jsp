@@ -31,10 +31,10 @@
     }</style>
 </head>
 <body>
-<dic class="page">
+<div class="page">
     <article class="my-3" id="floating-labels"> <!-- this is temp to genter-->
         <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
-            <h3>Login</h3>
+            <h3>Forgot password</h3>
         </div>
 
         <div>
@@ -49,7 +49,7 @@
                         <label for="nPassword2">Confirm</label>
                     </div>
                     <div class="col-12">
-                        <button class="btn btn-primary" type="submit">Login</button>
+                        <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
                     <div style="text-align:center">
                         <a href='register'>Don't have an account? Register here!</a>
@@ -58,4 +58,4 @@
             </div>
         </div>
     </article>
-</dic>
+</div>

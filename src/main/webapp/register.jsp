@@ -42,25 +42,37 @@
 <div class="page">
     <article class="my-3" id="floating-labels"> <!-- this is temp to genter-->
         <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
-            <h3>Login</h3>
+            <h3>Register</h3>
         </div>
 
         <div>
             <div class="bd-example">
                 <form action="">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="lname" placeholder="name@example.com">
-                        <label for="lname">Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <label for="email">Email address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                        <label for="floatingPassword">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="fName" placeholder="name">
+                        <label for="fName">First name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="lName" placeholder="name">
+                        <label for="lName">Last name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="tel" class="form-control" id="phoneNr" placeholder="98979695">
+                        <label for="phoneNr">Phone Nr</label>
                     </div>
                     <div class="col-12">
                         <button class="btn btn-primary" type="submit">Login</button>
                     </div>
                     <div style="text-align:center">
-                        <a href='register'>Don't have an account? Register here!</a>
+                        <a href='login'>Already have an account? Login here!</a>
                     </div>
                 </form>
             </div>
