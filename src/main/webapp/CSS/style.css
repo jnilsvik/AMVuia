@@ -4,7 +4,7 @@ ul {
 header, footer{
     font-size: 25px;
 }
-header, footer, .main{ /* gives space for the sidebar */
+.main{ /* gives space for the sidebar */
     margin-left: 280px;
     padding-left: 20px;
 }

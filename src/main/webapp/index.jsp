@@ -6,7 +6,7 @@
     <title>Index</title>
 </head>
 <body>
-    <jsp:include page="/sidebar.jsp"/>
+    <jsp:include page="/_sidebar.jsp"/>
     <!--content goes here-->
     <section class="main">
         <h1>Some stuff is missing here :)</h1>
@@ -21,7 +21,7 @@
         <br>
         <a href="toolcategories">Tool Categories</a>
         <br>
-        <a href="findFile.jsp">find tool with jsp file</a>
+        <a href="../java/bacit/web/scraped/findFile.jsp">find tool with jsp file</a>
         <br>
         <a href="tlb">TEST</a>
     </section>
