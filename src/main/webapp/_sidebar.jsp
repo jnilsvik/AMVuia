@@ -3,10 +3,10 @@
 
 <!-- This is the sidebar -->
 <nav class="sidebar">
-    <img src="img/amv.png" alt="AMV logo"></li>
-    <a href='http://localhost:8081/bacit-web-1.0-SNAPSHOT/profile'><i class="fa fa-user"></i>Ola Nordman</a></li>
-    <a href='toolcategories'><i class="fa fa-tools"></i>Tools and equipment</a></li>
-    <a href='profile'><i class="fa fa-receipt"></i>My rentals</a></li>
-    <a href='tl'><i class="fa fa-clipboard"></i>Reports</a></li>
-    <a href='#'><i class="fa fa-question-circle"></i>Help</a></li>
+    <img src="img/amv.png" alt="AMV logo">
+    <a href='${pageContext.request.contextPath}/profile'><i class="fa fa-user"></i>Ola Nordman</a>
+    <a href='${pageContext.request.contextPath}/toolcategories'><i class="fa fa-tools"></i>Tools and equipment</a>
+    <a href='${pageContext.request.contextPath}/profile'><i class="fa fa-receipt"></i>My rentals</a>
+    <a href='${pageContext.request.contextPath}/tl'><i class="fa fa-clipboard"></i>Reports</a>
+    <a href='${pageContext.request.contextPath}/help'><i class="fa fa-question-circle"></i>Help</a>
 </nav>
