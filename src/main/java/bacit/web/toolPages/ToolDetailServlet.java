@@ -111,7 +111,7 @@ public class ToolDetailServlet extends HttpServlet {
             LocalDate dateStart = rs2.getDate("startDate").toLocalDate();
             LocalDate dateEnd = rs2.getDate("endDate").toLocalDate();
 
-            while (!dateStart.isAfter(dateEnd)) {
+            while (!dateStart.isAfter(dateEnd)) { // doesnt this need to increase the dateStart as well? since it an increase by multiple days? todo
                 totalDates.add(dateStart);
                 dateStart = dateStart.plusDays(1);
             }
@@ -123,15 +123,15 @@ public class ToolDetailServlet extends HttpServlet {
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         out.println("<h2>Available dates</h2>");
         out.println("<table>");
-        out.println("<tr>");
-        out.println("<th>Monday</th>");
-        out.println("<th>Tuesday</th>");
-        out.println("<th>Wednesday</th>");
-        out.println("<th>Thursday</th>");
-        out.println("<th>Friday</th>");
-        out.println("<th>Saturday</th>");
-        out.println("<th>Sunday</th>");
-        out.println("</tr>");
+        out.println("   <tr>");
+        out.println("       <th>Monday</th>");
+        out.println("       <th>Tuesday</th>");
+        out.println("       <th>Wednesday</th>");
+        out.println("       <th>Thursday</th>");
+        out.println("       <th>Friday</th>");
+        out.println("       <th>Saturday</th>");
+        out.println("       <th>Sunday</th>");
+        out.println("   </tr>");
         out.println("<tr>");
 
         while (days <= 120) {
