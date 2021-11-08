@@ -62,6 +62,7 @@ public class Login extends HttpServlet {
         }
         return exists;
     }
+
     // no clue how to call this...
     void Logout(HttpServletRequest request,HttpServletResponse response){
         HttpSession session = request.getSession(false);

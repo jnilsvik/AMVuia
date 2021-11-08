@@ -39,8 +39,7 @@ public class Login extends HttpServlet {
         String email = request.getParameter("email");
         String pass = hashPassword.encryptThisString(request.getParameter("pass"));
 
-        if(Validate.checkUser(email, pass))
-        {
+        if(Validate.checkUser(email, pass)) {
             HttpSession session=request.getSession();
             session.setAttribute("email", email);
 
