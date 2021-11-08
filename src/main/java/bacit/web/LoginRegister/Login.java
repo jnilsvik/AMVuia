@@ -15,7 +15,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-@WebServlet(name = "login", value = "/login")
+@WebServlet(name = "xlogin", value = "/xlogin")
 public class Login extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -35,7 +35,7 @@ public class Login extends HttpServlet {
         String password = hashPassword.encryptThisString(request.getParameter("password"));
         if(Validation(email,password)){
             HttpSession session=request.getSession();
-            session.setAttribute("email", email); //TODO a way to set attributes
+            session.setAttribute("email", email); // ! a way to set attributes
             try {
                 request.getRequestDispatcher("/landing.jsp").forward(request,response);
             } catch (ServletException e) {

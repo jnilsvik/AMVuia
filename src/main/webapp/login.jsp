@@ -47,14 +47,14 @@
 
         <div>
             <div class="bd-example">
-                <form action="">
+                <form action="xlogin" method="post">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="lname" placeholder="name@example.com">
-                        <label for="lname">Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <label for="email">Email address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                        <label for="floatingPassword">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <label for="password">Password</label>
                     </div>
                     <div class="col-12">
                         <button class="btn btn-primary" type="submit">Login</button>
