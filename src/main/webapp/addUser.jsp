@@ -40,7 +40,7 @@
 </head>
 
 <body>
-<jsp:include page="_sidebar.jsp"></jsp:include>
+<jsp:include page="/_sidebar.jsp"/>
 
 <div class="page">
     <article class="my-3" id="floating-labels"> <!-- this is temp to genter-->

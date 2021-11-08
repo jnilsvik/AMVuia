@@ -32,7 +32,7 @@ public class Login extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         String email = request.getParameter("email");
-        String password = hashPassword.encryptThisString(request.getParameter("password"));
+        String password = hashPassword.encryptThisString(request.getParameter("pass"));
         if(Validation(email,password)){
             HttpSession session=request.getSession();
             session.setAttribute("email", email); // ! a way to set attributes
@@ -62,7 +62,6 @@ public class Login extends HttpServlet {
         }
         return exists;
     }
-
     // no clue how to call this...
     void Logout(HttpServletRequest request,HttpServletResponse response){
         HttpSession session = request.getSession(false);

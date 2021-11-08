@@ -37,7 +37,6 @@
     }</style>
 
 </head>
-
 <body>
 <div class="page">
     <article class="my-3" id="floating-labels">
@@ -79,4 +78,4 @@
         </div>
     </article>
 </div>
-<jsp:include page="_footer.jsp"></jsp:include>
+<jsp:include page="_footer.jsp"/>
