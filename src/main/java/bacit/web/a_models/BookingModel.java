@@ -1,7 +1,5 @@
 package bacit.web.a_models;
 
-//by Paul
-
 import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;
@@ -14,26 +12,28 @@ import java.time.Period;
 
 public class BookingModel {
 
-    private int bookingID;
+    private int orderID;
     private int userID;
     private int toolID;
     private LocalDate startDate;
     private LocalDate endDate;
+    private LocalDate returnDate;
 
-    public BookingModel(int bookingID, int userID, int toolID, LocalDate startDate, LocalDate endDate) {
-        this.bookingID = bookingID;
+    public BookingModel(int orderID, int userID, int toolID, LocalDate startDate, LocalDate endDate, LocalDate returnDate) {
+        this.orderID = orderID;
         this.userID = userID;
         this.toolID = toolID;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.returnDate = returnDate;
     }
 
-    public int getBookingID() {
-        return bookingID;
+    public int getOrderID() {
+        return orderID;
     }
 
-    public void setBookingID(int bookingID) {
-        this.bookingID = bookingID;
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
     }
 
     public int getUserID() {
@@ -66,6 +66,14 @@ public class BookingModel {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
     }
 
     public double getTotalPrice(PrintWriter out){

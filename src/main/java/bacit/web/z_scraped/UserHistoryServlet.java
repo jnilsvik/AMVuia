@@ -48,7 +48,7 @@ public class UserHistoryServlet extends HttpServlet{
         ResultSet rs = statement.executeQuery();
         LinkedList<BookingModel> bookings = new LinkedList<>();
         while(rs.next()){
-            bookings.add(new BookingModel(rs.getInt("bookingID"), rs.getInt("userID"), rs.getInt("toolID"), rs.getTimestamp("startDate").toLocalDateTime().toLocalDate(), rs.getTimestamp("endDate").toLocalDateTime().toLocalDate()));
+            bookings.add(new BookingModel(rs.getInt("bookingID"), rs.getInt("userID"), rs.getInt("toolID"), rs.getTimestamp("startDate").toLocalDateTime().toLocalDate(), rs.getTimestamp("endDate").toLocalDateTime().toLocalDate(),rs.getTimestamp("returnDate").toLocalDateTime().toLocalDate()));
         }
         return bookings;
     }
