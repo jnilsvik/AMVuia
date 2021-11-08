@@ -122,11 +122,11 @@ public class PageElements {
                         // TODO: 04.11.2021 make if statement to print diffrent if were admins
                 "<nav class=\"sidebar\">\n" +
                 "    <img src=\"img/amv.png\" alt=\"AMV logo\"></li>\n" +
-                "    <a hfref='/profile'><i class=\"fa fa-user\"></i>Ola Nordman</a></li>\n" +
-                "    <a hfref='/toolcategories'><i class=\"fa fa-tools\"></i>Tools and equipment</a></li>\n" +
-                "    <a hfref='/profile'><i class=\"fa fa-receipt\"></i>My rentals</a></li>\n" +
-                "    <a hfref='/tl'><i class=\"fa fa-clipboard\"></i>Reports</a></li>\n" +
-                "    <a hfref='#'><i class=\"fa fa-question-circle\"></i>Help</a></li>\n" +
+                "    <a href='/profile'><i class=\"fa fa-user\"></i>Ola Nordman</a></li>\n" +
+                "    <a href='/toolcategories'><i class=\"fa fa-tools\"></i>Tools and equipment</a></li>\n" +
+                "    <a href='/profile'><i class=\"fa fa-receipt\"></i>My rentals</a></li>\n" +
+                "    <a href='/tl'><i class=\"fa fa-clipboard\"></i>Reports</a></li>\n" +
+                "    <a href='#'><i class=\"fa fa-question-circle\"></i>Help</a></li>\n" +
                 "</nav>");
         if(AdminAccess.accessRights(email)){
             out.println(
