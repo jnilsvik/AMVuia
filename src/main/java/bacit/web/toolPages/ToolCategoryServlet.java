@@ -25,7 +25,7 @@ public class ToolCategoryServlet extends HttpServlet {
 
             PreparedStatement ps = con.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs = ps.executeQuery();
-            PageElements.printSidebar(out);
+            //PageElements.printSidebar(out);
             out.println("<html><head></head>");
             out.println("<style> table, th, td {border: 1px solid black;}</style>");
             out.println("<body>");

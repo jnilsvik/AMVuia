@@ -44,7 +44,7 @@ public class ToolDetailServlet extends HttpServlet {
             out.println("</style>");
             out.println("</head>");
             out.println("<body>");
-            PageElements.printSidebar(out);
+            //PageElements.printSidebar(out);
 
             while (rs1.next()) {
 

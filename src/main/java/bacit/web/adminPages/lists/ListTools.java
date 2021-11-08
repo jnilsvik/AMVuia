@@ -27,7 +27,7 @@ public class ListTools extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try {
-            PageElements.printSidebar(out);
+            //PageElements.printSidebar(out);
 
             Connection dbConnection = DBUtils.getNoErrorConnection(out);
             String toolQ = "select * from Tool order by toolID ";

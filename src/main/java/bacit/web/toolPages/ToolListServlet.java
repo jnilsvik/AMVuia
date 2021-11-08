@@ -37,7 +37,7 @@ public class ToolListServlet extends HttpServlet {
             out.println("table, th, td {border: 1px solid black;}");
             out.println("</style>");
             out.println("<body>");
-            PageElements.printSidebar(out);
+            //PageElements.printSidebar(out);
             out.println("<form action = 'tooldetail' method = 'GET'>");
             out.println("<table>");
 
