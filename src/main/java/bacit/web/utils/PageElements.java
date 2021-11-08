@@ -2,6 +2,8 @@ package bacit.web.utils;
 
 //by Paul
 
+import bacit.web.adminPages.AdminAccess;
+
 import java.io.PrintWriter;
 
 public class PageElements {
@@ -21,7 +23,7 @@ public class PageElements {
         out.println("</html>");
     }
 
-    public static void printSidebar(PrintWriter out){
+    public static void printSidebar(PrintWriter out, String email){
         out.println(
                 "<script src=\"https://kit.fontawesome.com/f65d62ad61.js\" crossorigin=\"anonymous\"></script>\n" +
                 "<style> ul {" +
@@ -126,7 +128,13 @@ public class PageElements {
                 "    <a hfref='/tl'><i class=\"fa fa-clipboard\"></i>Reports</a></li>\n" +
                 "    <a hfref='#'><i class=\"fa fa-question-circle\"></i>Help</a></li>\n" +
                 "</nav>");
+        if(AdminAccess.accessRights(email)){
+            out.println(
+                    ""
+            );
+        }
     }
+
 
     /* ADMIN SIDEBAR (commented out so you can use it when your functions are done)
                 out.println("<nav class=\"sidebar\">\n" +(

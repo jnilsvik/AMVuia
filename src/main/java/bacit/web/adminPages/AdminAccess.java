@@ -3,8 +3,16 @@ import java.sql.*;
 
 // by Dilan
 public class  AdminAccess {
-    public static boolean accessRights(String email)   {
-        boolean isAdmin = false;
+
+    private static boolean adminAlreadySet = false;
+    private static boolean isAdmin = false;
+
+    public static boolean accessRights(String email){
+        if(!adminAlreadySet) setRights(email);
+        return isAdmin;
+    }
+
+    private static void setRights(String email)   {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase","root","12345");
@@ -15,13 +23,13 @@ public class  AdminAccess {
             while (rs.next())
             {
                 isAdmin  = rs.getBoolean("userAdmin");
+                adminAlreadySet = true;
             }
 
         }
         catch(Exception e) {
             e.printStackTrace();
         }
-        return isAdmin;
     }
 
 }
