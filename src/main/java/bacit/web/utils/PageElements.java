@@ -127,4 +127,27 @@ public class PageElements {
                 "    <a hfref='#'><i class=\"fa fa-question-circle\"></i>Help</a></li>\n" +
                 "</nav>");
     }
+
+    /* ADMIN SIDEBAR (commented out so you can use it when your functions are done)
+                out.println("<nav class=\"sidebar\">\n" +(
+                "    <img src=\"img/amv.png\" alt=\"AMV logo\"></li>\n" +
+                "    <a hfref='"+BASE_URL+"/profile'><i class=\"fa fa-user\"></i>Ola Nordman</a></li>\n" +
+                "    <a hfref='"+BASE_URL+"/toolcategories'><i class=\"fa fa-tools\"></i>Tools Categories</a></li>\n" +
+                "    <a hfref='"+BASE_URL+"/tlb'><i class=\"fa fa-receipt\"></i>List of All Tools</a></li>\n" +
+                "    <a hfref='#'><i class=\"fa fa-question-circle\"></i>Help(TO DO)</a></li>\n" +
+                "    <a hfref='"+BASE_URL+"/toolregister'><i class=\"fa fa-question-circle\"></i>Register New Tool</a></li>\n" +
+                "    <a hfref='"+BASE_URL+"/toolmaintenance'><i class=\"fa fa-receipt\"></i>Put Tool in Maintenance</a></li>\n" +
+                "    <a hfref='"+BASE_URL+"/payment'><i class=\"fa fa-receipt\"></i>Payment Report</a></li>\n" +
+                "    <a hfref='"+BASE_URL+"/givecertificate'><i class=\"fa fa-receipt\"></i>Grant User Certificates</a></li>\n" +
+
+                "</nav>");
+
+            //MAYBE we should have the sidebar for admins have one link for a page called "admin functions" or similar?
+            //BECAUSE right now, there will be a lot of similar thing i the sidebar for admins to click.
+            //I THINK that they could be split into around two or three servlets named "Reports" and "Modify Tools".
+            //THESE servlets would have zero other functionalities than link to the other servlets.
+            //THIS might be redundant, but I feel something needs to move around for the sidebar links.
+     */
+
 }
+
