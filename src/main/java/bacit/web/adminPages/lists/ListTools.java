@@ -2,7 +2,6 @@ package bacit.web.adminPages.lists;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageElements;
-import bacit.web.a_models.ToolModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,8 +32,6 @@ public class ListTools extends HttpServlet {
             String toolQ = "select * from Tool order by toolID ";
             PreparedStatement statement = dbConnection.prepareStatement(toolQ);
             ResultSet rs = statement.executeQuery();
-            ToolModel model;
-
             //HTML SPAM!
             out.println(
                     "<!DOCTYPE html>" +
@@ -61,26 +58,17 @@ public class ListTools extends HttpServlet {
 
             //create a tool model as long as there are RS's left
             while (rs.next()) {
-                model = new ToolModel(
-                        rs.getInt("toolID"),
-                        rs.getString("toolName"),
-                        rs.getString("toolCategory"),
-                        rs.getBoolean("maintenance"),
-                        rs.getInt("priceFirst"),
-                        rs.getInt("priceAfter"),
-                        rs.getInt("certificateID"),
-                        rs.getString("toolDescription"),
-                        rs.getString("picturePath"));
                 //prints them to the table
                 out.println("<tr>");
-                out.println("<td>" + model.getToolName() + "</th>");
-                out.println("<td>" + model.getToolCategory() + "</th>");
-                out.println("<td>" + model.getPriceFirst() + "</th>");
-                out.println("<td>" + model.getPriceAfter() + "</th>");
-                out.println("<td>" + model.getMaintenance() + "</th>");
-                out.println("<td>" + model.getCertificateID() + "</th>");
+                out.println("<td>" + rs.getString("toolName") + "</th>");
+                out.println("<td>" + rs.getString("toolCategory") + "</th>");
+                out.println("<td>" + rs.getInt("priceFirst") + "</th>");
+                out.println("<td>" + rs.getInt("priceAfter") + "</th>");
+                out.println("<td>" + rs.getBoolean("maintenance") + "</th>");
+                out.println("<td>" + rs.getInt("certificateID") + "</th>");
                 out.println("</tr>");
             }
+            //adds script for sorting
             out.println("</tbody></table>" +
                     "<script src=\"JS/tabelsort.js\"></script>" +
                     "</body>" +

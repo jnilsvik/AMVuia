@@ -27,7 +27,7 @@ public class ListUsers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try {
-            //PageElements.printSidebar(out);
+            PageElements.printSidebar(out,"");
             out.println("<!DOCTYPE html>" +
                         "<head>" +
                         "  <title>Sorting Tables w/ JavaScript</title>" +
@@ -41,6 +41,7 @@ public class ListUsers extends HttpServlet {
                         "    <thead>"+
                         "        <tr>" +
                         "            <th>User ID</th>" +
+                        "            <th>Email</th>" +
                         "            <th>Firstname</th>" +
                         "            <th>Lastname</th>" +
                         "            <th>Phone nmbr</th>" +
@@ -54,30 +55,20 @@ public class ListUsers extends HttpServlet {
             String userQ = "select * from AMVUser order by userID ";
             PreparedStatement statement = dbConnection.prepareStatement(userQ);
             ResultSet rs = statement.executeQuery();
-            UserModel model;
-            //create a user model as long as there are RS's left
             while (rs.next()) {
-                model = new UserModel(
-                        rs.getInt("userID"),
-                        rs.getString("firstname"),
-                        rs.getString("lastname"),
-                        rs.getString("phoneNumber"),
-                        "",
-                        rs.getBoolean("unionMember"),
-                        rs.getBoolean("userAdmin"),
-                        rs.getString("email"));
                 //prints them to the table
                 out.println("<tr>");
-                out.println("<td>" + model.getUserID() + "</th>");
-                out.println("<td>" + model.getFirstname() + "</th>");
-                out.println("<td>" + model.getLastname() + "</th>");
-                out.println("<td>" + model.getPhoneNumber() + "</th>");
-                out.println("<td>" + model.isUnionMember() + "</th>");
-                out.println("<td>" + model.isUserAdmin() + "</th>");
+                out.println("<td>" + rs.getInt("userID") + "</th>");
+                out.println("<td>" + rs.getString("email") + "</th>");
+                out.println("<td>" + rs.getString("firstname") + "</th>");
+                out.println("<td>" + rs.getString("lastname") + "</th>");
+                out.println("<td>" + rs.getString("phoneNumber") + "</th>");
+                out.println("<td>" + rs.getBoolean("unionMember") + "</th>");
+                out.println("<td>" + rs.getBoolean("userAdmin") + "</th>");
                 out.println("</tr>");
             }
             out.println("</tbody></table>" +
-                    "<script src=\"tabelsort.js\"></script>" +
+                    "<script src=\"JS/tabelsort.js\"></script>" +
                     "</body>" +
                     "</html>");
 
