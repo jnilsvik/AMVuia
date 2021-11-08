@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 
 public class PageElements {
 
+    public static final String BASE_URL = "http://localhost:8081/bacit-web-1.0-SNAPSHOT";
+
     public static void printHeader(String title, PrintWriter out){
         out.println("<html>");
         out.println("<head>");
