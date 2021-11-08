@@ -15,6 +15,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+/*
+By Joachim -- INTENDED FOR DatabaseBuilder2!
+
+This class is ment to allow you the check if there are any oddeties with the database compared to the models we make
+
+the second line is the (those in the xxx-Print class) are the direct content from the db in the correct fields
+
+both result will print to the page upon loading,
+-- if any of the first of a kind is cut there is a flaw in the naming (cannot access)
+-- if the model (first line) is different, then the model is being loaded incorrectly (wrong order)
+ */
+
 
 @WebServlet(name = "mt", value = "/mt")
 public class ModuleTest extends HttpServlet {
