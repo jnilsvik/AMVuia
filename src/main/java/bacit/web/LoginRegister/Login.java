@@ -37,7 +37,8 @@ public class Login extends HttpServlet {
             HttpSession session=request.getSession();
             session.setAttribute("email", email); // ! a way to set attributes
             try {
-                request.getRequestDispatcher("/toolcategories").forward(request,response);
+                // TODO: 09.11.2021 make this send you straigth to tools thingy 
+                request.getRequestDispatcher("/index.jsp").forward(request,response);
             } catch (ServletException e) {
                 e.printStackTrace();
             }
