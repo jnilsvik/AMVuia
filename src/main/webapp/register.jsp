@@ -38,7 +38,7 @@
 <body>
 <div class='page'>
     <article class='my-3 amv-register' id='floating-labels'>
-        <div class='bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2'>
+        <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
             <h3>Register</h3>
         </div>
 

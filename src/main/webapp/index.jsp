@@ -9,7 +9,8 @@
     <jsp:include page="/_sidebar.jsp"/>
     <!--content goes here-->
     <section class="main">
-        <h1>Some stuff is missing here :)</h1>
+        <h1>Hello ${email}</h1>
+<        <h1>Some stuff is missing here :)</h1>
         <br>
         <a href="login">Login </a>
         <br>

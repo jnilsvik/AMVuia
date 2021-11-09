@@ -37,7 +37,7 @@ public class Login extends HttpServlet {
             HttpSession session=request.getSession();
             session.setAttribute("email", email); // ! a way to set attributes
             try {
-                request.getRequestDispatcher("/landing.jsp").forward(request,response);
+                request.getRequestDispatcher("/toolcategories").forward(request,response);
             } catch (ServletException e) {
                 e.printStackTrace();
             }
@@ -61,16 +61,5 @@ public class Login extends HttpServlet {
             e.printStackTrace();
         }
         return exists;
-    }
-    // no clue how to call this...
-    void Logout(HttpServletRequest request,HttpServletResponse response){
-        HttpSession session = request.getSession(false);
-        session.invalidate();
-        try {
-            request.getRequestDispatcher("/login.jsp").forward(request,response);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-
     }
 }

@@ -42,7 +42,7 @@
 <body>
 <div class='page'>
     <article class='my-3' id='floating-labels'>
-        <div class='bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2'>
+        <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
             <h3>Login</h3>
         </div>
 
