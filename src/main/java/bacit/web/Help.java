@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import javax.mail.*;
 
 
 @WebServlet(name = "Help", value = "/help")
