@@ -51,7 +51,7 @@ public class ToolDetailServlet extends HttpServlet {
                 out.print("<h2>Price the first day: " +  rs1.getInt("priceFirst") + "</h2>");
                 out.print("<h2>Price after the first day: " +  rs1.getInt("priceAfter") + "</h2>");
                 out.print("<br>");
-                out.print("<p> " + rs1.getString("toolDescription") + "");
+                out.print("<p> " + rs1.getString("description") + "");
                 out.print("<br><br>");
 
                 out.print("<form action = 'toolbooking' method = 'POST'>");
@@ -85,7 +85,7 @@ public class ToolDetailServlet extends HttpServlet {
     public void Calendar(PrintWriter out, Connection db, int toolID) {
         try {
             PreparedStatement st2 = db
-                    .prepareStatement("SELECT * FROM Booking WHERE toolID = ? AND toolReturnDate IS NULL");
+                    .prepareStatement("SELECT * FROM Booking WHERE toolID = ? AND returnDate IS NULL");
             st2.setInt(1, toolID);
             ResultSet rs2 = st2.executeQuery();
 

@@ -43,7 +43,7 @@ public class ToolCategory extends HttpServlet {
             // TODO: 30.10.2021 migth put this in dbq to simplyfy code, mby also make collection '
             //  - remove code dupe
             while (rs2.next()) {
-                out.println("<FORM action='tooldetail' method='get'>");             //FORM open
+                out.println("<FORM action='td' method='get'>");             //FORM open
                 out.println("<div class='featured-product-item'>");         //div open
                 out.println("    <div style='background-image: url(img/"+   //img open
                         rs2.getString("picturePath")                             //img path
