@@ -32,4 +32,26 @@ public class DBQ {
         }
         return model;
     }
+    public static ToolModel getToolModelByID(String toolID, PrintWriter out) throws SQLException {
+        Connection dbConnection = DBUtils.getNoErrorConnection(out);
+        PreparedStatement statement = dbConnection.prepareStatement(
+                "select * from Tool where toolID = ?");
+        statement.setString(1, toolID);
+        ResultSet rs = statement.executeQuery();
+
+        ToolModel model = null;
+        while (rs.next()) {
+            model = new ToolModel(
+                    rs.getInt("toolID"),
+                    rs.getString("toolName"),
+                    rs.getString("toolCategory"),
+                    rs.getBoolean("maintenance"),
+                    rs.getInt("priceFirst"),
+                    rs.getInt("priceAfter"),
+                    rs.getInt("certificateID"),
+                    rs.getString("description"),
+                    rs.getString("picturePath"));
+        }
+        return model;
+    }
 }
