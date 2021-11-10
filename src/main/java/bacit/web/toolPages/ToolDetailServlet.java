@@ -21,11 +21,17 @@ public class ToolDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.print(request.getAttribute("email"));
-        try {
-            HttpSession session = request.getSession(false);
-            String email = (String) session.getAttribute("email");
 
+        // TODO: 10.11.2021 we an use this "if" to redirect to login
+        if (!(request.getAttribute("email") == null)) {
+            out.print(request.getAttribute("email"));
+        } else {
+            request.setAttribute("email", "joachimn@uia.no");
+            out.print("YOU ARE NOT LOGGED IN !!! booking will be set to 'joachimn@uia.no'");
+        }
+
+        try {
+            String email = (String) request.getAttribute("email");
             int toolID = Integer.parseInt(request.getParameter("tool"));
 
             Connection db = DBUtils.getNoErrorConnection(out);
@@ -34,11 +40,8 @@ public class ToolDetailServlet extends HttpServlet {
             st1.setInt(1, toolID);
             ResultSet rs1 = st1.executeQuery();
 
-            out.print("<html>");
             out.print("<head>");
-            out.print("<style>");
-            out.print("table, th, td {border: 1px solid black;}");
-            out.print("th, td {padding: 0 5px;}");
+            out.print("<style> table, th, td {border: 1px solid black; th, td {padding: 0 5px;}");
             out.print("</style>");
             out.print("</head>");
             out.print("<body>");
@@ -51,7 +54,7 @@ public class ToolDetailServlet extends HttpServlet {
                 out.print("<h2>Price the first day: " +  rs1.getInt("priceFirst") + "</h2>");
                 out.print("<h2>Price after the first day: " +  rs1.getInt("priceAfter") + "</h2>");
                 out.print("<br>");
-                out.print("<p> " + rs1.getString("description") + "");
+                out.print("<p> " + rs1.getString("toolDescription") + "");
                 out.print("<br><br>");
 
                 out.print("<form action = 'toolbooking' method = 'POST'>");
@@ -69,16 +72,14 @@ public class ToolDetailServlet extends HttpServlet {
                 out.print("</select><br><br>");
 
                 out.print("<input type = 'hidden' value = '" + email + "' name = 'email' readonly>");
-
                 out.print("<input type = 'submit' value = 'Submit'>");
                 out.print("</form>");
             }
             Calendar(out, db, toolID); //Calendar of available and booked dates
 
             out.print("</body></html>");
-
         } catch (Exception e) {
-            out.print("error");
+            e.printStackTrace();
         }
     }
 

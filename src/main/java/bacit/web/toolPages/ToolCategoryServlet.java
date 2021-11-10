@@ -20,20 +20,16 @@ public class ToolCategoryServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-
-            PreparedStatement ps = con.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
-            ResultSet rs = ps.executeQuery();
-            //PageElements.printSidebar(out);
-            out.print("<html><head></head>");
-            out.print("<style> table, th, td {border: 1px solid black;}</style>");
+            out.print("<html><head><style> table, th, td {border: 1px solid black;}</style></head>");
             out.print("<body>");
-            out.print("<form action = 'toollistservlet' method = 'GET'>");
+            out.print("<form action = 'toollistservlet' method ='GET'>");
             out.print("<table>");
 
+            Class.forName("org.mariadb.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
+            PreparedStatement ps = con.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-
                 String categoryName = rs.getString("toolCategory");
 
                 out.print("<tr>");
