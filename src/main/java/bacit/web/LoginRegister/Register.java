@@ -45,7 +45,7 @@ public class Register extends HttpServlet {
 
             Connection db = DBUtils.getNoErrorConnection(out);
             PreparedStatement statement = db.prepareStatement(
-                    "insert into AMVUser (email, password, firstName, lastName, phoneNumber, unionMember, userAdmin) values(?, ?, ?, ?, ?, ?, ?)");
+                    "insert into AMVUser (email, passwordHash, firstName, lastName, phoneNumber, unionMember, userAdmin) values(?, ?, ?, ?, ?, ?, ?)");
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getFirstname());
