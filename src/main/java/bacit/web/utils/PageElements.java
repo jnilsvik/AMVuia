@@ -47,10 +47,9 @@ public class PageElements {
                 "    <a href="+BASE_URL+"'#'><i class=\"fa fa-question-circle\"></i>Help</a></li>\n");
         if(AdminAccess.accessRights(email)) {
             // TODO: 04.11.2021 make if statement to print diffrent if were admins
-            out.println("<a href=" + BASE_URL + "/admin><i class=\"fa fa-question-circle\"></i>Help</a></li>\n");
+            out.println("<a href=" + BASE_URL + "/admin><i class=\"fa fa-users-cog\"></i>Admin Page</a></li>\n");
         }
         out.println("</nav><div class='main'");
-
     }
 
     public static void printHeadNav(PrintWriter out){

@@ -18,6 +18,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "Profile", value = "/profile")
 public class Profile extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -39,6 +40,7 @@ public class Profile extends HttpServlet {
     }
 
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
@@ -48,7 +50,7 @@ public class Profile extends HttpServlet {
 
     private List<BookingModel> getBookings(String email, PrintWriter out) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection(out);
-        PreparedStatement ps = db.prepareStatement("SELECT orderID, AMVUser.userID, Tool.toolID, startDate, endDate, toolReturnDate FROM ((AMVUser INNER JOIN BOOKING ON AMVUser.userID = Booking.userID) INNER JOIN Tool on Booking.toolID = Tool.toolID) WHERE email = ?;");
+        PreparedStatement ps = db.prepareStatement("SELECT orderID, AMVUser.userID, Tool.toolID, startDate, endDate, returnDate FROM ((AMVUser INNER JOIN BOOKING ON AMVUser.userID = Booking.userID) INNER JOIN Tool on Booking.toolID = Tool.toolID) WHERE email = ?;");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
         List<BookingModel> bookings = new LinkedList<>();
@@ -59,7 +61,7 @@ public class Profile extends HttpServlet {
             }catch (NullPointerException e){}
             LocalDate toolReturnDate = null;
             try{
-                toolReturnDate = rs.getDate("toolReturnDate").toLocalDate();
+                toolReturnDate = rs.getDate("returnDate").toLocalDate();
             } catch (NullPointerException e){}
 
             bookings.add(new BookingModel(
@@ -84,7 +86,7 @@ public class Profile extends HttpServlet {
 
     private void writeBookings(PrintWriter out, List<BookingModel> bookings){
         out.print("<h2>Your current bookings</h2>");
-        out.println("<table style = 'width:80%'>");
+        out.println("<table style = 'width:90%'>");
         out.println("<tr>");
         out.println("<th>Order Number</th>");
         out.println("<th>Tool Name</th>");
@@ -92,7 +94,9 @@ public class Profile extends HttpServlet {
         out.println("<th>End Date</th>");
         out.println("<th>Total Price</th>");
         out.println("<th>Return Date</th>");
+        out.println("<th>Cancel Booking</th>");
         out.println("</tr>");
+
         for(BookingModel booking : bookings){
             out.println("<tr>");
             out.println("<td>" + booking.getOrderID() + "</td> ");
@@ -101,9 +105,21 @@ public class Profile extends HttpServlet {
             out.println("<td>" + booking.getStartDate() + "</td> ");
             out.println("<td>" + booking.getTotalPrice(out) + "</td> ");
             out.println("<td>" + booking.getReturnDate() + "</td> ");
+            printCancelBookingButton(out, booking.getStartDate(), booking.getEndDate());
             out.println("</tr>");
         }
         out.print("</table>");
+    }
+
+    private void printCancelBookingButton(PrintWriter out, LocalDate startDate, LocalDate endDate){
+        if(startDate.isAfter(LocalDate.now())){
+            //canceling possible
+            out.println("<button onclick=\"Profile.test(out)\")>delete</button> ");
+        } else if(endDate.isAfter(LocalDate.now())){
+            out.println("<td>booking started</td> ");
+        } else{
+            out.println("<td>booking over</td> ");
+        }
     }
 
     private void writeFooter(PrintWriter out){
