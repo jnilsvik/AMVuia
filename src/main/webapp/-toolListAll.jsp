@@ -43,11 +43,7 @@
                 out.print("<FORM action='xtd' method='get'>");
                 out.print("<div class='featured-product-item'>");
                 out.print("    <div style='background-image: url(img/"+
-                        rs2.getString("picturePath")
-                                .replaceAll(" ","%20")
-                                .replaceAll("æ","%C3%A6")
-                                .replaceAll("ø","%C3%B8")
-                                .replaceAll("å","%C3%A5") +
+                        rs2.getString("picturePath") +
                         ");' class='featured-product-item-image'>");
                 out.print("    </div>");
                 out.print("    <p class='title'>");

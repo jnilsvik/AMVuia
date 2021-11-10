@@ -41,7 +41,7 @@ public class ToolCategory extends HttpServlet {
         try {
             PreparedStatement ps = dbConnection.prepareStatement(
                 "select * from Tool where toolCategory =?");
-            ps.setString(1, String.valueOf(category.getParameter("toolCategory")));
+            ps.setString(1, String.valueOf(category.getParameter("category")));
 
             ResultSet rs2 = ps.executeQuery();
             // TODO: 30.10.2021 migth put this in dbq to simplyfy code, mby also make collection '
