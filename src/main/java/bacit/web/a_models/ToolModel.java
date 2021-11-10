@@ -1,7 +1,5 @@
 package bacit.web.a_models;
 
-//By Paul
-
 import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;
@@ -49,7 +47,7 @@ public class ToolModel {
         tool = new ToolModel(
                 rs.getInt("toolID"),
                 rs.getString("toolName"),
-                rs.getString("category"),
+                rs.getString("toolCategory"),
                 rs.getBoolean("maintenance"),
                 rs.getInt("priceFirst"),
                 rs.getInt("priceAfter"),

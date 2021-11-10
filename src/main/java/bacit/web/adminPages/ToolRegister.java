@@ -108,7 +108,7 @@ public class ToolRegister extends HttpServlet {
             statement.setBoolean(2, false);
             statement.setString(3, request.getParameter("pricefirst"));
             statement.setString(4, request.getParameter("priceafter"));
-            statement.setString(5, request.getParameter("category"));
+            statement.setString(5, request.getParameter("toolCategory"));
             statement.setString(6, request.getParameter("toolcertificate"));
             statement.setString(7, request.getParameter("tooldesc"));
             statement.executeUpdate();

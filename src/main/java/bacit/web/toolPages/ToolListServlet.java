@@ -27,7 +27,7 @@ public class ToolListServlet extends HttpServlet {
             Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
 
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Tool WHERE toolCategory = ? AND NOT maintenance = true");
-            ps.setString(1, (request.getParameter("category")));
+            ps.setString(1, (request.getParameter("toolCategory")));
             ResultSet rs = ps.executeQuery();
 
             out.println("<html>");

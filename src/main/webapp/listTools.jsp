@@ -1,4 +1,5 @@
-<%@ page import="java.sql.ResultSet" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="bacit.web.a_models.ToolModel" %><%--
   Created by IntelliJ IDEA.
   User: Joachim
   Date: 10.11.2021
@@ -14,36 +15,33 @@
     <link rel="stylesheet" href="CSS/tabelsort.css">
 </head>
 <body>
-    <h3>Tool Stuff</h3>
+    <h3>Tools Listing</h3>
     <table class="table-sortable">
         <thead>
             <tr>
-                <th>toolName</th>
-                <th>category</th>
+                <th>Name</th>
+                <th>Category</th>
                 <th>priceFirst</th>
                 <th>priceAfter</th>
-                <th>maintenance</th>
-                <th>certificateID</th>
+                <th>in Maintenance</th>
+                <th>CertificateID</th>
             </tr>
         </thead>
         <tbody>
         <%
-            ResultSet rs = (ResultSet) request.getAttribute("toollist");
-            try {
-                while (rs.next()) {
-                    //prints them to the table
+            ArrayList<ToolModel> model = (ArrayList<ToolModel>) request.getAttribute("toolList");
+            if(model != null) {
+                for (ToolModel tm : model){
                     out.print(
-                            "<tr" +
-                            "<td>" + rs.getString("toolName") + "</th>"+
-                            "<td>" + rs.getString("toolCategory") + "</th> " +
-                            "<td>" + rs.getInt("priceFirst") + "</th>" +
-                            "<td>" + rs.getInt("priceAfter") + "</th>" +
-                            "<td>" + rs.getBoolean("maintenance") + "</th>" +
-                            "<td>" + rs.getInt("certificateID") + "</th>" +
+                            "<tr>" +
+                            "<td>" + tm.getToolName() + "</td>" +
+                            "<td>" + tm.getToolCategory() + "</td>" +
+                            "<td>" + tm.getPriceFirst() + "</td>" +
+                            "<td>" + tm.getPriceAfter() + "</td>" +
+                            "<td>" + tm.getMaintenance() + "</td>" +
+                            "<td>" + tm.getCertificateID() + "</td>" +
                             "</tr>");
                 }
-            } catch (Exception e){
-                e.printStackTrace();
             }
         %>
         </tbody>
