@@ -33,7 +33,7 @@ public class Profile extends HttpServlet {
             writeBookings(out, bookings);
             //writeFooter(out);
         } catch (Exception e) {
-            out.println(e);
+            out.print(e);
         }
     }
 
@@ -77,31 +77,31 @@ public class Profile extends HttpServlet {
      //   PageElements.printSidebar(out, email);
        // PageElements.printHeader(header, out);
         //TODO sidebar and head
-        out.println("<style>");
-        out.println("table, th, td { border:1px solid black;}");
-        out.println("</style>");
+        out.print("<style>");
+        out.print("table, th, td { border:1px solid black;}");
+        out.print("</style>");
     }
 
     private void writeBookings(PrintWriter out, List<BookingModel> bookings){
         out.print("<h2>Your current bookings</h2>");
-        out.println("<table style = 'width:80%'>");
-        out.println("<tr>");
-        out.println("<th>Order Number</th>");
-        out.println("<th>Tool Name</th>");
-        out.println("<th>Start Date</th>");
-        out.println("<th>End Date</th>");
-        out.println("<th>Total Price</th>");
-        out.println("<th>Return Date</th>");
-        out.println("</tr>");
+        out.print("<table style = 'width:80%'>");
+        out.print("<tr>");
+        out.print("<th>Order Number</th>");
+        out.print("<th>Tool Name</th>");
+        out.print("<th>Start Date</th>");
+        out.print("<th>End Date</th>");
+        out.print("<th>Total Price</th>");
+        out.print("<th>Return Date</th>");
+        out.print("</tr>");
         for(BookingModel booking : bookings){
-            out.println("<tr>");
-            out.println("<td>" + booking.getOrderID() + "</td> ");
-            out.println("<td>" + booking.getToolName(out) + "</td> ");
-            out.println("<td>" + booking.getStartDate() + "</td> ");
-            out.println("<td>" + booking.getStartDate() + "</td> ");
-            out.println("<td>" + booking.getTotalPrice(out) + "</td> ");
-            out.println("<td>" + booking.getReturnDate() + "</td> ");
-            out.println("</tr>");
+            out.print("<tr>");
+            out.print("<td>" + booking.getOrderID() + "</td> ");
+            out.print("<td>" + booking.getToolName(out) + "</td> ");
+            out.print("<td>" + booking.getStartDate() + "</td> ");
+            out.print("<td>" + booking.getStartDate() + "</td> ");
+            out.print("<td>" + booking.getTotalPrice(out) + "</td> ");
+            out.print("<td>" + booking.getReturnDate() + "</td> ");
+            out.print("</tr>");
         }
         out.print("</table>");
     }

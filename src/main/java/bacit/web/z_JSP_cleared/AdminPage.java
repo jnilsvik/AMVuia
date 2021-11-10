@@ -1,4 +1,4 @@
-package bacit.web.adminPages;
+package bacit.web.z_JSP_cleared;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;

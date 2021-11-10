@@ -1,8 +1,9 @@
-package bacit.web.toolPages2;
+package bacit.web.z_JSP_cleared.toolPrev_WIP;
 
 import bacit.web.a_models.ToolModel;
 import bacit.web.utils.DBQ;
 import bacit.web.utils.DBUtils;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,13 +24,11 @@ import java.util.List;
 
 /*  by Joachim
 * dunno why it dont work, smth with the toolmodel not being loaded?*/
-@WebServlet(name = "td", value = "/td")
+@WebServlet(name = "xtd", value = "/xtd")
 public class ToolDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-       // PageElements.printHead(out);
-        //TODO Header
         try {
             writeToolDetails((DBQ.getToolModelByID(request.getParameter("toolID"),out)),out);
         } catch (SQLException e) {
@@ -37,12 +36,12 @@ public class ToolDetail extends HttpServlet {
         }
     }
     private void writeToolDetails(ToolModel model, PrintWriter out){
-        out.println("<h1>"+model.getToolName()+"</h1>");
-        out.println("<img src='img/"+model.getPicturePath()+"'>");
-        out.println("<p>"+model.getDescription()+"</p>");
-        out.println("<p>Price first day: " + model.getPriceFirst()+"</p>");
-        out.println("<p>Price after first day: "+ model.getPriceAfter()+"</p>");
-        //out.println(model.getMaintenance()); // this is quite a dumb attribute btw
+        out.print("<h1>"+model.getToolName()+"</h1>");
+        out.print("<img src='img/"+model.getPicturePath()+"'>");
+        out.print("<p>"+model.getDescription()+"</p>");
+        out.print("<p>Price first day: " + model.getPriceFirst()+"</p>");
+        out.print("<p>Price after first day: "+ model.getPriceAfter()+"</p>");
+        //out.print(model.getMaintenance()); // this is quite a dumb attribute btw
         //book now
         out.print("<form action='b' method='GET'>");
         out.print("<button type='submit' name='book' value='book'></button>");
@@ -78,7 +77,7 @@ public class ToolDetail extends HttpServlet {
             }
         }
         //create the table heading and starts the body
-        out.println(
+        out.print(
                 "<table class='table-sortable'>" +
                 "    <thead>" +
                 "        <tr>" +
@@ -113,7 +112,7 @@ public class ToolDetail extends HttpServlet {
             out.print("<td bgcolor=" + colour + ">" + date + "<br>" + status + "</td>");
             //week division
             if (newWeek == 7){
-                out.println("</tr><tr>");
+                out.print("</tr><tr>");
                 newWeek = 0;
             }
             date.plusDays(1);
@@ -123,14 +122,14 @@ public class ToolDetail extends HttpServlet {
 
     }
     public static void main(String[] args){
-        System.out.println(LocalDate.now().with(DayOfWeek.MONDAY));
-        System.out.println(LocalDate.now());
+        System.out.print(LocalDate.now().with(DayOfWeek.MONDAY));
+        System.out.print(LocalDate.now());
 
         LocalDate currentDate = LocalDate.now();
         currentDate = currentDate.with(DayOfWeek.MONDAY);
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String currentDateFormat = currentDate.format(formatters);
-        System.out.println(currentDateFormat);
+        System.out.print(currentDateFormat);
     }//End of main
 
     public void Calendar(PrintWriter out, int toolID) {
@@ -157,18 +156,18 @@ public class ToolDetail extends HttpServlet {
             int days = 0;
             int resetWeek = 1;
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            out.println("<h2>Available dates</h2>");
-            out.println("<table>");
-            out.println("   <tr>");
-            out.println("       <th>Monday</th>");
-            out.println("       <th>Tuesday</th>");
-            out.println("       <th>Wednesday</th>");
-            out.println("       <th>Thursday</th>");
-            out.println("       <th>Friday</th>");
-            out.println("       <th>Saturday</th>");
-            out.println("       <th>Sunday</th>");
-            out.println("   </tr>");
-            out.println("<tr>");
+            out.print("<h2>Available dates</h2>");
+            out.print("<table>");
+            out.print("   <tr>");
+            out.print("       <th>Monday</th>");
+            out.print("       <th>Tuesday</th>");
+            out.print("       <th>Wednesday</th>");
+            out.print("       <th>Thursday</th>");
+            out.print("       <th>Friday</th>");
+            out.print("       <th>Saturday</th>");
+            out.print("       <th>Sunday</th>");
+            out.print("   </tr>");
+            out.print("<tr>");
 
             while (days <= 120) {
                 //sets colour dependant on availability
@@ -180,11 +179,11 @@ public class ToolDetail extends HttpServlet {
                 }
                 //Print the actual line
                 String currentDateFormat = currentDate.format(formatters);
-                out.println("<td bgcolor=" + color + ">" + currentDateFormat + "<br>" + status + "</td>");
+                out.print("<td bgcolor=" + color + ">" + currentDateFormat + "<br>" + status + "</td>");
                 //resets the week (amount of days per coloums
                 if (resetWeek == 7) {
-                    out.println("</tr>");
-                    out.println("<tr>");
+                    out.print("</tr>");
+                    out.print("<tr>");
                     resetWeek = 0;
                 }
                 currentDate = currentDate.plusDays(1);
@@ -192,10 +191,10 @@ public class ToolDetail extends HttpServlet {
                 resetWeek++;
             }
 
-            out.println("</tr>");
-            out.println("</table>");
+            out.print("</tr>");
+            out.print("</table>");
         } catch (Exception e) {
-            out.println("error");
+            out.print("error");
         }
     }
 }

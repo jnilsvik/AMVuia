@@ -27,29 +27,29 @@ public class Payment extends HttpServlet {
             String email = (String) session.getAttribute("email");
 
             if (AdminAccess.accessRights(email)) {
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Tool maintenance</title>");
-                out.println("</head>");
-                out.println("<style>");
-                out.println("table, th, td { border:1px solid black;}");
-                out.println("</style>");
-                out.println("<body>");
+                out.print("<html>");
+                out.print("<head>");
+                out.print("<title>Tool maintenance</title>");
+                out.print("</head>");
+                out.print("<style>");
+                out.print("table, th, td { border:1px solid black;}");
+                out.print("</style>");
+                out.print("<body>");
 
-                out.println("<table style = 'width:100%'>");
-                out.println("<tr>");
-                out.println("<th>User ID</th>");
-                out.println("<th>First Name</th>");
-                out.println("<th>Last Name</th>");
-                out.println("<th>Email</th>");
-                out.println("<th>Phone Number</th>");
-                out.println("<th>Order ID</th>");
-                out.println("<th>Start Date</th>");
-                out.println("<th>End Date</th>");
-                out.println("<th>Return Date</th>");
-                out.println("<th>Tool ID</th>");
-                out.println("<th>Total Price</th>");
-                out.println("</tr>");
+                out.print("<table style = 'width:100%'>");
+                out.print("<tr>");
+                out.print("<th>User ID</th>");
+                out.print("<th>First Name</th>");
+                out.print("<th>Last Name</th>");
+                out.print("<th>Email</th>");
+                out.print("<th>Phone Number</th>");
+                out.print("<th>Order ID</th>");
+                out.print("<th>Start Date</th>");
+                out.print("<th>End Date</th>");
+                out.print("<th>Return Date</th>");
+                out.print("<th>Tool ID</th>");
+                out.print("<th>Total Price</th>");
+                out.print("</tr>");
 
                 Connection db = DBUtils.getNoErrorConnection(out);
                 String insertUserCommand = "SELECT * FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE paid = false AND returnDate IS NOT NULL";
@@ -76,39 +76,39 @@ public class Payment extends HttpServlet {
                     String endDateString = endDate.format(formatters);
                     String toolReturnalDateString = toolReturnDate.format(formatters);
 
-                    out.println("<tr>");
-                    out.println("<td>" + userID + "</td> ");
-                    out.println("<td>" + firstName + "</td> ");
-                    out.println("<td>" + lastName + "</td> ");
-                    out.println("<td>" + email1 + "</td> ");
-                    out.println("<td>" + phoneNumber + "</td> ");
-                    out.println("<td>" + orderID + "</td> ");
-                    out.println("<td>" + startDateString + "</td> ");
-                    out.println("<td>" + endDateString + "</td> ");
-                    out.println("<td>" + toolReturnalDateString + "</td> ");
-                    out.println("<td>" + toolID + "</td> ");
-                    out.println("<td>" + totalPrice + "</td> ");
-                    out.println("</tr>");
+                    out.print("<tr>");
+                    out.print("<td>" + userID + "</td> ");
+                    out.print("<td>" + firstName + "</td> ");
+                    out.print("<td>" + lastName + "</td> ");
+                    out.print("<td>" + email1 + "</td> ");
+                    out.print("<td>" + phoneNumber + "</td> ");
+                    out.print("<td>" + orderID + "</td> ");
+                    out.print("<td>" + startDateString + "</td> ");
+                    out.print("<td>" + endDateString + "</td> ");
+                    out.print("<td>" + toolReturnalDateString + "</td> ");
+                    out.print("<td>" + toolID + "</td> ");
+                    out.print("<td>" + totalPrice + "</td> ");
+                    out.print("</tr>");
                 }
-                out.println("</tr>");
-                out.println("</table>");
-                out.println("<br>");
+                out.print("</tr>");
+                out.print("</table>");
+                out.print("<br>");
 
-                out.println("<h2>Mark order as payed</h2>");
-                out.println("<form action = 'payment' method = 'POST'>");
-                out.println("<label for = 'orderID'>Order ID: </label><br>");
-                out.println("<input type = 'text' name = 'orderID'><br>");
-                out.println("<input type = 'submit' value = 'Submit'>");
-                out.println("</form>");
+                out.print("<h2>Mark order as payed</h2>");
+                out.print("<form action = 'payment' method = 'POST'>");
+                out.print("<label for = 'orderID'>Order ID: </label><br>");
+                out.print("<input type = 'text' name = 'orderID'><br>");
+                out.print("<input type = 'submit' value = 'Submit'>");
+                out.print("</form>");
 
-                out.println("</body>");
-                out.println("</html>");
+                out.print("</body>");
+                out.print("</html>");
             } else {
-                out.println("<h1> Sorry, you don't have access to this page");
+                out.print("<h1> Sorry, you don't have access to this page");
             }
 
         } catch (Exception e) {
-            out.println("error");
+            out.print("error");
         }
     }
 
@@ -124,13 +124,13 @@ public class Payment extends HttpServlet {
             statement.setString(1, request.getParameter("orderID"));
             statement.executeUpdate();
 
-            out.println("<html>");
+            out.print("<html>");
             out.print("<head>");
             out.print("</head>");
-            out.println("<body>");
-            out.println("<h1>Order successfully marked as paid</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.print("<body>");
+            out.print("<h1>Order successfully marked as paid</h1>");
+            out.print("</body>");
+            out.print("</html>");
         }
         catch (Exception e) {
             e.printStackTrace();

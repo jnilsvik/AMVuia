@@ -19,7 +19,7 @@ public class Help extends HttpServlet {
         response.setContentType("text/html");
 
         PrintWriter out = response.getWriter();
-        out.println("<html>" +
+        out.print("<html>" +
                 "<head>" +
                 "<title>Help</title>" +
                 "</head>" +
@@ -44,7 +44,7 @@ public class Help extends HttpServlet {
         String a = request.getParameter("name");
         String b = request.getParameter("message");
         String c = request.getParameter("email");
-        out.println("<html>" +
+        out.print("<html>" +
                 "<body>" +
                 "<h1>"+a+"</h1>"+
                 "<h1>"+b+"</h1>"+
