@@ -1,6 +1,5 @@
 package bacit.web.toolPages2;
 
-import bacit.web.utils.PageElements;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +24,9 @@ public class ToolAllListings extends HttpServlet {
             Class.forName("org.mariadb.jdbc.Driver");
             Connection dbConnection = DriverManager.getConnection(
                     "jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-            PageElements.printHead(out);
-            PageElements.printHeadNav(out);
+          //  PageElements.printHead(out);
+            //PageElements.printHeadNav(out);
+            //TODO Header
             printCategories(out,dbConnection);
             printTools(out,dbConnection);
         } catch (ClassNotFoundException | SQLException e) {

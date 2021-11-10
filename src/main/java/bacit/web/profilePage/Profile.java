@@ -2,7 +2,6 @@ package bacit.web.profilePage;
 
 import bacit.web.a_models.BookingModel;
 import bacit.web.utils.DBUtils;
-import bacit.web.utils.PageElements;
 
 import java.io.PrintWriter;
 import java.sql.*;
@@ -32,7 +31,7 @@ public class Profile extends HttpServlet {
             List<BookingModel> bookings = getBookings(email, out);
             writeHeader(out, "Profile Page", email);
             writeBookings(out, bookings);
-            writeFooter(out);
+            //writeFooter(out);
         } catch (Exception e) {
             out.println(e);
         }
@@ -48,7 +47,7 @@ public class Profile extends HttpServlet {
 
     private List<BookingModel> getBookings(String email, PrintWriter out) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection(out);
-        PreparedStatement ps = db.prepareStatement("SELECT orderID, AMVUser.userID, Tool.toolID, startDate, endDate, toolReturnDate FROM ((AMVUser INNER JOIN BOOKING ON AMVUser.userID = Booking.userID) INNER JOIN Tool on Booking.toolID = Tool.toolID) WHERE email = ?;");
+        PreparedStatement ps = db.prepareStatement("SELECT orderID, AMVUser.userID, Tool.toolID, startDate, endDate, returnDate FROM ((AMVUser INNER JOIN BOOKING ON AMVUser.userID = Booking.userID) INNER JOIN Tool on Booking.toolID = Tool.toolID) WHERE email = ?;");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
         List<BookingModel> bookings = new LinkedList<>();
@@ -75,8 +74,9 @@ public class Profile extends HttpServlet {
     }
 
     private void writeHeader(PrintWriter out, String header, String email){
-        PageElements.printSidebar(out, email);
-        PageElements.printHeader(header, out);
+     //   PageElements.printSidebar(out, email);
+       // PageElements.printHeader(header, out);
+        //TODO sidebar and head
         out.println("<style>");
         out.println("table, th, td { border:1px solid black;}");
         out.println("</style>");
@@ -106,10 +106,11 @@ public class Profile extends HttpServlet {
         out.print("</table>");
     }
 
-    private void writeFooter(PrintWriter out){
+    /*private void writeFooter(PrintWriter out){
         PageElements.printFooter(out);
     }
-
+*/
+    //TODO cleanup footer
 }
 
 

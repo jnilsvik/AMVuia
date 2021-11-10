@@ -3,7 +3,6 @@ package bacit.web.toolPages2;
 import bacit.web.a_models.ToolModel;
 import bacit.web.utils.DBQ;
 import bacit.web.utils.DBUtils;
-import bacit.web.utils.PageElements;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +28,8 @@ public class ToolDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        PageElements.printHead(out);
+       // PageElements.printHead(out);
+        //TODO Header
         try {
             writeToolDetails((DBQ.getToolModelByID(request.getParameter("toolID"),out)),out);
         } catch (SQLException e) {

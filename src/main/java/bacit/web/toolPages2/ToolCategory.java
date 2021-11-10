@@ -1,7 +1,6 @@
 package bacit.web.toolPages2;
 
 import bacit.web.utils.DBUtils;
-import bacit.web.utils.PageElements;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,9 +24,9 @@ public class ToolCategory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         Connection dbConnection = DBUtils.getNoErrorConnection(out);
-
-        PageElements.printHead(out);
-        PageElements.printHeadNav(out);
+        //TODO Header
+       // PageElements.printHead(out);
+        //PageElements.printHeadNav(out);
         printTools(out,dbConnection,request);
         out.println();
     }
