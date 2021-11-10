@@ -25,10 +25,6 @@ public class ListTools extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try {
-            Connection dbConnection = DBUtils.getNoErrorConnection(out);
-            String toolQ = "select * from Tool order by toolID ";
-            PreparedStatement statement = dbConnection.prepareStatement(toolQ);
-            ResultSet rs = statement.executeQuery();
             //HTML SPAM!
             out.println(
                     "<!DOCTYPE html>" +
@@ -53,6 +49,10 @@ public class ListTools extends HttpServlet {
                     "    </thead>"+
                     "<tbody>");
 
+            Connection dbConnection = DBUtils.getNoErrorConnection(out);
+            String toolQ = "select * from Tool order by toolID ";
+            PreparedStatement statement = dbConnection.prepareStatement(toolQ);
+            ResultSet rs = statement.executeQuery();
             //create a tool model as long as there are RS's left
             while (rs.next()) {
                 //prints them to the table
