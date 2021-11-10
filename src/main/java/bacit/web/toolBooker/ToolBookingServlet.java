@@ -3,7 +3,6 @@ package bacit.web.toolBooker;
 import java.time.*;
 
 import bacit.web.utils.DBUtils;
-import bacit.web.utils.PageElements;
 import jdk.javadoc.internal.tool.Start;
 import jdk.vm.ci.meta.Local;
 
@@ -75,9 +74,10 @@ public class ToolBookingServlet extends HttpServlet {
                 registerBooking(db, StartDateWanted, endingDate, totalPrice, userID, toolID);
 
                 String title = "Booking";
-                PageElements.printHeader(title, out);
+                //TODO Use the jsp Header and Footer
+               // PageElements.printHeader(title, out);
                 printBookingDetails(out, StartDateWanted, tool, endingDate, totalPrice, email);
-                PageElements.printFooter(out);
+                //PageElements.printFooter(out);
 
             } else {
                 out.println("<h1>Sorry, that tool is already taken or you dont have the needed ID./h1>");

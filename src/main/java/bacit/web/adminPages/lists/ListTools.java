@@ -1,7 +1,6 @@
 package bacit.web.adminPages.lists;
 
 import bacit.web.utils.DBUtils;
-import bacit.web.utils.PageElements;
 
 import java.io.IOException;
 import java.io.PrintWriter;
