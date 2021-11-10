@@ -46,13 +46,13 @@ public class Payment extends HttpServlet {
                 out.println("<th>Order ID</th>");
                 out.println("<th>Start Date</th>");
                 out.println("<th>End Date</th>");
-                out.println("<th>Returnal Date</th>");
+                out.println("<th>Return Date</th>");
                 out.println("<th>Tool ID</th>");
                 out.println("<th>Total Price</th>");
                 out.println("</tr>");
 
                 Connection db = DBUtils.getNoErrorConnection(out);
-                String insertUserCommand = "SELECT * FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE paid = false AND toolReturnDate IS NOT NULL";
+                String insertUserCommand = "SELECT * FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE paid = false AND returnDate IS NOT NULL";
                 PreparedStatement st1 = db.prepareStatement(insertUserCommand);
                 st1.executeUpdate();
                 ResultSet rs1 = st1.executeQuery();
