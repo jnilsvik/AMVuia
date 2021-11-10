@@ -85,7 +85,7 @@ public class ChangePassword extends HttpServlet {
             if(isOldPassValid && doPasswordsMatch) {
 
                 PreparedStatement st2 = db
-                        .prepareStatement("UPDATE AMVUser SET password = ? WHERE email = ?");
+                        .prepareStatement("UPDATE AMVUser SET passwordHash = ? WHERE email = ?");
                 st2.setString(1, newPassword1);
                 st2.setString(2, email);
                 st2.executeUpdate();
