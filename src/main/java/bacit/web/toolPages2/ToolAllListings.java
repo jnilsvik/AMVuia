@@ -24,14 +24,23 @@ public class ToolAllListings extends HttpServlet {
             Class.forName("org.mariadb.jdbc.Driver");
             Connection dbConnection = DriverManager.getConnection(
                     "jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-          //  PageElements.printHead(out);
-            //PageElements.printHeadNav(out);
-            //TODO Header
+            printHead(out);
             printCategories(out,dbConnection);
             printTools(out,dbConnection);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+    }
+    void printHead(PrintWriter out){
+        out.println("<!DOCTYPE html>");
+        out.println("<head>");
+        out.println("  <title>Toollist</title>"); // TODO: 09.11.2021 set the titel to a string or smth
+        out.println("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
+        out.println("  <meta charset=\"utf-8\" />");
+        out.println("  <link rel=\"stylesheet\" href=\"CSS/list.css\">" );
+        out.println("  <link rel=\"stylesheet\" href=\"CSS/style.css\">" );
+        out.println("</head>");
+        out.println("<body>");
     }
     void printCategories(PrintWriter out, Connection dbConnection){
         try {

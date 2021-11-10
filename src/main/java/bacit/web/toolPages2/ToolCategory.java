@@ -24,9 +24,15 @@ public class ToolCategory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         Connection dbConnection = DBUtils.getNoErrorConnection(out);
-        //TODO Header
-       // PageElements.printHead(out);
-        //PageElements.printHeadNav(out);
+        out.println("<!DOCTYPE html>");
+        out.println("<head>");
+        out.println("  <title>Toollist</title>"); // TODO: 09.11.2021 set the titel to a string or smth
+        out.println("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
+        out.println("  <meta charset=\"utf-8\" />");
+        out.println("  <link rel=\"stylesheet\" href=\"CSS/list.css\">" );
+        out.println("  <link rel=\"stylesheet\" href=\"CSS/style.css\">" );
+        out.println("</head>");
+        out.println("<body>");
         printTools(out,dbConnection,request);
         out.println();
     }
