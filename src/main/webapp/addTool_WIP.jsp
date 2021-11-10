@@ -39,7 +39,7 @@
     }</style>
 </head>
 <body>
-<jsp:include page="/_sidebar.jsp"/>
+<jsp:include page="__head_nav.html"/>
 <div class="page">
     <article class="my-3" id="floating-labels"> <!-- this is temp to genter-->
         <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">

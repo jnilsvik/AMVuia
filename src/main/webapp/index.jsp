@@ -6,7 +6,7 @@
     <title>Index</title>
 </head>
 <body>
-    <jsp:include page="/_sidebar.jsp"/>
+    <jsp:include page="__head_nav.html"/>
     <!--content goes here-->
     <section class="main">
         <h1>Hello ${email}</h1>
