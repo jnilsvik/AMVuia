@@ -27,7 +27,7 @@ CREATE OR REPLACE TABLE Tool (
 CREATE OR REPLACE TABLE AMVUser (
     userID INT NOT NULL auto_increment unique,
     email VARCHAR(50) NOT NULL unique,
-    password VARCHAR(250) NOT NULL,
+    passwordHash VARCHAR(250) NOT NULL,
     firstName VARCHAR(50),
     lastName VARCHAR(50) NOT NULL,
     phoneNumber VARCHAR(16),
