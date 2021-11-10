@@ -1,7 +1,7 @@
 package bacit.web.UpAndDownLoadFile;
 
 
-import bacit.web.bacit_database.DBUtils;
+import bacit.web.utils.DBUtils;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.PrintWriter;

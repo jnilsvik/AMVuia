@@ -1,6 +1,5 @@
 package bacit.web.UpAndDownLoadFile;
 
-import bacit.web.bacit_headerFooter.HeaderFooter;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,15 +20,15 @@ public class UpLoadServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        HeaderFooter.printHeader("Upload File", out);
+        printHeader(out);
         writeFileUploadForm(out,null);
-        HeaderFooter.printFooter(out);
+        printFooter(out);
     }
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        HeaderFooter.printHeader("Upload File", out);
+        printHeader(out);
         try{
             Part filePart = request.getPart("file");
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
@@ -52,7 +51,7 @@ public class UpLoadServlet extends HttpServlet {
             writeFileUploadForm(out, ex.getMessage());
 
         }
-        HeaderFooter.printFooter(out);
+        printFooter(out);
     }
 
     private void writeFileUploadForm(PrintWriter out, String errorMessage) {
@@ -66,6 +65,19 @@ public class UpLoadServlet extends HttpServlet {
         out.println("<input type='file' name='file'/>");
         out.println("<input type='submit' value='Upload file'/>");
         out.println("</form>");
+    }
+
+    private void printFooter(PrintWriter out){
+        out.println("</body>");
+        out.println("</html>");
+    }
+
+    private void printHeader(PrintWriter out){
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>FileUpload</title>");
+        out.println("</head>");
+        out.println("<body>");
     }
 }
 
