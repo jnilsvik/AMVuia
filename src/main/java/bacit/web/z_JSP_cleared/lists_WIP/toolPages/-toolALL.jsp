@@ -16,11 +16,12 @@
     <style> table, th, td {border: 1px solid black;}</style>
 </head>
 <body>
-<jsp:include page="__head_nav.html"/>
+<jsp:include page="../../../../../../webapp/__head_nav.html"/>
     <form action = 'toollistservlet' method = 'GET'>
         <table>
             <%
                 try {
+                    // TODO: 10.11.2021 -joachim: could move a lot of back to the servlet but meh
                     Class.forName("org.mariadb.jdbc.Driver");
                     Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
 

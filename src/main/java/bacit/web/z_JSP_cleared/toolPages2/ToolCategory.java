@@ -1,4 +1,4 @@
-package bacit.web.toolPages2;
+package bacit.web.z_JSP_cleared.toolPages2;
 
 import bacit.web.utils.DBUtils;
 
@@ -29,8 +29,8 @@ public class ToolCategory extends HttpServlet {
         out.print("  <title>Toollist</title>"); // TODO: 09.11.2021 set the titel to a string or smth
         out.print("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
         out.print("  <meta charset=\"utf-8\" />");
-        out.print("  <link rel=\"stylesheet\" href=\"CSS/list.css\">" );
-        out.print("  <link rel=\"stylesheet\" href=\"CSS/style.css\">" );
+        out.print("  <link rel=\"stylesheet\" href=\"css/list.css\">" );
+        out.print("  <link rel=\"stylesheet\" href=\"css/style.css\">" );
         out.print("</head>");
         out.print("<body>");
         printTools(out,dbConnection,request);
