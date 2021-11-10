@@ -9,12 +9,14 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
-    <title>Title</title>
+    <title>Tool List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <link rel="stylesheet" href="CSS/tabelsort.css">
 </head>
 <body>
+    <jsp:include page="__head_nav.html"/>
+
     <h3>Tools Listing</h3>
     <table class="table-sortable">
         <thead>

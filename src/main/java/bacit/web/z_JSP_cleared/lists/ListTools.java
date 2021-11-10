@@ -1,4 +1,4 @@
-package bacit.web.adminPages.lists;
+package bacit.web.z_JSP_cleared.lists;
 
 import bacit.web.a_models.ToolModel;
 import bacit.web.utils.DBUtils;
@@ -26,6 +26,7 @@ public class ListTools extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        // TODO: 10.11.2021 need to implement the non-admin prevention
         try {
             Connection dbConnection = DBUtils.getNoErrorConnection(out);
             String toolQ = "select * from Tool order by toolID ";
