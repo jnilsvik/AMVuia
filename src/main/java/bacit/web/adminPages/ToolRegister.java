@@ -35,21 +35,21 @@ public class ToolRegister extends HttpServlet {
                 PreparedStatement ps1 = con.prepareStatement("SELECT * FROM ToolCertificate");
                 ResultSet rs1 = ps1.executeQuery();
 
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Register Tool</title>");
-                out.println("</head>");
+                out.print("<html>");
+                out.print("<head>");
+                out.print("<title>Register Tool</title>");
+                out.print("</head>");
 
-                out.println("<h2>Register Tool</h2>");
-                out.println("<form action = 'toolregister' method = 'POST'> ");
-                out.println("<label for = 'toolname'>Tool Name: </label><br>");
-                out.println("<input type = 'text' name = 'toolname'><br>");
-                out.println("<label for = 'pricefirst'>Price First Day: </label><br>");
-                out.println("<input type = 'text' name = 'pricefirst'><br>");
-                out.println("<label for = 'priceafter'>Price After First Day: </label><br>");
-                out.println("<input type = 'text' name = 'priceafter'><br>");
+                out.print("<h2>Register Tool</h2>");
+                out.print("<form action = 'toolregister' method = 'POST'> ");
+                out.print("<label for = 'toolname'>Tool Name: </label><br>");
+                out.print("<input type = 'text' name = 'toolname'><br>");
+                out.print("<label for = 'pricefirst'>Price First Day: </label><br>");
+                out.print("<input type = 'text' name = 'pricefirst'><br>");
+                out.print("<label for = 'priceafter'>Price After First Day: </label><br>");
+                out.print("<input type = 'text' name = 'priceafter'><br>");
 
-                out.println("<label for = 'category'>Tool Category: </label><br>");
+                out.print("<label for = 'category'>Tool Category: </label><br>");
                 out.print("<select name = 'category' id = 'category'><br>");
 
                 while (rs.next()) {
@@ -59,10 +59,10 @@ public class ToolRegister extends HttpServlet {
 
                 }
                 out.print("</select>");
-                out.println("<br>");
-                out.println("<br>");
+                out.print("<br>");
+                out.print("<br>");
 
-                out.println("<label for = 'toolcertificate'>Tool Certificate: </label><br>");
+                out.print("<label for = 'toolcertificate'>Tool Certificate: </label><br>");
                 out.print("<select name = 'toolcertificate' id = 'toolcertificate'><br>");
 
                 while (rs1.next()) {
@@ -73,23 +73,23 @@ public class ToolRegister extends HttpServlet {
 
                 }
                 out.print("</select>");
-                out.println("<br>");
-                out.println("<br>");
+                out.print("<br>");
+                out.print("<br>");
 
-                out.println("<label for = 'tooldesc'>Tool Description: </label><br>");
-                out.println("<input type = 'text' name = 'tooldesc'><br>");
-                out.println("<input type = 'submit' value = 'Register User'>");
-                out.println("</form>");
+                out.print("<label for = 'tooldesc'>Tool Description: </label><br>");
+                out.print("<input type = 'text' name = 'tooldesc'><br>");
+                out.print("<input type = 'submit' value = 'Register User'>");
+                out.print("</form>");
 
 
-                out.println("</body>");
-                out.println("</html>");
+                out.print("</body>");
+                out.print("</html>");
             } else {
-                out.println("<h1> Sorry, you don't have access to this page");
+                out.print("<h1> Sorry, you don't have access to this page");
             }
 
         } catch (Exception e) {
-            out.println("error");
+            out.print("error");
         }
     }
 
@@ -113,13 +113,13 @@ public class ToolRegister extends HttpServlet {
             statement.setString(7, request.getParameter("tooldesc"));
             statement.executeUpdate();
 
-            out.println("<html>");
+            out.print("<html>");
             out.print("<head>");
             out.print("</head>");
-            out.println("<body>");
-            out.println("<h1> Tool suceccfully registered</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.print("<body>");
+            out.print("<h1> Tool suceccfully registered</h1>");
+            out.print("</body>");
+            out.print("</html>");
         }
         catch (Exception e) {
             e.printStackTrace();

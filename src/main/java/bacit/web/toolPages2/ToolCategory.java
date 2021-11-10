@@ -24,21 +24,20 @@ public class ToolCategory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         Connection dbConnection = DBUtils.getNoErrorConnection(out);
-        out.println("<!DOCTYPE html>");
-        out.println("<head>");
-        out.println("  <title>Toollist</title>"); // TODO: 09.11.2021 set the titel to a string or smth
-        out.println("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
-        out.println("  <meta charset=\"utf-8\" />");
-        out.println("  <link rel=\"stylesheet\" href=\"CSS/list.css\">" );
-        out.println("  <link rel=\"stylesheet\" href=\"CSS/style.css\">" );
-        out.println("</head>");
-        out.println("<body>");
+        out.print("<!DOCTYPE html>");
+        out.print("<head>");
+        out.print("  <title>Toollist</title>"); // TODO: 09.11.2021 set the titel to a string or smth
+        out.print("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
+        out.print("  <meta charset=\"utf-8\" />");
+        out.print("  <link rel=\"stylesheet\" href=\"CSS/list.css\">" );
+        out.print("  <link rel=\"stylesheet\" href=\"CSS/style.css\">" );
+        out.print("</head>");
+        out.print("<body>");
         printTools(out,dbConnection,request);
-        out.println();
     }
 
     void printTools(PrintWriter out,Connection dbConnection,HttpServletRequest category){
-        out.println("<section class='featured-products'>");
+        out.print("<section class='featured-products'>");
         try {
             PreparedStatement ps = dbConnection.prepareStatement(
                 "select * from Tool where toolCategory =?");
@@ -48,25 +47,25 @@ public class ToolCategory extends HttpServlet {
             // TODO: 30.10.2021 migth put this in dbq to simplyfy code, mby also make collection '
             //  - remove code dupe
             while (rs2.next()) {
-                out.println("<FORM action='td' method='get'>");             //FORM open
-                out.println("<div class='featured-product-item'>");         //div open
-                out.println("    <div style='background-image: url(img/"+   //img open
+                out.print("<FORM action='td' method='get'>");             //FORM open
+                out.print("<div class='featured-product-item'>");         //div open
+                out.print("    <div style='background-image: url(img/"+   //img open
                         rs2.getString("picturePath")                             //img path
                                 .replaceAll(" ","%20")
                                 .replaceAll("æ","%C3%A6")
                                 .replaceAll("ø","%C3%B8")
                                 .replaceAll("å","%C3%A5") +
                         ");' class='featured-product-item-image'>");         //img class specification
-                out.println("    </div>");                                 //img close
-                out.println("    <p class='title'>");                       //title open
-                out.println(rs2.getString("toolName").replaceAll("_"," "));
-                out.println("    </p>");                                    //title end
-                out.println("    <button class='list-btn' type='submit' name='toolID' value='"+ rs2.getInt("toolID") +"'>");
-                out.println("        View item");                           //button content
-                out.println("    </button>");                               //button close
-                out.println("</div></FORM>");                               //FORM close | div close
+                out.print("    </div>");                                 //img close
+                out.print("    <p class='title'>");                       //title open
+                out.print(rs2.getString("toolName").replaceAll("_"," "));
+                out.print("    </p>");                                    //title end
+                out.print("    <button class='list-btn' type='submit' name='toolID' value='"+ rs2.getInt("toolID") +"'>");
+                out.print("        View item");                           //button content
+                out.print("    </button>");                               //button close
+                out.print("</div></FORM>");                               //FORM close | div close
             }
-            out.println("</table></section></section></body></html>");
+            out.print("</table></section></section></body></html>");
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -59,9 +59,9 @@ public class Register extends HttpServlet {
             statement.close();
             db.close();
             // TODO: 10.11.2021 -joachim: redirect to login? not the way it should be for final but for is fine
-            out.println("<html><body>");
-            out.println("<a href=\"login\"><h1>Registration successful! Click here to login</a></h1></a>");
-            out.println("</body></html>");
+            out.print("<html><body>");
+            out.print("<a href=\"login\"><h1>Registration successful! Click here to login</a></h1></a>");
+            out.print("</body></html>");
         }
         catch (Exception e) {
             e.printStackTrace();

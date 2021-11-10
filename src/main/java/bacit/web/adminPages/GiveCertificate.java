@@ -33,20 +33,20 @@ public class GiveCertificate extends HttpServlet {
                 PreparedStatement ps = con.prepareStatement("SELECT * FROM ToolCertificate");
                 ResultSet rs = ps.executeQuery();
 
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Give a user a certificate</title>");
-                out.println("</head>");
+                out.print("<html>");
+                out.print("<head>");
+                out.print("<title>Give a user a certificate</title>");
+                out.print("</head>");
 
-                out.println("<h2>Register User</h2>");
-                out.println("<form action = 'givecertificate' method = 'POST'> ");
-                out.println("<label for = 'userID'>User ID: </label><br>");
-                out.println("<input type = 'text' name = 'userID'><br>");
-                out.println("<label for = 'accomplishdate'>Accomplish Date: </label><br>");
-                out.println("<input type = 'date' name = 'accomplishdate'><br>");
+                out.print("<h2>Register User</h2>");
+                out.print("<form action = 'givecertificate' method = 'POST'> ");
+                out.print("<label for = 'userID'>User ID: </label><br>");
+                out.print("<input type = 'text' name = 'userID'><br>");
+                out.print("<label for = 'accomplishdate'>Accomplish Date: </label><br>");
+                out.print("<input type = 'date' name = 'accomplishdate'><br>");
 
 
-                out.println("<label for = 'certificateID'>Tool Certificate: </label><br>");
+                out.print("<label for = 'certificateID'>Tool Certificate: </label><br>");
                 out.print("<select name = 'certificateID' id = 'certificateID'><br>");
 
                 while (rs.next()) {
@@ -58,20 +58,20 @@ public class GiveCertificate extends HttpServlet {
 
                 }
                 out.print("</select>");
-                out.println("<br>");
-                out.println("<br>");
+                out.print("<br>");
+                out.print("<br>");
 
-                out.println("<input type = 'submit' value = 'Register User'>");
-                out.println("</form>");
+                out.print("<input type = 'submit' value = 'Register User'>");
+                out.print("</form>");
 
-                out.println("</body>");
-                out.println("</html>");
+                out.print("</body>");
+                out.print("</html>");
             } else {
-                out.println("<h1> Sorry, you don't have access to this page");
+                out.print("<h1> Sorry, you don't have access to this page");
             }
 
         } catch (Exception e) {
-            out.println("error");
+            out.print("error");
         }
     }
 
@@ -92,13 +92,13 @@ public class GiveCertificate extends HttpServlet {
             statement.setObject(3, accomplishDate);
             statement.executeUpdate();
 
-            out.println("<html>");
+            out.print("<html>");
             out.print("<head>");
             out.print("</head>");
-            out.println("<body>");
-            out.println("<h1> Task successful!</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.print("<body>");
+            out.print("<h1> Task successful!</h1>");
+            out.print("</body>");
+            out.print("</html>");
         }
         catch (Exception e) {
             e.printStackTrace();

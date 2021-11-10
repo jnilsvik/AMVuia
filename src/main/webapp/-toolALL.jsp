@@ -1,4 +1,8 @@
-<%--
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %><%--
   Created by IntelliJ IDEA.
   User: Joachim
   Date: 10.11.2021
@@ -14,7 +18,30 @@
 <body>
 <jsp:include page="__head_nav.html"/>
     <form action = 'toollistservlet' method = 'GET'>
-        <table></table>
+        <table>
+            <%
+                try {
+                    Class.forName("org.mariadb.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
+
+                    PreparedStatement ps = con.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
+                    ResultSet rs = ps.executeQuery();
+
+                    while (rs.next()) {
+                        String categoryName = rs.getString("toolCategory");
+
+                        out.print("<tr>");
+                        out.print("<td><label for = " + categoryName + "> " + categoryName.replaceAll("_", " ") + ":</label></td>");
+                        out.print("<td><img src = 'img/amv.png' width = '156' heigth = '151'></td>");
+                        out.print("<td><input type = 'radio' id = " + categoryName + " name = 'category' value = " + categoryName + "></td>");
+                        out.print("</tr>");
+                    }
+                } catch (Exception e) {
+                    out.print("error");
+                }
+            %>
+        </table>
+        <input type = 'submit' value = 'Submit'>");
     </form>
 
 

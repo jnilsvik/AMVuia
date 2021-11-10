@@ -30,16 +30,16 @@ public class ToolListServlet extends HttpServlet {
             ps.setString(1, (request.getParameter("toolCategory")));
             ResultSet rs = ps.executeQuery();
 
-            out.println("<html>");
-            out.println("<head>");
-            out.println("</head>");
-            out.println("<style>");
-            out.println("table, th, td {border: 1px solid black;}");
-            out.println("</style>");
-            out.println("<body>");
+            out.print("<html>");
+            out.print("<head>");
+            out.print("</head>");
+            out.print("<style>");
+            out.print("table, th, td {border: 1px solid black;}");
+            out.print("</style>");
+            out.print("<body>");
             //PageElements.printSidebar(out);
-            out.println("<form action = 'tooldetail' method = 'GET'>");
-            out.println("<table>");
+            out.print("<form action = 'tooldetail' method = 'GET'>");
+            out.print("<table>");
 
             while (rs.next()) {
 
@@ -47,23 +47,23 @@ public class ToolListServlet extends HttpServlet {
                 int toolID = rs.getInt("toolID");
 
 
-                out.println("<tr>");
-                out.println("<td><label for = " + toolName + "> " + toolName.replaceAll("_", " ") + ":</label></td>");
-                out.println("<td><img src = 'img/amv.png' width = '156' heigth = '151'></td>");
-                out.println("<td><input type = 'radio' id = " + toolName + " name = 'tool' value = " + toolID + "></td>");
-                out.println("</tr>");
+                out.print("<tr>");
+                out.print("<td><label for = " + toolName + "> " + toolName.replaceAll("_", " ") + ":</label></td>");
+                out.print("<td><img src = 'img/amv.png' width = '156' heigth = '151'></td>");
+                out.print("<td><input type = 'radio' id = " + toolName + " name = 'tool' value = " + toolID + "></td>");
+                out.print("</tr>");
 
             }
 
-            out.println("</table>");
+            out.print("</table>");
 
-            out.println("<input type = 'submit' value = 'Submit'>");
-            out.println("</form>");
-            out.println("</body>");
-            out.println("</html>");
+            out.print("<input type = 'submit' value = 'Submit'>");
+            out.print("</form>");
+            out.print("</body>");
+            out.print("</html>");
 
         } catch (Exception e) {
-            out.println("error");
+            out.print("error");
         }
     }
 

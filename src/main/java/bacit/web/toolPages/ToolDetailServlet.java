@@ -34,14 +34,14 @@ public class ToolDetailServlet extends HttpServlet {
             st1.setInt(1, toolID);
             ResultSet rs1 = st1.executeQuery();
 
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<style>");
-            out.println("table, th, td {border: 1px solid black;}");
-            out.println("th, td {padding: 0 5px;}");
-            out.println("</style>");
-            out.println("</head>");
-            out.println("<body>");
+            out.print("<html>");
+            out.print("<head>");
+            out.print("<style>");
+            out.print("table, th, td {border: 1px solid black;}");
+            out.print("th, td {padding: 0 5px;}");
+            out.print("</style>");
+            out.print("</head>");
+            out.print("<body>");
 
             if (rs1.next()) {
                 out.print("<h1> " + rs1.getString("toolName").replaceAll("_", " ") +
@@ -75,10 +75,10 @@ public class ToolDetailServlet extends HttpServlet {
             }
             Calendar(out, db, toolID); //Calendar of available and booked dates
 
-            out.println("</body></html>");
+            out.print("</body></html>");
 
         } catch (Exception e) {
-            out.println("error");
+            out.print("error");
         }
     }
 
@@ -105,18 +105,18 @@ public class ToolDetailServlet extends HttpServlet {
             int days = 0;
             int resetWeek = 1;
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            out.println("<h2>Available dates</h2>");
-            out.println("<table>");
-            out.println("   <tr>");
-            out.println("       <th>Monday</th>");
-            out.println("       <th>Tuesday</th>");
-            out.println("       <th>Wednesday</th>");
-            out.println("       <th>Thursday</th>");
-            out.println("       <th>Friday</th>");
-            out.println("       <th>Saturday</th>");
-            out.println("       <th>Sunday</th>");
-            out.println("   </tr>");
-            out.println("<tr>");
+            out.print("<h2>Available dates</h2>");
+            out.print("<table>");
+            out.print("   <tr>");
+            out.print("       <th>Monday</th>");
+            out.print("       <th>Tuesday</th>");
+            out.print("       <th>Wednesday</th>");
+            out.print("       <th>Thursday</th>");
+            out.print("       <th>Friday</th>");
+            out.print("       <th>Saturday</th>");
+            out.print("       <th>Sunday</th>");
+            out.print("   </tr>");
+            out.print("<tr>");
 
             while (days <= 120) {
                 //sets colour dependant on availability
@@ -128,11 +128,11 @@ public class ToolDetailServlet extends HttpServlet {
                 }
                 //Print the actual line
                 String currentDateFormat = currentDate.format(formatters);
-                out.println("<td bgcolor=" + color + ">" + currentDateFormat + "<br>" + status + "</td>");
+                out.print("<td bgcolor=" + color + ">" + currentDateFormat + "<br>" + status + "</td>");
                 //resets the week (amount of days per coloums
                 if (resetWeek == 7) {
-                    out.println("</tr>");
-                    out.println("<tr>");
+                    out.print("</tr>");
+                    out.print("<tr>");
                     resetWeek = 0;
                 }
                 currentDate = currentDate.plusDays(1);
@@ -140,10 +140,10 @@ public class ToolDetailServlet extends HttpServlet {
                 resetWeek++;
             }
 
-            out.println("</tr>");
-            out.println("</table>");
+            out.print("</tr>");
+            out.print("</table>");
         } catch (Exception e) {
-            out.println("error");
+            out.print("error");
         }
     }
 }

@@ -26,28 +26,28 @@ public class ToolCategoryServlet extends HttpServlet {
             PreparedStatement ps = con.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs = ps.executeQuery();
             //PageElements.printSidebar(out);
-            out.println("<html><head></head>");
-            out.println("<style> table, th, td {border: 1px solid black;}</style>");
-            out.println("<body>");
-            out.println("<form action = 'toollistservlet' method = 'GET'>");
-            out.println("<table>");
+            out.print("<html><head></head>");
+            out.print("<style> table, th, td {border: 1px solid black;}</style>");
+            out.print("<body>");
+            out.print("<form action = 'toollistservlet' method = 'GET'>");
+            out.print("<table>");
 
             while (rs.next()) {
 
                 String categoryName = rs.getString("toolCategory");
 
-                out.println("<tr>");
-                out.println("<td><label for = " + categoryName + "> " + categoryName.replaceAll("_", " ") + ":</label></td>");
-                out.println("<td><img src = 'img/amv.png' width = '156' heigth = '151'></td>");
-                out.println("<td><input type = 'radio' id = " + categoryName + " name = 'category' value = " + categoryName + "></td>");
-                out.println("</tr>");
+                out.print("<tr>");
+                out.print("<td><label for = " + categoryName + "> " + categoryName.replaceAll("_", " ") + ":</label></td>");
+                out.print("<td><img src = 'img/amv.png' width = '156' heigth = '151'></td>");
+                out.print("<td><input type = 'radio' id = " + categoryName + " name = 'category' value = " + categoryName + "></td>");
+                out.print("</tr>");
             }
-            out.println("</table>");
-            out.println("<input type = 'submit' value = 'Submit'>");
-            out.println("</form></body></html>");
+            out.print("</table>");
+            out.print("<input type = 'submit' value = 'Submit'>");
+            out.print("</form></body></html>");
 
         } catch (Exception e) {
-            out.println("error");
+            out.print("error");
         }
     }
 

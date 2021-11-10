@@ -40,15 +40,15 @@
             if(rs != null) {
                 try {
                     while (rs.next()) {
-                            out.println("<tr>");
-                            out.println("<td>" + rs.getInt("userID") + "</td>");
-                            out.println("<td>" + rs.getString("email") + "</td>");
-                            out.println("<td>" + rs.getString("firstname") + "</td>");
-                            out.println("<td>" + rs.getString("lastname") + "</td>");
-                            out.println("<td>" + rs.getString("phoneNumber") + "</td>");
-                            out.println("<td>" + rs.getBoolean("unionMember") + "</td>");
-                            out.println("<td>" + rs.getBoolean("userAdmin") + "</td>");
-                            out.println("</tr>");
+                            out.print("<tr>");
+                            out.print("<td>" + rs.getInt("userID") + "</td>");
+                            out.print("<td>" + rs.getString("email") + "</td>");
+                            out.print("<td>" + rs.getString("firstname") + "</td>");
+                            out.print("<td>" + rs.getString("lastname") + "</td>");
+                            out.print("<td>" + rs.getString("phoneNumber") + "</td>");
+                            out.print("<td>" + rs.getBoolean("unionMember") + "</td>");
+                            out.print("<td>" + rs.getBoolean("userAdmin") + "</td>");
+                            out.print("</tr>");
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();

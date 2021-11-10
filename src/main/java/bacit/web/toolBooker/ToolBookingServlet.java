@@ -80,7 +80,7 @@ public class ToolBookingServlet extends HttpServlet {
                 //PageElements.printFooter(out);
 
             } else {
-                out.println("<h1>Sorry, that tool is already taken or you dont have the needed ID./h1>");
+                out.print("<h1>Sorry, that tool is already taken or you dont have the needed ID./h1>");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,12 +175,12 @@ public class ToolBookingServlet extends HttpServlet {
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String StartDateWantedFormat = StartDateWanted.format(formatters);
         String EndingDateForm = endingDate.format(formatters);
-        out.println("<h1> Tool has been booked. Here is your the order details:</h1>");
-        out.println("<p>Tool: " + tool + "</p>");
-        out.println("<p>Start Date: " + StartDateWantedFormat + "</p>");
-        out.println("<p>Start Date: " + EndingDateForm + "</p>");
-        out.println("<p>Total price: " + totalPrice + "</p>");
-        out.println("<p>Booked as: " + email + "</p>");
+        out.print("<h1> Tool has been booked. Here is your the order details:</h1>");
+        out.print("<p>Tool: " + tool + "</p>");
+        out.print("<p>Start Date: " + StartDateWantedFormat + "</p>");
+        out.print("<p>Start Date: " + EndingDateForm + "</p>");
+        out.print("<p>Total price: " + totalPrice + "</p>");
+        out.print("<p>Booked as: " + email + "</p>");
     }
 
 }

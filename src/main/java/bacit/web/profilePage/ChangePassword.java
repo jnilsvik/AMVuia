@@ -22,29 +22,29 @@ public class ChangePassword extends HttpServlet {
             HttpSession session = request.getSession(false);
             String email = (String) session.getAttribute("email");
 
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Change Pasword</title>");
-                out.println("</head>");
+                out.print("<html>");
+                out.print("<head>");
+                out.print("<title>Change Pasword</title>");
+                out.print("</head>");
 
-                out.println("<h2>Change Password</h2>");
-                out.println("<form action = 'changepassword' method = 'POST'> ");
-                out.println("<label for = 'oldpass'>Old password: </label><br>");
-                out.println("<input type = 'text' name = 'oldpass' required><br>");
-                out.println("<label for = 'newpass1'>New password: </label><br>");
-                out.println("<input type = 'text' name = 'newpass1' required><br>");
-                out.println("<label for = 'newpass2'>Repeat new password: </label><br>");
-                out.println("<input type = 'text' name = 'newpass2' required><br>");
-                out.println("<input type = 'submit' value = 'Change Password'>");
-                out.println("</form>");
+                out.print("<h2>Change Password</h2>");
+                out.print("<form action = 'changepassword' method = 'POST'> ");
+                out.print("<label for = 'oldpass'>Old password: </label><br>");
+                out.print("<input type = 'text' name = 'oldpass' required><br>");
+                out.print("<label for = 'newpass1'>New password: </label><br>");
+                out.print("<input type = 'text' name = 'newpass1' required><br>");
+                out.print("<label for = 'newpass2'>Repeat new password: </label><br>");
+                out.print("<input type = 'text' name = 'newpass2' required><br>");
+                out.print("<input type = 'submit' value = 'Change Password'>");
+                out.print("</form>");
 
 
-                out.println("</body>");
-                out.println("</html>");
+                out.print("</body>");
+                out.print("</html>");
 
 
         } catch (Exception e) {
-            out.println("error");
+            out.print("error");
         }
     }
 
@@ -91,12 +91,12 @@ public class ChangePassword extends HttpServlet {
                 st2.executeUpdate();
 
                 out.print("Your password has been successfully changed!");
-                out.println("<a href = 'http://localhost:8081/bacit-web-1.0-SNAPSHOT/profile'> Go back to profile</a>");
+                out.print("<a href = 'http://localhost:8081/bacit-web-1.0-SNAPSHOT/profile'> Go back to profile</a>");
             }
 
 
         } catch (Exception e) {
-            out.println("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
+            out.print("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
         }
 
 

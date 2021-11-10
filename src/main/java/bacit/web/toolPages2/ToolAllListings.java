@@ -32,15 +32,15 @@ public class ToolAllListings extends HttpServlet {
         }
     }
     void printHead(PrintWriter out){
-        out.println("<!DOCTYPE html>");
-        out.println("<head>");
-        out.println("  <title>Toollist</title>"); // TODO: 09.11.2021 set the titel to a string or smth
-        out.println("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
-        out.println("  <meta charset=\"utf-8\" />");
-        out.println("  <link rel=\"stylesheet\" href=\"CSS/list.css\">" );
-        out.println("  <link rel=\"stylesheet\" href=\"CSS/style.css\">" );
-        out.println("</head>");
-        out.println("<body>");
+        out.print("<!DOCTYPE html>");
+        out.print("<head>");
+        out.print("  <title>Toollist</title>"); // TODO: 09.11.2021 set the titel to a string or smth
+        out.print("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
+        out.print("  <meta charset=\"utf-8\" />");
+        out.print("  <link rel=\"stylesheet\" href=\"CSS/list.css\">" );
+        out.print("  <link rel=\"stylesheet\" href=\"CSS/style.css\">" );
+        out.print("</head>");
+        out.print("<body>");
     }
     void printCategories(PrintWriter out, Connection dbConnection){
         try {
@@ -48,48 +48,48 @@ public class ToolAllListings extends HttpServlet {
                     "SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs1 = ps.executeQuery();
 
-            out.println("<section class='categories' style='width: 70%'>");
+            out.print("<section class='categories' style='width: 70%'>");
             while (rs1.next()) {
                 String category = rs1.getString("toolCategory");
                 // TODO: 30.10.2021 find out how to filter 
-                out.println("<FORM action='tc' method='get'");
-                out.println("<div class='category-item' style='background-image: url(img/amv.png);'>");
-                out.println("<div class='category-item-inner'>");
-                out.println("<button class='list-btn' name='category' type='submit' value='"+ category +"'>"+ category.replaceAll("_"," ") +"</button></div></div></FORM>");
+                out.print("<FORM action='tc' method='get'");
+                out.print("<div class='category-item' style='background-image: url(img/amv.png);'>");
+                out.print("<div class='category-item-inner'>");
+                out.print("<button class='list-btn' name='category' type='submit' value='"+ category +"'>"+ category.replaceAll("_"," ") +"</button></div></div></FORM>");
             }
-            out.println("</section>");}
+            out.print("</section>");}
         catch (SQLException e) {
             e.printStackTrace();
             out.print("smth weith categories");
         }
     }
     void printTools(PrintWriter out,Connection dbConnection){
-        out.println("<section class='featured-products' style='width: 70%'>");
+        out.print("<section class='featured-products' style='width: 70%'>");
         try {
             PreparedStatement ps = dbConnection.prepareStatement(
                     "select * from Tool order by toolID");
             ResultSet rs2 = ps.executeQuery();
             // TODO: 30.10.2021 migth put this in dbq to simplyfy code, mby also make collection 
             while (rs2.next()) {
-                out.println("<FORM action='td' method='get'>");     //FORM open
-                out.println("<div class='featured-product-item'>");         //div open
-                out.println("    <div style='background-image: url(img/"+   //img open
+                out.print("<FORM action='td' method='get'>");     //FORM open
+                out.print("<div class='featured-product-item'>");         //div open
+                out.print("    <div style='background-image: url(img/"+   //img open
                         rs2.getString("picturePath")                        //img path
                                 .replaceAll(" ","%20")
                                 .replaceAll("æ","%C3%A6")
                                 .replaceAll("ø","%C3%B8")
                                 .replaceAll("å","%C3%A5") +
                         ");' class='featured-product-item-image'>");
-                out.println("    </div>");
-                out.println("    <p class='title'>");
-                out.println(rs2.getString("toolName").replaceAll("_"," "));
-                out.println("    </p>");
-                out.println("    <button class='list-btn' name='toolID' type='submit' value='"+rs2.getInt("toolID")+"'>");
-                out.println("        View item");
-                out.println("    </button>");
-                out.println("</div></FORM>");
+                out.print("    </div>");
+                out.print("    <p class='title'>");
+                out.print(rs2.getString("toolName").replaceAll("_"," "));
+                out.print("    </p>");
+                out.print("    <button class='list-btn' name='toolID' type='submit' value='"+rs2.getInt("toolID")+"'>");
+                out.print("        View item");
+                out.print("    </button>");
+                out.print("</div></FORM>");
             }
-            out.println("</table></section></section></body></html>");
+            out.print("</table></section></section></body></html>");
         } catch (SQLException e) {
             e.printStackTrace();
             out.print("smth weith tools");

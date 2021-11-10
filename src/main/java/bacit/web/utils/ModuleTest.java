@@ -35,59 +35,59 @@ public class ModuleTest extends HttpServlet {
         PrintWriter out = resp.getWriter();
         Connection dbc = DBUtils.getNoErrorConnection(out);
 
-        out.println("<!DOCTYPE html>");
-        out.println("<head>");
-        out.println("  <title>Toollist</title>");
-        out.println("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
-        out.println("  <meta charset=\"utf-8\" />");
-        out.println("  <link rel=\"stylesheet\" href=\"css/list.css\">" );
-        out.println("  <link rel=\"stylesheet\" href=\"css/style.css\">" );
-        out.println("</head>");
-        out.println("<body>");
+        out.print("<!DOCTYPE html>");
+        out.print("<head>");
+        out.print("  <title>Toollist</title>");
+        out.print("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
+        out.print("  <meta charset=\"utf-8\" />");
+        out.print("  <link rel=\"stylesheet\" href=\"css/list.css\">" );
+        out.print("  <link rel=\"stylesheet\" href=\"css/style.css\">" );
+        out.print("</head>");
+        out.print("<body>");
 
 
-        out.println("<section class='book'>");
+        out.print("<section class='book'>");
         try {
             TestBookingModule(out, dbc);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        out.println("</section>");
-        out.println("<section class='printBook'>");
+        out.print("</section>");
+        out.print("<section class='printBook'>");
         try {
             TestBookingModulePrint(out,dbc);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        out.println("</section>");
-        out.println("<section class='user'>");
+        out.print("</section>");
+        out.print("<section class='user'>");
         try {
             TestUserModule(out,dbc);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        out.println("</section>");
-        out.println("<section class='userPrint'>");
+        out.print("</section>");
+        out.print("<section class='userPrint'>");
         try {
             TestUserModulePrint(out,dbc);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        out.println("</section>");
-        out.println("<section class='tool'>");
+        out.print("</section>");
+        out.print("<section class='tool'>");
         try {
             TestToolModule(out,dbc);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        out.println("</section>");
-        out.println("<section class='toolPrint'>");
+        out.print("</section>");
+        out.print("<section class='toolPrint'>");
         try {
             TestToolModulePrint(out,dbc);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        out.println("</section>");
+        out.print("</section>");
     }
 
     void TestBookingModule(PrintWriter out, Connection dbConnection) throws SQLException{
@@ -104,12 +104,12 @@ public class ModuleTest extends HttpServlet {
                     rs.getTimestamp("startDate").toLocalDateTime().toLocalDate(),
                     rs.getTimestamp("endDate").toLocalDateTime().toLocalDate(),
                     rs.getTimestamp("returnDate").toLocalDateTime().toLocalDate());
-            out.println(model.getOrderID());
-            out.println(model.getToolID());
-            out.println(model.getUserID());
-            out.println(model.getStartDate());
-            out.println(model.getEndDate());
-            out.println(model.getReturnDate());
+            out.print(model.getOrderID());
+            out.print(model.getToolID());
+            out.print(model.getUserID());
+            out.print(model.getStartDate());
+            out.print(model.getEndDate());
+            out.print(model.getReturnDate());
         }
     }
 
@@ -129,14 +129,14 @@ public class ModuleTest extends HttpServlet {
                     rs.getBoolean("unionMember"),
                     rs.getBoolean("userAdmin"),
                     rs.getString("email"));
-            out.println(model.getUserID());
-            out.println(model.getEmail());
-            out.println(model.getPassword());
-            out.println(model.getFirstname());
-            out.println(model.getLastname());
-            out.println(model.getPhoneNumber());
-            out.println(model.isUnionMember());
-            out.println(model.isUserAdmin());
+            out.print(model.getUserID());
+            out.print(model.getEmail());
+            out.print(model.getPassword());
+            out.print(model.getFirstname());
+            out.print(model.getLastname());
+            out.print(model.getPhoneNumber());
+            out.print(model.isUnionMember());
+            out.print(model.isUserAdmin());
         }
     }
 
@@ -157,15 +157,15 @@ public class ModuleTest extends HttpServlet {
                     rs.getInt("certificateID"),
                     rs.getString("description"),
                     rs.getString("picturePath"));
-            out.println(model.getToolID());
-            out.println(model.getToolName());
-            out.println(model.getToolCategory());
-            out.println(model.getMaintenance());
-            out.println(model.getPriceFirst());
-            out.println(model.getPriceAfter());
-            out.println(model.getCertificateID());
-            out.println(model.getDescription());
-            out.println(model.getPicturePath());
+            out.print(model.getToolID());
+            out.print(model.getToolName());
+            out.print(model.getToolCategory());
+            out.print(model.getMaintenance());
+            out.print(model.getPriceFirst());
+            out.print(model.getPriceAfter());
+            out.print(model.getCertificateID());
+            out.print(model.getDescription());
+            out.print(model.getPicturePath());
         }
     }
 
@@ -175,12 +175,12 @@ public class ModuleTest extends HttpServlet {
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
-            out.println(rs.getInt("orderID"));
-            out.println(rs.getInt("toolID"));
-            out.println(rs.getInt("userID"));
-            out.println(rs.getTimestamp("startDate").toLocalDateTime().toLocalDate());
-            out.println(rs.getTimestamp("endDate").toLocalDateTime().toLocalDate());
-            out.println(rs.getTimestamp("returnDate").toLocalDateTime().toLocalDate());
+            out.print(rs.getInt("orderID"));
+            out.print(rs.getInt("toolID"));
+            out.print(rs.getInt("userID"));
+            out.print(rs.getTimestamp("startDate").toLocalDateTime().toLocalDate());
+            out.print(rs.getTimestamp("endDate").toLocalDateTime().toLocalDate());
+            out.print(rs.getTimestamp("returnDate").toLocalDateTime().toLocalDate());
         }
     }
 
@@ -190,14 +190,14 @@ public class ModuleTest extends HttpServlet {
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
-            out.println(rs.getInt("userID"));
-            out.println(rs.getString("email"));
-            out.println("password");
-            out.println(rs.getString("firstname"));
-            out.println(rs.getString("lastname"));
-            out.println(rs.getString("phoneNumber"));
-            out.println(rs.getBoolean("unionMember"));
-            out.println(rs.getBoolean("userAdmin"));
+            out.print(rs.getInt("userID"));
+            out.print(rs.getString("email"));
+            out.print("password");
+            out.print(rs.getString("firstname"));
+            out.print(rs.getString("lastname"));
+            out.print(rs.getString("phoneNumber"));
+            out.print(rs.getBoolean("unionMember"));
+            out.print(rs.getBoolean("userAdmin"));
         }
     }
 
@@ -207,15 +207,15 @@ public class ModuleTest extends HttpServlet {
         ResultSet rs = statement.executeQuery();
 
         if (rs.next()) {
-            out.println(rs.getInt("toolID"));
-            out.println(rs.getString("toolName"));
-            out.println(rs.getString("toolCategory"));
-            out.println(rs.getBoolean("maintenance"));
-            out.println(rs.getInt("priceFirst"));
-            out.println(rs.getInt("priceAfter"));
-            out.println(rs.getInt("certificateID"));
-            out.println(rs.getString("description"));
-            out.println(rs.getString("picturePath"));
+            out.print(rs.getInt("toolID"));
+            out.print(rs.getString("toolName"));
+            out.print(rs.getString("toolCategory"));
+            out.print(rs.getBoolean("maintenance"));
+            out.print(rs.getInt("priceFirst"));
+            out.print(rs.getInt("priceAfter"));
+            out.print(rs.getInt("certificateID"));
+            out.print(rs.getString("description"));
+            out.print(rs.getString("picturePath"));
         }
     }
 }
