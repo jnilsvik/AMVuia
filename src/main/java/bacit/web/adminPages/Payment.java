@@ -68,7 +68,7 @@ public class Payment extends HttpServlet {
                     int orderID = rs1.getInt("orderID");
                     LocalDate startDate = rs1.getDate("startDate").toLocalDate();
                     LocalDate endDate = rs1.getDate("endDate").toLocalDate();
-                    LocalDate toolReturnDate = rs1.getDate("toolReturnDate").toLocalDate();
+                    LocalDate toolReturnDate = rs1.getDate("returnDate").toLocalDate();
                     int toolID = rs1.getInt("toolID");
                     int totalPrice = rs1.getInt("totalPrice");
 

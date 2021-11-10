@@ -72,7 +72,7 @@ public class ChangePassword extends HttpServlet {
 
             boolean isOldPassValid = false;
             while(rs.next()) {
-                if(oldPassword.equals(rs.getString("passwordHash"))) {
+                if(oldPassword.equals(rs.getString("password"))) {
                     isOldPassValid = true;
                 }
             }
