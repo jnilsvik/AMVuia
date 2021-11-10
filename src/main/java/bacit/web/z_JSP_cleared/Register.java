@@ -1,4 +1,4 @@
-package bacit.web.LoginRegister;
+package bacit.web.z_JSP_cleared;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.a_models.UserModel;
@@ -20,26 +20,28 @@ public class Register extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        printPage(out);
+        //printPage(out);
+        try {
+            request.getRequestDispatcher("/register.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 
-
+    // TODO: 10.11.2021 -joachim :this could use some optimising
+    //  (why build a model the same place you're using it?
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {
             UserModel user = new UserModel();
-            if(request.getParameter("union") != null) {
-                user.setUnionMember(true);
-            } else {
-                user.setUnionMember(false);
-            }
-
+            user.setUnionMember(request.getParameter("union") != null);
             user.setUserAdmin(request.getParameter("admin") != null);
             user.setFirstname(request.getParameter("fname"));
             user.setLastname(request.getParameter("lname"));
-            user.setPassword(hashPassword.encryptThisString(request.getParameter("password")));
+            user.setPassword(hashPassword.encryptThisString(
+                    request.getParameter("password")));
             user.setPhoneNumber(request.getParameter("phone"));
             user.setEmail(request.getParameter("email"));
 
@@ -56,11 +58,10 @@ public class Register extends HttpServlet {
             statement.executeUpdate();
             statement.close();
             db.close();
-
+            // TODO: 10.11.2021 -joachim: redirect to login? not the way it should be for final but for is fine
             out.println("<html><body>");
             out.println("<a href=\"login\"><h1>Registration successful! Click here to login</a></h1></a>");
             out.println("</body></html>");
-
         }
         catch (Exception e) {
             e.printStackTrace();

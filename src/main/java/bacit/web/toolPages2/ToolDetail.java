@@ -31,7 +31,7 @@ public class ToolDetail extends HttpServlet {
        // PageElements.printHead(out);
         //TODO Header
         try {
-            writeToolDetails((DBQ.getToolModelByID(request.getParameter("toolID"),out)),out);
+            writeToolDetails((DBQ.getAToolModelByID(request.getParameter("toolID"),out)),out);
         } catch (SQLException e) {
             e.printStackTrace();
         }
