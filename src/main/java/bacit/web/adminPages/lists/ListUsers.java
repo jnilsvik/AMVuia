@@ -21,7 +21,7 @@ by Joachim
 
 prints all the users
 */
-@WebServlet(name = "el", value = "/el")
+@WebServlet(name = "lu", value = "/lu")
 public class ListUsers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

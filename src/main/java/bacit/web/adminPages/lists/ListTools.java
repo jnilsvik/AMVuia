@@ -19,7 +19,7 @@ by Joachim
 
 prints all the tools
 */
-@WebServlet(name = "tl", value = "/tl")
+@WebServlet(name = "lt", value = "/lt")
 public class ListTools extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
