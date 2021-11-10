@@ -2,7 +2,8 @@
 <%@ page import="bacit.web.a_models.ToolModel" %>
 <%@ page import="bacit.web.a_models.UserModel" %>
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.SQLException" %><%--
+<%@ page import="java.sql.SQLException" %>
+<%--
   Created by IntelliJ IDEA.
   User: Joachim
   Date: 10.11.2021

@@ -8,33 +8,34 @@
 <%@ page contentType='text/html;charset=UTF-8'%>
 <html>
 <head>
-    <title>Title</title>
-
+    <title>Register</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous'>
-    <style> .page {
-        flex-grow: 1;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-bottom: 70px;
+    <%// TODO: 10.11.2021 should transfer these styles to a common stylesheet %>
+    <style>
+        .page {
+            flex-grow: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 70px;
 
-        background-image: url(https://media.discordapp.net/attachments/472062607646261249/702987431653277705/unknown.png);
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: 100% 100%;
-    }
-    .amv-register {
-        width: 480px;
-        background: #fff;
-        box-shadow: 0 25px 75px rgba(16, 30, 54, .25);
-        border-radius: 6px;
-        padding: 30px 60px 26px;
-        margin-top: -75px;
-    }
-</style>
-
+            background-image: url(https://media.discordapp.net/attachments/472062607646261249/702987431653277705/unknown.png);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+        .amv-register {
+            width: 480px;
+            background: #fff;
+            box-shadow: 0 25px 75px rgba(16, 30, 54, .25);
+            border-radius: 6px;
+            padding: 30px 60px 26px;
+            margin-top: -75px;
+        }
+    </style>
 </head>
+
 <body>
 <div class='page'>
     <article class='my-3 amv-register' id='floating-labels'>
