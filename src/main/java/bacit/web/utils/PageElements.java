@@ -2,7 +2,7 @@ package bacit.web.utils;
 
 //by Paul
 
-import bacit.web.adminPages.AdminAccess;
+import bacit.web.AdminAccess;
 
 import java.io.PrintWriter;
 

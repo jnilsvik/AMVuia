@@ -1,5 +1,5 @@
 
-package bacit.web.toolBooker;
+package bacit.web;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

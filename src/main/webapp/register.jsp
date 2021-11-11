@@ -45,7 +45,7 @@
 
         <div>
             <div class='bd-example'>
-                <form action=''>
+                <form action='register' method="post">
                     <div class='form-floating mb-3'>
                         <input type='email' class='form-control' id='email' name='email' placeholder='name@example.com'>
                         <label for='email'>Email address</label>
@@ -69,6 +69,8 @@
                     <div class='mb-3 form-check'>
                         <input type='checkbox' class='form-check-input' id='admin' name='admin'>
                         <label class='form-check-label' for='admin'>Administrator</label>
+                    </div>
+                    <div class='mb-3 form-check'>
                         <input type='checkbox' class='form-check-input' id='union' name='union'>
                         <label class='form-check-label' for='union'>Union member</label>
                     </div>

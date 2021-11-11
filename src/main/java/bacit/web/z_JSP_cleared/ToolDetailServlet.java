@@ -1,4 +1,4 @@
-package bacit.web.toolPages;
+package bacit.web.z_JSP_cleared;
 
 import bacit.web.utils.DBUtils;
 
@@ -32,7 +32,7 @@ public class ToolDetailServlet extends HttpServlet {
 
         try {
             String email = (String) request.getAttribute("email");
-            int toolID = Integer.parseInt(request.getParameter("tool"));
+            int toolID = Integer.parseInt(request.getParameter("toolID"));
 
             Connection db = DBUtils.getNoErrorConnection(out);
             PreparedStatement st1 = db.prepareStatement(
@@ -49,12 +49,10 @@ public class ToolDetailServlet extends HttpServlet {
             if (rs1.next()) {
                 out.print("<h1> " + rs1.getString("toolName").replaceAll("_", " ") +
                         " from the Category: " + rs1.getString("toolCategory").replaceAll("_", " ") + "</h1>");
-                out.print("<br>");
                 out.print("<img src = 'img/amv.png' width = '156' heigth = '151'>");
                 out.print("<h2>Price the first day: " +  rs1.getInt("priceFirst") + "</h2>");
                 out.print("<h2>Price after the first day: " +  rs1.getInt("priceAfter") + "</h2>");
-                out.print("<br>");
-                out.print("<p> " + rs1.getString("toolDescription") + "");
+                out.print("<p>" + rs1.getString("toolDescription")+"</p>");
                 out.print("<br><br>");
 
                 out.print("<form action = 'toolbooking' method = 'POST'>");

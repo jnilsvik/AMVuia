@@ -1,10 +1,9 @@
-package bacit.web.toolBooker;
+package bacit.web.z_JSP_cleared;
 
 import java.time.*;
 
+import bacit.web.checkDate;
 import bacit.web.utils.DBUtils;
-import jdk.javadoc.internal.tool.Start;
-import jdk.vm.ci.meta.Local;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -19,7 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 @WebServlet(name = "ToolBookingServlet", value = "/toolbooking")
-public class ToolBookingServlet extends HttpServlet {
+public class Tool_BookingServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
     }
@@ -73,12 +72,7 @@ public class ToolBookingServlet extends HttpServlet {
             if (!checkDate.dateBookedTaken(db, StartDateWanted, inputDays, tool) && hasCertificate(db, userID, toolCertificateID, toolCertificateName)) {
                 registerBooking(db, StartDateWanted, endingDate, totalPrice, userID, toolID);
 
-                String title = "Booking";
-                //TODO Use the jsp Header and Footer
-               // PageElements.printHeader(title, out);
                 printBookingDetails(out, StartDateWanted, tool, endingDate, totalPrice, email);
-                //PageElements.printFooter(out);
-
             } else {
                 out.print("<h1>Sorry, that tool is already taken or you dont have the needed ID./h1>");
             }

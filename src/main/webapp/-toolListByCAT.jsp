@@ -22,31 +22,27 @@
         try {
             ResultSet rs2= (ResultSet) request.getAttribute("toolByCAT");
             while (rs2.next()) {
-                out.print("<FORM action='xtd' method='get'>");             //FORM open
-                out.print("<div class='featured-product-item'>");         //div open
-                out.print("    <div style='background-image: url(img/"+   //img open
-                        rs2.getString("picturePath")                        //img path
+                out.print("<FORM action='tooldetail' method='get'>");
+                out.print("<div class='featured-product-item'>");
+                out.print("<div class='featured-product-item-image' style='background-image: url(img/"+
+                        rs2.getString("picturePath")
                                 .replaceAll(" ","%20")
                                 .replaceAll("æ","%C3%A6")
                                 .replaceAll("ø","%C3%B8")
                                 .replaceAll("å","%C3%A5") +
-                        ");' class='featured-product-item-image'>");
-                out.print("    </div>");
-                out.print("    <p class='title'>");
-                out.print(rs2.getString("toolName").replaceAll("_"," "));
-                out.print("    </p>");
-                out.print("    <button name='toolID' type='submit' value='"+rs2.getInt("toolID")+"'>");
-                out.print("        View item");
-                out.print("    </button>");
-                out.print("</div></FORM>");
+                        ");'>");
+                out.print("</div>");
+                out.print("<p class='title'>"+rs2.getString("toolName").replaceAll("_"," ")+"</p>");
+                out.print("<button name='toolID' type='submit' value='"+rs2.getInt("toolID")+"'>");
+                out.print("View item");
+                out.print("</button></div></FORM>");
             }
             out.print("</table></section></section></body></html>");
         } catch (SQLException e) {
-            e.printStackTrace();
             out.print("smth weith tools");
+            e.printStackTrace();
         }
         request.removeAttribute("CAT");
-
     %>
 </section>
 </body>

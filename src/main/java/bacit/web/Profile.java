@@ -1,4 +1,4 @@
-package bacit.web.profilePage;
+package bacit.web;
 
 import bacit.web.a_models.BookingModel;
 import bacit.web.utils.DBUtils;

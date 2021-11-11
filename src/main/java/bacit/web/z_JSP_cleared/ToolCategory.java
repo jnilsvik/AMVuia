@@ -1,4 +1,4 @@
-package bacit.web.z_JSP_cleared.toolPrev_WIP;
+package bacit.web.z_JSP_cleared;
 
 import bacit.web.utils.DBUtils;
 
@@ -23,9 +23,7 @@ public class ToolCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-
         request.setAttribute("CAT", request.getParameter("category"));
-
         Connection dbc= DBUtils.getNoErrorConnection(out);
         try {
             PreparedStatement ps3 = dbc.prepareStatement(

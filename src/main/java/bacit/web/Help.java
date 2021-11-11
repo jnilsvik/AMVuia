@@ -25,12 +25,12 @@ public class Help extends HttpServlet {
                 "</head>" +
                 "<body>" +
                 "<h2>How can we help?</h2>" +
-                "<form action='https://script.google.com/a/hsu.edu.hk/macros/s/AKfycbxfqBQo0UkCet0kkVLK8CDMtPBpann19xu0mI10/exec' method='POST' data-email='cheuklong20010212@gmail.com'> " +
-                "<h3>Name:</h3>"+
+                "<form onclick='http://localhost:8081/bacit-web-1.0-SNAPSHOT/' action='https://script.google.com/a/hsu.edu.hk/macros/s/AKfycbxfqBQo0UkCet0kkVLK8CDMtPBpann19xu0mI10/exec' method='POST' data-email='cheuklong20010212@gmail.com'>" +
+                "<h3>Name:</h3>" +
                 "<textarea id='name' name='name' rows='2' cols='50'></textarea><br><br>" +
-                "<h3>Message:</h3>"+
+                "<h3>Message:</h3>" +
                 "<textarea id='message' name='message' rows='10' cols='50'></textarea><br><br>" +
-                "<h3>Email:</h3>"+
+                "<h3>Email:</h3>" +
                 "<textarea id='email' name='email' rows='2' cols='50'></textarea><br><br>" +
                 "<input type = 'submit' value = 'Send Help!'>" +
                 "</form>" +
@@ -46,9 +46,9 @@ public class Help extends HttpServlet {
         String c = request.getParameter("email");
         out.print("<html>" +
                 "<body>" +
-                "<h1>"+a+"</h1>"+
-                "<h1>"+b+"</h1>"+
-                "<h1>"+c+"</h1>"+
+                "<h1>" + a + "</h1>" +
+                "<h1>" + b + "</h1>" +
+                "<h1>" + c + "</h1>" +
                 "</body>" +
                 "</html>");
 
