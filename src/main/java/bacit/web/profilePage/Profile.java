@@ -2,7 +2,6 @@ package bacit.web.profilePage;
 
 import bacit.web.a_models.BookingModel;
 import bacit.web.utils.DBUtils;
-import bacit.web.utils.PageElements;
 
 import java.io.PrintWriter;
 import java.sql.*;

@@ -2,6 +2,7 @@
 <%@ page import="java.util.LinkedList" %>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -18,8 +19,8 @@
 </head>
 <body>
     <jsp:include page="__head_nav.html"></jsp:include>
-</body>
     <h2>Your current bookings</h2>
+</body>
     <table style = ' width:90%'>
         <tr>
             <th>Order Number</th>
@@ -29,17 +30,28 @@
             <th>Total Price</th>
             <th>Return Date</th>
             <th>Cancel Booking</th>
-        </tr>
         <%
             List<BookingModel> bookings = (List<BookingModel>) request.getAttribute("bookings");
+            PrintWriter writer = (PrintWriter) request.getAttribute("out");
             for(BookingModel booking : bookings){
                     out.println("<tr>");
                     out.println("<td>" + booking.getOrderID() + "</td> ");
                     out.println("<td>" + booking.getToolName() + "</td> ");
                     out.println("<td>" + booking.getStartDate() + "</td> ");
-                    out.println("<td>" + booking.getStartDate() + "</td> ");
+                    out.println("<td>" + booking.getEndDate() + "</td> ");
                     out.println("<td>" + booking.getTotalPrice() + "</td> ");
                     out.println("<td>" + booking.getReturnDate() + "</td> ");
+                    if(booking.getStartDate().isAfter(LocalDate.now())){
+                        out.println("<td>");
+                            out.println("<a href=\"/bacit-web-1.0-SNAPSHOT/cancellation?id="+booking.getOrderID()+"\">cancel</a>");
+                        out.println("</td>");
+                    }else{
+                        if(booking.getEndDate().isAfter(LocalDate.now())){
+                            out.println("<td>Booking started</td>");
+                        }else {
+                            out.println("<td>Booking over</td>");
+                        }
+                    }
                     out.println("</tr>");
             }
 
