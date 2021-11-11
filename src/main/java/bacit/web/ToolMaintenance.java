@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-// by Dilan
 @WebServlet(name = "ToolMaintenance", value = "/toolmaintenance")
 public class ToolMaintenance extends HttpServlet {
 
