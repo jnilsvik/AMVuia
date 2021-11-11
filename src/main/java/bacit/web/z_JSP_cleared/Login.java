@@ -33,7 +33,8 @@ public class Login extends HttpServlet {
         String email = request.getParameter("email");
         String password = hashPassword.encryptThisString(request.getParameter("pass"));
         if(Validation(email,password)){
-            request.getSession().setAttribute("email", email); // ! a way to set attributes
+            request.setAttribute("email", email); // ! a way to set attributes
+            SetUserSessionAttributes(email,request);
             try {
                 // TODO: 09.11.2021 make this send you straigth to tools thingy 
                 request.getRequestDispatcher("/landing.jsp").forward(request,response);
@@ -45,7 +46,6 @@ public class Login extends HttpServlet {
         }
     }
     public boolean Validation(String email, String pw){
-        boolean exists = false;
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             Connection con = DriverManager.getConnection(
@@ -55,10 +55,30 @@ public class Login extends HttpServlet {
             ps.setString(1, email);
             ps.setString(2, pw);
             ResultSet rs1 = ps.executeQuery();
-            exists = rs1.next();
+            if (rs1.next()) return true;
         } catch (Exception e){
             e.printStackTrace();
         }
-        return exists;
+        return false;
+    }
+
+    // TODO: 11.11.2021 this could probably be done better
+    void SetUserSessionAttributes(String email, HttpServletRequest request){
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            Connection con = DriverManager.getConnection(
+                    "jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
+            PreparedStatement ps = con.prepareStatement(
+                    "select * from AMVUser where email=?");
+            ps.setString(1, email);
+            ResultSet rs1 = ps.executeQuery();
+            request.setAttribute("uID", rs1.getInt("userID"));
+            request.setAttribute("ufname", rs1.getString("firstName"));
+            request.setAttribute("ulname", rs1.getString("lastName"));
+            request.setAttribute("uemail", rs1.getString("phoneNumber"));
+            //request.setAttribute("email", rs1.getString("email"));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
