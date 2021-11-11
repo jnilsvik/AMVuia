@@ -1,4 +1,4 @@
-package bacit.web.adminPages;
+package bacit.web;
 import java.sql.*;
 
 // by Dilan

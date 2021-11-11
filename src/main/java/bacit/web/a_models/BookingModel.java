@@ -76,9 +76,10 @@ public class BookingModel {
         this.returnDate = returnDate;
     }
 
-    public double getTotalPrice(PrintWriter out){
+    public double getTotalPrice(){
         double totalPrice = 0;
         try {
+            PrintWriter out = null;
             Connection db = DBUtils.getNoErrorConnection(out);
             String query = "SELECT Tool.priceAfter, Tool.priceFirst\n" +
                     "FROM Tool\n" +
@@ -102,9 +103,10 @@ public class BookingModel {
         return priceAfterFirstDay + priceAfterFirstDay * period.getDays();
     }
 
-    public String getToolName(PrintWriter out){
+    public String getToolName(){
         String toolName = "";
         try {
+            PrintWriter out = null;
             Connection db = DBUtils.getNoErrorConnection(out);
             String query = "SELECT toolName FROM Tool WHERE toolID = ?;";
             PreparedStatement statement = db.prepareStatement(query);
