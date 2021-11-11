@@ -21,9 +21,7 @@
     <br>
     <a href="register">Register</a>
     <br>
-    <a href="toolcategories">tool display 1</a>
-    <br>
-    <a href="tl">tool display 2</a>
+    <a href="xtl">tool display 1</a>
     <br>
     <a href="lt">tool list</a>
     <br>

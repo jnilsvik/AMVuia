@@ -1,4 +1,4 @@
-package bacit.web.z_JSP_cleared.WIP.toolPrev_WIP;
+package bacit.web.z_JSP_cleared;
 
 import bacit.web.utils.DBUtils;
 
@@ -22,23 +22,36 @@ public class ToolAllListings extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try {
+            GetSetCategories(out, request);
+            GetSetTools(out,request);
+            request.getRequestDispatcher("/-toolListAll.jsp").forward(request,response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void GetSetCategories(PrintWriter out, HttpServletRequest request){
+        try {
             Connection dbc= DBUtils.getNoErrorConnection(out);
-            //gets n sets categories
-            PreparedStatement ps1 = dbc.prepareStatement(
+            PreparedStatement ps1 = null;
+            ps1 = dbc.prepareStatement(
                     "SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs1 = ps1.executeQuery();
             // TODO: 10.11.2021 should make this into string array before sending?
             request.setAttribute("toolCAT", rs1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-            //gets n sets tools
+    void GetSetTools(PrintWriter out, HttpServletRequest request){
+        try {
+            Connection dbc= DBUtils.getNoErrorConnection(out);
             PreparedStatement ps2 = dbc.prepareStatement(
                     "select * from Tool order by toolID");
             ResultSet rs2 = ps2.executeQuery();
-            // TODO: 10.11.2021 should make this into model array b4 sendeing?
+            // TODO: 10.11.2021 should make this into model array b4 sending?
             request.setAttribute("toolALL", rs2);
-
-            //sends to page
-            request.getRequestDispatcher("/-toolListAll.jsp").forward(request,response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
