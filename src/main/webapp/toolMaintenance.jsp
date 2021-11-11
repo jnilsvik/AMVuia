@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
-    <title>Tool List</title>
+    <title>Tool Maintenance</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous'>
     <style>
         .page {
@@ -36,37 +36,43 @@
             padding: 30px 60px 26px;
             margin-top: -75px;
         }
+
+        table, th, td { border:1px solid black;}
     </style>
 </head>
 <body>
 <jsp:include page="__head_nav.html"/>
 
-<html>
-<head>
-    <title>Tool maintenance</title>
-</head>
-<style>
-    table, th, td { border:1px solid black;}
-</style>
-<body>
-<jsp:include page="__head_nav.html"/>
+<div class='page'>
+    <article class='my-3 amv-register' id='floating-labels'>
+        <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
+            <h3>Put tool in or out of maintanence</h3>
+        </div>
+        <div>
+            <div class='bd-example'>
+                <form action = 'toolmaintenance' method = 'POST'>
 
-<form action = 'toolmaintenance' method = 'POST'>
+                    <label for = 'toolmaintenancein'>Put tool in maintenance</label></td>
+                    <input type = 'radio' id = 'toolmaintenancein'  name = 'toolmaintenance' value = 'ToolInMaintenanceIn'>
+                    <br>
 
-    <label for = 'toolmaintenance'>Put tool in maintenance</label></td>
-    <input type = 'radio' id = 'toolmaintenance'  name = 'toolmaintenance' value = 'ToolInMaintenanceIn'>
-    <br>
+                    <label for = 'toolmaintenanceout'>Put tool out of maintenance</label>
+                    <input type = 'radio' id = 'toolmaintenanceout'  name = 'toolmaintenance' value = 'ToolInMaintenanceOut'>
 
-    <label for = 'toolmaintenance'>Put tool out of maintenance</label>
-    <input type = 'radio' id = 'toolmaintenance'  name = 'toolmaintenance' value = 'ToolInMaintenanceOut'>
-    <br>
+                    <div class='form-floating mb-3'>
+                        <input type = 'text' class='form-control' id = 'toolID' name = 'toolID' placeholder='toolID'>
+                        <label for = 'toolID'>Tool ID: </label>
 
-    <label for = 'toolID'>Tool ID: </label><br>
-    <input type = 'text' name = 'toolID'><br>
-    <br>
-    <input type = 'submit' value = 'Submit'>
-</form>
-<br>
+                    </div>
+
+                    <div class='col-12' >
+                        <button class='btn btn-primary' style='width: 100%'  type='submit'>Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</div>
 
 </body>
 </html>

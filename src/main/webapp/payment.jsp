@@ -2,17 +2,12 @@
 <%@ page import="bacit.web.a_models.ToolModel" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.time.LocalDate" %>
-<%@ page import="java.sql.ResultSet" %><%--
-  Created by IntelliJ IDEA.
-  User: Joachim
-  Date: 10.11.2021
-  Time: 16:11
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.sql.ResultSet" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
+
 <html>
 <head>
-    <title>Tool List</title>
+    <title>Payments</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous'>
     <style>
         .page {
@@ -36,19 +31,13 @@
             padding: 30px 60px 26px;
             margin-top: -75px;
         }
+
+        table, th, td { border:1px solid black;}
     </style>
 </head>
 <body>
 <jsp:include page="__head_nav.html"/>
 
-<html>
-<head>
-    <title>Tool maintenance</title>
-    </head>
-<style>
-table, th, td { border:1px solid black;}
-</style>
-<body>
 <table style = 'width:100%'>
     <tr>
         <th>User ID</th>

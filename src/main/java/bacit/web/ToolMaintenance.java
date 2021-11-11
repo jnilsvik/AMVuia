@@ -23,32 +23,7 @@ public class ToolMaintenance extends HttpServlet {
             String email = (String) session.getAttribute("email");
 
             if (AdminAccess.accessRights(email)) {
-                out.print("<html>");
-                out.print("<head>");
-                out.print("<title>Tool maintenance</title>");
-                out.print("</head>");
-                out.print("<body>");
-
-                out.print("<form action = 'toolmaintenance' method = 'POST'>");
-
-                out.print("<label for = 'toolmaintenance'>Put tool in maintenance</label></td>");
-                out.print("<input type = 'radio' id = 'toolmaintenance'  name = 'toolmaintenance' value = 'ToolInMaintenanceIn'>");
-                out.print("<br>");
-
-                out.print("<label for = 'toolmaintenance'>Put tool out of maintenance</label>");
-                out.print("<input type = 'radio' id = 'toolmaintenance'  name = 'toolmaintenance' value = 'ToolInMaintenanceOut'>");
-                out.print("<br>");
-
-                out.print("<label for = 'toolID'>Tool ID: </label><br>");
-                out.print("<input type = 'text' name = 'toolID'><br>");
-                out.print("<br>");
-                out.print("<input type = 'submit' value = 'Submit'>");
-                out.print("</form>");
-                out.print("<br>");
-
-
-                out.print("</body>");
-                out.print("</html>");
+                request.getRequestDispatcher("toolMaintenance.jsp").forward(request,response);
             } else {
                 out.print("<h1> Sorry, you don't have access to this page");
             }
