@@ -52,13 +52,9 @@ public class Payment extends HttpServlet {
             String orderID = request.getParameter("orderID");
             setPaid(out, orderID);
 
-            out.print("<html>");
-            out.print("<head>");
-            out.print("</head>");
-            out.print("<body>");
-            out.print("<h1>Order successfully marked as paid</h1>");
-            out.print("</body>");
-            out.print("</html>");
+            String successfulLine = "Order was successfully marked as paid";
+            request.setAttribute("successfulLine", successfulLine);
+            request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
         }
         catch (Exception e) {
             e.printStackTrace();
