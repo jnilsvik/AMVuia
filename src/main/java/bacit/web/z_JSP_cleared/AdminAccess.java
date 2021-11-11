@@ -1,4 +1,4 @@
-package bacit.web;
+package bacit.web.z_JSP_cleared;
 import java.sql.*;
 
 // by Dilan

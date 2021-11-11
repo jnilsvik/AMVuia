@@ -16,7 +16,6 @@ public class hashPassword {
             while (hashtext.length() < 32) {
                 hashtext = "0" + hashtext;
             }
-
             return hashtext;
         }
         catch (NoSuchAlgorithmException e) {

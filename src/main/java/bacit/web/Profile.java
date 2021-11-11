@@ -44,7 +44,6 @@ public class Profile extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-
     }
 
     private List<BookingModel> getBookings(String email, PrintWriter out) throws SQLException {
@@ -57,16 +56,17 @@ public class Profile extends HttpServlet {
             int toolID = 0;
             try{
                 toolID = rs.getInt("toolID");
-            }catch (NullPointerException e){}
+            }catch (NullPointerException e){e.printStackTrace();}
             LocalDate toolReturnDate = null;
             try{
                 toolReturnDate = rs.getDate("returnDate").toLocalDate();
-            } catch (NullPointerException e){}
+            } catch (NullPointerException e){e.printStackTrace();}
 
             bookings.add(new BookingModel(
                     rs.getInt("orderID"),
                     rs.getInt("userID"),
                     toolID,
+                    0,
                     rs.getDate("startDate").toLocalDate(),
                     rs.getDate("endDate").toLocalDate(),
                     toolReturnDate

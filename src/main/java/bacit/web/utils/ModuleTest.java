@@ -106,6 +106,7 @@ public class ModuleTest extends HttpServlet {
                     rs.getInt("orderID"),
                     rs.getInt("toolID"),
                     rs.getInt("userID"),
+                    0,
                     rs.getTimestamp("startDate").toLocalDateTime().toLocalDate(),
                     rs.getTimestamp("endDate").toLocalDateTime().toLocalDate(),
                     rs.getTimestamp("returnDate").toLocalDateTime().toLocalDate());

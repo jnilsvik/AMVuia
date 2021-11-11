@@ -11,18 +11,19 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class BookingModel {
-
     private int orderID;
     private int userID;
     private int toolID;
+    private int totalPrice;
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate returnDate;
 
-    public BookingModel(int orderID, int userID, int toolID, LocalDate startDate, LocalDate endDate, LocalDate returnDate) {
+    public BookingModel(int orderID, int userID, int toolID,int totalPrice, LocalDate startDate, LocalDate endDate, LocalDate returnDate) {
         this.orderID = orderID;
         this.userID = userID;
         this.toolID = toolID;
+        this.totalPrice = totalPrice;
         this.startDate = startDate;
         this.endDate = endDate;
         this.returnDate = returnDate;
@@ -52,6 +53,10 @@ public class BookingModel {
         this.toolID = toolID;
     }
 
+    public int getTotalPrice(){return totalPrice;}
+
+    public void setTotalPrice(int totalPrice){this.totalPrice=totalPrice;}
+
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -76,36 +81,7 @@ public class BookingModel {
         this.returnDate = returnDate;
     }
 
-    public double getTotalPrice(){
-        double totalPrice = 0;
-        try {
-            PrintWriter out = null;
-            Connection db = DBUtils.getNoErrorConnection(out);
-            String query = "SELECT Tool.priceAfter, Tool.priceFirst\n" +
-                    "FROM Tool\n" +
-                    " WHERE Tool.toolID = ?;";
-            PreparedStatement statement = db.prepareStatement(query);
-            statement.setInt(1, toolID);
-            ResultSet rs = statement.executeQuery();
-            if (!rs.next()) throw new SQLException("No tool could be found");
-            double priceFirstDay = rs.getDouble("priceFirstDay");
-            double priceAfterFirstDay = rs.getDouble("priceAfterFirstDay");
-            totalPrice = calculateTotalPrice(priceFirstDay, priceAfterFirstDay);
-            db.close();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return totalPrice;
-    }
-
-    private double calculateTotalPrice(double priceFirstDay, double priceAfterFirstDay){
-        Period period = Period.between(startDate, endDate);
-        period.minusDays(1);
-        return priceAfterFirstDay + priceAfterFirstDay * period.getDays();
-    }
-
     public String getToolName(){
-        String toolName = "";
         try {
             PrintWriter out = null;
             Connection db = DBUtils.getNoErrorConnection(out);
@@ -114,12 +90,11 @@ public class BookingModel {
             statement.setInt(1, toolID);
             ResultSet rs = statement.executeQuery();
             if (!rs.next()) throw new SQLException("No tool could be found");
-            toolName = rs.getString("toolName");
+            return  rs.getString("toolName");
             db.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
-        //Currently, there is no toolName stored in the db will be added
-        return toolName;
+        return "currently no toolName stored";
     }
 }
