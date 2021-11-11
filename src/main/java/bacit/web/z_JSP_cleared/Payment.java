@@ -1,5 +1,6 @@
-package bacit.web.adminPages;
+package bacit.web.z_JSP_cleared;
 
+import bacit.web.adminPages.AdminAccess;
 import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;
