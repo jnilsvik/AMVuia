@@ -73,45 +73,9 @@ public class Profile extends HttpServlet {
                     toolReturnDate
             ));
         }
+        db.close();
         return bookings;
     }
-
-    private void writeHeader(PrintWriter out, String header, String email){
-        PageElements.printSidebar(out, email);
-        PageElements.printHeader(header, out);
-        out.println("<style>");
-        out.println("table, th, td { border:1px solid black;}");
-        out.println("</style>");
-    }
-
-    private void writeBookings(PrintWriter out, List<BookingModel> bookings){
-        out.print("<h2>Your current bookings</h2>");
-        out.println("<table style = 'width:80%'>");
-        out.println("<tr>");
-        out.println("<th>Order Number</th>");
-        out.println("<th>Tool Name</th>");
-        out.println("<th>Start Date</th>");
-        out.println("<th>End Date</th>");
-        out.println("<th>Total Price</th>");
-        out.println("<th>Return Date</th>");
-        out.println("</tr>");
-        for(BookingModel booking : bookings){
-            out.println("<tr>");
-            out.println("<td>" + booking.getOrderID() + "</td> ");
-            out.println("<td>" + booking.getToolName() + "</td> ");
-            out.println("<td>" + booking.getStartDate() + "</td> ");
-            out.println("<td>" + booking.getStartDate() + "</td> ");
-            out.println("<td>" + booking.getTotalPrice() + "</td> ");
-            out.println("<td>" + booking.getReturnDate() + "</td> ");
-            out.println("</tr>");
-        }
-        out.print("</table>");
-    }
-
-    private void writeFooter(PrintWriter out){
-        PageElements.printFooter(out);
-    }
-
 }
 
 

@@ -94,6 +94,7 @@ public class ChangePassword extends HttpServlet {
                 out.print("<a href = 'http://localhost:8081/bacit-web-1.0-SNAPSHOT/profile'> Go back to profile</a>");
             }
 
+            db.close();
 
         } catch (Exception e) {
             out.print("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");

@@ -91,6 +91,7 @@ public class BookingModel {
             double priceFirstDay = rs.getDouble("priceFirstDay");
             double priceAfterFirstDay = rs.getDouble("priceAfterFirstDay");
             totalPrice = calculateTotalPrice(priceFirstDay, priceAfterFirstDay);
+            db.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -114,10 +115,11 @@ public class BookingModel {
             ResultSet rs = statement.executeQuery();
             if (!rs.next()) throw new SQLException("No tool could be found");
             toolName = rs.getString("toolName");
+            db.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
         //Currently, there is no toolName stored in the db will be added
-        return "currently no toolName stored";
+        return toolName;
     }
 }

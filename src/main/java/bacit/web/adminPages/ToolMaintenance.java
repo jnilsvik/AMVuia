@@ -98,7 +98,7 @@ public class ToolMaintenance extends HttpServlet {
                 out.print("</html>");
             }
 
-
+            db.close();
 
         } catch (Exception e) {
             e.printStackTrace();

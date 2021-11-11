@@ -54,6 +54,7 @@ public class checkDate {
                 }
 
             }
+            db.close();
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -26,8 +26,8 @@ public class ToolCategoryServlet extends HttpServlet {
             out.print("<table>");
 
             Class.forName("org.mariadb.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-            PreparedStatement ps = con.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
+            Connection db = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
+            PreparedStatement ps = db.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 String categoryName = rs.getString("toolCategory");
@@ -41,6 +41,7 @@ public class ToolCategoryServlet extends HttpServlet {
             out.print("</table>");
             out.print("<input type = 'submit' value = 'Submit'>");
             out.print("</form></body></html>");
+            db.close();
 
         } catch (Exception e) {
             out.print("error");
