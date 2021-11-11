@@ -18,14 +18,9 @@
 </head>
 <body>
     <jsp:include page="__head_nav.html"></jsp:include>
-    <jsp:include page="_sidebar.jsp"></jsp:include>
-    <%
-    List<BookingModel> bookings = (List<BookingModel>) request.getAttribute("bookings");
-    PrintWriter writer = (PrintWriter) request.getAttribute("out");
-    %>
 </body>
     <h2>Your current bookings</h2>
-    <table style = 'width:90%'>
+    <table style = ' width:90%'>
         <tr>
             <th>Order Number</th>
             <th>Tool Name</th>
@@ -36,17 +31,18 @@
             <th>Cancel Booking</th>
         </tr>
         <%
+            List<BookingModel> bookings = (List<BookingModel>) request.getAttribute("bookings");
             for(BookingModel booking : bookings){
-                out.println("<tr>");
-                out.println("<td>" + booking.getOrderID() + "</td> ");
-                out.println("<td>" + booking.getToolName(writer) + "</td> ");
-                out.println("<td>" + booking.getStartDate() + "</td> ");
-                out.println("<td>" + booking.getStartDate() + "</td> ");
-                out.println("<td>" + booking.getTotalPrice(writer) + "</td> ");
-                out.println("<td>" + booking.getReturnDate() + "</td> ");
-
-                out.println("</tr>");
+                    out.println("<tr>");
+                    out.println("<td>" + booking.getOrderID() + "</td> ");
+                    out.println("<td>" + booking.getToolName() + "</td> ");
+                    out.println("<td>" + booking.getStartDate() + "</td> ");
+                    out.println("<td>" + booking.getStartDate() + "</td> ");
+                    out.println("<td>" + booking.getTotalPrice() + "</td> ");
+                    out.println("<td>" + booking.getReturnDate() + "</td> ");
+                    out.println("</tr>");
             }
+
         %>
     </table>
 </body>
