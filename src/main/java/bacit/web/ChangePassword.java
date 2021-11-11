@@ -19,30 +19,7 @@ public class ChangePassword extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            HttpSession session = request.getSession(false);
-            String email = (String) session.getAttribute("email");
-
-                out.print("<html>");
-                out.print("<head>");
-                out.print("<title>Change Pasword</title>");
-                out.print("</head>");
-
-                out.print("<h2>Change Password</h2>");
-                out.print("<form action = 'changepassword' method = 'POST'> ");
-                out.print("<label for = 'oldpass'>Old password: </label><br>");
-                out.print("<input type = 'text' name = 'oldpass' required><br>");
-                out.print("<label for = 'newpass1'>New password: </label><br>");
-                out.print("<input type = 'text' name = 'newpass1' required><br>");
-                out.print("<label for = 'newpass2'>Repeat new password: </label><br>");
-                out.print("<input type = 'text' name = 'newpass2' required><br>");
-                out.print("<input type = 'submit' value = 'Change Password'>");
-                out.print("</form>");
-
-
-                out.print("</body>");
-                out.print("</html>");
-
-
+            request.getRequestDispatcher("/passwordChange.jsp").forward(request,response);
         } catch (Exception e) {
             out.print("error");
         }
@@ -55,35 +32,28 @@ public class ChangePassword extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            HttpSession session = request.getSession(false);
-            String email = (String) session.getAttribute("email");
-
-            Connection db = DBUtils.getNoErrorConnection(out);
-
+            String email = (String) request.getAttribute("email");
             String oldPassword = hashPassword.encryptThisString(request.getParameter("oldpass"));
             String newPassword1 = hashPassword.encryptThisString(request.getParameter("newpass1"));
             String newPassword2 = hashPassword.encryptThisString(request.getParameter("newpass2"));
 
-
-            PreparedStatement st1 = db
-                    .prepareStatement("SELECT * FROM AMVUser WHERE email = ?");
+            Connection db = DBUtils.getNoErrorConnection(out);
+            PreparedStatement st1 = db.prepareStatement("SELECT passwordHash FROM AMVUser WHERE email = ?");
             st1.setString(1, email);
             ResultSet rs = st1.executeQuery();
-
+            // TODO: 11.11.2021 we could do this with a short js insert in the page,,,
+            //  https://stackoverflow.com/questions/9142527/can-you-require-two-form-fields-to-match-with-html5
             boolean isOldPassValid = false;
             while(rs.next()) {
                 if(oldPassword.equals(rs.getString("password"))) {
                     isOldPassValid = true;
                 }
             }
-
             boolean doPasswordsMatch = false;
             if(newPassword1.equals(newPassword2)) {
                 doPasswordsMatch = true;
             }
-
             if(isOldPassValid && doPasswordsMatch) {
-
                 PreparedStatement st2 = db
                         .prepareStatement("UPDATE AMVUser SET passwordHash = ? WHERE email = ?");
                 st2.setString(1, newPassword1);
@@ -91,17 +61,12 @@ public class ChangePassword extends HttpServlet {
                 st2.executeUpdate();
 
                 out.print("Your password has been successfully changed!");
-                out.print("<a href = 'http://localhost:8081/bacit-web-1.0-SNAPSHOT/profile'> Go back to profile</a>");
+                out.print("<a href = '/profile'> Go back to profile</a>");
             }
-
-
         } catch (Exception e) {
             out.print("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
         }
-
-
     }
-
 }
 
 
