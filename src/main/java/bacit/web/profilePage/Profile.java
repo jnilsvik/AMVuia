@@ -2,6 +2,7 @@ package bacit.web.profilePage;
 
 import bacit.web.a_models.BookingModel;
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageElements;
 
 import java.io.PrintWriter;
 import java.sql.*;
@@ -29,11 +30,13 @@ public class Profile extends HttpServlet {
             }
             String email = (String) session.getAttribute("email");
             List<BookingModel> bookings = getBookings(email, out);
-            writeHeader(out, "Profile Page", email);
-            writeBookings(out, bookings);
-            //writeFooter(out);
+
+            out.println(email);
+            request.setAttribute("out", out);
+            request.setAttribute("bookings", bookings);
+            request.getRequestDispatcher("/Profile.jsp").forward(request,response);
         } catch (Exception e) {
-            out.print(e);
+            out.println(e);
         }
     }
 
@@ -58,7 +61,7 @@ public class Profile extends HttpServlet {
             }catch (NullPointerException e){}
             LocalDate toolReturnDate = null;
             try{
-                toolReturnDate = rs.getDate("toolReturnDate").toLocalDate();
+                toolReturnDate = rs.getDate("returnDate").toLocalDate();
             } catch (NullPointerException e){}
 
             bookings.add(new BookingModel(
@@ -74,43 +77,41 @@ public class Profile extends HttpServlet {
     }
 
     private void writeHeader(PrintWriter out, String header, String email){
-     //   PageElements.printSidebar(out, email);
-       // PageElements.printHeader(header, out);
-        //TODO sidebar and head
-        out.print("<style>");
-        out.print("table, th, td { border:1px solid black;}");
-        out.print("</style>");
+        PageElements.printSidebar(out, email);
+        PageElements.printHeader(header, out);
+        out.println("<style>");
+        out.println("table, th, td { border:1px solid black;}");
+        out.println("</style>");
     }
 
     private void writeBookings(PrintWriter out, List<BookingModel> bookings){
         out.print("<h2>Your current bookings</h2>");
-        out.print("<table style = 'width:80%'>");
-        out.print("<tr>");
-        out.print("<th>Order Number</th>");
-        out.print("<th>Tool Name</th>");
-        out.print("<th>Start Date</th>");
-        out.print("<th>End Date</th>");
-        out.print("<th>Total Price</th>");
-        out.print("<th>Return Date</th>");
-        out.print("</tr>");
+        out.println("<table style = 'width:80%'>");
+        out.println("<tr>");
+        out.println("<th>Order Number</th>");
+        out.println("<th>Tool Name</th>");
+        out.println("<th>Start Date</th>");
+        out.println("<th>End Date</th>");
+        out.println("<th>Total Price</th>");
+        out.println("<th>Return Date</th>");
+        out.println("</tr>");
         for(BookingModel booking : bookings){
-            out.print("<tr>");
-            out.print("<td>" + booking.getOrderID() + "</td> ");
-            out.print("<td>" + booking.getToolName(out) + "</td> ");
-            out.print("<td>" + booking.getStartDate() + "</td> ");
-            out.print("<td>" + booking.getStartDate() + "</td> ");
-            out.print("<td>" + booking.getTotalPrice(out) + "</td> ");
-            out.print("<td>" + booking.getReturnDate() + "</td> ");
-            out.print("</tr>");
+            out.println("<tr>");
+            out.println("<td>" + booking.getOrderID() + "</td> ");
+            out.println("<td>" + booking.getToolName() + "</td> ");
+            out.println("<td>" + booking.getStartDate() + "</td> ");
+            out.println("<td>" + booking.getStartDate() + "</td> ");
+            out.println("<td>" + booking.getTotalPrice() + "</td> ");
+            out.println("<td>" + booking.getReturnDate() + "</td> ");
+            out.println("</tr>");
         }
         out.print("</table>");
     }
 
-    /*private void writeFooter(PrintWriter out){
+    private void writeFooter(PrintWriter out){
         PageElements.printFooter(out);
     }
-*/
-    //TODO cleanup footer
+
 }
 
 
