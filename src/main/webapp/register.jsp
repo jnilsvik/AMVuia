@@ -69,6 +69,8 @@
                     <div class='mb-3 form-check'>
                         <input type='checkbox' class='form-check-input' id='admin' name='admin'>
                         <label class='form-check-label' for='admin'>Administrator</label>
+                    </div>
+                    <div class='mb-3 form-check'>
                         <input type='checkbox' class='form-check-input' id='union' name='union'>
                         <label class='form-check-label' for='union'>Union member</label>
                     </div>
