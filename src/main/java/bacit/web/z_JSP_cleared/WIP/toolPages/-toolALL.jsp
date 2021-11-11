@@ -28,9 +28,9 @@
                     PreparedStatement ps = con.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
                     ResultSet rs = ps.executeQuery();
 
+                    String categoryName;
                     while (rs.next()) {
-                        String categoryName = rs.getString("toolCategory");
-
+                        categoryName = rs.getString("toolCategory");
                         out.print("<tr>");
                         out.print("<td><label for = " + categoryName + "> " + categoryName.replaceAll("_", " ") + ":</label></td>");
                         out.print("<td><img src = 'img/amv.png' width = '156' heigth = '151'></td>");

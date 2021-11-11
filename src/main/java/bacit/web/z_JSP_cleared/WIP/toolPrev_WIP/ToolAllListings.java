@@ -1,4 +1,4 @@
-package bacit.web.z_JSP_cleared.toolPrev_WIP;
+package bacit.web.z_JSP_cleared.WIP.toolPrev_WIP;
 
 import bacit.web.utils.DBUtils;
 

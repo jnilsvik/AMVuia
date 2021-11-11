@@ -1,4 +1,4 @@
-package bacit.web.z_JSP_cleared.lists_WIP.toolPages;
+package bacit.web.z_JSP_cleared.WIP.toolPages;
 
 
 import javax.servlet.annotation.WebServlet;
