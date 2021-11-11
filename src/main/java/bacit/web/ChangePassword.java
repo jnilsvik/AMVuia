@@ -63,6 +63,7 @@ public class ChangePassword extends HttpServlet {
                 out.print("Your password has been successfully changed!");
                 out.print("<a href = '/profile'> Go back to profile</a>");
             }
+            db.close();
         } catch (Exception e) {
             out.print("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
         }

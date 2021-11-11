@@ -74,6 +74,7 @@ public class ToolDetailServlet extends HttpServlet {
                 out.print("</form>");
             }
             Calendar(out, db, toolID); //Calendar of available and booked dates
+            db.close();
 
             out.print("</body></html>");
         } catch (Exception e) {

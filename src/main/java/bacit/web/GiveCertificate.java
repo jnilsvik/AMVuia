@@ -28,10 +28,8 @@ public class GiveCertificate extends HttpServlet {
 
             if (AdminAccess.accessRights(email)) {
 
-                Class.forName("org.mariadb.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-
-                PreparedStatement ps = con.prepareStatement("SELECT * FROM ToolCertificate");
+                Connection db = DBUtils.getNoErrorConnection(out);
+                PreparedStatement ps = db.prepareStatement("SELECT * FROM ToolCertificate");
                 ResultSet rs = ps.executeQuery();
 
                 out.print("<html>");
@@ -67,6 +65,8 @@ public class GiveCertificate extends HttpServlet {
 
                 out.print("</body>");
                 out.print("</html>");
+
+                db.close();
             } else {
                 out.print("<h1> Sorry, you don't have access to this page");
             }

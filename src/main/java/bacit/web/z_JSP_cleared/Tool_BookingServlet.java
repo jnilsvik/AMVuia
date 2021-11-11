@@ -58,6 +58,7 @@ public class Tool_BookingServlet extends HttpServlet {
             } else {
                 out.print("<h1>Sorry, that tool is already taken or you dont have the needed ID./h1>");
             }
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

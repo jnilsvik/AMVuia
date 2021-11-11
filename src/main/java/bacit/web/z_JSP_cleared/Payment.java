@@ -5,6 +5,8 @@ import bacit.web.utils.DBUtils;
 import java.io.PrintWriter;
 import java.io.*;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -46,17 +48,14 @@ public class Payment extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        try {
+
             String orderID = request.getParameter("orderID");
             setPaid(out, orderID);
 
             String successfulLine = "Order was successfully marked as paid";
             request.setAttribute("successfulLine", successfulLine);
             request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void setPaid(PrintWriter out, String orderID) {

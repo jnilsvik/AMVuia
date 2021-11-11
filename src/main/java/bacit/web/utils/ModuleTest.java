@@ -33,7 +33,7 @@ public class ModuleTest extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
-        Connection dbc = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection(out);
 
         out.print("<!DOCTYPE html>");
         out.print("<head>");
@@ -48,46 +48,51 @@ public class ModuleTest extends HttpServlet {
 
         out.print("<section class='book'>");
         try {
-            TestBookingModule(out, dbc);
+            TestBookingModule(out, db);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         out.print("</section>");
         out.print("<section class='printBook'>");
         try {
-            TestBookingModulePrint(out,dbc);
+            TestBookingModulePrint(out,db);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         out.print("</section>");
         out.print("<section class='user'>");
         try {
-            TestUserModule(out,dbc);
+            TestUserModule(out,db);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         out.print("</section>");
         out.print("<section class='userPrint'>");
         try {
-            TestUserModulePrint(out,dbc);
+            TestUserModulePrint(out,db);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         out.print("</section>");
         out.print("<section class='tool'>");
         try {
-            TestToolModule(out,dbc);
+            TestToolModule(out,db);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         out.print("</section>");
         out.print("<section class='toolPrint'>");
         try {
-            TestToolModulePrint(out,dbc);
+            TestToolModulePrint(out,db);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         out.print("</section>");
+        try {
+            db.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     void TestBookingModule(PrintWriter out, Connection dbConnection) throws SQLException{

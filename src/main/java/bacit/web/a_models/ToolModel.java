@@ -35,9 +35,9 @@ public class ToolModel {
     }
 
     public static ToolModel getToolModel(String toolID, PrintWriter out) throws SQLException {
-        Connection dbConnection = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection(out);
         String query ="select * from Tool where toolID = ?;";
-        PreparedStatement statement= dbConnection.prepareStatement(query);
+        PreparedStatement statement= db.prepareStatement(query);
         statement.setString(1, toolID);
 
         ResultSet rs = statement.executeQuery();
@@ -54,6 +54,7 @@ public class ToolModel {
                 rs.getInt("certificateID"),
                 rs.getString("toolDescription"),
                 rs.getString("picturePath"));
+        db.close();
         return tool;
     }
 
@@ -130,9 +131,9 @@ public class ToolModel {
     }
 
     public LinkedList<LocalDate> getUsedDates(PrintWriter out) throws SQLException {
-        Connection dbConnection = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection(out);
         String query = "SELECT startDate, endDate FROM Booking WHERE toolID = ?;";
-        PreparedStatement statement = dbConnection.prepareStatement(query);
+        PreparedStatement statement = db.prepareStatement(query);
         statement.setInt(1, toolID);
         LinkedList<LocalDate> dayDates = new LinkedList<>();
         ResultSet rs = statement.executeQuery();
@@ -141,6 +142,7 @@ public class ToolModel {
             LocalDate end = rs.getTimestamp("endDate").toLocalDateTime().toLocalDate();
             addDatesToLinkedList(dayDates, start, end);
         }
+        db.close();
         return dayDates;
     }
 
