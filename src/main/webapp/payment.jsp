@@ -13,9 +13,30 @@
 <html>
 <head>
     <title>Tool List</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/tabelsort.css">
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous'>
+    <style>
+        .page {
+            flex-grow: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 70px;
+
+            background-image: url(https://media.discordapp.net/attachments/472062607646261249/702987431653277705/unknown.png);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+        .amv-register {
+            width: 480px;
+            background: #fff;
+            box-shadow: 0 25px 75px rgba(16, 30, 54, .25);
+            border-radius: 6px;
+            padding: 30px 60px 26px;
+            margin-top: -75px;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="__head_nav.html"/>
@@ -91,12 +112,27 @@ table, th, td { border:1px solid black;}
     </tr>
     </table>
 <br>
-<h2>Mark order as payed</h2>
-<form action = 'payment' method = 'POST'>
-    <label for ='orderID' >Order ID: </label><br>
-    <input type = 'text' name = 'orderID' id="orderID"><br>
-    <input type = 'submit' value = 'Submit'>
+
+<div class='page'>
+    <article class='my-3 amv-register' id='floating-labels'>
+        <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
+            <h3>Mark order as payed</h3>
+        </div>
+        <div>
+            <div class='bd-example'>
+    <form action = 'payment' method = 'POST'>
+        <div class='form-floating mb-3'>
+            <input type = 'text' class='form-control' name = 'orderID' id="orderID" placeholder='name'>
+            <label for ='orderID' >Order ID: </label>
+        </div>
+        <div class='col-12' >
+            <button class='btn btn-primary' style='width: 100%'  type='submit'>Submit</button>
+        </div>
     </form>
+  </div>
+ </div>
+</article>
+</div>
 </body>
 </html>
 
