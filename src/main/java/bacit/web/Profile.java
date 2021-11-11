@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
+// TODO: 11.11.2021 -joachim: id like to point out that this has a horribly unintuitive name
 // by Dilan changed by Paul
 @WebServlet(name = "Profile", value = "/profile")
 public class Profile extends HttpServlet {
@@ -38,7 +39,6 @@ public class Profile extends HttpServlet {
             out.println(e);
         }
     }
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -69,8 +69,7 @@ public class Profile extends HttpServlet {
                     0,
                     rs.getDate("startDate").toLocalDate(),
                     rs.getDate("endDate").toLocalDate(),
-                    toolReturnDate
-            ));
+                    toolReturnDate));
         }
         db.close();
         return bookings;

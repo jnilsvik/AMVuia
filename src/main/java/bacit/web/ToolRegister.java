@@ -26,10 +26,8 @@ public class ToolRegister extends HttpServlet {
             String email = (String) session.getAttribute("email");
 
             if (AdminAccess.accessRights(email)) {
-
                 Class.forName("org.mariadb.jdbc.Driver");
                 Connection db = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-
                 PreparedStatement ps = db.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
                 ResultSet rs = ps.executeQuery();
 
@@ -54,10 +52,8 @@ public class ToolRegister extends HttpServlet {
                 out.print("<select name = 'category' id = 'category'><br>");
 
                 while (rs.next()) {
-
                     String categoryName = rs.getString("toolCategory");
                     out.print("<option value = '" + categoryName + "'> " + categoryName + " </option>");
-
                 }
                 out.print("</select>");
                 out.print("<br>");
@@ -67,22 +63,18 @@ public class ToolRegister extends HttpServlet {
                 out.print("<select name = 'toolcertificate' id = 'toolcertificate'><br>");
 
                 while (rs1.next()) {
-
                     int certificateID = rs1.getInt("certificateID");
                     String certificateName = rs1.getString("certificateName");
                     out.print("<option value = '" + certificateID + "'> " + certificateName + " </option>");
-
                 }
+
                 out.print("</select>");
                 out.print("<br>");
                 out.print("<br>");
-
                 out.print("<label for = 'tooldesc'>Tool Description: </label><br>");
                 out.print("<input type = 'text' name = 'tooldesc'><br>");
                 out.print("<input type = 'submit' value = 'Register User'>");
                 out.print("</form>");
-
-
                 out.print("</body>");
                 out.print("</html>");
                 db.close();
