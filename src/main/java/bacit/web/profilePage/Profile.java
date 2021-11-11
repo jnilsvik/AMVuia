@@ -18,7 +18,6 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "Profile", value = "/profile")
 public class Profile extends HttpServlet {
 
-    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -31,16 +30,17 @@ public class Profile extends HttpServlet {
             }
             String email = (String) session.getAttribute("email");
             List<BookingModel> bookings = getBookings(email, out);
-            writeHeader(out, "Profile Page", email);
-            writeBookings(out, bookings);
-            writeFooter(out);
+
+            session.setAttribute("bookings", bookings);
+            session.setAttribute("out", out);
+
+            request.getRequestDispatcher("/Profile.jsp").forward(request,response);
         } catch (Exception e) {
             out.println(e);
         }
     }
 
 
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
@@ -105,21 +105,10 @@ public class Profile extends HttpServlet {
             out.println("<td>" + booking.getStartDate() + "</td> ");
             out.println("<td>" + booking.getTotalPrice(out) + "</td> ");
             out.println("<td>" + booking.getReturnDate() + "</td> ");
-            printCancelBookingButton(out, booking.getStartDate(), booking.getEndDate());
+
             out.println("</tr>");
         }
         out.print("</table>");
-    }
-
-    private void printCancelBookingButton(PrintWriter out, LocalDate startDate, LocalDate endDate){
-        if(startDate.isAfter(LocalDate.now())){
-            //canceling possible
-            out.println("<button onclick=\"Profile.test(out)\")>delete</button> ");
-        } else if(endDate.isAfter(LocalDate.now())){
-            out.println("<td>booking started</td> ");
-        } else{
-            out.println("<td>booking over</td> ");
-        }
     }
 
     private void writeFooter(PrintWriter out){
