@@ -103,7 +103,6 @@ public class Payment extends HttpServlet {
 
                 out.print("</body>");
                 out.print("</html>");
-                db.close();
             } else {
                 out.print("<h1> Sorry, you don't have access to this page");
             }
