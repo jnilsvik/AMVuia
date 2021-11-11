@@ -1,4 +1,4 @@
-package bacit.web.LoginRegister;
+package bacit.web.z_JSP_cleared;
 
 // by Dilan
 import java.io.PrintWriter;

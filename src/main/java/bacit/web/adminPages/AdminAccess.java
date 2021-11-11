@@ -2,6 +2,7 @@ package bacit.web.adminPages;
 import java.sql.*;
 
 // by Dilan
+// TODO: 10.11.2021 -joachim: this class is probably scrap now with the session thingy, leaving it for now
 public class  AdminAccess {
     public static boolean accessRights(String email)   {
         boolean isAdmin = false;

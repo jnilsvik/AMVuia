@@ -40,16 +40,17 @@ public class PageElements {
                         "<link rel=\"stylesheet\" href=\"CSS/style.css\">" +
                 "<nav class=\"sidebar\">\n" +
                 "    <img src=\"img/amv.png\" alt=\"AMV logo\"></li>\n" +
-                "    <a href="+BASE_URL+"/profile><i class=\"fa fa-user\"></i>Ola Nordman</a></li>\n" +
-                "    <a href="+BASE_URL+"/toolcategories><i class=\"fa fa-tools\"></i>Tools and equipment</a></li>\n" +
-                "    <a href="+BASE_URL+"/profile><i class=\"fa fa-receipt\"></i>My rentals</a></li>\n" +
-                "    <a href="+BASE_URL+"/tl><i class=\"fa fa-clipboard\"></i>Reports</a></li>\n" +
-                "    <a href="+BASE_URL+"#><i class=\"fa fa-question-circle\"></i>Help</a></li>\n");
+                "    <a href="+BASE_URL+"'/profile'><i class=\"fa fa-user\"></i>Ola Nordman</a></li>\n" +
+                "    <a href="+BASE_URL+"'/toolcategories'><i class=\"fa fa-tools\"></i>Tools and equipment</a></li>\n" +
+                "    <a href="+BASE_URL+"'/profile'><i class=\"fa fa-receipt\"></i>My rentals</a></li>\n" +
+                "    <a href="+BASE_URL+"'/tl'><i class=\"fa fa-clipboard\"></i>Reports</a></li>\n" +
+                "    <a href="+BASE_URL+"'#'><i class=\"fa fa-question-circle\"></i>Help</a></li>\n");
         if(AdminAccess.accessRights(email)) {
             // TODO: 04.11.2021 make if statement to print diffrent if were admins
-            out.println("<a href=" + BASE_URL + "/admin><i class=\"fa fa-users-cog\"></i>Admin Page</a></li>\n");
+            out.println("<a href=" + BASE_URL + "/admin><i class=\"fa fa-question-circle\"></i>Help</a></li>\n");
         }
         out.println("</nav><div class='main'");
+
     }
 
     public static void printHeadNav(PrintWriter out){

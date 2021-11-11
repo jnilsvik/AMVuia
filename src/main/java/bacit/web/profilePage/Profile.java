@@ -30,11 +30,9 @@ public class Profile extends HttpServlet {
             }
             String email = (String) session.getAttribute("email");
             List<BookingModel> bookings = getBookings(email, out);
-
-            session.setAttribute("bookings", bookings);
-            session.setAttribute("out", out);
-
-            request.getRequestDispatcher("/Profile.jsp").forward(request,response);
+            writeHeader(out, "Profile Page", email);
+            writeBookings(out, bookings);
+            writeFooter(out);
         } catch (Exception e) {
             out.println(e);
         }
@@ -50,7 +48,7 @@ public class Profile extends HttpServlet {
 
     private List<BookingModel> getBookings(String email, PrintWriter out) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection(out);
-        PreparedStatement ps = db.prepareStatement("SELECT orderID, AMVUser.userID, Tool.toolID, startDate, endDate, returnDate FROM ((AMVUser INNER JOIN BOOKING ON AMVUser.userID = Booking.userID) INNER JOIN Tool on Booking.toolID = Tool.toolID) WHERE email = ?;");
+        PreparedStatement ps = db.prepareStatement("SELECT orderID, AMVUser.userID, Tool.toolID, startDate, endDate, toolReturnDate FROM ((AMVUser INNER JOIN BOOKING ON AMVUser.userID = Booking.userID) INNER JOIN Tool on Booking.toolID = Tool.toolID) WHERE email = ?;");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
         List<BookingModel> bookings = new LinkedList<>();
@@ -61,7 +59,7 @@ public class Profile extends HttpServlet {
             }catch (NullPointerException e){}
             LocalDate toolReturnDate = null;
             try{
-                toolReturnDate = rs.getDate("returnDate").toLocalDate();
+                toolReturnDate = rs.getDate("toolReturnDate").toLocalDate();
             } catch (NullPointerException e){}
 
             bookings.add(new BookingModel(
@@ -86,7 +84,7 @@ public class Profile extends HttpServlet {
 
     private void writeBookings(PrintWriter out, List<BookingModel> bookings){
         out.print("<h2>Your current bookings</h2>");
-        out.println("<table style = 'width:90%'>");
+        out.println("<table style = 'width:80%'>");
         out.println("<tr>");
         out.println("<th>Order Number</th>");
         out.println("<th>Tool Name</th>");
@@ -94,9 +92,7 @@ public class Profile extends HttpServlet {
         out.println("<th>End Date</th>");
         out.println("<th>Total Price</th>");
         out.println("<th>Return Date</th>");
-        out.println("<th>Cancel Booking</th>");
         out.println("</tr>");
-
         for(BookingModel booking : bookings){
             out.println("<tr>");
             out.println("<td>" + booking.getOrderID() + "</td> ");
@@ -105,7 +101,6 @@ public class Profile extends HttpServlet {
             out.println("<td>" + booking.getStartDate() + "</td> ");
             out.println("<td>" + booking.getTotalPrice(out) + "</td> ");
             out.println("<td>" + booking.getReturnDate() + "</td> ");
-
             out.println("</tr>");
         }
         out.print("</table>");

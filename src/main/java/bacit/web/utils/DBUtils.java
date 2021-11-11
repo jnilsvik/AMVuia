@@ -26,7 +26,7 @@ public class DBUtils {
         }
         catch(NamingException ex)
         {
-            out.println(ex.getMessage());
+            out.print(ex.getMessage());
         }
         return null;
     }
