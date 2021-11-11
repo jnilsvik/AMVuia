@@ -2,7 +2,6 @@ package bacit.web;
 
 import bacit.web.a_models.BookingModel;
 import bacit.web.utils.DBUtils;
-import bacit.web.utils.PageElements;
 
 import java.io.PrintWriter;
 import java.sql.*;
@@ -45,7 +44,6 @@ public class Profile extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-
     }
 
     private List<BookingModel> getBookings(String email, PrintWriter out) throws SQLException {
@@ -58,16 +56,17 @@ public class Profile extends HttpServlet {
             int toolID = 0;
             try{
                 toolID = rs.getInt("toolID");
-            }catch (NullPointerException e){}
+            }catch (NullPointerException e){e.printStackTrace();}
             LocalDate toolReturnDate = null;
             try{
                 toolReturnDate = rs.getDate("returnDate").toLocalDate();
-            } catch (NullPointerException e){}
+            } catch (NullPointerException e){e.printStackTrace();}
 
             bookings.add(new BookingModel(
                     rs.getInt("orderID"),
                     rs.getInt("userID"),
                     toolID,
+                    0,
                     rs.getDate("startDate").toLocalDate(),
                     rs.getDate("endDate").toLocalDate(),
                     toolReturnDate
@@ -77,8 +76,6 @@ public class Profile extends HttpServlet {
     }
 
     private void writeHeader(PrintWriter out, String header, String email){
-        PageElements.printSidebar(out, email);
-        PageElements.printHeader(header, out);
         out.println("<style>");
         out.println("table, th, td { border:1px solid black;}");
         out.println("</style>");
@@ -107,11 +104,6 @@ public class Profile extends HttpServlet {
         }
         out.print("</table>");
     }
-
-    private void writeFooter(PrintWriter out){
-        PageElements.printFooter(out);
-    }
-
 }
 
 

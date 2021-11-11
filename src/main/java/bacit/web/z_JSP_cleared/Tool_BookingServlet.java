@@ -26,9 +26,9 @@ public class Tool_BookingServlet extends HttpServlet {
 
             String email = request.getParameter("email");
             String tool = request.getParameter("tools");
-            LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
             int inputDays = Integer.parseInt(request.getParameter("days"));
             int userID = getUserID(db, email);
+            LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
             LocalDate endingDate = StartDateWanted.plusDays(inputDays);
 
             PreparedStatement st2 = db.prepareStatement(
@@ -49,14 +49,12 @@ public class Tool_BookingServlet extends HttpServlet {
                 toolCertificateID = rs2.getInt("certificateID");
                 toolCertificateName = rs2.getString("certificateName");
             }
-
             //getTotalPrice class calculates the total price.
-            int totalPrice =  priceFirst + priceAfter * (inputDays-1);;
-
+            int totalPrice =  priceFirst + priceAfter * (inputDays-1);
             //checkDate class sees if the wanted booked days are already taken. The hasCertificate method checks if the user has the needed certificate.
             if (!dateBookedTaken(db, StartDateWanted, inputDays, tool) && hasCertificate(db, userID, toolCertificateID, toolCertificateName)) {
                 registerBooking(db, StartDateWanted, endingDate, totalPrice, userID, toolID);
-                printBookingDetails(out, StartDateWanted, tool, endingDate, totalPrice, email);
+                request.getRequestDispatcher("/bookingComplete.jsp").forward(request,response);
             } else {
                 out.print("<h1>Sorry, that tool is already taken or you dont have the needed ID./h1>");
             }
@@ -82,7 +80,7 @@ public class Tool_BookingServlet extends HttpServlet {
         return userID;
     }
 
-    public  boolean hasCertificate(Connection db, int userID, int toolCertificateID, String toolCertificateName) {
+    public boolean hasCertificate(Connection db, int userID, int toolCertificateID, String toolCertificateName) {
         boolean hasTheCertificate = false;
         try {
             PreparedStatement st3 = db
@@ -100,7 +98,6 @@ public class Tool_BookingServlet extends HttpServlet {
             if (totalCertificateID.contains(toolCertificateID) || toolCertificateName.equals("none")) {
                 hasTheCertificate = true;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -123,6 +120,7 @@ public class Tool_BookingServlet extends HttpServlet {
         }
     }
 
+    // TODO: 11.11.2021 -joachim: finish the booking here
     public void printBookingDetails(PrintWriter out, LocalDate StartDateWanted, String tool, LocalDate endingDate, int totalPrice, String email) {
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String StartDateWantedFormat = StartDateWanted.format(formatters);
@@ -130,15 +128,16 @@ public class Tool_BookingServlet extends HttpServlet {
         out.print("<h1> Tool has been booked. Here is your the order details:</h1>");
         out.print("<p>Tool: " + tool + "</p>");
         out.print("<p>Start Date: " + StartDateWantedFormat + "</p>");
-        out.print("<p>Start Date: " + EndingDateForm + "</p>");
+        out.print("<p>End Date: " + EndingDateForm + "</p>");
         out.print("<p>Total price: " + totalPrice + "</p>");
         out.print("<p>Booked as: " + email + "</p>");
     }
+
+    // TODO: 11.11.2021 -joachim: this works but i genuinely hate this method
     public static boolean dateBookedTaken(Connection db, LocalDate StartDateWanted, int inputDays, String tool) {
         boolean taken = false;
         try {
-            PreparedStatement st = db
-                    .prepareStatement("SELECT * FROM Booking WHERE toolID = ?");
+            PreparedStatement st = db.prepareStatement("SELECT * FROM Booking WHERE toolID = ?");
             st.setString(1, tool);
             ResultSet rs = st.executeQuery();
 
@@ -174,9 +173,4 @@ public class Tool_BookingServlet extends HttpServlet {
         }
         return taken;
     }
-
 }
-
-
-
-
