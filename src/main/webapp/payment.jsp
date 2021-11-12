@@ -36,7 +36,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="__head_nav.html"/>
+<jsp:include page="_head_nav.jsp"/>
 
 <table style = 'width:100%'>
     <tr>
@@ -51,7 +51,7 @@
         <th>Return Date</th>
         <th>Tool ID</th>
         <th>Total Price</th>
-        </tr>
+    </tr>
 
     <%
 
@@ -95,11 +95,8 @@
         }  catch (Exception e) {
             e.printStackTrace();
         }
-
         request.removeAttribute("unpaid");
     %>
-    </tr>
-    </table>
 <br>
 
 <div class='page'>
@@ -122,8 +119,5 @@
  </div>
 </article>
 </div>
-</body>
-</html>
-
 </body>
 </html>

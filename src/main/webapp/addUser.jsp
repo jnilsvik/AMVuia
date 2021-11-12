@@ -40,7 +40,7 @@
 </head>
 
 <body>
-<jsp:include page="__head_nav.html"/>
+<jsp:include page="_head_nav.jsp"/>
 
 <div class="page">
     <article class="my-3" id="floating-labels">

@@ -12,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<jsp:include page="__head_nav.html"/>
+<jsp:include page="_head_nav.jsp"/>
 <%
     DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     BookingModel bm = (BookingModel) request.getAttribute("bmodel");

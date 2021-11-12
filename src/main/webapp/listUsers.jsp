@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="css/tabelsort.css">
 </head>
 <body>
-    <jsp:include page="__head_nav.html"/>
+    <jsp:include page="_head_nav.jsp"/>
 
     <h3>User Listing</h3>
     <table class="table-sortable">

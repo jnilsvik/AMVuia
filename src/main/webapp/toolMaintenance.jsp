@@ -41,7 +41,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="__head_nav.html"/>
+<jsp:include page="_head_nav.jsp"/>
 
 <div class='page'>
     <article class='my-3 amv-register' id='floating-labels'>
@@ -52,7 +52,7 @@
             <div class='bd-example'>
                 <form action = 'toolmaintenance' method = 'POST'>
 
-                    <label for = 'toolmaintenancein'>Put tool in maintenance</label></td>
+                    <label for = 'toolmaintenancein'>Put tool in maintenance</label>
                     <input type = 'radio' id = 'toolmaintenancein'  name = 'toolmaintenance' value = 'ToolInMaintenanceIn'>
                     <br>
 

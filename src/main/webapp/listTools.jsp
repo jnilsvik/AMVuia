@@ -1,11 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="bacit.web.a_models.ToolModel" %><%--
-  Created by IntelliJ IDEA.
-  User: Joachim
-  Date: 10.11.2021
-  Time: 16:11
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="bacit.web.a_models.ToolModel" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
@@ -15,7 +9,7 @@
     <link rel="stylesheet" href="css/tabelsort.css">
 </head>
 <body>
-    <jsp:include page="__head_nav.html"/>
+    <jsp:include page="_head_nav.jsp"/>
 
     <h3>Tools Listing</h3>
     <table class="table-sortable">

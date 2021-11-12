@@ -5,13 +5,13 @@
   Time: 17:06
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"  %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-<jsp:include page="__head_nav.html"/>
+<jsp:include page="_head_nav.jsp"/>
 <!--content goes here-->
 <section class="main">
     <h1>Hello ${email}</h1>

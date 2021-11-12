@@ -2,7 +2,7 @@
 
 <title>Admin Functions</title>
 
-<jsp:include page="__head_nav.html"/>
+<jsp:include page="_head_nav.jsp"/>
 <div>
  <a href="toolregister"> <span class=bigbutton> Register Tool </span></a>
  <br>
