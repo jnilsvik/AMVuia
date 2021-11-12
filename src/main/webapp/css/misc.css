@@ -1,0 +1,47 @@
+.page {
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 70px;
+
+    background-image: url(https://media.discordapp.net/attachments/472062607646261249/702987431653277705/unknown.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+.page button {
+    width: 100%;
+}
+.page article{
+    width: 480px;
+    background: #fff;
+    box-shadow: 0 25px 75px rgba(16, 30, 54, .25);
+    border-radius: 6px;
+    padding: 30px 60px 26px;
+    margin-top: -75px;
+}
+
+.amv-table{
+    width: 100%;
+
+}
+.amv-table table, th, td { border:1px solid black;}
+
+.amv-txc-b {
+    color: #11165a;
+}
+.amv-bgc-y {
+    background-color: #ffb300;
+}
+.amv-btn {
+    color: #11165a;
+    border: 2px solid #11165a;
+    border-radius: unset;
+}
+.amv-btn:hover {
+    background-color: #11165a;
+    color: #ffb300;
+}

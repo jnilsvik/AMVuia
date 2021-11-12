@@ -1,14 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="bacit.web.a_models.ToolModel" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.time.LocalDate" %>
-<%@ page import="java.sql.ResultSet" %><%--
-  Created by IntelliJ IDEA.
-  User: Dilan
-  Date: 11.11.2021
-  Time: 11:47
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
