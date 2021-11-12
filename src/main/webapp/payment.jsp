@@ -9,31 +9,8 @@
 <head>
     <title>Payments</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous'>
-    <style>
-        .page {
-            flex-grow: 1;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-bottom: 70px;
-
-            background-image: url(https://media.discordapp.net/attachments/472062607646261249/702987431653277705/unknown.png);
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: 100% 100%;
-        }
-        .amv-register {
-            width: 480px;
-            background: #fff;
-            box-shadow: 0 25px 75px rgba(16, 30, 54, .25);
-            border-radius: 6px;
-            padding: 30px 60px 26px;
-            margin-top: -75px;
-        }
-
-        table, th, td { border:1px solid black;}
-    </style>
+    <link rel="stylesheet" href="css/misc.css">
+    <style> table, th, td { border:1px solid black;} </style>
 </head>
 <body>
 <jsp:include page="_head_nav.jsp"/>
@@ -54,41 +31,23 @@
     </tr>
 
     <%
-
         ResultSet rs1 = (ResultSet) request.getAttribute("unpaid");
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
         try {
             while(rs1.next()) {
-                int userID = rs1.getInt("userID");
-                String firstName = rs1.getString("firstName");
-                String lastName = rs1.getString("lastName");
-                String email1 = rs1.getString("email");
-                String phoneNumber = rs1.getString("phoneNumber");
-
-                int orderID = rs1.getInt("orderID");
-                LocalDate startDate = rs1.getDate("startDate").toLocalDate();
-                LocalDate endDate = rs1.getDate("endDate").toLocalDate();
-                LocalDate toolReturnDate = rs1.getDate("returnDate").toLocalDate();
-                int toolID = rs1.getInt("toolID");
-                int totalPrice = rs1.getInt("totalPrice");
-
-                String startDateString = startDate.format(formatters);
-                String endDateString = endDate.format(formatters);
-                String toolReturnalDateString = toolReturnDate.format(formatters);
-
                 out.print("<tr>");
-                out.print("<td>" + userID + "</td> ");
-                out.print("<td>" + firstName + "</td> ");
-                out.print("<td>" + lastName + "</td> ");
-                out.print("<td>" + email1 + "</td> ");
-                out.print("<td>" + phoneNumber + "</td> ");
-                out.print("<td>" + orderID + "</td> ");
-                out.print("<td>" + startDateString + "</td> ");
-                out.print("<td>" + endDateString + "</td> ");
-                out.print("<td>" + toolReturnalDateString + "</td> ");
-                out.print("<td>" + toolID + "</td> ");
-                out.print("<td>" + totalPrice + "</td> ");
+                out.print("<td>" + rs1.getInt("userID") + "</td> ");
+                out.print("<td>" + rs1.getString("firstName") + "</td> ");
+                out.print("<td>" + rs1.getString("lastName") + "</td> ");
+                out.print("<td>" + rs1.getString("email") + "</td> ");
+                out.print("<td>" + rs1.getString("phoneNumber") + "</td> ");
+                out.print("<td>" + rs1.getInt("orderID") + "</td> ");
+                out.print("<td>" + rs1.getDate("startDate").toLocalDate().format(formatters)+ "</td> ");
+                out.print("<td>" + rs1.getDate("endDate").toLocalDate().format(formatters) + "</td> ");
+                out.print("<td>" + rs1.getDate("returnDate").toLocalDate().format(formatters) + "</td> ");
+                out.print("<td>" + rs1.getInt("toolID") + "</td> ");
+                out.print("<td>" + rs1.getInt("totalPrice") + "</td> ");
                 out.print("</tr>");
             }
 
