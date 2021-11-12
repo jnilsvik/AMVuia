@@ -2,6 +2,14 @@ drop schema AMVDatabase;
 create database if not exists AMVDatabase;
 use AMVDatabase;
 
+create table files(
+    id int not null auto_increment unique,
+    name varchar(255),
+    content blob,
+    contentType varchar(255),
+    PRIMARY KEY (id)
+);
+
 CREATE OR REPLACE TABLE ToolCertificate(
     certificateID int NOT NULL auto_increment unique,
     certificateName VARCHAR(50) NOT NULL,

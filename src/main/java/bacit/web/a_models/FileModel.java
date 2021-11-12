@@ -1,4 +1,4 @@
-package bacit.web.UpAndDownLoadFile;
+package bacit.web.a_models;
 
 public class FileModel {
 
