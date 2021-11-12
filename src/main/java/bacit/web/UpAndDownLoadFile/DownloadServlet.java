@@ -1,5 +1,7 @@
 package bacit.web.UpAndDownLoadFile;
 
+import bacit.web.a_models.FileModel;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

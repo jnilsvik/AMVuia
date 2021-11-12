@@ -22,10 +22,11 @@ public class ToolRegister extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+            /*
             HttpSession session = request.getSession(false);
             String email = (String) session.getAttribute("email");
 
-            if (AdminAccess.accessRights(email)) {
+            if (AdminAccess.accessRights(email)) {*/
                 Class.forName("org.mariadb.jdbc.Driver");
                 Connection db = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
                 PreparedStatement ps = db.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
@@ -78,9 +79,6 @@ public class ToolRegister extends HttpServlet {
                 out.print("</body>");
                 out.print("</html>");
                 db.close();
-            } else {
-                out.print("<h1> Sorry, you don't have access to this page");
-            }
 
         } catch (Exception e) {
             out.print("error");

@@ -1,11 +1,13 @@
 package bacit.web.UpAndDownLoadFile;
 
 
+import bacit.web.a_models.FileModel;
 import bacit.web.utils.DBUtils;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -25,7 +27,8 @@ public class FileDAO {
 
     public FileModel getFile(int id) throws Exception
     {
-        Connection db = DBUtils.getINSTANCE().getConnection();
+        Class.forName("org.mariadb.jdbc.Driver");
+        Connection db = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
         String query3 = "select Name, Content, ContentType from Files where id = ?";
         PreparedStatement statement = db.prepareStatement(query3);
         statement.setInt(1, id);
