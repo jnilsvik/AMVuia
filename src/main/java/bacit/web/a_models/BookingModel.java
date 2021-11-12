@@ -89,9 +89,10 @@ public class BookingModel {
             PreparedStatement statement = db.prepareStatement(query);
             statement.setInt(1, toolID);
             ResultSet rs = statement.executeQuery();
+            db.close();
+
             if (!rs.next()) throw new SQLException("No tool could be found");
             return  rs.getString("toolName");
-            db.close();
         } catch (SQLException e){
             e.printStackTrace();
         }
