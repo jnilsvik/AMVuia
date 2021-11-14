@@ -74,7 +74,7 @@ public class ToolRegister extends HttpServlet {
                 out.print("<br>");
                 out.print("<label for = 'tooldesc'>Tool Description: </label><br>");
                 out.print("<input type = 'text' name = 'tooldesc'><br>");
-                out.print("<input type = 'submit' value = 'Register User'>");
+                out.print("<input type = 'submit' value = 'Register Tool'>");
                 out.print("</form>");
                 out.print("</body>");
                 out.print("</html>");
@@ -93,14 +93,14 @@ public class ToolRegister extends HttpServlet {
 
         try {
 
-            Connection db = DBUtils.getNoErrorConnection(out);
+            Connection db = DBUtils.getNoErrorConnection();
             String insertUserCommand = "insert into Tool (toolName, maintenance, priceFirst, priceAfter, toolCategory, certificateID, toolDescription) values(?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = db.prepareStatement(insertUserCommand);
             statement.setString(1, request.getParameter("toolname"));
             statement.setBoolean(2, false);
             statement.setString(3, request.getParameter("pricefirst"));
             statement.setString(4, request.getParameter("priceafter"));
-            statement.setString(5, request.getParameter("toolCategory"));
+            statement.setString(5, "Nailguns");
             statement.setString(6, request.getParameter("toolcertificate"));
             statement.setString(7, request.getParameter("tooldesc"));
             statement.executeUpdate();
@@ -116,7 +116,7 @@ public class ToolRegister extends HttpServlet {
 
         }
         catch (Exception e) {
-            e.printStackTrace();
+            out.println(e);
         }
     }
 

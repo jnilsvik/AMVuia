@@ -84,7 +84,7 @@ public class BookingModel {
     public String getToolName(){
         try {
             PrintWriter out = null;
-            Connection db = DBUtils.getNoErrorConnection(out);
+            Connection db = DBUtils.getNoErrorConnection();
             String query = "SELECT toolName FROM Tool WHERE toolID = ?;";
             PreparedStatement statement = db.prepareStatement(query);
             statement.setInt(1, toolID);

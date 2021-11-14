@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class DBQ {
     public static ToolModel getAToolModelByID(String toolID, PrintWriter out) throws SQLException {
-        Connection db = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection();
         String toolQ = "select * from Tool where ToolID = ?";
         PreparedStatement statement = db.prepareStatement(toolQ);
         statement.setString(1, toolID);
@@ -34,7 +34,7 @@ public class DBQ {
         return model;
     }
     public static ToolModel getToolModelByID(String toolID, PrintWriter out) throws SQLException {
-        Connection db = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement statement = db.prepareStatement(
                 "select * from Tool where toolID = ?");
         statement.setString(1, toolID);

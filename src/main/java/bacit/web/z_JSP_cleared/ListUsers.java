@@ -25,7 +25,7 @@ public class ListUsers extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try {
-            Connection dbConnection = DBUtils.getNoErrorConnection(out);
+            Connection dbConnection = DBUtils.getNoErrorConnection();
             String userQ = "select * from AMVUser order by userID ";
             PreparedStatement statement = dbConnection.prepareStatement(userQ);
             ResultSet rs = statement.executeQuery();

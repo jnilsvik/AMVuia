@@ -25,7 +25,7 @@ public class Payment extends HttpServlet {
 
             if (AdminAccess.accessRights(email)) {
 
-                Connection db = DBUtils.getNoErrorConnection(out);
+                Connection db = DBUtils.getNoErrorConnection();
                 String insertUserCommand = "SELECT * FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE paid = false AND returnDate IS NOT NULL";
                 PreparedStatement st1 = db.prepareStatement(insertUserCommand);
                 st1.executeUpdate();
@@ -61,7 +61,7 @@ public class Payment extends HttpServlet {
     public void setPaid(PrintWriter out, String orderID) {
         try {
 
-        Connection db = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection();
         String insertUserCommand = "UPDATE Booking SET paid = true WHERE orderID = ?";
         PreparedStatement statement = db.prepareStatement(insertUserCommand);
         statement.setString(1, orderID);

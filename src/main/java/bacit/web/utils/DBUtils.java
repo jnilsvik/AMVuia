@@ -16,7 +16,7 @@ public class DBUtils {
         return INSTANCE;
     }
 
-    private Connection getConnection(PrintWriter out) throws SQLException {
+    private Connection getConnection() throws SQLException {
         try{
             Context initCtx = new InitialContext();
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
@@ -26,15 +26,15 @@ public class DBUtils {
         }
         catch(NamingException ex)
         {
-            out.print(ex.getMessage());
+            ex.printStackTrace();
         }
         return null;
     }
 
-    public static Connection getNoErrorConnection(PrintWriter out){
+    public static Connection getNoErrorConnection(){
         Connection dbConnection = null;
         try{
-            dbConnection = DBUtils.getINSTANCE().getConnection(out);
+            dbConnection = DBUtils.getINSTANCE().getConnection();
         } catch (SQLException sqlException){
             sqlException.printStackTrace();
         }

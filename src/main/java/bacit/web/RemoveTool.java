@@ -36,7 +36,7 @@ public class RemoveTool extends HttpServlet {
                 "</body>" +
                 "</html>");
         try {
-            Connection conn = DBUtils.getNoErrorConnection(out);
+            Connection conn = DBUtils.getNoErrorConnection();
             String a = "Select * FROM Tool; ";
             PreparedStatement statements = conn.prepareStatement(a);
             ResultSet rs = statements.executeQuery();
@@ -58,7 +58,7 @@ public class RemoveTool extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {
-            Connection conn = DBUtils.getNoErrorConnection(out);
+            Connection conn = DBUtils.getNoErrorConnection();
             PreparedStatement statement = conn.prepareStatement("DELETE FROM Tool WHERE toolID = ? ");
             statement.setString(1, String.valueOf(request.getParameter("input")));
             int noOfAffectedRows = statement.executeUpdate();

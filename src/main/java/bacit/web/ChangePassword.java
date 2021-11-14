@@ -36,7 +36,7 @@ public class ChangePassword extends HttpServlet {
             String newPassword1 = hashPassword.encryptThisString(request.getParameter("newpass1"));
             String newPassword2 = hashPassword.encryptThisString(request.getParameter("newpass2"));
 
-            Connection db = DBUtils.getNoErrorConnection(out);
+            Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement st1 = db.prepareStatement("SELECT passwordHash FROM AMVUser WHERE email = ?");
             st1.setString(1, email);
             ResultSet rs = st1.executeQuery();

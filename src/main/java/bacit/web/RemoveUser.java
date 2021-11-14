@@ -36,7 +36,7 @@ public class RemoveUser extends HttpServlet {
                 "</body>" +
                 "</html>");
         try {
-            Connection conn = DBUtils.getNoErrorConnection(out);
+            Connection conn = DBUtils.getNoErrorConnection();
             String a = "Select * FROM AMVUser; ";
             PreparedStatement statements = conn.prepareStatement(a);
             ResultSet rs = statements.executeQuery();
@@ -57,7 +57,7 @@ public class RemoveUser extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {
-            Connection conn = DBUtils.getNoErrorConnection(out);
+            Connection conn = DBUtils.getNoErrorConnection();
             PreparedStatement statement = conn.prepareStatement("DELETE FROM AMVUser WHERE email = ? ");
             statement.setString(1, String.valueOf(request.getParameter("input")));
             int noOfAffectedRows = statement.executeUpdate();

@@ -47,7 +47,7 @@ public class Profile extends HttpServlet {
     }
 
     private List<BookingModel> getBookings(String email, PrintWriter out) throws SQLException {
-        Connection db = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement ps = db.prepareStatement("SELECT orderID, AMVUser.userID, Tool.toolID, startDate, endDate, returnDate FROM ((AMVUser INNER JOIN BOOKING ON AMVUser.userID = Booking.userID) INNER JOIN Tool on Booking.toolID = Tool.toolID) WHERE email = ?;");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();

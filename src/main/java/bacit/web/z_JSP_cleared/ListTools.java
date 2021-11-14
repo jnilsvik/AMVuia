@@ -28,7 +28,7 @@ public class ListTools extends HttpServlet {
         PrintWriter out = response.getWriter();
         // TODO: 10.11.2021 need to implement the non-admin prevention
         try {
-            Connection dbConnection = DBUtils.getNoErrorConnection(out);
+            Connection dbConnection = DBUtils.getNoErrorConnection();
             String toolQ = "select * from Tool order by toolID ";
             PreparedStatement statement = dbConnection.prepareStatement(toolQ);
             ResultSet rs = statement.executeQuery();

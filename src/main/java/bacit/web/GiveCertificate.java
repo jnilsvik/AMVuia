@@ -28,7 +28,7 @@ public class GiveCertificate extends HttpServlet {
 
             if (AdminAccess.accessRights(email)) {
 
-                Connection db = DBUtils.getNoErrorConnection(out);
+                Connection db = DBUtils.getNoErrorConnection();
                 PreparedStatement ps = db.prepareStatement("SELECT * FROM ToolCertificate");
                 ResultSet rs = ps.executeQuery();
 
@@ -85,7 +85,7 @@ public class GiveCertificate extends HttpServlet {
         try {
             LocalDate accomplishDate = LocalDate.parse(request.getParameter("accomplishdate"));
 
-            Connection db = DBUtils.getNoErrorConnection(out);
+            Connection db = DBUtils.getNoErrorConnection();
             String insertUserCommand = "insert into UsersCertificate (userID, certificateID, accomplishDate) values(?, ?, ?)";
             PreparedStatement statement = db.prepareStatement(insertUserCommand);
             statement.setString(1, request.getParameter("userID"));
