@@ -38,7 +38,7 @@ public class GiveCertificate extends HttpServlet {
                 request.setAttribute("certificates", certificates);
                 request.getRequestDispatcher("/GiveCertificate.jsp").forward(request,response);
             } else {
-                out.print("<h1> Sorry, you don't have access to this page");
+                request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
             }
 
         } catch (Exception e) {
@@ -51,27 +51,27 @@ public class GiveCertificate extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-
-        try {
-            LocalDate accomplishDate = LocalDate.parse(request.getParameter("accomplishdate"));
-            String userID = request.getParameter("userID");
-            String certificateID = request.getParameter("certificateID");
-
-            addCertificate(userID, certificateID, accomplishDate);
-
-            out.print("<html>");
-            out.print("<head>");
-            out.print("</head>");
-            out.print("<body>");
-            out.print("<h1> Task successful!</h1>");
-            out.print("</body>");
-            out.print("</html>");
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+            return;
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        String email = (String) session.getAttribute("email");
+
+        if (AdminAccess.accessRights(email)) {
+            try {
+                LocalDate accomplishDate = LocalDate.parse(request.getParameter("accomplishdate"));
+                String userID = request.getParameter("userID");
+                String certificateID = request.getParameter("certificateID");
+                addCertificate(userID, certificateID, accomplishDate);
+                printSuccess(out);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request, response);
         }
     }
-
     private List<Certificate> getCertificates() throws SQLException {
         List<Certificate> certificateNames = new LinkedList<>();
         Connection db = DBUtils.getNoErrorConnection();
@@ -94,6 +94,16 @@ public class GiveCertificate extends HttpServlet {
         statement.setString(2, certificateID);
         statement.setObject(3, accomplishDate);
         statement.executeUpdate();
+    }
+
+    private void printSuccess(PrintWriter out){
+        out.print("<html>");
+        out.print("<head>");
+        out.print("</head>");
+        out.print("<body>");
+        out.print("<h1> Task successful!</h1>");
+        out.print("</body>");
+        out.print("</html>");
     }
 
 }

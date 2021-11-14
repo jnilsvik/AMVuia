@@ -5,6 +5,7 @@ import bacit.web.a_models.ToolModel;
 import bacit.web.a_models.UserModel;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.hashPassword;
+import bacit.web.z_JSP_cleared.AdminAccess;
 
 import java.io.*;
 import java.sql.Connection;
@@ -21,37 +22,49 @@ import javax.servlet.annotation.*;
 //by ? changed to jsp by paul
 @WebServlet(name = "RemoveUser", value = "/removeuser")
 public class RemoveUser extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
 
         HttpSession session = request.getSession(false);
         if(session == null){
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
         }
-
-        try {
-            List<UserModel> users = getUsers();
-            request.setAttribute("users", users);
-            request.getRequestDispatcher("/RemoveUser.jsp").forward(request,response);
-        } catch (Exception e) {
-            e.printStackTrace();
+        String email = (String) session.getAttribute("email");
+        if(AdminAccess.accessRights("paul@feichten")) {
+            try {
+                List<UserModel> users = getUsers();
+                request.setAttribute("users", users);
+                request.getRequestDispatcher("/RemoveUser.jsp").forward(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
         }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        try {
-            boolean success = deleteUser(request.getParameter("input"));
-            List<UserModel> users = getUsers();
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+            return;
+        }
+        String email = (String) session.getAttribute("email");
+        if(AdminAccess.accessRights(email)) {
+            try {
+                boolean success = deleteUser(request.getParameter("input"));
+                List<UserModel> users = getUsers();
 
-            request.setAttribute("success", success);
-            request.setAttribute("users", users);
-            request.getRequestDispatcher("/RemoveUserPost.jsp").forward(request,response);
-        } catch (SQLException e) {
-            e.printStackTrace();
+                request.setAttribute("success", success);
+                request.setAttribute("users", users);
+                request.getRequestDispatcher("/RemoveUserPost.jsp").forward(request, response);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else{
+            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
         }
     }
 

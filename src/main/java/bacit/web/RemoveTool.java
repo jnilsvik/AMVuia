@@ -5,6 +5,7 @@ import bacit.web.a_models.ToolModel;
 import bacit.web.a_models.UserModel;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.hashPassword;
+import bacit.web.z_JSP_cleared.AdminAccess;
 
 import java.io.*;
 import java.sql.Connection;
@@ -23,22 +24,24 @@ import javax.tools.Tool;
 //made by ? changed to JSP by Paul
 @WebServlet(name = "RemoveTool", value = "/removetool")
 public class RemoveTool extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         HttpSession session = request.getSession(false);
-        if(session == null){
+        if (session == null) {
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
         }
-
-        //TODO check if user is admin
-
-        try {
-            List<ToolModel> tools = getTools();
-            request.setAttribute("tools", tools);
-            request.getRequestDispatcher("/RemoveTool.jsp").forward(request,response);
-        } catch (SQLException | ServletException e) {
-            e.printStackTrace();
+        String email = (String) session.getAttribute("email");
+        if (AdminAccess.accessRights("paul@feichten")){
+            try {
+                List<ToolModel> tools = getTools();
+                request.setAttribute("tools", tools);
+                request.getRequestDispatcher("/RemoveTool.jsp").forward(request, response);
+            } catch (SQLException | ServletException e) {
+                e.printStackTrace();
+            }
+        }else {
+            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
         }
     }
 
@@ -49,21 +52,22 @@ public class RemoveTool extends HttpServlet {
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
         }
+        String email = (String) session.getAttribute("email");
+        if(AdminAccess.accessRights(email)){
+            try {
+                String id = request.getParameter("input");
+                Boolean success = deleteRow(id);
+                List<ToolModel> tools = getTools();
 
-        //TODO check is is Admin
+                request.setAttribute("success", success);
+                request.setAttribute("tools", tools);
+                request.getRequestDispatcher("/RemoveToolPost.jsp").forward(request,response);
 
-        PrintWriter out = response.getWriter();
-        try {
-            String id = request.getParameter("input");
-            Boolean success = deleteRow(id);
-            List<ToolModel> tools = getTools();
-
-            request.setAttribute("success", success);
-            request.setAttribute("tools", tools);
-            request.getRequestDispatcher("/RemoveToolPost.jsp").forward(request,response);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else {
+            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
         }
     }
 
