@@ -28,11 +28,10 @@ public class Profile extends HttpServlet {
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
             }
+
             String email = (String) session.getAttribute("email");
             List<BookingModel> bookings = getBookings(email, out);
 
-            out.println(email);
-            request.setAttribute("out", out);
             request.setAttribute("bookings", bookings);
             request.getRequestDispatcher("/Profile.jsp").forward(request,response);
         } catch (Exception e) {
@@ -56,11 +55,11 @@ public class Profile extends HttpServlet {
             int toolID = 0;
             try{
                 toolID = rs.getInt("toolID");
-            }catch (NullPointerException e){e.printStackTrace();}
+            }catch (NullPointerException e){out.println(e);}
             LocalDate toolReturnDate = null;
             try{
                 toolReturnDate = rs.getDate("returnDate").toLocalDate();
-            } catch (NullPointerException e){e.printStackTrace();}
+            } catch (NullPointerException e){out.println(e);}
 
             bookings.add(new BookingModel(
                     rs.getInt("orderID"),

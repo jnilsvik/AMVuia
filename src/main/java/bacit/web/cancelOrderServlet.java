@@ -24,7 +24,6 @@ public class cancelOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("TEST");
         try {
             HttpSession session = request.getSession(false);
             if(session == null){
@@ -32,9 +31,7 @@ public class cancelOrderServlet extends HttpServlet {
                 return;
             }
             String email = (String) session.getAttribute("email");
-            out.println(email);
             String orderId = request.getParameter("id");
-            out.println(orderId);
             String result;
             if(isAllowedToChancel(orderId, email, out)){
                 deleteOrder(orderId, out);

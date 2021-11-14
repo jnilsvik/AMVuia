@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
-    <title>Register</title>
+    <title>Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="css/list.css">
@@ -22,6 +22,7 @@
             <th>Total Price</th>
             <th>Return Date</th>
             <th>Cancel Booking</th>
+        </tr>
         <%
             List<BookingModel> bookings = (List<BookingModel>) request.getAttribute("bookings");
             for(BookingModel booking : bookings){
@@ -43,9 +44,9 @@
                             out.println("<td>Booking over</td>");
                         }
                     }
+                    out.println("</tr>");
             }
         %>
-        </tr>
     </table>
 </body>
 </html>
