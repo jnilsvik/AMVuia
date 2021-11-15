@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
+<jsp:include page="_head_nav.jsp"/>
 <section class='featured-products'>
     <h1>${CAT}</h1>
     <%
@@ -39,7 +39,6 @@
             }
             out.print("</table></section></section></body></html>");
         } catch (SQLException e) {
-            out.print("smth weith tools");
             e.printStackTrace();
         }
         request.removeAttribute("CAT");

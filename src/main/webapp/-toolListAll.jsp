@@ -17,6 +17,7 @@
 </head>
 
 <body>
+<jsp:include page="_head_nav.jsp"/>
 <h2>Categories</h2>
 <section class='categories'>
     <%
