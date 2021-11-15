@@ -2,6 +2,8 @@ package bacit.web.a_models;
 
 import bacit.web.utils.DBUtils;
 
+import javax.servlet.jsp.JspWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -82,20 +84,18 @@ public class BookingModel {
     }
 
     public String getToolName(){
+        String result = "";
         try {
-            PrintWriter out = null;
             Connection db = DBUtils.getNoErrorConnection();
             String query = "SELECT toolName FROM Tool WHERE toolID = ?;";
             PreparedStatement statement = db.prepareStatement(query);
             statement.setInt(1, toolID);
             ResultSet rs = statement.executeQuery();
+            if(rs.next())result =  rs.getString("toolName");
             db.close();
-
-            if (!rs.next()) throw new SQLException("No tool could be found");
-            return  rs.getString("toolName");
-        } catch (SQLException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
-        return "currently no toolName stored";
+        return result;
     }
 }

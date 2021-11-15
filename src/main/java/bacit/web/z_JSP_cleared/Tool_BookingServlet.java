@@ -1,7 +1,10 @@
 package bacit.web.z_JSP_cleared;
 
+import java.sql.SQLException;
 import java.time.*;
 
+import bacit.web.a_models.BookingModel;
+import bacit.web.a_models.ToolModel;
 import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;
@@ -12,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -23,86 +27,73 @@ public class Tool_BookingServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {
-            Connection db = DBUtils.getNoErrorConnection();
-
             HttpSession session = request.getSession(false);
             if(session == null){
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
             }
             String email = (String) session.getAttribute("email");
-            String tool = request.getParameter("tools");
+            int toolID = Integer.parseInt(request.getParameter("tools"));
             int inputDays = Integer.parseInt(request.getParameter("days"));
-            int userID = getUserID(db, email);
+            int userID = getUserID(email);
             LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
             LocalDate endingDate = StartDateWanted.plusDays(inputDays);
 
-            PreparedStatement st2 = db.prepareStatement(
-                    "SELECT * FROM Tool INNER JOIN ToolCertificate ON Tool.certificateID = ToolCertificate.certificateID WHERE toolID = ?");
-            st2.setString(1, (request.getParameter("tools")));
-            ResultSet rs2 = st2.executeQuery();
+            ToolModel tool = getTool(toolID);
 
-            int priceFirst = 0;
-            int priceAfter = 0;
-            int toolID = 0;
-            int toolCertificateID = 0;
-            String toolCertificateName = null;
-
-            if (rs2.next()) {
-                priceFirst = rs2.getInt("priceFirst");
-                priceAfter = rs2.getInt("priceAfter");
-                toolID = rs2.getInt("toolID");
-                toolCertificateID = rs2.getInt("certificateID");
-                toolCertificateName = rs2.getString("certificateName");
-            }
             //getTotalPrice class calculates the total price.
-            int totalPrice =  priceFirst + priceAfter * (inputDays-1);
+            int totalPrice =  tool.getPriceFirst() + tool.getPriceAfter() * (inputDays-1);
+
             //checkDate class sees if the wanted booked days are already taken. The hasCertificate method checks if the user has the needed certificate.
-            if (!dateBookedTaken(db, StartDateWanted, inputDays, tool) && hasCertificate(db, userID, toolCertificateID, toolCertificateName)) {
-                registerBooking(db, StartDateWanted, endingDate, totalPrice, userID, toolID);
+            if(dateBookedTaken(StartDateWanted, inputDays, toolID)){
+                out.print("<h1>Sorry, that tool is already taken.</h1>");
+            }else if(!hasCertificate(userID, tool.getCertificateID())){
+                out.print("<h1>Sorry, you don't have the needed certificate.</h1>");
+            }else{
+                registerBooking(StartDateWanted, endingDate, totalPrice, userID, toolID);
+                request.setAttribute("booking", new BookingModel(0, userID, toolID, totalPrice, StartDateWanted, StartDateWanted.plusDays(inputDays), null));
                 request.getRequestDispatcher("/bookingComplete.jsp").forward(request,response);
-            } else {
-                out.print("<h1>Sorry, that tool is already taken or you dont have the needed ID./h1>");
             }
-            db.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            out.println(e.getMessage());
         }
     }
 
-    public static int getUserID(Connection db, String email) {
+    public static int getUserID(String email) {
         int userID = 0;
         try {
+            Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement st1 = db.prepareStatement(
                     "SELECT * FROM AMVUser WHERE email = ?");
             st1.setString(1, email);
             ResultSet rs1 = st1.executeQuery();
-
             rs1.next();
             userID = rs1.getInt("userID");
-            return userID;
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return userID;
     }
 
-    public boolean hasCertificate(Connection db, int userID, int toolCertificateID, String toolCertificateName) {
+    public boolean hasCertificate(int userID, int toolCertificateID) {
+        if(toolCertificateID == 1) return true;
         boolean hasTheCertificate = false;
         try {
-            PreparedStatement st3 = db
-                    .prepareStatement("SELECT * FROM UsersCertificate WHERE userID = ?");
-            st3.setInt(1, userID);
-            ResultSet rs3 = st3.executeQuery();
+            Connection db = DBUtils.getNoErrorConnection();
+            PreparedStatement ps = db.prepareStatement("SELECT * FROM UsersCertificate WHERE userID = ?");
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
             List<Integer> totalCertificateID = new ArrayList<>();
             int userCertificateID;
 
-            while (rs3.next()) {
-                userCertificateID = rs3.getInt("certificateID");
+            while (rs.next()) {
+                userCertificateID = rs.getInt("certificateID");
                 totalCertificateID.add(userCertificateID);
             }
+            db.close();
             //This checks if the user has the needed certificationID for the tool.
-            if (totalCertificateID.contains(toolCertificateID) || toolCertificateName.equals("none")) {
+            if (totalCertificateID.contains(toolCertificateID)) {
                 hasTheCertificate = true;
             }
         } catch (Exception e) {
@@ -111,8 +102,9 @@ public class Tool_BookingServlet extends HttpServlet {
         return hasTheCertificate;
     }
 
-    public void registerBooking(Connection db, LocalDate StartDateWanted, LocalDate endingDate, int totalPrice, int userID, int toolID ) {
+    public void registerBooking(LocalDate StartDateWanted, LocalDate endingDate, int totalPrice, int userID, int toolID ) {
         try {
+            Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement statement2 =
                     db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
             statement2.setObject(1, StartDateWanted);
@@ -121,60 +113,49 @@ public class Tool_BookingServlet extends HttpServlet {
             statement2.setInt(4, userID);
             statement2.setInt(5, toolID);
             statement2.executeUpdate();
-
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // TODO: 11.11.2021 -joachim: finish the booking here
-    public void printBookingDetails(PrintWriter out, LocalDate StartDateWanted, String tool, LocalDate endingDate, int totalPrice, String email) {
-        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String StartDateWantedFormat = StartDateWanted.format(formatters);
-        String EndingDateForm = endingDate.format(formatters);
-        out.print("<h1> Tool has been booked. Here is your the order details:</h1>");
-        out.print("<p>Tool: " + tool + "</p>");
-        out.print("<p>Start Date: " + StartDateWantedFormat + "</p>");
-        out.print("<p>End Date: " + EndingDateForm + "</p>");
-        out.print("<p>Total price: " + totalPrice + "</p>");
-        out.print("<p>Booked as: " + email + "</p>");
+    private ToolModel getTool(int toolID) throws SQLException {
+        ToolModel tool = null;
+        Connection db = DBUtils.getNoErrorConnection();
+        String query = "SELECT toolID, toolName, priceFirst, priceAfter, certificateID FROM Tool WHERE toolID = ?;";
+        PreparedStatement statement = db.prepareStatement(query);
+        statement.setInt(1, toolID);
+        ResultSet rs = statement.executeQuery();
+        if(rs.next()){
+            tool = new ToolModel(
+                    rs.getInt("toolID"),
+                    rs.getString("toolName"),
+                    "",false,
+                    rs.getInt("priceFirst"),
+                    rs.getInt("priceAfter"),
+                    rs.getInt("certificateID")
+                    ,"", "");
+        }
+        db.close();
+        return tool;
     }
 
-    // TODO: 11.11.2021 -joachim: this works but i genuinely hate this method
-    public static boolean dateBookedTaken(Connection db, LocalDate StartDateWanted, int inputDays, String tool) {
+    public static boolean dateBookedTaken(LocalDate StartDateWanted, int inputDays, int toolID) {
         boolean taken = false;
         try {
+            Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement st = db.prepareStatement("SELECT * FROM Booking WHERE toolID = ?");
-            st.setString(1, tool);
+            st.setInt(1, toolID);
             ResultSet rs = st.executeQuery();
 
             while (rs.next() && !taken) {
                 LocalDate dateStart = rs.getDate("startDate").toLocalDate();
                 LocalDate dateEnd = rs.getDate("endDate").toLocalDate();
-                List<LocalDate> totalDates = new ArrayList<>();
-                while (!dateStart.isAfter(dateEnd)) {
-                    totalDates.add(dateStart);
-                    dateStart = dateStart.plusDays(1);
-                }
-                if (inputDays == 1) {
-                    LocalDate EndDateWanted = StartDateWanted;
-                    if (totalDates.contains(StartDateWanted) || totalDates.contains(EndDateWanted)) {
-                        taken = true;
-                    }
-                }
-                if (inputDays == 2) {
-                    LocalDate EndDateWanted = StartDateWanted.plusDays(1);
-                    if (totalDates.contains(StartDateWanted) || totalDates.contains(EndDateWanted)) {
-                        taken = true;
-                    }
-                }
-                if (inputDays == 3) {
-                    LocalDate EndDateWanted = StartDateWanted.plusDays(2);
-                    if (totalDates.contains(StartDateWanted) || totalDates.contains(EndDateWanted)) {
-                        taken = true;
-                    }
+                if(!dateEnd.isBefore(StartDateWanted) && !dateStart.isAfter(StartDateWanted.plusDays(inputDays))){
+                    taken = true;
                 }
             }
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

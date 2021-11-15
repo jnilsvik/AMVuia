@@ -1,3 +1,4 @@
+<%@ page import="bacit.web.z_JSP_cleared.AdminAccess" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +21,12 @@
                 <li><a href="xtl" class="nav-link px-2 amv-txc-b">TOOL OVERVIEW</a></li>
                 <li><a href="profile" class="nav-link px-2 amv-txc-b">RENTALS</a></li>
                 <li><a href="help" class="nav-link px-2 amv-txc-b">FAQ & HELP</a></li>
+                <%
+                    String email = (String) session.getAttribute("email");
+                    if(AdminAccess.accessRights(email)){
+                        out.println("<li><a href=\"admin\" class=\"nav-link px-2 amv-txc-b\">ADMIN PAGE</a></li>");
+                    }
+                %>
             </ul>
 
             <div class="text-end">
