@@ -29,8 +29,6 @@ public class GiveCertificate extends HttpServlet {
                 return;
             }
             String email = (String) session.getAttribute("email");
-            // not working so for testing:
-            email = "paul@feichten";
 
             if (AdminAccess.accessRights(email)) {
                 List<Certificate> certificates = getCertificates();

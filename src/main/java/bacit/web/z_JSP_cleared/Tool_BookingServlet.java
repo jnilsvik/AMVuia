@@ -18,13 +18,19 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 @WebServlet(name = "ToolBookingServlet", value = "/toolbooking")
 public class Tool_BookingServlet extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {
             Connection db = DBUtils.getNoErrorConnection();
 
-            String email = request.getParameter("email");
+            HttpSession session = request.getSession(false);
+            if(session == null){
+                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+                return;
+            }
+            String email = (String) session.getAttribute("email");
             String tool = request.getParameter("tools");
             int inputDays = Integer.parseInt(request.getParameter("days"));
             int userID = getUserID(db, email);
