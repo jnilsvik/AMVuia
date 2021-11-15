@@ -57,8 +57,10 @@ public class ChangePassword extends HttpServlet {
                 st2.setString(1, newPassword1);
                 st2.setString(2, email);
                 st2.executeUpdate();
-                out.print("Your password has been successfully changed!");
-                out.println("<a href = 'http://localhost:8081/bacit-web-1.0-SNAPSHOT/profile'> Go back to profile</a>");
+
+                String successfulLine = "Password was successfully changed!";
+                request.setAttribute("successfulLine", successfulLine);
+                request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
             }
         } catch (Exception e) {
             out.println("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
