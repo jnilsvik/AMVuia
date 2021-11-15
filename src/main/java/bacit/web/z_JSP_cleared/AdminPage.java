@@ -12,12 +12,22 @@ import java.io.PrintWriter;
 @WebServlet(name = "AdminPage", value = "/admin")
 public class AdminPage extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        try {
-            request.getRequestDispatcher("/adminPage.jsp").forward(request,response);
-        } catch (ServletException e) {
-            e.printStackTrace();
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+            return;
+        }
+        String email = (String) session.getAttribute("email");
+        if(AdminAccess.accessRights(email)) {
+            try {
+                request.getRequestDispatcher("/adminPage.jsp").forward(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
+        }else {
+            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
         }
     }
 }
