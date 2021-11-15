@@ -31,20 +31,19 @@ public class ChangePassword extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            String email = (String) request.getAttribute("email");
+            HttpSession session = request.getSession(false);
+            String email = (String) session.getAttribute("email");
+            Connection db = DBUtils.getNoErrorConnection();
             String oldPassword = hashPassword.encryptThisString(request.getParameter("oldpass"));
             String newPassword1 = hashPassword.encryptThisString(request.getParameter("newpass1"));
             String newPassword2 = hashPassword.encryptThisString(request.getParameter("newpass2"));
-
-            Connection db = DBUtils.getNoErrorConnection();
-            PreparedStatement st1 = db.prepareStatement("SELECT passwordHash FROM AMVUser WHERE email = ?");
+            PreparedStatement st1 = db
+                    .prepareStatement("SELECT * FROM AMVUser WHERE email = ?");
             st1.setString(1, email);
             ResultSet rs = st1.executeQuery();
-            // TODO: 11.11.2021 we could do this with a short js insert in the page,,,
-            //  https://stackoverflow.com/questions/9142527/can-you-require-two-form-fields-to-match-with-html5
             boolean isOldPassValid = false;
             while(rs.next()) {
-                if(oldPassword.equals(rs.getString("password"))) {
+                if(oldPassword.equals(rs.getString("passwordHash"))) {
                     isOldPassValid = true;
                 }
             }
@@ -58,14 +57,13 @@ public class ChangePassword extends HttpServlet {
                 st2.setString(1, newPassword1);
                 st2.setString(2, email);
                 st2.executeUpdate();
-
                 out.print("Your password has been successfully changed!");
-                out.print("<a href = '/profile'> Go back to profile</a>");
+                out.println("<a href = 'http://localhost:8081/bacit-web-1.0-SNAPSHOT/profile'> Go back to profile</a>");
             }
-            db.close();
         } catch (Exception e) {
-            out.print("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
+            out.println("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
         }
+
     }
 }
 
