@@ -19,6 +19,8 @@ public class BookingModel {
     private LocalDate endDate;
     private LocalDate returnDate;
 
+    public BookingModel() {}
+
     public BookingModel(int orderID, int userID, int toolID,int totalPrice, LocalDate startDate, LocalDate endDate, LocalDate returnDate) {
         this.orderID = orderID;
         this.userID = userID;

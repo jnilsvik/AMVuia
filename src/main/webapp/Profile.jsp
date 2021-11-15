@@ -35,7 +35,7 @@
                     out.println("<td>" + booking.getReturnDate() + "</td> ");
                     if(booking.getStartDate().isAfter(LocalDate.now())){
                         out.println("<td>");
-                            out.println("<a href=\"/bacit-web-1.0-SNAPSHOT/cancellation?id="+booking.getOrderID()+"\">cancel</a>");
+                            out.println("<a href=\"cancellation?id="+booking.getOrderID()+"\">cancel</a>");
                         out.println("</td>");
                     }else{
                         if(booking.getEndDate().isAfter(LocalDate.now())){

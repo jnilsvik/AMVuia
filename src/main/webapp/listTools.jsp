@@ -36,6 +36,7 @@
                             "<td>" + tm.getPriceAfter() + "</td>" +
                             "<td>" + tm.getMaintenance() + "</td>" +
                             "<td>" + tm.getCertificateID() + "</td>" +
+                            "<td><a href='toolhistory' name='toolID' value='" +tm.getToolID()+ "'> TEMP </a></td>" +
                             "</tr>");
                 }
             }
