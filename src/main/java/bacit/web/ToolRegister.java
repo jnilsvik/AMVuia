@@ -93,7 +93,7 @@ public class ToolRegister extends HttpServlet {
 
         try {
 
-            Connection db = DBUtils.getNoErrorConnection(out);
+            Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement statement = db.prepareStatement(
                     "insert into Tool (toolName, maintenance, priceFirst, priceAfter, toolCategory, certificateID, toolDescription) values(?, ?, ?, ?, ?, ?, ?)");
             statement.setString(1, request.getParameter("toolname"));
