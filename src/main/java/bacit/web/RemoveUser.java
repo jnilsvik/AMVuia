@@ -5,6 +5,7 @@ import bacit.web.a_models.ToolModel;
 import bacit.web.a_models.UserModel;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.hashPassword;
+import bacit.web.z_JSP_cleared.AdminAccess;
 
 import java.io.*;
 import java.sql.Connection;
@@ -12,75 +13,84 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-
+//by ? changed to jsp by paul
 @WebServlet(name = "RemoveUser", value = "/removeuser")
 public class RemoveUser extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        out.print("<html>" +
-                "<head>" +
-                "<title>Remove User</title>" +
-                "</head>" +
-                "<body>" +
-                "<h2>Please enter the email of the user you want to remove</h2>" +
-                "<form method='POST'>" +
-                "<h3>Email:</h3>" +
-                "<textarea id='input' name='input' rows='1' cols='50'></textarea><br><br>" +
-                "<input type = 'submit' value = 'Remove!'>" +
-                "</form>" +
-                "</body>" +
-                "</html>");
-        try {
-            Connection conn = DBUtils.getNoErrorConnection(out);
-            String a = "Select * FROM AMVUser; ";
-            PreparedStatement statements = conn.prepareStatement(a);
-            ResultSet rs = statements.executeQuery();
-            out.println("<html><table>");
-            while (rs.next()) {
-                String Email = rs.getString("email");
-                out.println("<tr><td>" + Email + "</td></tr>");
-            }
-            out.println("</table></html>");
-            conn.close();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+            return;
+        }
+        String email = (String) session.getAttribute("email");
+        if(AdminAccess.accessRights("paul@feichten")) {
+            try {
+                List<UserModel> users = getUsers();
+                request.setAttribute("users", users);
+                request.getRequestDispatcher("/RemoveUser.jsp").forward(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
         }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        try {
-            Connection conn = DBUtils.getNoErrorConnection(out);
-            PreparedStatement statement = conn.prepareStatement("DELETE FROM AMVUser WHERE email = ? ");
-            statement.setString(1, String.valueOf(request.getParameter("input")));
-            int noOfAffectedRows = statement.executeUpdate();
-            if (noOfAffectedRows == 0) {
-                out.println("<html><body>");
-                out.println("<h1>Nothing is deleted<h1>");
-                out.println("</body></html>");
-            } else {
-                String a = "Select * FROM AMVUser; ";
-                PreparedStatement statements = conn.prepareStatement(a);
-                ResultSet rs = statements.executeQuery();
-                out.println("<html><table>");
-                out.println("<h1>User Deleted!</h1>");
-                while (rs.next()) {
-                    String Email = rs.getString("email");
-                    out.println("<tr><td>" + Email + "</td></tr>");
-                }
-                out.println("</table></html>");
-                conn.close();
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+            return;
         }
+        String email = (String) session.getAttribute("email");
+        if(AdminAccess.accessRights(email)) {
+            try {
+                boolean success = deleteUser(request.getParameter("input"));
+                List<UserModel> users = getUsers();
+
+                request.setAttribute("success", success);
+                request.setAttribute("users", users);
+                request.getRequestDispatcher("/RemoveUserPost.jsp").forward(request, response);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else{
+            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
+        }
+    }
+
+    private boolean deleteUser(String email) throws  SQLException{
+        Connection db = DBUtils.getNoErrorConnection();
+        PreparedStatement statement = db.prepareStatement("DELETE FROM AMVUser WHERE email = ? ");
+        statement.setString(1, String.valueOf(email));
+        int noOfAffectedRows = statement.executeUpdate();
+        return noOfAffectedRows != 0;
+    }
+
+    private List<UserModel> getUsers() throws SQLException {
+        List<UserModel> users = new LinkedList<>();
+        Connection db = DBUtils.getNoErrorConnection();
+        String a = "Select userID, email FROM AMVUser SORT ORDER BY userID; ";
+        PreparedStatement statements = db.prepareStatement(a);
+        ResultSet rs = statements.executeQuery();
+        while (rs.next()) {
+            users.add(new UserModel(
+                    rs.getInt("userID"),
+                    "", "", "", "", false, false,
+                    rs.getString("email")
+            ));
+        }
+        db.close();
+        return users;
     }
 
 }

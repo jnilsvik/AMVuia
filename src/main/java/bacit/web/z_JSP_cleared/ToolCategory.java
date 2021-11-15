@@ -24,7 +24,7 @@ public class ToolCategory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         request.setAttribute("CAT", request.getParameter("category"));
-        Connection dbc= DBUtils.getNoErrorConnection(out);
+        Connection dbc= DBUtils.getNoErrorConnection();
         try {
             PreparedStatement ps3 = dbc.prepareStatement(
                 "select * from Tool where toolCategory =?");

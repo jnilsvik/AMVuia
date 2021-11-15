@@ -1,12 +1,10 @@
 <%@ page import="bacit.web.a_models.BookingModel" %>
-<%@ page import="java.util.LinkedList" %>
-<%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
-    <title>Register</title>
+    <title>Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="css/list.css">
@@ -24,9 +22,9 @@
             <th>Total Price</th>
             <th>Return Date</th>
             <th>Cancel Booking</th>
+        </tr>
         <%
             List<BookingModel> bookings = (List<BookingModel>) request.getAttribute("bookings");
-            PrintWriter writer = (PrintWriter) request.getAttribute("out");
             for(BookingModel booking : bookings){
                     out.println("<tr>");
                     out.println("<td>" + booking.getOrderID() + "</td> ");
@@ -48,7 +46,6 @@
                     }
                     out.println("</tr>");
             }
-
         %>
     </table>
 </body>

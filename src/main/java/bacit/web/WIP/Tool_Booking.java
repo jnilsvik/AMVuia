@@ -51,7 +51,7 @@ public class Tool_Booking extends HttpServlet {
     }
 
     private static LinkedList<BookingModel> GetBookedDates(PrintWriter out, String toolID) throws SQLException{
-        Connection dbConnection = DBUtils.getNoErrorConnection(out);
+        Connection dbConnection = DBUtils.getNoErrorConnection();
         PreparedStatement statement = dbConnection.prepareStatement(
                 "select * from Booking where toolID = ?");
         statement.setString(1, toolID);
@@ -84,7 +84,7 @@ public class Tool_Booking extends HttpServlet {
     }
 
     void InsertBooking(PrintWriter out, BookingModel model) throws SQLException{
-        Connection dbc = DBUtils.getNoErrorConnection(out);
+        Connection dbc = DBUtils.getNoErrorConnection();
         PreparedStatement statement = dbc.prepareStatement(
                 "insert into Booking(userID, toolID, startDate, endDate, totalPrice) values (?,?,?,?,?)");
         statement.setInt(1, model.getUserID());

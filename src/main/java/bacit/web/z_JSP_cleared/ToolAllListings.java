@@ -32,7 +32,7 @@ public class ToolAllListings extends HttpServlet {
 
     void GetSetCategories(PrintWriter out, HttpServletRequest request){
         try {
-            Connection dbc= DBUtils.getNoErrorConnection(out);
+            Connection dbc= DBUtils.getNoErrorConnection();
             PreparedStatement ps1 = null;
             ps1 = dbc.prepareStatement(
                     "SELECT toolCategory FROM Tool GROUP BY toolCategory");
@@ -46,7 +46,7 @@ public class ToolAllListings extends HttpServlet {
 
     void GetSetTools(PrintWriter out, HttpServletRequest request){
         try {
-            Connection dbc= DBUtils.getNoErrorConnection(out);
+            Connection dbc= DBUtils.getNoErrorConnection();
             PreparedStatement ps2 = dbc.prepareStatement(
                     "select * from Tool order by toolID");
             ResultSet rs2 = ps2.executeQuery();

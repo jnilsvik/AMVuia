@@ -1,4 +1,4 @@
-package bacit.web.profilePage;
+package bacit.web;
 
 import bacit.web.a_models.BookingModel;
 import bacit.web.utils.DBUtils;
@@ -24,7 +24,6 @@ public class cancelOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("TEST");
         try {
             HttpSession session = request.getSession(false);
             if(session == null){
@@ -32,9 +31,7 @@ public class cancelOrderServlet extends HttpServlet {
                 return;
             }
             String email = (String) session.getAttribute("email");
-            out.println(email);
             String orderId = request.getParameter("id");
-            out.println(orderId);
             String result;
             if(isAllowedToChancel(orderId, email, out)){
                 deleteOrder(orderId, out);
@@ -54,7 +51,7 @@ public class cancelOrderServlet extends HttpServlet {
     }
 
     private void deleteOrder(String orderId, PrintWriter out) throws SQLException {
-        Connection db = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement ps = db.prepareStatement("DELETE FROM Booking WHERE orderID = ?;");
         ps.setString(1, orderId);
         ps.executeUpdate();
@@ -62,7 +59,7 @@ public class cancelOrderServlet extends HttpServlet {
     }
 
     private boolean isAllowedToChancel(String orderID, String email, PrintWriter out) throws SQLException {
-        Connection db = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement ps = db.prepareStatement("SELECT email, orderID from Booking inner JOIN AMVUser AU on Booking.userID = AU.userID WHERE orderID = ?;");
         ps.setString(1, orderID);
         ResultSet rs = ps.executeQuery();

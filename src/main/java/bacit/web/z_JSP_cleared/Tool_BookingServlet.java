@@ -22,7 +22,7 @@ public class Tool_BookingServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {
-            Connection db = DBUtils.getNoErrorConnection(out);
+            Connection db = DBUtils.getNoErrorConnection();
 
             String email = request.getParameter("email");
             String tool = request.getParameter("tools");

@@ -18,7 +18,6 @@ public class Register extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         try {
             request.getRequestDispatcher("/register.jsp").forward(request,response);
         } catch (ServletException e) {
@@ -31,7 +30,7 @@ public class Register extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {
-            Connection db = DBUtils.getNoErrorConnection(out);
+            Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement statement = db.prepareStatement(
                     "insert into AMVUser (email, passwordHash, firstName, lastName, phoneNumber, unionMember, userAdmin) values(?, ?, ?, ?, ?, ?, ?)");
             statement.setString(1, request.getParameter("email"));

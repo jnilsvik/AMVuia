@@ -35,7 +35,7 @@ public class ToolModel {
     }
 
     public static ToolModel getToolModel(String toolID, PrintWriter out) throws SQLException {
-        Connection db = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection();
         String query ="select * from Tool where toolID = ?;";
         PreparedStatement statement= db.prepareStatement(query);
         statement.setString(1, toolID);
@@ -131,7 +131,7 @@ public class ToolModel {
     }
 
     public LinkedList<LocalDate> getUsedDates(PrintWriter out) throws SQLException {
-        Connection db = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection();
         String query = "SELECT startDate, endDate FROM Booking WHERE toolID = ?;";
         PreparedStatement statement = db.prepareStatement(query);
         statement.setInt(1, toolID);

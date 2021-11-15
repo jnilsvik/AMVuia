@@ -34,7 +34,7 @@ public class ToolDetailServlet extends HttpServlet {
             String email = (String) request.getAttribute("email");
             int toolID = Integer.parseInt(request.getParameter("toolID"));
 
-            Connection db = DBUtils.getNoErrorConnection(out);
+            Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement st1 = db.prepareStatement(
                     "SELECT * FROM Tool WHERE toolID = ?");
             st1.setInt(1, toolID);

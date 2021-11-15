@@ -1,20 +1,20 @@
 package bacit.web;
 
+import bacit.web.a_models.Certificate;
 import bacit.web.utils.DBUtils;
 import bacit.web.z_JSP_cleared.AdminAccess;
 
 import java.io.PrintWriter;
-import java.sql.Connection;
+import java.sql.*;
 import java.io.*;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-// by Dilan
+// by Dilan changed to jsp by paul
 @WebServlet(name = "GiveCertificate", value = "/givecertificate")
 public class GiveCertificate extends HttpServlet {
 
@@ -24,55 +24,25 @@ public class GiveCertificate extends HttpServlet {
 
         try {
             HttpSession session = request.getSession(false);
+            if(session == null){
+                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+                return;
+            }
             String email = (String) session.getAttribute("email");
+            // not working so for testing:
+            email = "paul@feichten";
 
             if (AdminAccess.accessRights(email)) {
+                List<Certificate> certificates = getCertificates();
 
-                Connection db = DBUtils.getNoErrorConnection(out);
-                PreparedStatement ps = db.prepareStatement("SELECT * FROM ToolCertificate");
-                ResultSet rs = ps.executeQuery();
-
-                out.print("<html>");
-                out.print("<head>");
-                out.print("<title>Give a user a certificate</title>");
-                out.print("</head>");
-
-                out.print("<h2>Register User</h2>");
-                out.print("<form action = 'givecertificate' method = 'POST'> ");
-                out.print("<label for = 'userID'>User ID: </label><br>");
-                out.print("<input type = 'text' name = 'userID'><br>");
-                out.print("<label for = 'accomplishdate'>Accomplish Date: </label><br>");
-                out.print("<input type = 'date' name = 'accomplishdate'><br>");
-
-
-                out.print("<label for = 'certificateID'>Tool Certificate: </label><br>");
-                out.print("<select name = 'certificateID' id = 'certificateID'><br>");
-
-                while (rs.next()) {
-
-                    String certificateName = rs.getString("certificateName");
-                    int certificateID = rs.getInt("certificateID");
-
-                    out.print("<option value = '" + certificateID + "'> " + certificateName + " </option>");
-
-                }
-                out.print("</select>");
-                out.print("<br>");
-                out.print("<br>");
-
-                out.print("<input type = 'submit' value = 'Register User'>");
-                out.print("</form>");
-
-                out.print("</body>");
-                out.print("</html>");
-
-                db.close();
+                request.setAttribute("certificates", certificates);
+                request.getRequestDispatcher("/GiveCertificate.jsp").forward(request,response);
             } else {
-                out.print("<h1> Sorry, you don't have access to this page");
+                request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
             }
 
         } catch (Exception e) {
-            out.print("error");
+            out.println(e);
         }
     }
 
@@ -81,29 +51,59 @@ public class GiveCertificate extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-
-        try {
-            LocalDate accomplishDate = LocalDate.parse(request.getParameter("accomplishdate"));
-
-            Connection db = DBUtils.getNoErrorConnection(out);
-            String insertUserCommand = "insert into UsersCertificate (userID, certificateID, accomplishDate) values(?, ?, ?)";
-            PreparedStatement statement = db.prepareStatement(insertUserCommand);
-            statement.setString(1, request.getParameter("userID"));
-            statement.setString(2, request.getParameter("certificateID"));
-            statement.setObject(3, accomplishDate);
-            statement.executeUpdate();
-
-            out.print("<html>");
-            out.print("<head>");
-            out.print("</head>");
-            out.print("<body>");
-            out.print("<h1> Task successful!</h1>");
-            out.print("</body>");
-            out.print("</html>");
+        HttpSession session = request.getSession(false);
+        if(session == null){
+            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+            return;
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        String email = (String) session.getAttribute("email");
+
+        if (AdminAccess.accessRights(email)) {
+            try {
+                LocalDate accomplishDate = LocalDate.parse(request.getParameter("accomplishdate"));
+                String userID = request.getParameter("userID");
+                String certificateID = request.getParameter("certificateID");
+                addCertificate(userID, certificateID, accomplishDate);
+                printSuccess(out);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request, response);
         }
+    }
+    private List<Certificate> getCertificates() throws SQLException {
+        List<Certificate> certificateNames = new LinkedList<>();
+        Connection db = DBUtils.getNoErrorConnection();
+        PreparedStatement ps = db.prepareStatement("SELECT * FROM ToolCertificate");
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+           certificateNames.add(new Certificate(
+                   rs.getInt("certificateId"),
+                   rs.getString("certificateName")));
+        }
+        db.close();
+        return certificateNames;
+    }
+
+    private void addCertificate(String userID, String certificateID, LocalDate accomplishDate) throws SQLException {
+        Connection db = DBUtils.getNoErrorConnection();
+        String insertUserCommand = "insert into UsersCertificate (userID, certificateID, accomplishDate) values(?, ?, ?)";
+        PreparedStatement statement = db.prepareStatement(insertUserCommand);
+        statement.setString(1, userID);
+        statement.setString(2, certificateID);
+        statement.setObject(3, accomplishDate);
+        statement.executeUpdate();
+    }
+
+    private void printSuccess(PrintWriter out){
+        out.print("<html>");
+        out.print("<head>");
+        out.print("</head>");
+        out.print("<body>");
+        out.print("<h1> Task successful!</h1>");
+        out.print("</body>");
+        out.print("</html>");
     }
 
 }

@@ -46,7 +46,7 @@ public class ToolMaintenance extends HttpServlet {
     public void maintainTool(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String toolMaintenance, String toolID) {
 
         try {
-        Connection db = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection();
 
         if (toolMaintenance.equals("ToolInMaintenanceIn")) {
             String insertUserCommand = "UPDATE Tool SET maintenance = true WHERE toolID = ?";

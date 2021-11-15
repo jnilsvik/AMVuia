@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 public class FileDAO {
 
     public void persistFile(FileModel file, PrintWriter out) throws Exception{
-        Connection db = DBUtils.getNoErrorConnection(out);
+        Connection db = DBUtils.getNoErrorConnection();
         String query3 = "insert into files (Name, Content, ContentType) values(?,?,?)";
 
         PreparedStatement statement = db.prepareStatement(query3);

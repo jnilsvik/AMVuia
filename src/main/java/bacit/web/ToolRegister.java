@@ -74,7 +74,7 @@ public class ToolRegister extends HttpServlet {
                 out.print("<br>");
                 out.print("<label for = 'tooldesc'>Tool Description: </label><br>");
                 out.print("<input type = 'text' name = 'tooldesc'><br>");
-                out.print("<input type = 'submit' value = 'Register User'>");
+                out.print("<input type = 'submit' value = 'Register Tool'>");
                 out.print("</form>");
                 out.print("</body>");
                 out.print("</html>");
@@ -116,7 +116,7 @@ public class ToolRegister extends HttpServlet {
 
         }
         catch (Exception e) {
-            e.printStackTrace();
+            out.println(e);
         }
     }
 
