@@ -13,5 +13,9 @@
  <a href="payment"> <span class=bigbutton> Payment Report </span></a>
  <br>
  <a href="givecertificate"> <span class=bigbutton> Give Certificate </span></a>
+ <br>
+ <a href="removetool"> <span class=bigbutton> Remove User </span></a>
+ <br>
+ <a href="removeuser"> <span class=bigbutton> Remove Tool </span></a>
 </div>
 <jsp:include page="_footer.jsp"/>
