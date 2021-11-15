@@ -22,7 +22,6 @@ prints all the tools NOW WITH IMAGES!
 public class ToolCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         request.setAttribute("CAT", request.getParameter("category"));
         Connection dbc= DBUtils.getNoErrorConnection();
         try {
@@ -32,11 +31,10 @@ public class ToolCategory extends HttpServlet {
             ResultSet rs3 = ps3.executeQuery();
             // TODO: 10.11.2021 should make this into model array b4 sendeing?
             request.setAttribute("toolByCAT", rs3);
-            request.getRequestDispatcher("/-toolListAll.jsp").forward(request,response);
+            request.getRequestDispatcher("/-toolListByCAT.jsp").forward(request,response);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
     }
 }
