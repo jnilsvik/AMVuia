@@ -16,17 +16,30 @@
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous'>
 </head>
 <body>
-    <jsp:include page="_head_nav.jsp"/>
-    <h2>Register User</h2>
+<jsp:include page="_head_nav.jsp"/>
+<div class='page'>
+    <article class='my-3 amv-register' id='floating-labels'>
+        <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
+            <h3>Give Certificate</h3>
+        </div>
+        <div>
+            <div class='bd-example'>
     <form action = 'givecertificate' method = 'POST'>
-        <%--@declare id="userid"--%><label for = "userID">User ID: </label><br>
-        <input type = 'text' name = 'userID'><br>
-        <%--@declare id="accomplishdate"--%><label for = 'accomplishdate'>Accomplish Date: </label><br>
-        <input type = 'date' name = 'accomplishdate'><br>
+        <div class='form-floating mb-3'>
+            <input type = 'text' name = 'userID' class='form-control' placeholder='name'>
+        <%--@declare id="userid"--%><label for = "userID">User ID: </label>
+        </div>
+        <div class='form-floating mb-3'>
+        <input type = 'date' name = 'accomplishdate' class='form-control'><br>
+        <%--@declare id="accomplishdate"--%><label for = 'accomplishdate'>Accomplish Date: </label>
+        </div>
+        <div class='form-floating mb-3'>
         <%
             List<Certificate> certificateNames = (List<Certificate>) request.getAttribute("certificates");
+            out.print("<h3>Choose Certificate:</h3>");
+            out.print("<select name = 'certificateID' id = 'certificateID' class='form-control' placeholder='name'><br>");
             out.print("<label for = 'certificateID'>Tool Certificate: </label><br>");
-            out.print("<select name = 'certificateID' id = 'certificateID'><br>");
+
             for (Certificate cert : certificateNames) {
                 String certificateName = cert.getCertificateName();
                 int certificateID = cert.getCertificateID();
@@ -34,9 +47,14 @@
             }
         %>
         </select>
-        <br>
-        <br>
-        <input type = 'submit' value = 'Giver User Certificate'>
+        </div>
+            <div class='col-12' >
+                <button class='btn btn-primary' style='width: 100%'  type='submit'>Submit</button>
+            </div>
     </form>
+    </div>
+    </div>
+    </article>
+    </div>
 </body>
 </html>

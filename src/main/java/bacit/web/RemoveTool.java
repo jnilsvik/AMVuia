@@ -32,7 +32,7 @@ public class RemoveTool extends HttpServlet {
             return;
         }
         String email = (String) session.getAttribute("email");
-        if (AdminAccess.accessRights("paul@feichten")){
+        if (AdminAccess.accessRights(email)){
             try {
                 List<ToolModel> tools = getTools();
                 request.setAttribute("tools", tools);

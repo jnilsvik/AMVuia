@@ -56,6 +56,7 @@
         }
         request.removeAttribute("unpaid");
     %>
+</table>
 <br>
 
 <div class='page'>

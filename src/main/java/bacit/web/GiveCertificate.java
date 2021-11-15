@@ -29,8 +29,6 @@ public class GiveCertificate extends HttpServlet {
                 return;
             }
             String email = (String) session.getAttribute("email");
-            // not working so for testing:
-            email = "paul@feichten";
 
             if (AdminAccess.accessRights(email)) {
                 List<Certificate> certificates = getCertificates();
@@ -64,7 +62,10 @@ public class GiveCertificate extends HttpServlet {
                 String userID = request.getParameter("userID");
                 String certificateID = request.getParameter("certificateID");
                 addCertificate(userID, certificateID, accomplishDate);
-                printSuccess(out);
+
+                String successfulLine = "Certificate was successfully given!";
+                request.setAttribute("successfulLine", successfulLine);
+                request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -96,15 +97,7 @@ public class GiveCertificate extends HttpServlet {
         statement.executeUpdate();
     }
 
-    private void printSuccess(PrintWriter out){
-        out.print("<html>");
-        out.print("<head>");
-        out.print("</head>");
-        out.print("<body>");
-        out.print("<h1> Task successful!</h1>");
-        out.print("</body>");
-        out.print("</html>");
-    }
+
 
 }
 

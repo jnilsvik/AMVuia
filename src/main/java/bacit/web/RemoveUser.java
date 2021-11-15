@@ -31,7 +31,7 @@ public class RemoveUser extends HttpServlet {
             return;
         }
         String email = (String) session.getAttribute("email");
-        if(AdminAccess.accessRights("paul@feichten")) {
+        if(AdminAccess.accessRights(email)) {
             try {
                 List<UserModel> users = getUsers();
                 request.setAttribute("users", users);
