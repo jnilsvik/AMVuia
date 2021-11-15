@@ -49,8 +49,8 @@ public class ToolRegister extends HttpServlet {
                 out.print("<label for = 'priceafter'>Price After First Day: </label><br>");
                 out.print("<input type = 'text' name = 'priceafter'><br>");
 
-                out.print("<label for = 'category'>Tool Category: </label><br>");
-                out.print("<select name = 'category' id = 'category'><br>");
+                out.print("<label for = 'toolCategory'>Tool Category: </label><br>");
+                out.print("<select name = 'toolCategory' id = 'toolCategory'><br>");
 
                 while (rs.next()) {
                     String categoryName = rs.getString("toolCategory");
@@ -94,12 +94,12 @@ public class ToolRegister extends HttpServlet {
         try {
 
             Connection db = DBUtils.getNoErrorConnection(out);
-            String insertUserCommand = "insert into Tool (toolName, maintenance, priceFirst, priceAfter, toolCategory, certificateID, toolDescription) values(?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = db.prepareStatement(insertUserCommand);
+            PreparedStatement statement = db.prepareStatement(
+                    "insert into Tool (toolName, maintenance, priceFirst, priceAfter, toolCategory, certificateID, toolDescription) values(?, ?, ?, ?, ?, ?, ?)");
             statement.setString(1, request.getParameter("toolname"));
             statement.setBoolean(2, false);
-            statement.setString(3, request.getParameter("pricefirst"));
-            statement.setString(4, request.getParameter("priceafter"));
+            statement.setInt(3, Integer.parseInt(request.getParameter("pricefirst")));
+            statement.setInt(4, Integer.parseInt(request.getParameter("priceafter")));
             statement.setString(5, request.getParameter("toolCategory"));
             statement.setString(6, request.getParameter("toolcertificate"));
             statement.setString(7, request.getParameter("tooldesc"));
