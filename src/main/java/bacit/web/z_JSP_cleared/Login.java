@@ -33,8 +33,7 @@ public class Login extends HttpServlet {
         String email = request.getParameter("email");
         String password = hashPassword.encryptThisString(request.getParameter("pass"));
         if(Validation(email,password)){
-            request.setAttribute("email", email); // ! a way to set attributes
-            SetUserSessionAttributes(email,request);
+            request.getSession().setAttribute("email", email);
             try {
                 // TODO: 09.11.2021 make this send you straigth to tools thingy 
                 request.getRequestDispatcher("/landing.jsp").forward(request,response);
