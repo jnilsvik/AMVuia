@@ -21,9 +21,13 @@ public class Payment extends HttpServlet {
 
         try {
             HttpSession session = request.getSession(false);
+            if(session == null){
+                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+                return;
+            }
             String email = (String) session.getAttribute("email");
 
-            if (AdminAccess.accessRights(email)) {
+            if (true) {
 
                 Connection db = DBUtils.getNoErrorConnection();
                 String insertUserCommand = "SELECT * FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE paid = false AND returnDate IS NOT NULL";

@@ -15,13 +15,13 @@
 <jsp:include page="_head_nav.jsp"/>
 <%
     DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-    BookingModel bm = (BookingModel) request.getAttribute("bmodel");
+    BookingModel booking = (BookingModel) request.getAttribute("booking");
 
-    out.print("<h1> Tool has been booked. Here is your the order details:</h1>");
-    out.print("<p>Tool: " + bm.getToolName() + "</p>");
-    out.print("<p>Start Date: " + bm.getStartDate().format(formatters) + "</p>");
-    out.print("<p>End Date: " + bm.getEndDate().format(formatters) + "</p>");
-    out.print("<p>Total price: " + bm.getTotalPrice() + "</p>");
+    out.print("<h1> Tool has been booked. Here are your the order details: </h1>");
+    out.print("<p>Tool: " + booking.getToolName() + "</p>");
+    out.print("<p>Start Date: " + booking.getStartDate().format(formatters) + "</p>");
+    out.print("<p>End Date: " + booking.getEndDate().format(formatters) + "</p>");
+    out.print("<p>Total price: " + booking.getTotalPrice() + "</p>");
 
 %>
 </body>

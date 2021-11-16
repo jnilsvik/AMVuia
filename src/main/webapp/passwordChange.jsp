@@ -8,19 +8,44 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Change password</title>
+    <title>Payments</title>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous'>
+    <link rel="stylesheet" href="css/misc.css">
+    <style> table, th, td { border:1px solid black;} </style>
 </head>
 <body>
-<h2>Change Password</h2>
+<jsp:include page="_head_nav.jsp"/>
+<div class='page'>
+    <article class='my-3 amv-register' id='floating-labels'>
+        <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
+            <h3>Change password</h3>
+        </div>
+        <div>
+            <div class='bd-example'>
+
 <form action='changepassword' method='POST'>
+    <div class='form-floating mb-3'>
+        <input type='text' class='form-control' name='oldpass' id="oldpass" placeholder='name' required><br>
     <label for='oldpass'>Old password: </label><br>
-    <input type='text' name='oldpass' id="oldpass" required><br>
+
+    </div>
+    <div class='form-floating mb-3'>
+        <input type='text' class='form-control' name='newpass1'id="newpass1" placeholder='name' required><br>
     <label for='newpass1'>New password: </label><br>
-    <input type='text' name='newpass1'id="newpass1" required><br>
+    </div>
+        <div class='form-floating mb-3'>
+            <input type='text' class='form-control' name='newpass2'id="newpass2" placeholder='name' required><br>
     <label for='newpass2'>Repeat new password: </label><br>
-    <input type='text' name='newpass2'id="newpass2" required><br>
-    <input type='submit' value='Change Password'>
+
+        </div>
+    <div class='col-12' >
+        <button class='btn btn-primary' style='width: 100%'  type='submit'>Submit</button>
+    </div>
 </form>
+            </div>
+        </div>
+    </article>
+</div>
 </body>
 </html>
 
