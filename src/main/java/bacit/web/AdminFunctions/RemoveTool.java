@@ -20,12 +20,13 @@ import javax.servlet.annotation.*;
 public class RemoveTool extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        HttpSession session = request.getSession(false);
-        if (session == null) {
+        HttpSession session=request.getSession(false);
+        String email = (String) session.getAttribute("email");
+        if(email == null){
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
         }
-        String email = (String) session.getAttribute("email");
+
         if (AdminAccess.accessRights(email)){
             try {
                 List<ToolModel> tools = getTools();
@@ -77,6 +78,8 @@ public class RemoveTool extends HttpServlet {
                     rs.getString("toolName"),
                     "",false, 0,0,0,"", ""));
         }
+        rs.close();
+        statement.close();
         db.close();
         return tools;
     }
@@ -86,7 +89,13 @@ public class RemoveTool extends HttpServlet {
         PreparedStatement statement = db.prepareStatement("DELETE FROM Tool WHERE toolID = ? ");
         statement.setString(1, String.valueOf(id));
         int noOfAffectedRows = statement.executeUpdate();
+
+        statement.close();
+        db.close();
+
         return noOfAffectedRows != 0;
+
+
     }
 }
 

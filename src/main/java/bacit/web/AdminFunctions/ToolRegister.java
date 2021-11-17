@@ -21,11 +21,13 @@ public class ToolRegister extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            /*
-            HttpSession session = request.getSession(false);
+            HttpSession session=request.getSession(false);
             String email = (String) session.getAttribute("email");
-
-            if (AdminAccess.accessRights(email)) {*/
+            if(email == null){
+                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+                return;
+            }
+            if (AdminAccess.accessRights(email)) {
                 Class.forName("org.mariadb.jdbc.Driver");
                 Connection db = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
                 PreparedStatement ps = db.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
@@ -77,7 +79,13 @@ public class ToolRegister extends HttpServlet {
                 out.print("</form>");
                 out.print("</body>");
                 out.print("</html>");
+
+                ps.close();
+                ps1.close();
+                rs1.close();
+                rs.close();
                 db.close();
+            }
 
         } catch (Exception e) {
             out.print("error");
@@ -111,11 +119,13 @@ public class ToolRegister extends HttpServlet {
             out.print("<h1> Tool suceccfully registered</h1>");
             out.print("</body>");
             out.print("</html>");
+
+            statement.close();
             db.close();
 
         }
         catch (Exception e) {
-            out.println(e);
+            out.print(e);
         }
     }
 

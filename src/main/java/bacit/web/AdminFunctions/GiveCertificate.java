@@ -22,12 +22,12 @@ public class GiveCertificate extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            HttpSession session = request.getSession(false);
-            if(session == null){
+            HttpSession session=request.getSession(false);
+            String email = (String) session.getAttribute("email");
+            if(email == null){
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
             }
-            String email = (String) session.getAttribute("email");
 
             if (AdminAccess.accessRights(email)) {
                 List<Certificate> certificates = getCertificates();
@@ -39,7 +39,7 @@ public class GiveCertificate extends HttpServlet {
             }
 
         } catch (Exception e) {
-            out.println(e);
+            out.print(e);
         }
     }
 
@@ -82,6 +82,8 @@ public class GiveCertificate extends HttpServlet {
                    rs.getInt("certificateId"),
                    rs.getString("certificateName")));
         }
+        rs.close();
+        ps.close();
         db.close();
         return certificateNames;
     }
@@ -94,6 +96,9 @@ public class GiveCertificate extends HttpServlet {
         statement.setString(2, certificateID);
         statement.setObject(3, accomplishDate);
         statement.executeUpdate();
+
+        statement.close();
+        db.close();
     }
 
 

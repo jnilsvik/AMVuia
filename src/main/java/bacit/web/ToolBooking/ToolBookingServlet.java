@@ -25,12 +25,12 @@ public class ToolBookingServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session = request.getSession(false);
-            if(session == null){
+            HttpSession session=request.getSession(false);
+            String email = (String) session.getAttribute("email");
+            if(email == null){
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
             }
-            String email = (String) session.getAttribute("email");
             int toolID = Integer.parseInt(request.getParameter("tools"));
             int inputDays = Integer.parseInt(request.getParameter("days"));
             int userID = getUserID(email);
@@ -53,7 +53,7 @@ public class ToolBookingServlet extends HttpServlet {
                 request.getRequestDispatcher("/jspFiles/ToolBooking/bookingComplete.jsp").forward(request,response);
             }
         } catch (Exception e) {
-            out.println(e.getMessage());
+            out.print(e.getMessage());
         }
     }
 
@@ -67,6 +67,9 @@ public class ToolBookingServlet extends HttpServlet {
             ResultSet rs1 = st1.executeQuery();
             rs1.next();
             userID = rs1.getInt("userID");
+
+            rs1.close();
+            st1.close();
             db.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,11 +92,15 @@ public class ToolBookingServlet extends HttpServlet {
                 userCertificateID = rs.getInt("certificateID");
                 totalCertificateID.add(userCertificateID);
             }
-            db.close();
+
             //This checks if the user has the needed certificationID for the tool.
             if (totalCertificateID.contains(toolCertificateID)) {
                 hasTheCertificate = true;
             }
+
+            rs.close();
+            ps.close();
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,6 +118,8 @@ public class ToolBookingServlet extends HttpServlet {
             statement2.setInt(4, userID);
             statement2.setInt(5, toolID);
             statement2.executeUpdate();
+
+            statement2.close();
             db.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,6 +143,8 @@ public class ToolBookingServlet extends HttpServlet {
                     rs.getInt("certificateID")
                     ,"", "");
         }
+        rs.close();
+        statement.close();
         db.close();
         return tool;
     }
@@ -153,6 +164,9 @@ public class ToolBookingServlet extends HttpServlet {
                     taken = true;
                 }
             }
+
+            rs.close();
+            st.close();
             db.close();
         } catch (Exception e) {
             e.printStackTrace();

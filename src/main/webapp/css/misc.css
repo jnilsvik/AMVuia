@@ -7,7 +7,7 @@
     align-items: center;
     padding-bottom: 70px;
 
-    background-image: url(https://media.discordapp.net/attachments/472062607646261249/702987431653277705/unknown.png);
+    background-image: url(https://d9z1tpn605xsl.cloudfront.net/uploads/ckeditor/pictures/2049/content_kemach-img.jpg);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100% 100%;
@@ -45,3 +45,19 @@
     background-color: #11165a;
     color: #ffb300;
 }
+
+.bigbutton {
+    display: block;
+    width: 50%;
+    border: none;
+    background-color: #ffb300;
+    color: black;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: auto;
+    text-align: center; }
+
+.bigbutton:hover {
+    background-color: #11165a;
+    color: white; }

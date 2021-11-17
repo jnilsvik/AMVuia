@@ -31,7 +31,7 @@ public class ListUsers extends HttpServlet {
             ResultSet rs = statement.executeQuery();
 
             request.setAttribute("userList", rs); // ! a way to set attributes
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/listUsers.jsp").forward(request,response);
+            request.getRequestDispatcher("/listUsers.jsp").forward(request,response);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

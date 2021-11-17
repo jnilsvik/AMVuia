@@ -20,12 +20,13 @@ public class RemoveUser extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
 
-        HttpSession session = request.getSession(false);
-        if(session == null){
+        HttpSession session=request.getSession(false);
+        String email = (String) session.getAttribute("email");
+        if(email == null){
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
         }
-        String email = (String) session.getAttribute("email");
+
         if(AdminAccess.accessRights(email)) {
             try {
                 List<UserModel> users = getUsers();
@@ -68,6 +69,9 @@ public class RemoveUser extends HttpServlet {
         PreparedStatement statement = db.prepareStatement("DELETE FROM AMVUser WHERE email = ? ");
         statement.setString(1, String.valueOf(email));
         int noOfAffectedRows = statement.executeUpdate();
+
+        statement.close();
+        db.close();
         return noOfAffectedRows != 0;
     }
 
@@ -84,6 +88,8 @@ public class RemoveUser extends HttpServlet {
                     rs.getString("email")
             ));
         }
+        rs.close();
+        statements.close();
         db.close();
         return users;
     }

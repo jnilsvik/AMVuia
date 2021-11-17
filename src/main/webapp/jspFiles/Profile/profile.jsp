@@ -27,25 +27,25 @@
         <%
             List<BookingModel> bookings = (List<BookingModel>) request.getAttribute("bookings");
             for(BookingModel booking : bookings){
-                    out.println("<tr>");
-                    out.println("<td>" + booking.getOrderID() + "</td> ");
-                    out.println("<td>" + booking.getToolName() + "</td> ");
-                    out.println("<td>" + booking.getStartDate() + "</td> ");
-                    out.println("<td>" + booking.getEndDate() + "</td> ");
-                    out.println("<td>" + booking.getTotalPrice() + "</td> ");
-                    out.println("<td>" + booking.getReturnDate() + "</td> ");
+                    out.print("<tr>");
+                    out.print("<td>" + booking.getOrderID() + "</td> ");
+                    out.print("<td>" + booking.getToolName() + "</td> ");
+                    out.print("<td>" + booking.getStartDate() + "</td> ");
+                    out.print("<td>" + booking.getEndDate() + "</td> ");
+                    out.print("<td>" + booking.getTotalPrice() + "</td> ");
+                    out.print("<td>" + booking.getReturnDate() + "</td> ");
                     if(booking.getStartDate().isAfter(LocalDate.now())){
-                        out.println("<td>");
-                            out.println("<a href=\"/bacit-web-1.0-SNAPSHOT/cancellation?id="+booking.getOrderID()+"\">cancel</a>");
-                        out.println("</td>");
+                        out.print("<td>");
+                            out.print("<a href=\"cancellation?id="+booking.getOrderID()+"\">cancel</a>");
+                        out.print("</td>");
                     }else{
                         if(booking.getEndDate().isAfter(LocalDate.now())){
-                            out.println("<td>Booking started</td>");
+                            out.print("<td>Booking started</td>");
                         }else {
-                            out.println("<td>Booking over</td>");
+                            out.print("<td>Booking over</td>");
                         }
                     }
-                    out.println("</tr>");
+                    out.print("</tr>");
             }
         %>
     </table>

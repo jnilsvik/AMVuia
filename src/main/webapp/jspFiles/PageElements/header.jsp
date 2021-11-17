@@ -24,14 +24,16 @@
                 <%
                     String email = (String) session.getAttribute("email");
                     if(AdminAccess.accessRights(email)){
-                        out.println("<li><a href=\"admin\" class=\"nav-link px-2 amv-txc-b\">ADMIN PAGE</a></li>");
+                        out.print("<li><a href=\"admin\" class=\"nav-link px-2 amv-txc-b\">ADMIN PAGE</a></li>");
                     }
                 %>
             </ul>
 
             <div class="text-end">
-                <button type="button" formaction="login" class="btn amv-btn">LOGIN</button>
-                <button type="button" formaction="logout" class="btn amv-btn">LOGOUT</button>
+                <%
+                    if(email == null) out.print("<a href='login' class='btn amv-btn'>LOGIN</a>");
+                    else out.print("<a href='logout' class='btn amv-btn'>LOGOUT</a>");
+                %>
             </div>
         </div>
     </div>

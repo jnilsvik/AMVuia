@@ -23,12 +23,12 @@ public class ToolDetailServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        HttpSession session = request.getSession(false);
-        if(session == null){
+        HttpSession session=request.getSession(false);
+        String email = (String) session.getAttribute("email");
+        if(email == null){
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
         }
-        String email = (String) session.getAttribute("email");
         int toolID = Integer.parseInt(request.getParameter("toolID"));
         try{
             ToolModel tool = getTool(toolID);
@@ -38,7 +38,7 @@ public class ToolDetailServlet extends HttpServlet {
             request.setAttribute("dates", dates);
             request.getRequestDispatcher("/jspFiles/ToolBooking/toolDetailed.jsp").forward(request,response);
         } catch (Exception e) {
-            out.println(e.getMessage());
+            out.print(e.getMessage());
         }
     }
 
@@ -60,9 +60,11 @@ public class ToolDetailServlet extends HttpServlet {
                     rs.getString("toolDescription"),
                     rs.getString("picturePath")
             );
-        }else {
+        }
+        else {
             return null;
         }
+
     }
 
     private List<LocalDate> getBookings(int toolID) throws SQLException {
@@ -80,6 +82,9 @@ public class ToolDetailServlet extends HttpServlet {
                 dateStart = dateStart.plusDays(1);
             }
         }
+
+        rs.close();
+        ps.close();
         db.close();
         return dates;
     }

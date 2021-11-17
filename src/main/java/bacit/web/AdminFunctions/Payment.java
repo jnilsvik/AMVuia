@@ -20,14 +20,15 @@ public class Payment extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            HttpSession session = request.getSession(false);
-            if(session == null){
+            HttpSession session=request.getSession(false);
+            String email = (String) session.getAttribute("email");
+            if(email == null){
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
             }
-            String email = (String) session.getAttribute("email");
 
-            if (true) {
+
+            if (AdminAccess.accessRights(email)) {
 
                 Connection db = DBUtils.getNoErrorConnection();
                 String insertUserCommand = "SELECT * FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE paid = false AND returnDate IS NOT NULL";
@@ -37,6 +38,10 @@ public class Payment extends HttpServlet {
 
                 request.setAttribute("unpaid", rs1);
                 request.getRequestDispatcher("/jspFiles/AdminFunctions/payment.jsp").forward(request,response);
+
+                rs1.close();
+                st1.close();
+                db.close();
 
             } else {
                 request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
@@ -70,6 +75,9 @@ public class Payment extends HttpServlet {
         PreparedStatement statement = db.prepareStatement(insertUserCommand);
         statement.setString(1, orderID);
         statement.executeUpdate();
+
+            statement.close();
+            db.close();
 
         } catch (Exception e) {
             e.printStackTrace();

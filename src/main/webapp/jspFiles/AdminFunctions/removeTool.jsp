@@ -29,7 +29,7 @@
       <%
         List<ToolModel> tools = (List<ToolModel>) request.getAttribute("tools");
         for(ToolModel tool : tools){
-          out.println("<tr>" +
+          out.print("<tr>" +
                   "<td>" + tool.getToolID() + "</td>" +
                   "<td>" + tool.getToolName() + "</td>" +
                   "</tr>");

@@ -16,6 +16,8 @@ public class BookingModel {
     private LocalDate endDate;
     private LocalDate returnDate;
 
+    public BookingModel() {}
+
     public BookingModel(int orderID, int userID, int toolID,int totalPrice, LocalDate startDate, LocalDate endDate, LocalDate returnDate) {
         this.orderID = orderID;
         this.userID = userID;
@@ -87,6 +89,9 @@ public class BookingModel {
             statement.setInt(1, toolID);
             ResultSet rs = statement.executeQuery();
             if(rs.next())result =  rs.getString("toolName");
+
+            rs.close();
+            statement.close();
             db.close();
         }catch (Exception e){
             e.printStackTrace();

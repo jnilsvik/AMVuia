@@ -41,7 +41,6 @@ public class ModuleTest extends HttpServlet {
         out.print("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />");
         out.print("  <meta charset=\"utf-8\" />");
         out.print("  <link rel=\"stylesheet\" href=\"css/list.css\">" );
-        out.print("  <link rel=\"stylesheet\" href=\"css/style.css\">" );
         out.print("</head>");
         out.print("<body>");
 

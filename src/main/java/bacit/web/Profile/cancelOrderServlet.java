@@ -24,12 +24,12 @@ public class cancelOrderServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session = request.getSession(false);
-            if(session == null){
+            HttpSession session=request.getSession(false);
+            String email = (String) session.getAttribute("email");
+            if(email == null){
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
             }
-            String email = (String) session.getAttribute("email");
             String orderId = request.getParameter("id");
             String result;
             if(isAllowedToChancel(orderId, email, out)){
@@ -39,13 +39,13 @@ public class cancelOrderServlet extends HttpServlet {
                 result = "The user is not allowed to cancel this booking";
             }
 
-            out.println(result);
+            out.print(result);
             request.setAttribute("result", result);
             request.setAttribute("orderId", orderId);
             request.setAttribute("email", email);
             request.getRequestDispatcher("/jspFiles/Profile/cancellation.jsp").forward(request,response);
         } catch (Exception e) {
-            out.println(e);
+            out.print(e);
         }
     }
 
@@ -54,6 +54,8 @@ public class cancelOrderServlet extends HttpServlet {
         PreparedStatement ps = db.prepareStatement("DELETE FROM Booking WHERE orderID = ?;");
         ps.setString(1, orderId);
         ps.executeUpdate();
+
+        ps.close();
         db.close();
     }
 
@@ -64,6 +66,9 @@ public class cancelOrderServlet extends HttpServlet {
         ResultSet rs = ps.executeQuery();
         if(!rs.next()) return false;
         boolean result = rs.getString("email").equals(email);
+
+        rs.close();
+        ps.close();
         db.close();
         return result;
     }

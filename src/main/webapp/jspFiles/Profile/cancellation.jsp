@@ -19,7 +19,7 @@
 
     <%
        String result = (String)request.getAttribute("result");
-       out.println("<h2>"+result+"</h2>");
+       out.print("<h2>"+result+"</h2>");
     %>
 <jsp:include page="../PageElements/footer.jsp"/>
 </body>

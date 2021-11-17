@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.nio.file.Paths;
 
 @WebServlet(name = "fileUpload", value = "/fileUpload")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 5, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5)
 public class UpLoadServlet extends HttpServlet {
 
     @Override
@@ -45,11 +45,11 @@ public class UpLoadServlet extends HttpServlet {
             FileDAO dao = new FileDAO();
             dao.persistFile(fileModel, out);
 
-            out.println("Received file with name: "+fileModel.getName()+ "with the length of: "+fileModel.getContents().length+" bytes");
+            out.print("Received file with name: "+fileModel.getName()+ "with the length of: "+fileModel.getContents().length+" bytes");
         }
         catch(Exception ex)
         {
-            out.println(ex.getMessage());
+            out.print(ex.getMessage());
             writeFileUploadForm(out, ex.getMessage());
 
         }
@@ -60,26 +60,26 @@ public class UpLoadServlet extends HttpServlet {
 
         if(errorMessage!=null)
         {
-            out.println("<h3>"+errorMessage+"</h3>");
+            out.print("<h3>"+errorMessage+"</h3>");
         }
-        out.println("<form action='fileUpload' method='POST' enctype='multipart/form-data'>");
-        out.println("<label for='file'>Upload a file</label> ");
-        out.println("<input type='file' name='file'/>");
-        out.println("<input type='submit' value='Upload file'/>");
-        out.println("</form>");
+        out.print("<form action='fileUpload' method='POST' enctype='multipart/form-data'>");
+        out.print("<label for='file'>Upload a file</label> ");
+        out.print("<input type='file' name='file'/>");
+        out.print("<input type='submit' value='Upload file'/>");
+        out.print("</form>");
     }
 
     private void printFooter(PrintWriter out){
-        out.println("</body>");
-        out.println("</html>");
+        out.print("</body>");
+        out.print("</html>");
     }
 
     private void printHeader(PrintWriter out){
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>FileUpload</title>");
-        out.println("</head>");
-        out.println("<body>");
+        out.print("<html>");
+        out.print("<head>");
+        out.print("<title>FileUpload</title>");
+        out.print("</head>");
+        out.print("<body>");
     }
 }
 
