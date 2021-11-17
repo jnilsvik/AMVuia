@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.nio.file.Paths;
 
 @WebServlet(name = "fileUpload", value = "/fileUpload")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 5, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5)
 public class UpLoadServlet extends HttpServlet {
 
     @Override

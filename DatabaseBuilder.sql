@@ -5,7 +5,7 @@ use AMVDatabase;
 create table files(
     id int not null auto_increment unique,
     name varchar(255),
-    content blob,
+    content mediumblob,
     contentType varchar(255),
     PRIMARY KEY (id)
 );

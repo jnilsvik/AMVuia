@@ -26,7 +26,7 @@
 
         out.print("<h1> " + tool.getToolName().replaceAll("_", " ") +
                 " from the Category: " + tool.getToolCategory().replaceAll("_", " ") + "</h1>");
-        out.print("<img src = 'img/amv.png' width = '156' heigth = '151'>");
+        out.print("<img src = 'img/amv.png' width = '156' height = '151'>");
         out.print("<h2>Price the first day: " +  tool.getPriceFirst() + "</h2>");
         out.print("<h2>Price after the first day: " +  tool.getPriceAfter() + "</h2>");
         out.print("<p>" + tool.getDescription()+"</p>");

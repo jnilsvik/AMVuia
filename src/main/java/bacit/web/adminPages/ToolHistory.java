@@ -23,10 +23,11 @@ public class ToolHistory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            int toolID = Integer.parseInt(request.getParameter("toolID"));
             Connection dbConnection = DBUtils.getNoErrorConnection();
             String history = "select * from Booking WHERE toolID = ? order by orderID desc";
             PreparedStatement statement = dbConnection.prepareStatement(history);
-            statement.setInt(1, Integer.parseInt(request.getParameter("toolID")));
+            statement.setInt(1, toolID);
             ResultSet rs = statement.executeQuery();
 
             ArrayList<BookingModel> bookingList = new ArrayList<>();
