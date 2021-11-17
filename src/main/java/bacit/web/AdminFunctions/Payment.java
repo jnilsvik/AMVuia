@@ -1,4 +1,4 @@
-package bacit.web.z_JSP_cleared;
+package bacit.web.AdminFunctions;
 
 import bacit.web.utils.DBUtils;
 
@@ -38,6 +38,10 @@ public class Payment extends HttpServlet {
                 request.setAttribute("unpaid", rs1);
                 request.getRequestDispatcher("payment.jsp").forward(request,response);
 
+                rs1.close();
+                st1.close();
+                db.close();
+
             } else {
                 out.print("<h1> Sorry, you don't have access to this page");
             }
@@ -70,6 +74,9 @@ public class Payment extends HttpServlet {
         PreparedStatement statement = db.prepareStatement(insertUserCommand);
         statement.setString(1, orderID);
         statement.executeUpdate();
+
+            statement.close();
+            db.close();
 
         } catch (Exception e) {
             e.printStackTrace();

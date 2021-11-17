@@ -1,6 +1,6 @@
-package bacit.web;
+package bacit.web.Profile;
 
-import bacit.web.a_models.BookingModel;
+import bacit.web.Modules.BookingModel;
 import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;
@@ -70,6 +70,8 @@ public class Profile extends HttpServlet {
                     rs.getDate("endDate").toLocalDate(),
                     toolReturnDate));
         }
+        rs.close();
+        ps.close();
         db.close();
         return bookings;
     }

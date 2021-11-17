@@ -1,4 +1,4 @@
-<%@ page import="bacit.web.a_models.BookingModel" %>
+<%@ page import="bacit.web.Modules.BookingModel" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html;charset=UTF-8"%>

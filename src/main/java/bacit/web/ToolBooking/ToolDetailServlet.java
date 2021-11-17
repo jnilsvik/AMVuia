@@ -1,7 +1,6 @@
-package bacit.web.z_JSP_cleared;
+package bacit.web.ToolBooking;
 
-import bacit.web.a_models.BookingModel;
-import bacit.web.a_models.ToolModel;
+import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 
 
@@ -10,16 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.tools.Tool;
 
 @WebServlet(name = "ToolDetailServlet", value = "/tooldetail")
 public class ToolDetailServlet extends HttpServlet {
@@ -65,9 +60,11 @@ public class ToolDetailServlet extends HttpServlet {
                     rs.getString("toolDescription"),
                     rs.getString("picturePath")
             );
-        }else {
+        }
+        else {
             return null;
         }
+
     }
 
     private List<LocalDate> getBookings(int toolID) throws SQLException {
@@ -85,6 +82,9 @@ public class ToolDetailServlet extends HttpServlet {
                 dateStart = dateStart.plusDays(1);
             }
         }
+
+        rs.close();
+        ps.close();
         db.close();
         return dates;
     }

@@ -1,10 +1,10 @@
-package bacit.web.z_JSP_cleared;
+package bacit.web.ToolBooking;
 
 import java.sql.SQLException;
 import java.time.*;
 
-import bacit.web.a_models.BookingModel;
-import bacit.web.a_models.ToolModel;
+import bacit.web.Modules.BookingModel;
+import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;
@@ -13,9 +13,7 @@ import java.io.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -69,6 +67,9 @@ public class Tool_BookingServlet extends HttpServlet {
             ResultSet rs1 = st1.executeQuery();
             rs1.next();
             userID = rs1.getInt("userID");
+
+            rs1.close();
+            st1.close();
             db.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,11 +92,15 @@ public class Tool_BookingServlet extends HttpServlet {
                 userCertificateID = rs.getInt("certificateID");
                 totalCertificateID.add(userCertificateID);
             }
-            db.close();
+
             //This checks if the user has the needed certificationID for the tool.
             if (totalCertificateID.contains(toolCertificateID)) {
                 hasTheCertificate = true;
             }
+
+            rs.close();
+            ps.close();
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,6 +118,8 @@ public class Tool_BookingServlet extends HttpServlet {
             statement2.setInt(4, userID);
             statement2.setInt(5, toolID);
             statement2.executeUpdate();
+
+            statement2.close();
             db.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,6 +143,8 @@ public class Tool_BookingServlet extends HttpServlet {
                     rs.getInt("certificateID")
                     ,"", "");
         }
+        rs.close();
+        statement.close();
         db.close();
         return tool;
     }
@@ -155,6 +164,9 @@ public class Tool_BookingServlet extends HttpServlet {
                     taken = true;
                 }
             }
+
+            rs.close();
+            st.close();
             db.close();
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,7 +1,7 @@
 package bacit.web.UpAndDownLoadFile;
 
 
-import bacit.web.a_models.FileModel;
+import bacit.web.Modules.FileModel;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;

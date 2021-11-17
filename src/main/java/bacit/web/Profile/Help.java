@@ -1,13 +1,6 @@
-package bacit.web;
-
-import bacit.web.*;
-import bacit.web.a_models.UserModel;
-import bacit.web.utils.DBUtils;
-import bacit.web.utils.hashPassword;
+package bacit.web.Profile;
 
 import java.io.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

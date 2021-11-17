@@ -1,6 +1,5 @@
-package bacit.web;
+package bacit.web.Profile;
 
-import bacit.web.a_models.BookingModel;
 import bacit.web.utils.DBUtils;
 
 import javax.servlet.ServletException;
@@ -55,6 +54,8 @@ public class cancelOrderServlet extends HttpServlet {
         PreparedStatement ps = db.prepareStatement("DELETE FROM Booking WHERE orderID = ?;");
         ps.setString(1, orderId);
         ps.executeUpdate();
+
+        ps.close();
         db.close();
     }
 
@@ -65,6 +66,9 @@ public class cancelOrderServlet extends HttpServlet {
         ResultSet rs = ps.executeQuery();
         if(!rs.next()) return false;
         boolean result = rs.getString("email").equals(email);
+
+        rs.close();
+        ps.close();
         db.close();
         return result;
     }

@@ -1,4 +1,4 @@
-package bacit.web.a_models;
+package bacit.web.Modules;
 
 import bacit.web.utils.DBUtils;
 
@@ -142,6 +142,9 @@ public class ToolModel {
             LocalDate end = rs.getTimestamp("endDate").toLocalDateTime().toLocalDate();
             addDatesToLinkedList(dayDates, start, end);
         }
+
+        rs.close();
+        statement.close();
         db.close();
         return dayDates;
     }

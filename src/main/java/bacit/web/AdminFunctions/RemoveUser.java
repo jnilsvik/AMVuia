@@ -1,18 +1,13 @@
-package bacit.web;
+package bacit.web.AdminFunctions;
 
-import bacit.web.*;
-import bacit.web.a_models.ToolModel;
-import bacit.web.a_models.UserModel;
+import bacit.web.Modules.UserModel;
 import bacit.web.utils.DBUtils;
-import bacit.web.utils.hashPassword;
-import bacit.web.z_JSP_cleared.AdminAccess;
 
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -73,6 +68,9 @@ public class RemoveUser extends HttpServlet {
         PreparedStatement statement = db.prepareStatement("DELETE FROM AMVUser WHERE email = ? ");
         statement.setString(1, String.valueOf(email));
         int noOfAffectedRows = statement.executeUpdate();
+
+        statement.close();
+        db.close();
         return noOfAffectedRows != 0;
     }
 
@@ -89,6 +87,8 @@ public class RemoveUser extends HttpServlet {
                     rs.getString("email")
             ));
         }
+        rs.close();
+        statements.close();
         db.close();
         return users;
     }

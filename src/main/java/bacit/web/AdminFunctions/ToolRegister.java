@@ -1,7 +1,6 @@
-package bacit.web;
+package bacit.web.AdminFunctions;
 
 import bacit.web.utils.DBUtils;
-import bacit.web.z_JSP_cleared.AdminAccess;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -78,6 +77,11 @@ public class ToolRegister extends HttpServlet {
                 out.print("</form>");
                 out.print("</body>");
                 out.print("</html>");
+
+                ps.close();
+                ps1.close();
+                rs1.close();
+                rs.close();
                 db.close();
 
         } catch (Exception e) {
@@ -112,6 +116,8 @@ public class ToolRegister extends HttpServlet {
             out.print("<h1> Tool suceccfully registered</h1>");
             out.print("</body>");
             out.print("</html>");
+
+            statement.close();
             db.close();
 
         }

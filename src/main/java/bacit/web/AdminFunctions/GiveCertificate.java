@@ -1,8 +1,7 @@
-package bacit.web;
+package bacit.web.AdminFunctions;
 
-import bacit.web.a_models.Certificate;
+import bacit.web.Modules.Certificate;
 import bacit.web.utils.DBUtils;
-import bacit.web.z_JSP_cleared.AdminAccess;
 
 import java.io.PrintWriter;
 import java.sql.*;
@@ -83,6 +82,8 @@ public class GiveCertificate extends HttpServlet {
                    rs.getInt("certificateId"),
                    rs.getString("certificateName")));
         }
+        rs.close();
+        ps.close();
         db.close();
         return certificateNames;
     }
@@ -95,6 +96,9 @@ public class GiveCertificate extends HttpServlet {
         statement.setString(2, certificateID);
         statement.setObject(3, accomplishDate);
         statement.executeUpdate();
+
+        statement.close();
+        db.close();
     }
 
 

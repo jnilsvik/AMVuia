@@ -1,6 +1,6 @@
-package bacit.web.z_JSP_cleared;
+package bacit.web.AdminFunctions;
 
-import bacit.web.a_models.ToolModel;
+import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 
 import javax.servlet.ServletException;
@@ -49,6 +49,10 @@ public class ListTools extends HttpServlet {
             }
             request.setAttribute("toolList", toolList); // ! a way to set attributes
             request.getRequestDispatcher("/listTools.jsp").forward(request,response);
+
+            rs.close();
+            statement.close();
+            dbConnection.close();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

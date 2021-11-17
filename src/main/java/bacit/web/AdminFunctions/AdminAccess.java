@@ -1,4 +1,4 @@
-package bacit.web.z_JSP_cleared;
+package bacit.web.AdminFunctions;
 import java.sql.*;
 
 // by Dilan
@@ -17,6 +17,8 @@ public class  AdminAccess {
             {
                 isAdmin  = rs.getBoolean("userAdmin");
             }
+            rs.close();
+            ps.close();
             db.close();
 
         }

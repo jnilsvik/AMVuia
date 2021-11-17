@@ -1,16 +1,11 @@
-package bacit.web.a_models;
+package bacit.web.Modules;
 
 import bacit.web.utils.DBUtils;
 
-import javax.servlet.jsp.JspWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.Period;
 
 public class BookingModel {
     private int orderID;
@@ -94,6 +89,9 @@ public class BookingModel {
             statement.setInt(1, toolID);
             ResultSet rs = statement.executeQuery();
             if(rs.next())result =  rs.getString("toolName");
+
+            rs.close();
+            statement.close();
             db.close();
         }catch (Exception e){
             e.printStackTrace();

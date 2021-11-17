@@ -1,8 +1,8 @@
 package bacit.web.utils;
 
-import bacit.web.a_models.BookingModel;
-import bacit.web.a_models.ToolModel;
-import bacit.web.a_models.UserModel;
+import bacit.web.Modules.BookingModel;
+import bacit.web.Modules.ToolModel;
+import bacit.web.Modules.UserModel;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

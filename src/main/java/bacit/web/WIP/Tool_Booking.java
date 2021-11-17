@@ -1,6 +1,6 @@
 package bacit.web.WIP;
 
-import bacit.web.a_models.BookingModel;
+import bacit.web.Modules.BookingModel;
 import bacit.web.utils.DBUtils;
 
 import javax.servlet.ServletException;
@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 @WebServlet(name = "b", value = "/b")

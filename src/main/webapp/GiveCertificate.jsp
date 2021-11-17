@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="bacit.web.a_models.Certificate" %><%--
+<%@ page import="bacit.web.Modules.Certificate" %><%--
   Created by IntelliJ IDEA.
   User: Asus
   Date: 14.11.2021
