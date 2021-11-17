@@ -13,9 +13,10 @@ import java.util.logging.Logger;
 @WebServlet(name = "fileDownload", value = "/fileDownload")
 public class DownloadServlet extends HttpServlet {
 
+    @SuppressWarnings("CanBeFinal")
     Logger logger = Logger.getLogger(String.valueOf(UpLoadServlet.class));
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         int id = 1;
         try{
             FileModel fileModel =  getFile(id);

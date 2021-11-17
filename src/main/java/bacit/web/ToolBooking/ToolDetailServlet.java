@@ -19,7 +19,7 @@ import javax.servlet.http.*;
 @WebServlet(name = "ToolDetailServlet", value = "/tooldetail")
 public class ToolDetailServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 

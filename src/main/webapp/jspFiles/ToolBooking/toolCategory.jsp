@@ -5,7 +5,7 @@
   Time: 19:58
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Toollist</title>
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="/jspFiles/PageElements/header.jsp"/>
 <section class='featured-products'>
     <h1>${CAT}</h1>
     <%

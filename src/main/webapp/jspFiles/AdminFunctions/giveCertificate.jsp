@@ -6,7 +6,7 @@
   Time: 13:56
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
   <title>Give Certificate</title>
@@ -26,6 +26,7 @@
             <div class='bd-example'>
     <form action = 'givecertificate' method = 'POST'>
         <div class='form-floating mb-3'>
+
             <input type = 'text' name = 'userID' class='form-control' placeholder='name'>
         <%--@declare id="userid"--%><label for = "userID">User ID: </label>
         </div>

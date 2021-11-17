@@ -16,7 +16,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "GiveCertificate", value = "/givecertificate")
 public class GiveCertificate extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
         try {
             HttpSession session=request.getSession(false);

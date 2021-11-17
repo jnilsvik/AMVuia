@@ -3,7 +3,6 @@ package bacit.web.Profile;
 import bacit.web.Modules.BookingModel;
 import bacit.web.utils.DBUtils;
 
-import java.io.PrintWriter;
 import java.sql.*;
 import java.io.*;
 import java.time.LocalDate;
@@ -44,7 +43,6 @@ public class Profile extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
     }
 
     private List<BookingModel> getBookings(String email, PrintWriter out) throws SQLException {

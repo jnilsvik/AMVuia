@@ -3,7 +3,6 @@ package bacit.web.AdminFunctions;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.hashPassword;
 
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -33,8 +32,7 @@ public class RegisterUser extends HttpServlet {
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
         try {
             Connection db = DBUtils.getNoErrorConnection();

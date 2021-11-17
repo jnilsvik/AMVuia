@@ -44,8 +44,7 @@ public class ToolAllListings extends HttpServlet {
     void GetSetCategories(PrintWriter out, HttpServletRequest request){
         try {
             Connection dbc= DBUtils.getNoErrorConnection();
-            PreparedStatement ps1 = null;
-            ps1 = dbc.prepareStatement(
+            PreparedStatement ps1 = dbc.prepareStatement(
                     "SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs1 = ps1.executeQuery();
             // TODO: 10.11.2021 should make this into string array before sending?

@@ -2,7 +2,6 @@ package bacit.web.AdminFunctions;
 
 import bacit.web.utils.DBUtils;
 
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.io.*;
 import java.sql.DriverManager;
@@ -57,7 +56,7 @@ public class RegisterTool extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 

@@ -7,7 +7,6 @@ import bacit.web.Modules.BookingModel;
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.io.*;
 
@@ -21,7 +20,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "ToolBookingServlet", value = "/toolbooking")
 public class ToolBookingServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {

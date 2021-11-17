@@ -1,8 +1,6 @@
 package bacit.web.LogInOut;
 
 // by Dilan
-import java.io.PrintWriter;
-import java.sql.*;
 import java.io.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -14,7 +12,9 @@ public class LogOut extends HttpServlet {
         try {
             HttpSession session = request.getSession(false);
             session.invalidate();
-        }catch(NullPointerException e){}
+        }catch(NullPointerException e){
+            e.printStackTrace();
+        }
         try {
             request.getRequestDispatcher("/jspFiles/LogIn/login.jsp").forward(request,response);
         } catch (ServletException e) {

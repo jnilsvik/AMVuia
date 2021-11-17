@@ -2,7 +2,6 @@ package bacit.web.AdminFunctions;
 
 import bacit.web.utils.DBUtils;
 
-import java.io.PrintWriter;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +13,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "ToolMaintenance", value = "/toolmaintenance")
 public class ToolMaintenance extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
         try {
             HttpSession session=request.getSession(false);
@@ -38,7 +37,7 @@ public class ToolMaintenance extends HttpServlet {
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 

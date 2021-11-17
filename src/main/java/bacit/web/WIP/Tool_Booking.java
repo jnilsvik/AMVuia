@@ -21,7 +21,6 @@ import java.util.LinkedList;
 public class Tool_Booking extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
 
         int duration = Integer.parseInt(req.getParameter("days"));
         LocalDate reqStartDate = LocalDate.parse(req.getParameter("dateStart"));
@@ -37,19 +36,19 @@ public class Tool_Booking extends HttpServlet {
                     reqEndDate,
                     null);
 
-            if(CompareAndValidateBooking(reqStartDate, reqEndDate, GetBookedDates(out,req.getParameter("toolID")))){
-                InsertBooking(out, bModel);
+            if(CompareAndValidateBooking(reqStartDate, reqEndDate, GetBookedDates(req.getParameter("toolID")))){
+                InsertBooking(bModel);
                 req.setAttribute("bmodel", bModel);
                 req.getRequestDispatcher("/jspFiles/PageElements/login.jsp").forward(req,resp);
             } else {
-                out.print("Could not complete"); // TODO: 31.10.2021 figure out what to w/this
+                // TODO: 31.10.2021 figure out what to w/this
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private static LinkedList<BookingModel> GetBookedDates(PrintWriter out, String toolID) throws SQLException{
+    private static LinkedList<BookingModel> GetBookedDates(String toolID) throws SQLException{
         Connection dbConnection = DBUtils.getNoErrorConnection();
         PreparedStatement statement = dbConnection.prepareStatement(
                 "select * from Booking where toolID = ?");
@@ -82,7 +81,7 @@ public class Tool_Booking extends HttpServlet {
         return ava;
     }
 
-    void InsertBooking(PrintWriter out, BookingModel model) throws SQLException{
+    void InsertBooking(BookingModel model) throws SQLException{
         Connection dbc = DBUtils.getNoErrorConnection();
         PreparedStatement statement = dbc.prepareStatement(
                 "insert into Booking(userID, toolID, startDate, endDate, totalPrice) values (?,?,?,?,?)");

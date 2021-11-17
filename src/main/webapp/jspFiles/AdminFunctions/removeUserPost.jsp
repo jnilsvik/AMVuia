@@ -1,6 +1,6 @@
 <%@ page import="bacit.web.Modules.UserModel" %>
 <%@ page import="java.util.List" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Profile</title>

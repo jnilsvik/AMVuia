@@ -3,7 +3,6 @@ package bacit.web.Profile;
 import bacit.web.utils.hashPassword;
 import bacit.web.utils.DBUtils;
 
-import java.io.PrintWriter;
 import java.sql.*;
 import java.io.*;
 import javax.servlet.ServletException;
@@ -14,7 +13,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "ChangePassword", value = "/changepassword")
 public class ChangePassword extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
 
         try {
@@ -35,7 +34,7 @@ public class ChangePassword extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
@@ -56,11 +55,7 @@ public class ChangePassword extends HttpServlet {
                     isOldPassValid = true;
                 }
             }
-            boolean doPasswordsMatch = false;
-            if(newPassword1.equals(newPassword2)) {
-                doPasswordsMatch = true;
-            }
-            if(isOldPassValid && doPasswordsMatch) {
+            if(newPassword1.equals(newPassword2) && isOldPassValid) {
                 PreparedStatement st2 = db
                         .prepareStatement("UPDATE AMVUser SET passwordHash = ? WHERE email = ?");
                 st2.setString(1, newPassword1);

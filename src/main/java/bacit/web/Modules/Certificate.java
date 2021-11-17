@@ -1,5 +1,6 @@
 package bacit.web.Modules;
 
+@SuppressWarnings({"FieldMayBeFinal", "CanBeFinal"})
 public class Certificate {
 
     private int certificateID;

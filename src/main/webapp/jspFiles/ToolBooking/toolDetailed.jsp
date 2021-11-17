@@ -3,7 +3,7 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.DayOfWeek" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Profile</title>

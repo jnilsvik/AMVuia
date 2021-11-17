@@ -1,6 +1,6 @@
 <%@ page import="bacit.web.utils.DBUtils" %>
 <%@ page import="java.sql.*" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Toollist</title>
