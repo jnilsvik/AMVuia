@@ -33,65 +33,25 @@ public class RegisterTool extends HttpServlet {
             if (AdminAccess.accessRights(email)) {
                 Class.forName("org.mariadb.jdbc.Driver");
                 Connection db = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-                PreparedStatement ps = db.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
-                ResultSet rs = ps.executeQuery();
-
-                PreparedStatement ps1 = db.prepareStatement("SELECT * FROM ToolCertificate");
+                PreparedStatement ps1 = db.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
                 ResultSet rs1 = ps1.executeQuery();
 
-                out.print("<html>");
-                out.print("<head>");
-                out.print("<title>Register Tool</title>");
-                out.print("</head>");
+                PreparedStatement ps2 = db.prepareStatement("SELECT * FROM ToolCertificate");
+                ResultSet rs2 = ps2.executeQuery();
 
-                out.print("<h2>Register Tool</h2>");
-                out.print("<form action = 'toolregister' method = 'POST'> ");
-                out.print("<label for = 'toolname'>Tool Name: </label><br>");
-                out.print("<input type = 'text' name = 'toolname'><br>");
-                out.print("<label for = 'pricefirst'>Price First Day: </label><br>");
-                out.print("<input type = 'text' name = 'pricefirst'><br>");
-                out.print("<label for = 'priceafter'>Price After First Day: </label><br>");
-                out.print("<input type = 'text' name = 'priceafter'><br>");
+                request.setAttribute("regTool1",rs1);
+                request.setAttribute("regTool2",rs2);
+                request.getRequestDispatcher("registerTool").forward(request,response);
 
-                out.print("<label for = 'toolCategory'>Tool Category: </label><br>");
-                out.print("<select name = 'toolCategory' id = 'toolCategory'><br>");
-
-                while (rs.next()) {
-                    String categoryName = rs.getString("toolCategory");
-                    out.print("<option value = '" + categoryName + "'> " + categoryName + " </option>");
-                }
-                out.print("</select>");
-                out.print("<br>");
-                out.print("<br>");
-
-                out.print("<label for = 'toolcertificate'>Tool Certificate: </label><br>");
-                out.print("<select name = 'toolcertificate' id = 'toolcertificate'><br>");
-
-                while (rs1.next()) {
-                    int certificateID = rs1.getInt("certificateID");
-                    String certificateName = rs1.getString("certificateName");
-                    out.print("<option value = '" + certificateID + "'> " + certificateName + " </option>");
-                }
-
-                out.print("</select>");
-                out.print("<br>");
-                out.print("<br>");
-                out.print("<label for = 'tooldesc'>Tool Description: </label><br>");
-                out.print("<input type = 'text' name = 'tooldesc'><br>");
-                out.print("<input type = 'submit' value = 'Register Tool'>");
-                out.print("</form>");
-                out.print("</body>");
-                out.print("</html>");
-
-                ps.close();
                 ps1.close();
+                ps2.close();
                 rs1.close();
-                rs.close();
+                rs2.close();
                 db.close();
             }
 
         } catch (Exception e) {
-            out.print("error");
+            e.printStackTrace();
         }
     }
 
@@ -128,7 +88,7 @@ public class RegisterTool extends HttpServlet {
 
         }
         catch (Exception e) {
-            out.print(e);
+            e.printStackTrace();
         }
     }
 
