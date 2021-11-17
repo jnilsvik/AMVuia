@@ -19,7 +19,7 @@ public class ChangePassword extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            request.getRequestDispatcher("/passwordChange.jsp").forward(request,response);
+            request.getRequestDispatcher("jspFiles/Profile/passwordChange.jsp").forward(request,response);
         } catch (Exception e) {
             out.print("error");
         }
@@ -60,7 +60,7 @@ public class ChangePassword extends HttpServlet {
 
                 String successfulLine = "Password was successfully changed!";
                 request.setAttribute("successfulLine", successfulLine);
-                request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
+                request.getRequestDispatcher("jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
             }
         } catch (Exception e) {
             out.println("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");

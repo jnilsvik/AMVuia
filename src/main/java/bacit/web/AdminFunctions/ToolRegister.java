@@ -116,7 +116,7 @@ public class ToolRegister extends HttpServlet {
             out.print("<head>");
             out.print("</head>");
             out.print("<body>");
-            out.print("<h1> Tool suceccfully registered</h1>");
+            out.print("<h1> Tool successfully registered</h1>");
             out.print("</body>");
             out.print("</html>");
 

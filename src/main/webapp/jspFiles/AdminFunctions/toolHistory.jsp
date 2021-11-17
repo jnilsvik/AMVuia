@@ -1,22 +1,17 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="bacit.web.a_models.BookingModel" %>
-<%@ page import="java.time.LocalDate" %><%--
-  Created by IntelliJ IDEA.
-  User: Joachim
-  Date: 10.11.2021
-  Time: 16:11
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="bacit.web.Modules.BookingModel" %>
+<%@ page import="java.time.LocalDate" %>
+
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>Tool History</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/tabelsort.css">
+    <link rel="stylesheet" href="../../css/tabelsort.css">
 </head>
 <body>
-    <jsp:include page="_head_nav.jsp"/>
+    <jsp:include page="../PageElements/header.jsp"/>
 
     <h3>Tool History</h3>
     <table class="table-sortable">
@@ -56,7 +51,7 @@
         </tbody>
     </table>
 
-    <script src="js/tabelsort.js"></script>
+    <script src="../../js/tabelsort.js"></script>
 
 </body>
 </html>
