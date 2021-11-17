@@ -25,12 +25,12 @@ public class Tool_BookingServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         try {
-            HttpSession session = request.getSession(false);
-            if(session == null){
+            HttpSession session=request.getSession(false);
+            String email = (String) session.getAttribute("email");
+            if(email == null){
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
             }
-            String email = (String) session.getAttribute("email");
             int toolID = Integer.parseInt(request.getParameter("tools"));
             int inputDays = Integer.parseInt(request.getParameter("days"));
             int userID = getUserID(email);

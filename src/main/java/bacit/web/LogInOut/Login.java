@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -33,7 +34,8 @@ public class Login extends HttpServlet {
         String email = request.getParameter("email");
         String password = hashPassword.encryptThisString(request.getParameter("pass"));
         if(Validation(email,password)){
-            request.getSession().setAttribute("email", email);
+            HttpSession session= request.getSession();
+            session.setAttribute("email",email);
             try {
                 // TODO: 09.11.2021 make this send you straigth to tools thingy 
                 request.getRequestDispatcher("/landing.jsp").forward(request,response);

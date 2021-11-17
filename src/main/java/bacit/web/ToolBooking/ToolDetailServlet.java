@@ -23,12 +23,12 @@ public class ToolDetailServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        HttpSession session = request.getSession(false);
-        if(session == null){
+        HttpSession session=request.getSession(false);
+        String email = (String) session.getAttribute("email");
+        if(email == null){
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
         }
-        String email = (String) session.getAttribute("email");
         int toolID = Integer.parseInt(request.getParameter("toolID"));
         try{
             ToolModel tool = getTool(toolID);

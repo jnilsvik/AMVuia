@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -28,6 +29,13 @@ public class ListTools extends HttpServlet {
         PrintWriter out = response.getWriter();
         // TODO: 10.11.2021 need to implement the non-admin prevention
         try {
+            HttpSession session=request.getSession(false);
+            String email = (String) session.getAttribute("email");
+            if(email == null){
+                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+                return;
+            }
+
             Connection dbConnection = DBUtils.getNoErrorConnection();
             String toolQ = "select * from Tool order by toolID ";
             PreparedStatement statement = dbConnection.prepareStatement(toolQ);

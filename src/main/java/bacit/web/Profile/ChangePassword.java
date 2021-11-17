@@ -19,6 +19,12 @@ public class ChangePassword extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+            HttpSession session=request.getSession(false);
+            String email = (String) session.getAttribute("email");
+            if(email == null){
+                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+                return;
+            }
             request.getRequestDispatcher("/passwordChange.jsp").forward(request,response);
         } catch (Exception e) {
             out.print("error");
