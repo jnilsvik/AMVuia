@@ -20,12 +20,12 @@ public class AdminPage extends HttpServlet {
         String email = (String) session.getAttribute("email");
         if(AdminAccess.accessRights(email)) {
             try {
-                request.getRequestDispatcher("/adminPage.jsp").forward(request, response);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/adminPage.jsp").forward(request, response);
             } catch (ServletException e) {
                 e.printStackTrace();
             }
         }else {
-            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
         }
     }
 }

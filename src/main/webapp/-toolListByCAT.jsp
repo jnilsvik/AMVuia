@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="OneDrive/Desktop/Uni/WS2021/IT-Project/AMVuia2/src/main/webapp/jspFiles/PageElements/header.jsp"/>
 <section class='featured-products'>
     <h1>${CAT}</h1>
     <%

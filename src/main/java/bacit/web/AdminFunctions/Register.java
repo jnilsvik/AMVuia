@@ -18,7 +18,7 @@ public class Register extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         try {
-            request.getRequestDispatcher("/register.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/register.jsp").forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         }

@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="header.jsp"/>
 <!--content goes here-->
 <section class="main">
     <h1>Hello ${email}</h1>
@@ -27,6 +27,7 @@
     <br>
     <a href="lu">user list</a>
     <br>
+<jsp:include page="header.jsp"/>
 </section>
 </body>
 </html>

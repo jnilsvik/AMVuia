@@ -36,10 +36,10 @@ public class Payment extends HttpServlet {
                 ResultSet rs1 = st1.executeQuery();
 
                 request.setAttribute("unpaid", rs1);
-                request.getRequestDispatcher("payment.jsp").forward(request,response);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/payment.jsp").forward(request,response);
 
             } else {
-                out.print("<h1> Sorry, you don't have access to this page");
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
             }
 
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public class Payment extends HttpServlet {
 
             String successfulLine = "Order was successfully marked as paid";
             request.setAttribute("successfulLine", successfulLine);
-            request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
 
     }
 
