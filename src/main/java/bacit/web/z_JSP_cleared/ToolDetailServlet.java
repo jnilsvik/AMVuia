@@ -41,7 +41,7 @@ public class ToolDetailServlet extends HttpServlet {
 
             request.setAttribute("tool", tool);
             request.setAttribute("dates", dates);
-            request.getRequestDispatcher("/ToolDetailed.jsp").forward(request,response);
+            request.getRequestDispatcher("/-toolPreview.jsp").forward(request,response);
         } catch (Exception e) {
             out.println(e.getMessage());
         }
