@@ -1,8 +1,8 @@
-<%@ page import="bacit.web.a_models.ToolModel" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.DayOfWeek" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="bacit.web.Modules.ToolModel" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -259,11 +259,10 @@
                                 resetWeek++;
                             }
                         %>
-
                     </tr>
                 </table>
-
             </div>
+
             <div class="container_book">
                 <form action = 'toolbooking' method = 'POST'>
                     <%

@@ -28,7 +28,6 @@ public class ToolDetailServlet extends HttpServlet {
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
         }
-        String email = (String) session.getAttribute("email");
         int toolID = Integer.parseInt(request.getParameter("toolID"));
         try{
             ToolModel tool = getTool(toolID);
@@ -36,7 +35,7 @@ public class ToolDetailServlet extends HttpServlet {
 
             request.setAttribute("tool", tool);
             request.setAttribute("dates", dates);
-            request.getRequestDispatcher("/-toolPreview.jsp").forward(request,response);
+            request.getRequestDispatcher("/ToolDetailed.jsp").forward(request,response);
         } catch (Exception e) {
             out.println(e.getMessage());
         }
