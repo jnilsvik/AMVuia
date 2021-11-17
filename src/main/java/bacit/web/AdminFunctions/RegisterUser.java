@@ -36,7 +36,6 @@ public class RegisterUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         try {
             Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement statement = db.prepareStatement(
@@ -51,15 +50,11 @@ public class RegisterUser extends HttpServlet {
             statement.executeUpdate();
             statement.close();
             db.close();
-            // TODO: 10.11.2021 -joachim: redirect to login? not the way it should be for final but for is fine
-            //  @dilan
-            out.print("<html><body>");
-            out.print("<a href=\"login\"><h1>Registration successful! Click here to login</a></h1></a>");
-            out.print("</body></html>");
+
+            request.getRequestDispatcher("login").forward(request,response);
         }
         catch (Exception e) {
             e.printStackTrace();
-            out.print("test");
         }
     }
 }

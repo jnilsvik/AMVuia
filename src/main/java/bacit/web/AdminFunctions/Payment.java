@@ -51,7 +51,7 @@ public class Payment extends HttpServlet {
             }
 
         } catch (Exception e) {
-            out.print("error");
+            e.printStackTrace();
         }
     }
 

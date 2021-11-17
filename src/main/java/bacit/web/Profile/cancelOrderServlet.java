@@ -36,23 +36,18 @@ public class cancelOrderServlet extends HttpServlet {
             String orderId = request.getParameter("id");
             String result;
             if(isAllowedToChancel(orderId, email, out)){
-                deleteOrder(orderId, out);
+                deleteOrder(orderId);
                 result = "The booking has been successfully removed";
             } else {
                 result = "The user is not allowed to cancel this booking";
             }
-
-            out.print(result);
-            request.setAttribute("result", result);
-            request.setAttribute("orderId", orderId);
-            request.setAttribute("email", email);
-            request.getRequestDispatcher("/jspFiles/Profile/cancellation.jsp").forward(request,response);
+            DBUtils.ReDirFeedback(request,response,result);
         } catch (Exception e) {
-            out.print(e);
+            e.printStackTrace();
         }
     }
 
-    private void deleteOrder(String orderId, PrintWriter out) throws SQLException {
+    private void deleteOrder(String orderId) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement ps = db.prepareStatement("DELETE FROM Booking WHERE orderID = ?;");
         ps.setString(1, orderId);

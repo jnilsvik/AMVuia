@@ -37,7 +37,7 @@ public class Profile extends HttpServlet {
             request.setAttribute("bookings", bookings);
             request.getRequestDispatcher("/jspFiles/Profile/profile.jsp").forward(request,response);
         } catch (Exception e) {
-            out.print(e);
+            e.printStackTrace();
         }
     }
 
@@ -57,11 +57,11 @@ public class Profile extends HttpServlet {
             int toolID = 0;
             try{
                 toolID = rs.getInt("toolID");
-            }catch (NullPointerException e){out.print(e);}
+            }catch (NullPointerException e){e.printStackTrace();}
             LocalDate toolReturnDate = null;
             try{
                 toolReturnDate = rs.getDate("returnDate").toLocalDate();
-            } catch (NullPointerException e){out.print(e);}
+            } catch (NullPointerException e){e.printStackTrace();}
 
             bookings.add(new BookingModel(
                     rs.getInt("orderID"),
