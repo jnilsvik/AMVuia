@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Joachim
-  Date: 04.11.2021
-  Time: 15:00
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
@@ -14,7 +8,7 @@
     <link rel="stylesheet" href="css/misc.css">
 </head>
 <body>
-<jsp:include page="OneDrive/Desktop/Uni/WS2021/IT-Project/AMVuia2/src/main/webapp/jspFiles/PageElements/header.jsp"/>
+<jsp:include page="/jspFiles/PageElements/header.jsp"/>
 <div class="page">
     <article class="my-3" id="floating-labels"> <!-- this is temp to genter-->
         <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
