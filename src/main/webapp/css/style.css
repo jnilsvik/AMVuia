@@ -1,9 +1,7 @@
 ul {
     list-style-type: none;
 }
-header, footer{
-    font-size: 25px;
-}
+
 .main{ /* gives space for the sidebar */
     margin-left: 280px;
     padding-left: 20px;
