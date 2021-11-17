@@ -11,11 +11,11 @@
     <title>Toollist</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/list.css">
+    <link rel="stylesheet" href="../../css/list.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
 <section class='featured-products'>
     <h1>${CAT}</h1>
     <%

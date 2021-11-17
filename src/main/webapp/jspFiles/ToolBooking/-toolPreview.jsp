@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous'>
-    <link rel="stylesheet" href="css/misc.css">
+    <link rel="stylesheet" href="../../css/misc.css">
     <style>
         .container{
             align-self: center;
@@ -115,7 +115,7 @@
 </style>
 </head>
 <body>
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
     <section class="" style="width: 100%">
         <div class="container">
             <%
@@ -125,7 +125,7 @@
             %>
             <div class='container_product'>
                 <div class="product_img pm">
-                    <%out.print("<img src = 'img/amv.png' width = '156' heigth = '151'>");%>
+                    <%out.print("<img src = 'img/amv.png' width = '156' height = '151'>");%>
                 </div>
                 <div class="product_desc pm">
                     <%out.print("<p>" + tool.getDescription()+"</p>");%>

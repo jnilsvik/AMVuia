@@ -49,7 +49,7 @@ public class ToolHistory extends HttpServlet {
                 bookingList.add(model);
             }
             request.setAttribute("bookingList", bookingList); // ! a way to set attributes
-            request.getRequestDispatcher("/toolHistory.jsp").forward(request,response);
+            request.getRequestDispatcher("jspFiles/AdminFunctions/toolHistory.jsp").forward(request,response);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -23,7 +23,7 @@ public class ToolMaintenance extends HttpServlet {
             String email = (String) session.getAttribute("email");
 
             if (AdminAccess.accessRights(email)) {
-                request.getRequestDispatcher("toolMaintenance.jsp").forward(request,response);
+                request.getRequestDispatcher("jspFiles/AdminFunctions/toolMaintenance.jsp").forward(request,response);
             } else {
                 out.print("<h1> Sorry, you don't have access to this page");
             }
@@ -56,7 +56,7 @@ public class ToolMaintenance extends HttpServlet {
 
             String successfulLine = "Tool was successfully put out in maintenance";
             request.setAttribute("successfulLine", successfulLine);
-            request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
+            request.getRequestDispatcher("jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
         }
 
         if (toolMaintenance.equals("ToolInMaintenanceOut")) {
@@ -67,7 +67,7 @@ public class ToolMaintenance extends HttpServlet {
 
             String successfulLine = "Tool was successfully put out of maintenance";
             request.setAttribute("successfulLine", successfulLine);
-            request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
+            request.getRequestDispatcher("jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
         }
         db.close();
 
