@@ -21,7 +21,7 @@ public class Login extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         try {
-            request.getRequestDispatcher("/jspFiles/LogIN/login.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/LogIn/login.jsp").forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         }

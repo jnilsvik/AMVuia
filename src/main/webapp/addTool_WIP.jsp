@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/misc.css">
 </head>
 <body>
-<jsp:include page="OneDrive/Desktop/Uni/WS2021/IT-Project/AMVuia2/src/main/webapp/jspFiles/PageElements/header.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
 <div class="page">
     <article class="my-3" id="floating-labels"> <!-- this is temp to genter-->
         <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
