@@ -30,8 +30,10 @@
             </ul>
 
             <div class="text-end">
-                <button type="button" formaction="login" class="btn amv-btn">LOGIN</button>
-                <button type="button" formaction="logout" class="btn amv-btn">LOGOUT</button>
+                <%
+                    if(email == null) out.print("<a href='login' class='btn amv-btn'>LOGIN</a>");
+                    else out.println("<a href='logout' class='btn amv-btn'>LOGOUT</a>");
+                %>
             </div>
         </div>
     </div>
