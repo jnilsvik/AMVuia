@@ -77,7 +77,7 @@ public class ChangePassword extends HttpServlet {
 
 
         } catch (Exception e) {
-            out.println("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
+            out.print("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
         }
 
     }

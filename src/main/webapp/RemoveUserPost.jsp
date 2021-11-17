@@ -15,16 +15,16 @@
         List<UserModel> users = (List<UserModel>) request.getAttribute("users");
         boolean success = (boolean) request.getAttribute("success");
         if(!success){
-            out.println("<h1>No User found with this email. No user could be deleted</h1>");
+            out.print("<h1>No User found with this email. No user could be deleted</h1>");
         } else {
-            out.println("<h1>User got deleted</h1>");
-            out.println("<table>");
+            out.print("<h1>User got deleted</h1>");
+            out.print("<table>");
             for(UserModel user : users){
-                out.println("<tr>" +
+                out.print("<tr>" +
                         "<td>" + user.getEmail() + "</td>" +
                         "</tr>");
             }
-            out.println("</table>");
+            out.print("</table>");
         }
     %>
 </body>

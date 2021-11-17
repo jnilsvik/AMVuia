@@ -39,13 +39,13 @@ public class cancelOrderServlet extends HttpServlet {
                 result = "The user is not allowed to cancel this booking";
             }
 
-            out.println(result);
+            out.print(result);
             request.setAttribute("result", result);
             request.setAttribute("orderId", orderId);
             request.setAttribute("email", email);
             request.getRequestDispatcher("/Cancellation.jsp").forward(request,response);
         } catch (Exception e) {
-            out.println(e);
+            out.print(e);
         }
     }
 
