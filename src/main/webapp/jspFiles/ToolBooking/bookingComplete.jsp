@@ -12,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
 <%
     DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     BookingModel booking = (BookingModel) request.getAttribute("booking");
@@ -24,5 +24,6 @@
     out.print("<p>Total price: " + booking.getTotalPrice() + "</p>");
 
 %>
+<jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>

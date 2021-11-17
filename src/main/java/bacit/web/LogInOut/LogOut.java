@@ -16,7 +16,7 @@ public class LogOut extends HttpServlet {
             session.invalidate();
         }catch(NullPointerException e){}
         try {
-            request.getRequestDispatcher("/login.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/LogIn/login.jsp").forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         }

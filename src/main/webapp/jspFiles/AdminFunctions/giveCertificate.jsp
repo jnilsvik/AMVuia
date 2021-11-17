@@ -16,7 +16,7 @@
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3' crossorigin='anonymous'>
 </head>
 <body>
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
 <div class='page'>
     <article class='my-3 amv-register' id='floating-labels'>
         <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
@@ -56,5 +56,6 @@
     </div>
     </article>
     </div>
+<jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>

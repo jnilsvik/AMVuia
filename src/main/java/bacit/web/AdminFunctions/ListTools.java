@@ -55,7 +55,7 @@ public class ListTools extends HttpServlet {
                                 rs.getString("picturePath")));
             }
             request.setAttribute("toolList", toolList); // ! a way to set attributes
-            request.getRequestDispatcher("/listTools.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/listTools.jsp").forward(request,response);
 
             rs.close();
             statement.close();

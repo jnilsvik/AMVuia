@@ -2,7 +2,7 @@
 
 <title>Admin Functions</title>
 
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
 <div>
  <a href="toolregister"> <span class=bigbutton> Register Tool </span></a>
  <br>
@@ -18,4 +18,4 @@
  <br>
  <a href="removeuser"> <span class=bigbutton> Remove Tool </span></a>
 </div>
-<jsp:include page="_footer.jsp"/>
+<jsp:include page="../PageElements/footer.jsp"/>

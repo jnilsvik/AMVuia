@@ -17,7 +17,7 @@
     <style> table, th, td {border: 1px solid black;} th, td {padding: 0 5px;}</style>
 </head>
 <body>
-    <jsp:include page="_head_nav.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
     <h2>Please enter the email of the user you want to remove</h2>
     <form method='POST'>
     <h3>Email:</h3>
@@ -35,5 +35,6 @@
             }
         %>
     </table>
+<jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>

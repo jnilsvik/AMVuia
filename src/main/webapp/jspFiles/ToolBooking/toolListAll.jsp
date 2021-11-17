@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
 <h2>Categories</h2>
 <section class='categories'>
     <%
@@ -57,5 +57,6 @@
         }
     %>
 </section>
+<jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>

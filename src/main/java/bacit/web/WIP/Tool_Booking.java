@@ -40,7 +40,7 @@ public class Tool_Booking extends HttpServlet {
             if(CompareAndValidateBooking(reqStartDate, reqEndDate, GetBookedDates(out,req.getParameter("toolID")))){
                 InsertBooking(out, bModel);
                 req.setAttribute("bmodel", bModel);
-                req.getRequestDispatcher("/login.jsp").forward(req,resp);
+                req.getRequestDispatcher("/jspFiles/PageElements/login.jsp").forward(req,resp);
             } else {
                 out.print("Could not complete"); // TODO: 31.10.2021 figure out what to w/this
             }

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/tabelsort.css">
 </head>
 <body>
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
 
 <html>
 <head>
@@ -17,13 +17,13 @@
     table, th, td { border:1px solid black;}
 </style>
 <body>
+<jsp:include page="../PageElements/header.jsp"/>
 <%
         String successfulLine = (String) request.getAttribute("successfulLine");
         out.print(successfulLine);
         request.removeAttribute("successfulLine");
 %>
-</body>
-</html>
+<jsp:include page="../PageElements/footer.jsp"/>
 
 </body>
 </html>

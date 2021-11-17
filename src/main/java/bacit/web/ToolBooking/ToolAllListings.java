@@ -32,7 +32,7 @@ public class ToolAllListings extends HttpServlet {
 
             GetSetCategories(out, request);
             GetSetTools(out,request);
-            request.getRequestDispatcher("/-toolListAll.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/ToolBooking/toolListAll.jsp").forward(request,response);
         } catch (Exception e) {
             e.printStackTrace();
         }

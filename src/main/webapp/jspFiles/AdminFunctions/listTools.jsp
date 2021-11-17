@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/tabelsort.css">
 </head>
 <body>
-    <jsp:include page="_head_nav.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
 
     <h3>Tools Listing</h3>
     <table class="table-sortable">
@@ -46,6 +46,6 @@
     </table>
 
     <script src="js/tabelsort.js"></script>
-
+<jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>

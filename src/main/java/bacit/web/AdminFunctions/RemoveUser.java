@@ -31,12 +31,12 @@ public class RemoveUser extends HttpServlet {
             try {
                 List<UserModel> users = getUsers();
                 request.setAttribute("users", users);
-                request.getRequestDispatcher("/RemoveUser.jsp").forward(request, response);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/removeUser.jsp").forward(request, response);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }else {
-            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
         }
     }
 
@@ -55,12 +55,12 @@ public class RemoveUser extends HttpServlet {
 
                 request.setAttribute("success", success);
                 request.setAttribute("users", users);
-                request.getRequestDispatcher("/RemoveUserPost.jsp").forward(request, response);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/removeUserPost.jsp").forward(request, response);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }else{
-            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
         }
     }
 

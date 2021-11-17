@@ -32,7 +32,7 @@ public class Profile extends HttpServlet {
             List<BookingModel> bookings = getBookings(email, out);
 
             request.setAttribute("bookings", bookings);
-            request.getRequestDispatcher("/Profile.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/Profile/profile.jsp").forward(request,response);
         } catch (Exception e) {
             out.print(e);
         }

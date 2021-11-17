@@ -21,12 +21,7 @@ public class Login extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         try {
-            HttpSession session = request.getSession(false);
-            if(session == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/xtl");
-                return;
-            }
-            request.getRequestDispatcher("/login.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/LogIN/login.jsp").forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         }
@@ -43,7 +38,7 @@ public class Login extends HttpServlet {
             session.setAttribute("email",email);
             try {
                 // TODO: 09.11.2021 make this send you straigth to tools thingy 
-                request.getRequestDispatcher("/landing.jsp").forward(request,response);
+                request.getRequestDispatcher("/jspFiles/PageElements/landing.jsp").forward(request,response);
             } catch (ServletException e) {
                 e.printStackTrace();
             }

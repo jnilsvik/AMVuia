@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="_head_nav.jsp"/>
+<jsp:include page="../PageElements/header.jsp"/>
 
 <div class='page'>
     <article class='my-3 amv-register' id='floating-labels'>
@@ -51,6 +51,6 @@
         </div>
     </article>
 </div>
-
+<jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>

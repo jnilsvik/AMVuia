@@ -43,7 +43,7 @@ public class cancelOrderServlet extends HttpServlet {
             request.setAttribute("result", result);
             request.setAttribute("orderId", orderId);
             request.setAttribute("email", email);
-            request.getRequestDispatcher("/Cancellation.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/Profile/cancellation.jsp").forward(request,response);
         } catch (Exception e) {
             out.print(e);
         }

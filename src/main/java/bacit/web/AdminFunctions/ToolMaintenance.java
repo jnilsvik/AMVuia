@@ -19,12 +19,8 @@ public class ToolMaintenance extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            HttpSession session=request.getSession(false);
+            HttpSession session = request.getSession(false);
             String email = (String) session.getAttribute("email");
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
 
             if (AdminAccess.accessRights(email)) {
                 request.getRequestDispatcher("toolMaintenance.jsp").forward(request,response);
@@ -61,8 +57,6 @@ public class ToolMaintenance extends HttpServlet {
             String successfulLine = "Tool was successfully put out in maintenance";
             request.setAttribute("successfulLine", successfulLine);
             request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
-
-            st1.close();
         }
 
         if (toolMaintenance.equals("ToolInMaintenanceOut")) {
@@ -74,11 +68,8 @@ public class ToolMaintenance extends HttpServlet {
             String successfulLine = "Tool was successfully put out of maintenance";
             request.setAttribute("successfulLine", successfulLine);
             request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
-
-            st2.close();
         }
-            db.close();
-
+        db.close();
 
         } catch (Exception e) {
             e.printStackTrace();

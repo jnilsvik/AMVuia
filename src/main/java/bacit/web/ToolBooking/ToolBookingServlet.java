@@ -19,7 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 @WebServlet(name = "ToolBookingServlet", value = "/toolbooking")
-public class Tool_BookingServlet extends HttpServlet {
+public class ToolBookingServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
@@ -50,7 +50,7 @@ public class Tool_BookingServlet extends HttpServlet {
             }else{
                 registerBooking(StartDateWanted, endingDate, totalPrice, userID, toolID);
                 request.setAttribute("booking", new BookingModel(0, userID, toolID, totalPrice, StartDateWanted, StartDateWanted.plusDays(inputDays), null));
-                request.getRequestDispatcher("/bookingComplete.jsp").forward(request,response);
+                request.getRequestDispatcher("/jspFiles/ToolBooking/bookingComplete.jsp").forward(request,response);
             }
         } catch (Exception e) {
             out.print(e.getMessage());

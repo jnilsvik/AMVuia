@@ -33,9 +33,9 @@ public class GiveCertificate extends HttpServlet {
                 List<Certificate> certificates = getCertificates();
 
                 request.setAttribute("certificates", certificates);
-                request.getRequestDispatcher("/GiveCertificate.jsp").forward(request,response);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/giveCertificate.jsp").forward(request,response);
             } else {
-                request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request,response);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
             }
 
         } catch (Exception e) {
@@ -64,12 +64,12 @@ public class GiveCertificate extends HttpServlet {
 
                 String successfulLine = "Certificate was successfully given!";
                 request.setAttribute("successfulLine", successfulLine);
-                request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            request.getRequestDispatcher("/NoAdminAccount.jsp").forward(request, response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request, response);
         }
     }
     private List<Certificate> getCertificates() throws SQLException {
