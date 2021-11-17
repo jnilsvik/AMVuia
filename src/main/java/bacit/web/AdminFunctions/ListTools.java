@@ -17,16 +17,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/*
-by Joachim
-
-prints all the tools
-*/
 @WebServlet(name = "lt", value = "/lt")
 public class ListTools extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         // TODO: 10.11.2021 need to implement the non-admin prevention
         try {
             HttpSession session=request.getSession(false);

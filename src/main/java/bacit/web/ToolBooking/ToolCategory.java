@@ -1,4 +1,4 @@
-package WillBeRemoved;
+package bacit.web.ToolBooking;
 
 import bacit.web.utils.DBUtils;
 
@@ -14,10 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/*
-by Joachim
-prints all the tools NOW WITH IMAGES!
-*/
 @WebServlet(name = "xtc", value = "/xtc")
 public class ToolCategory extends HttpServlet {
     @Override
