@@ -23,7 +23,10 @@ public class GiveCertificate extends HttpServlet {
 
         try {
             HttpSession session=request.getSession(false);
-            String email = (String) session.getAttribute("email");
+            String email = null;
+            if(session != null){
+                email = (String) session.getAttribute("email");
+            }
             if(email == null){
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
@@ -75,7 +78,7 @@ public class GiveCertificate extends HttpServlet {
     private List<Certificate> getCertificates() throws SQLException {
         List<Certificate> certificateNames = new LinkedList<>();
         Connection db = DBUtils.getNoErrorConnection();
-        PreparedStatement ps = db.prepareStatement("SELECT * FROM ToolCertificate");
+        PreparedStatement ps = db.prepareStatement("SELECT certificateID, certificateName FROM ToolCertificate");
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
            certificateNames.add(new Certificate(

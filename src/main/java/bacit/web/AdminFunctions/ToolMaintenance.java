@@ -19,8 +19,15 @@ public class ToolMaintenance extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            HttpSession session = request.getSession(false);
-            String email = (String) session.getAttribute("email");
+            HttpSession session=request.getSession(false);
+            String email = null;
+            if(session != null){
+                email = (String) session.getAttribute("email");
+            }
+            if(email == null){
+                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+                return;
+            }
 
             if (AdminAccess.accessRights(email)) {
                 request.getRequestDispatcher("jspFiles/AdminFunctions/toolMaintenance.jsp").forward(request,response);

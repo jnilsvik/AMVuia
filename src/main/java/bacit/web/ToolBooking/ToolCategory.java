@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -21,6 +22,15 @@ public class ToolCategory extends HttpServlet {
         request.setAttribute("CAT", request.getParameter("category"));
         Connection dbc= DBUtils.getNoErrorConnection();
         try {
+            HttpSession session=request.getSession(false);
+            String email = null;
+            if(session != null){
+                email = (String) session.getAttribute("email");
+            }
+            if(email == null){
+                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+                return;
+            }
             PreparedStatement ps3 = dbc.prepareStatement(
                 "select * from Tool where toolCategory =?");
             ps3.setString(1, String.valueOf(request.getParameter("category")));

@@ -19,6 +19,16 @@ public class ChangePassword extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+            HttpSession session=request.getSession(false);
+            String email = null;
+            if(session != null){
+                email = (String) session.getAttribute("email");
+            }
+            if(email == null){
+                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+                return;
+            }
+
             request.getRequestDispatcher("jspFiles/Profile/passwordChange.jsp").forward(request,response);
         } catch (Exception e) {
             out.print("error");
@@ -38,7 +48,7 @@ public class ChangePassword extends HttpServlet {
             String newPassword1 = hashPassword.encryptThisString(request.getParameter("newpass1"));
             String newPassword2 = hashPassword.encryptThisString(request.getParameter("newpass2"));
             PreparedStatement st1 = db
-                    .prepareStatement("SELECT * FROM AMVUser WHERE email = ?");
+                    .prepareStatement("SELECT passwordHash FROM AMVUser WHERE email = ?");
             st1.setString(1, email);
             ResultSet rs = st1.executeQuery();
             boolean isOldPassValid = false;

@@ -25,10 +25,9 @@ public class Profile extends HttpServlet {
         try {
             HttpSession session=request.getSession(false);
             String email = null;
-            try{
+            if(session != null){
                 email = (String) session.getAttribute("email");
-            }catch(NullPointerException e){}
-
+            }
             if(email == null){
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;

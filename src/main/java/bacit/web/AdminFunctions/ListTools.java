@@ -24,7 +24,10 @@ public class ListTools extends HttpServlet {
         // TODO: 10.11.2021 need to implement the non-admin prevention
         try {
             HttpSession session=request.getSession(false);
-            String email = (String) session.getAttribute("email");
+            String email = null;
+            if(session != null){
+                email = (String) session.getAttribute("email");
+            }
             if(email == null){
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;

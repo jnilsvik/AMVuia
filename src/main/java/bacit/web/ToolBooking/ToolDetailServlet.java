@@ -24,7 +24,10 @@ public class ToolDetailServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         HttpSession session=request.getSession(false);
-        String email = (String) session.getAttribute("email");
+        String email = null;
+        if(session != null){
+            email = (String) session.getAttribute("email");
+        }
         if(email == null){
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
@@ -69,7 +72,7 @@ public class ToolDetailServlet extends HttpServlet {
 
     private List<LocalDate> getBookings(int toolID) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection();
-        PreparedStatement ps = db.prepareStatement("SELECT * FROM Booking WHERE toolID = ? AND returnDate IS NULL;");
+        PreparedStatement ps = db.prepareStatement("SELECT startDate, endDate FROM Booking WHERE toolID = ? AND returnDate IS NULL;");
         ps.setInt(1, toolID);
         ResultSet rs = ps.executeQuery();
         List<LocalDate> dates = new LinkedList<>();

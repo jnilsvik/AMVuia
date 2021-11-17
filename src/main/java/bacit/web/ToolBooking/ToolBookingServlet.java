@@ -26,7 +26,10 @@ public class ToolBookingServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             HttpSession session=request.getSession(false);
-            String email = (String) session.getAttribute("email");
+            String email = null;
+            if(session != null){
+                email = (String) session.getAttribute("email");
+            }
             if(email == null){
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
@@ -82,7 +85,7 @@ public class ToolBookingServlet extends HttpServlet {
         boolean hasTheCertificate = false;
         try {
             Connection db = DBUtils.getNoErrorConnection();
-            PreparedStatement ps = db.prepareStatement("SELECT * FROM UsersCertificate WHERE userID = ?");
+            PreparedStatement ps = db.prepareStatement("SELECT certificateID FROM UsersCertificate WHERE userID = ?");
             ps.setInt(1, userID);
             ResultSet rs = ps.executeQuery();
             List<Integer> totalCertificateID = new ArrayList<>();
@@ -153,7 +156,7 @@ public class ToolBookingServlet extends HttpServlet {
         boolean taken = false;
         try {
             Connection db = DBUtils.getNoErrorConnection();
-            PreparedStatement st = db.prepareStatement("SELECT * FROM Booking WHERE toolID = ?");
+            PreparedStatement st = db.prepareStatement("SELECT startDate, endDate FROM Booking WHERE toolID = ?");
             st.setInt(1, toolID);
             ResultSet rs = st.executeQuery();
 

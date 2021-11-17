@@ -52,7 +52,7 @@ public class Login extends HttpServlet {
             Connection con = DriverManager.getConnection(
                     "jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
             PreparedStatement ps = con.prepareStatement(
-                    "select * from AMVUser where email=? and passwordHash=?");
+                    "select userID from AMVUser where email=? and passwordHash=?");
             ps.setString(1, email);
             ps.setString(2, pw);
             ResultSet rs1 = ps.executeQuery();
