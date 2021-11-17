@@ -17,11 +17,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/*
-by Joachim
-
-prints all the tools
-*/
 @WebServlet(name = "lt", value = "/lt")
 public class ListTools extends HttpServlet {
     @Override
