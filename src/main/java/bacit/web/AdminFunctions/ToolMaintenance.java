@@ -57,6 +57,8 @@ public class ToolMaintenance extends HttpServlet {
             String successfulLine = "Tool was successfully put out in maintenance";
             request.setAttribute("successfulLine", successfulLine);
             request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
+
+            st1.close();
         }
 
         if (toolMaintenance.equals("ToolInMaintenanceOut")) {
@@ -68,8 +70,11 @@ public class ToolMaintenance extends HttpServlet {
             String successfulLine = "Tool was successfully put out of maintenance";
             request.setAttribute("successfulLine", successfulLine);
             request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
+
+            st2.close();
         }
-        db.close();
+            db.close();
+
 
         } catch (Exception e) {
             e.printStackTrace();

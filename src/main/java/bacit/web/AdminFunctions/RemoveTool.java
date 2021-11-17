@@ -77,6 +77,8 @@ public class RemoveTool extends HttpServlet {
                     rs.getString("toolName"),
                     "",false, 0,0,0,"", ""));
         }
+        rs.close();
+        statement.close();
         db.close();
         return tools;
     }
@@ -86,7 +88,13 @@ public class RemoveTool extends HttpServlet {
         PreparedStatement statement = db.prepareStatement("DELETE FROM Tool WHERE toolID = ? ");
         statement.setString(1, String.valueOf(id));
         int noOfAffectedRows = statement.executeUpdate();
+
+        statement.close();
+        db.close();
+
         return noOfAffectedRows != 0;
+
+
     }
 }
 

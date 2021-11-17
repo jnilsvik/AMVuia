@@ -68,6 +68,9 @@ public class RemoveUser extends HttpServlet {
         PreparedStatement statement = db.prepareStatement("DELETE FROM AMVUser WHERE email = ? ");
         statement.setString(1, String.valueOf(email));
         int noOfAffectedRows = statement.executeUpdate();
+
+        statement.close();
+        db.close();
         return noOfAffectedRows != 0;
     }
 
@@ -84,6 +87,8 @@ public class RemoveUser extends HttpServlet {
                     rs.getString("email")
             ));
         }
+        rs.close();
+        statements.close();
         db.close();
         return users;
     }

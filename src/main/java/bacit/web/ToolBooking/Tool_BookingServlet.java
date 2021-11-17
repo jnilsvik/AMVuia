@@ -67,6 +67,9 @@ public class Tool_BookingServlet extends HttpServlet {
             ResultSet rs1 = st1.executeQuery();
             rs1.next();
             userID = rs1.getInt("userID");
+
+            rs1.close();
+            st1.close();
             db.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,11 +92,15 @@ public class Tool_BookingServlet extends HttpServlet {
                 userCertificateID = rs.getInt("certificateID");
                 totalCertificateID.add(userCertificateID);
             }
-            db.close();
+
             //This checks if the user has the needed certificationID for the tool.
             if (totalCertificateID.contains(toolCertificateID)) {
                 hasTheCertificate = true;
             }
+
+            rs.close();
+            ps.close();
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,6 +118,8 @@ public class Tool_BookingServlet extends HttpServlet {
             statement2.setInt(4, userID);
             statement2.setInt(5, toolID);
             statement2.executeUpdate();
+
+            statement2.close();
             db.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,6 +143,8 @@ public class Tool_BookingServlet extends HttpServlet {
                     rs.getInt("certificateID")
                     ,"", "");
         }
+        rs.close();
+        statement.close();
         db.close();
         return tool;
     }
@@ -153,6 +164,9 @@ public class Tool_BookingServlet extends HttpServlet {
                     taken = true;
                 }
             }
+
+            rs.close();
+            st.close();
             db.close();
         } catch (Exception e) {
             e.printStackTrace();

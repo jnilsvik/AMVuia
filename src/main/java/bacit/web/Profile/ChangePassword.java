@@ -61,7 +61,15 @@ public class ChangePassword extends HttpServlet {
                 String successfulLine = "Password was successfully changed!";
                 request.setAttribute("successfulLine", successfulLine);
                 request.getRequestDispatcher("successfulLine.jsp").forward(request,response);
+
+                rs.close();
+                st2.close();
+                st1.close();
+                db.close();
+
             }
+
+
         } catch (Exception e) {
             out.println("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
         }

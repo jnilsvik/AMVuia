@@ -87,6 +87,9 @@ public class BookingModel {
             statement.setInt(1, toolID);
             ResultSet rs = statement.executeQuery();
             if(rs.next())result =  rs.getString("toolName");
+
+            rs.close();
+            statement.close();
             db.close();
         }catch (Exception e){
             e.printStackTrace();

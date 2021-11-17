@@ -82,6 +82,8 @@ public class GiveCertificate extends HttpServlet {
                    rs.getInt("certificateId"),
                    rs.getString("certificateName")));
         }
+        rs.close();
+        ps.close();
         db.close();
         return certificateNames;
     }
@@ -94,6 +96,9 @@ public class GiveCertificate extends HttpServlet {
         statement.setString(2, certificateID);
         statement.setObject(3, accomplishDate);
         statement.executeUpdate();
+
+        statement.close();
+        db.close();
     }
 
 
