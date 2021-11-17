@@ -29,6 +29,7 @@
             if(model != null) {
                 for (ToolModel tm : model){
                     out.print(
+                            "<FORM action='toolhistory' method='get'>" +
                             "<tr>" +
                             "<td>" + tm.getToolName() + "</td>" +
                             "<td>" + tm.getToolCategory() + "</td>" +
@@ -36,6 +37,7 @@
                             "<td>" + tm.getPriceAfter() + "</td>" +
                             "<td>" + tm.getMaintenance() + "</td>" +
                             "<td>" + tm.getCertificateID() + "</td>" +
+                            "<td> <button name='toolID' type='submit' value='"+tm.getToolID()+"'> View History </button> </td>" +
                             "</tr>");
                 }
             }
