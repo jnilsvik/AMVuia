@@ -1,4 +1,4 @@
-package bacit.web.z_JSP_cleared;
+package bacit.web.LogInOut;
 
 import bacit.web.utils.hashPassword;
 

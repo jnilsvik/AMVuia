@@ -1,13 +1,11 @@
-package bacit.web.z_JSP_cleared;
+package bacit.web.AdminFunctions;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "AdminPage", value = "/admin")
 public class AdminPage extends HttpServlet {

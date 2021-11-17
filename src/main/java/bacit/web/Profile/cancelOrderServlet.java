@@ -1,6 +1,5 @@
-package bacit.web;
+package bacit.web.Profile;
 
-import bacit.web.a_models.BookingModel;
 import bacit.web.utils.DBUtils;
 
 import javax.servlet.ServletException;

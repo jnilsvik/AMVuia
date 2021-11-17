@@ -1,8 +1,7 @@
-package bacit.web;
+package bacit.web.AdminFunctions;
 
-import bacit.web.a_models.Certificate;
+import bacit.web.Modules.Certificate;
 import bacit.web.utils.DBUtils;
-import bacit.web.z_JSP_cleared.AdminAccess;
 
 import java.io.PrintWriter;
 import java.sql.*;

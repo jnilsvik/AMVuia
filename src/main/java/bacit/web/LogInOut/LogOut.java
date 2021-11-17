@@ -1,4 +1,4 @@
-package bacit.web.z_JSP_cleared;
+package bacit.web.LogInOut;
 
 // by Dilan
 import java.io.PrintWriter;
@@ -11,8 +11,10 @@ import javax.servlet.annotation.*;
 public class LogOut extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession(false);
-        session.invalidate();
+        try {
+            HttpSession session = request.getSession(false);
+            session.invalidate();
+        }catch(NullPointerException e){}
         try {
             request.getRequestDispatcher("/login.jsp").forward(request,response);
         } catch (ServletException e) {

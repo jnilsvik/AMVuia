@@ -1,4 +1,4 @@
-package bacit.web.z_JSP_cleared;
+package bacit.web.ToolBooking;
 
 import bacit.web.utils.DBUtils;
 

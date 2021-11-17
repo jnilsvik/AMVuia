@@ -1,6 +1,6 @@
-package bacit.web.z_JSP_cleared;
+package bacit.web.AdminFunctions;
 
-import bacit.web.a_models.ToolModel;
+import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 
 import javax.servlet.ServletException;

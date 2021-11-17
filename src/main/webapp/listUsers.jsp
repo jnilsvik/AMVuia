@@ -1,6 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="bacit.web.a_models.ToolModel" %>
-<%@ page import="bacit.web.a_models.UserModel" %>
+<%@ page import="bacit.web.Modules.ToolModel" %>
+<%@ page import="bacit.web.Modules.UserModel" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
 <%--

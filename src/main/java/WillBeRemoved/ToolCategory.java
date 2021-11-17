@@ -1,4 +1,4 @@
-package bacit.web.z_JSP_cleared;
+package WillBeRemoved;
 
 import bacit.web.utils.DBUtils;
 

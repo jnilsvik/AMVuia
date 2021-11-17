@@ -1,5 +1,5 @@
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="bacit.web.a_models.ToolModel" %>
+<%@ page import="bacit.web.Modules.ToolModel" %>
 <%@ page import="java.util.List" %>
 <%@ page import="javax.tools.Tool" %><%--
   Created by IntelliJ IDEA.

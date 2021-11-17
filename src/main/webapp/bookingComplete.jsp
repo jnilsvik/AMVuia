@@ -1,4 +1,4 @@
-<%@ page import="bacit.web.a_models.BookingModel" %>
+<%@ page import="bacit.web.Modules.BookingModel" %>
 <%@ page import="java.time.format.DateTimeFormatter" %><%--
   Created by IntelliJ IDEA.
   User: Joachim
