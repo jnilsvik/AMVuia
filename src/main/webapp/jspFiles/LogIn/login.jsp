@@ -36,7 +36,7 @@
                         <button class='btn btn-primary' type='submit'>Login</button>
                     </div>
                     <div style='text-align:center'>
-                        <a href='register'>Don't have an account? Register here!</a>
+                        <p>You don't have an account? Just contact the administrator</p>
                     </div>
                 </form>
             </div>

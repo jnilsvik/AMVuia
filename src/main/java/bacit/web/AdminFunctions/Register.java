@@ -15,12 +15,18 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "Register", value = "/register")
 public class Register extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        try {
+        HttpSession session=request.getSession(false);
+        String email = (String) session.getAttribute("email");
+        if(email == null){
+            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+            return;
+        }
+        if(AdminAccess.accessRights(email)) {
             request.getRequestDispatcher("/jspFiles/AdminFunctions/register.jsp").forward(request,response);
-        } catch (ServletException e) {
-            e.printStackTrace();
+        }else {
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
         }
     }
 

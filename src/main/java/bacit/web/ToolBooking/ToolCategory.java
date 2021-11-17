@@ -27,7 +27,10 @@ public class ToolCategory extends HttpServlet {
             ResultSet rs3 = ps3.executeQuery();
             // TODO: 10.11.2021 should make this into model array b4 sendeing?
             request.setAttribute("toolByCAT", rs3);
+
             request.getRequestDispatcher("jspFiles/ToolBooking/-toolListByCAT.jsp").forward(request,response);
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();
