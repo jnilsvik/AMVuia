@@ -13,7 +13,7 @@
 <body>
 <jsp:include page="_head_nav.jsp"/>
 <!--content goes here-->
-<section class="main">
+<section>
     <h1>Hello ${email}</h1>
     <h1>Select any of the temp links</h1>
     <br>
