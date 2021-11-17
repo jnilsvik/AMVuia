@@ -53,7 +53,7 @@ public class Tool_BookingServlet extends HttpServlet {
                 request.getRequestDispatcher("/bookingComplete.jsp").forward(request,response);
             }
         } catch (Exception e) {
-            out.println(e.getMessage());
+            out.print(e.getMessage());
         }
     }
 

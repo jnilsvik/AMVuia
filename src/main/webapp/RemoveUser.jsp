@@ -29,7 +29,7 @@
         <%
             List<UserModel> users = (List<UserModel>) request.getAttribute("users");
             for(UserModel user : users){
-                out.println("<tr>" +
+                out.print("<tr>" +
                         "<td>" + user.getEmail() + "</td>" +
                         "</tr>");
             }

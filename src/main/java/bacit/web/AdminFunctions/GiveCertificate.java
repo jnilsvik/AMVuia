@@ -39,7 +39,7 @@ public class GiveCertificate extends HttpServlet {
             }
 
         } catch (Exception e) {
-            out.println(e);
+            out.print(e);
         }
     }
 

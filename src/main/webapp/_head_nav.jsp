@@ -24,7 +24,7 @@
                 <%
                     String email = (String) session.getAttribute("email");
                     if(AdminAccess.accessRights(email)){
-                        out.println("<li><a href=\"admin\" class=\"nav-link px-2 amv-txc-b\">ADMIN PAGE</a></li>");
+                        out.print("<li><a href=\"admin\" class=\"nav-link px-2 amv-txc-b\">ADMIN PAGE</a></li>");
                     }
                 %>
             </ul>
@@ -32,7 +32,7 @@
             <div class="text-end">
                 <%
                     if(email == null) out.print("<a href='login' class='btn amv-btn'>LOGIN</a>");
-                    else out.println("<a href='logout' class='btn amv-btn'>LOGOUT</a>");
+                    else out.print("<a href='logout' class='btn amv-btn'>LOGOUT</a>");
                 %>
             </div>
         </div>
