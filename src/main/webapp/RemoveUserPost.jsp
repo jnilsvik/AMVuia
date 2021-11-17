@@ -1,11 +1,5 @@
 <%@ page import="bacit.web.Modules.UserModel" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: Asus
-  Date: 14.11.2021
-  Time: 13:18
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
