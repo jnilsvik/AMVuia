@@ -1,4 +1,6 @@
 package bacit.web.AdminFunctions;
+import bacit.web.utils.DBUtils;
+
 import java.sql.*;
 
 // by Dilan
@@ -7,18 +9,18 @@ public class  AdminAccess {
     public static boolean accessRights(String email)   {
         boolean isAdmin = false;
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            Connection db = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase","root","12345");
-            PreparedStatement ps = db.prepareStatement("select userAdmin from AMVUser where email=?");
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
+            Connection db = DBUtils.getNoErrorConnection();
+            String insertUserCommand = "select userAdmin from AMVUser where email=?";
+            PreparedStatement statement = db.prepareStatement(insertUserCommand);
+            statement.setString(1, email);
+            ResultSet rs = statement.executeQuery();
 
             while (rs.next())
             {
                 isAdmin  = rs.getBoolean("userAdmin");
             }
             rs.close();
-            ps.close();
+            statement.close();
             db.close();
 
         }
