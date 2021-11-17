@@ -1,5 +1,6 @@
 package bacit.web.LogInOut;
 
+import bacit.web.utils.DBUtils;
 import bacit.web.utils.hashPassword;
 
 import javax.servlet.ServletException;
@@ -43,7 +44,7 @@ public class Login extends HttpServlet {
                 e.printStackTrace();
             }
         } else {
-            out.print("Invalid email or password");
+            DBUtils.ReDirFeedback(request,response,"Invalid email or password");
         }
     }
     public boolean Validation(String email, String pw){

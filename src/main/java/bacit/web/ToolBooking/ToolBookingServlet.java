@@ -56,7 +56,7 @@ public class ToolBookingServlet extends HttpServlet {
                 request.getRequestDispatcher("/jspFiles/ToolBooking/bookingComplete.jsp").forward(request,response);
             }
         } catch (Exception e) {
-            out.print(e.getMessage());
+            e.printStackTrace();
         }
     }
 

@@ -72,7 +72,7 @@ public class ChangePassword extends HttpServlet {
                 request.getRequestDispatcher("jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
             }
         } catch (Exception e) {
-            out.println("Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
+            DBUtils.ReDirFeedback(request,response,"Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
         }
 
     }

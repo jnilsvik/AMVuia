@@ -75,13 +75,7 @@ public class RegisterTool extends HttpServlet {
             statement.setString(7, request.getParameter("tooldesc"));
             statement.executeUpdate();
 
-            out.print("<html>");
-            out.print("<head>");
-            out.print("</head>");
-            out.print("<body>");
-            out.print("<h1> Tool successfully registered</h1>");
-            out.print("</body>");
-            out.print("</html>");
+            DBUtils.ReDirFeedback(request,response,"Tool successfully registered");
 
             statement.close();
             db.close();
