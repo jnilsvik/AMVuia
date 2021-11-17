@@ -31,6 +31,7 @@
 
             <div class="text-end">
                 <button type="button" formaction="login" class="btn amv-btn">LOGIN</button>
+                <button type="button" formaction="logout" class="btn amv-btn">LOGOUT</button>
             </div>
         </div>
     </div>
