@@ -3,7 +3,6 @@ package bacit.web.AdminFunctions;
 import bacit.web.Modules.Certificate;
 import bacit.web.utils.DBUtils;
 
-import java.io.PrintWriter;
 import java.sql.*;
 import java.io.*;
 import java.time.LocalDate;
@@ -19,8 +18,6 @@ public class GiveCertificate extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
         try {
             HttpSession session=request.getSession(false);
             String email = null;
@@ -42,7 +39,7 @@ public class GiveCertificate extends HttpServlet {
             }
 
         } catch (Exception e) {
-            out.print(e);
+            e.printStackTrace();
         }
     }
 
@@ -50,7 +47,6 @@ public class GiveCertificate extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
         if(session == null){
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");

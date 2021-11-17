@@ -16,7 +16,6 @@ public class ChangePassword extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
 
         try {
             HttpSession session=request.getSession(false);
@@ -31,7 +30,7 @@ public class ChangePassword extends HttpServlet {
 
             request.getRequestDispatcher("jspFiles/Profile/passwordChange.jsp").forward(request,response);
         } catch (Exception e) {
-            out.print("error");
+            e.printStackTrace();
         }
     }
 

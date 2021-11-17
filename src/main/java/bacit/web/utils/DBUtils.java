@@ -3,8 +3,11 @@ package bacit.web.utils;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -39,6 +42,15 @@ public class DBUtils {
             sqlException.printStackTrace();
         }
         return dbConnection;
+    }
+
+    public static void ReDirFeedback(HttpServletRequest request, HttpServletResponse response, String feedbackMsg){
+        try {
+            request.setAttribute("feedback",feedbackMsg);
+            request.getRequestDispatcher("feedback.jsp").forward(request,response);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

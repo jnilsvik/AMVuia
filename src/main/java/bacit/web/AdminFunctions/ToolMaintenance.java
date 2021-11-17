@@ -16,8 +16,6 @@ public class ToolMaintenance extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
         try {
             HttpSession session=request.getSession(false);
             String email = null;
@@ -32,14 +30,13 @@ public class ToolMaintenance extends HttpServlet {
             if (AdminAccess.accessRights(email)) {
                 request.getRequestDispatcher("jspFiles/AdminFunctions/toolMaintenance.jsp").forward(request,response);
             } else {
-                out.print("<h1> Sorry, you don't have access to this page");
+                DBUtils.ReDirFeedback(request,response,"You need to be an administrator to view this");
             }
         } catch (Exception e) {
-            out.print("error");
+            e.printStackTrace();
         }
     }
-
-
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
@@ -47,10 +44,10 @@ public class ToolMaintenance extends HttpServlet {
 
         String toolMaintenance = request.getParameter("toolmaintenance");
         String toolID = request.getParameter("toolID");
-        maintainTool(request, response, out, toolMaintenance, toolID);
+        maintainTool(request, response, toolMaintenance, toolID);
     }
 
-    public void maintainTool(HttpServletRequest request, HttpServletResponse response, PrintWriter out, String toolMaintenance, String toolID) {
+    public void maintainTool(HttpServletRequest request, HttpServletResponse response, String toolMaintenance, String toolID) {
 
         try {
         Connection db = DBUtils.getNoErrorConnection();

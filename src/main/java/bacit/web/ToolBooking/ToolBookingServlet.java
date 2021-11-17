@@ -47,9 +47,9 @@ public class ToolBookingServlet extends HttpServlet {
 
             //checkDate class sees if the wanted booked days are already taken. The hasCertificate method checks if the user has the needed certificate.
             if(dateBookedTaken(StartDateWanted, inputDays, toolID)){
-                out.print("<h1>Sorry, that tool is already taken.</h1>");
+                DBUtils.ReDirFeedback(request,response,"Sorry, the tools is already been booked for that date");
             }else if(!hasCertificate(userID, tool.getCertificateID())){
-                out.print("<h1>Sorry, you don't have the needed certificate.</h1>");
+                DBUtils.ReDirFeedback(request,response,"Sorry, you don't have the needed certificate for this tool.");
             }else{
                 registerBooking(StartDateWanted, endingDate, totalPrice, userID, toolID);
                 request.setAttribute("booking", new BookingModel(0, userID, toolID, totalPrice, StartDateWanted, StartDateWanted.plusDays(inputDays), null));

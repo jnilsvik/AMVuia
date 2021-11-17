@@ -12,8 +12,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 // by Dilan
-@WebServlet(name = "Register", value = "/register")
-public class Register extends HttpServlet {
+@WebServlet(name = "RegisterUser", value = "/register")
+public class RegisterUser extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");

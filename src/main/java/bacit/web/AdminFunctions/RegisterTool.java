@@ -13,8 +13,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 // by Dilan
-@WebServlet(name = "ToolRegister", value = "/toolregister")
-public class ToolRegister extends HttpServlet {
+@WebServlet(name = "RegisterTool", value = "/toolregister")
+public class RegisterTool extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
