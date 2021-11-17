@@ -60,9 +60,11 @@ public class ToolDetailServlet extends HttpServlet {
                     rs.getString("toolDescription"),
                     rs.getString("picturePath")
             );
-        }else {
+        }
+        else {
             return null;
         }
+
     }
 
     private List<LocalDate> getBookings(int toolID) throws SQLException {
@@ -80,6 +82,9 @@ public class ToolDetailServlet extends HttpServlet {
                 dateStart = dateStart.plusDays(1);
             }
         }
+
+        rs.close();
+        ps.close();
         db.close();
         return dates;
     }

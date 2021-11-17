@@ -15,17 +15,17 @@
 <!--content goes here-->
 <section class="main">
     <h1>Hello ${email}</h1>
-    <h1>Some stuff is missing here :)</h1>
+    <h1>Select any of the temp links</h1>
     <br>
-    <a href="login">Login </a>
+    <a href="fileDownload">Download a file</a>
     <br>
-    <a href="register">Register</a>
+    <a href="fileUpload">Upload a file</a>
     <br>
-    <a href="xtl">tool display 1</a>
+    <a href="xtl">List of Equipment</a>
     <br>
-    <a href="lt">tool list</a>
+    <a href="lt">List of Equipment (Admin Table)</a>
     <br>
-    <a href="lu">user list</a>
+    <a href="toolregister">Add equipment to list</a>
     <br>
 </section>
 </body>

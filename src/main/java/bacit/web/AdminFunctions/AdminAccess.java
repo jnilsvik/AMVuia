@@ -17,6 +17,8 @@ public class  AdminAccess {
             {
                 isAdmin  = rs.getBoolean("userAdmin");
             }
+            rs.close();
+            ps.close();
             db.close();
 
         }

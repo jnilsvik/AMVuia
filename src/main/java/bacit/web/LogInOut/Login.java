@@ -61,6 +61,10 @@ public class Login extends HttpServlet {
             ps.setString(2, pw);
             ResultSet rs1 = ps.executeQuery();
             if (rs1.next()) return true;
+
+            rs1.close();
+            ps.close();
+            con.close();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -82,6 +86,10 @@ public class Login extends HttpServlet {
             request.setAttribute("ulname", rs1.getString("lastName"));
             request.setAttribute("uemail", rs1.getString("phoneNumber"));
             //request.setAttribute("email", rs1.getString("email"));
+
+            rs1.close();
+            ps.close();
+            con.close();
         } catch (Exception e){
             e.printStackTrace();
         }

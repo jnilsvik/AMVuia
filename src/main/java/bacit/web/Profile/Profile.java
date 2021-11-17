@@ -70,6 +70,8 @@ public class Profile extends HttpServlet {
                     rs.getDate("endDate").toLocalDate(),
                     toolReturnDate));
         }
+        rs.close();
+        ps.close();
         db.close();
         return bookings;
     }
