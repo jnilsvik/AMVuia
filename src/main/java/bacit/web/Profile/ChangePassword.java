@@ -1,4 +1,4 @@
-package bacit.web;
+package bacit.web.Profile;
 
 import bacit.web.utils.hashPassword;
 import bacit.web.utils.DBUtils;

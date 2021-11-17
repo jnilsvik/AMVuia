@@ -1,4 +1,4 @@
-<%@ page import="bacit.web.z_JSP_cleared.AdminAccess" %>
+<%@ page import="bacit.web.AdminFunctions.AdminAccess" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>

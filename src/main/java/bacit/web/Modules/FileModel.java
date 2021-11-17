@@ -1,4 +1,4 @@
-package bacit.web.a_models;
+package bacit.web.Modules;
 
 public class FileModel {
 

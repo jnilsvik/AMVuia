@@ -1,24 +1,18 @@
-package bacit.web;
+package bacit.web.AdminFunctions;
 
-import bacit.web.*;
-import bacit.web.a_models.ToolModel;
-import bacit.web.a_models.UserModel;
+import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
-import bacit.web.utils.hashPassword;
-import bacit.web.z_JSP_cleared.AdminAccess;
 
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import javax.tools.Tool;
 
 
 //made by ? changed to JSP by Paul

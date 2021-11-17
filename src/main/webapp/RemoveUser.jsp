@@ -1,4 +1,4 @@
-<%@ page import="bacit.web.a_models.UserModel" %>
+<%@ page import="bacit.web.Modules.UserModel" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Asus
