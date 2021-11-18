@@ -61,7 +61,7 @@ public class GiveCertificate extends HttpServlet {
                 String certificateID = request.getParameter("certificateID");
                 addCertificate(userID, certificateID, accomplishDate);
 
-                String successfulLine = "Certificate was successfully given!";
+                String successfulLine = "<h3 style=\"text-align:center\">Certificate was given successfully!</h3>" + "<br><br><br>"  + "<a href=\"givecertificate\"> <span class=bigbutton> Go back  </span></a>";
                 request.setAttribute("successfulLine", successfulLine);
                 request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
             } catch (Exception e) {

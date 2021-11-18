@@ -60,7 +60,7 @@ public class ToolReturnal extends HttpServlet {
         String orderID = request.getParameter("orderID");
         setReturned(orderID, returnDate);
 
-        String successfulLine = "Order was successfully marked as returned";
+        String successfulLine = "<h3 style=\"text-align:center\">Tool was succesfully returned!</h3>" + "<br><br><br>"  + "<a href=\"toolreturnal\"> <span class=bigbutton> Go back  </span></a>";
         request.setAttribute("successfulLine", successfulLine);
         request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
 

@@ -58,7 +58,7 @@ public class Payment extends HttpServlet {
             String orderID = request.getParameter("orderID");
             setPaid(orderID);
 
-            String successfulLine = "Order was successfully marked as paid";
+            String successfulLine = "<h3 style=\"text-align:center\">Order was successfully marked as paid</h3>" + "<br><br><br>"  + "<a href=\"payment\"> <span class=bigbutton> Go back  </span></a>";
             request.setAttribute("successfulLine", successfulLine);
             request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
 
