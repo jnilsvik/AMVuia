@@ -1,4 +1,4 @@
-package bacit.web.UpAndDownLoadFile;
+package bacit.web.utils;
 
 
 import bacit.web.Modules.FileModel;
@@ -12,33 +12,33 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class FileDAO {
-
-    public void persistFile(FileModel file, PrintWriter out) throws Exception{
+    public void persistFile(FileModel file) throws Exception{
         Connection db = DBUtils.getNoErrorConnection();
-        String query3 = "insert into files (Name, Content, ContentType) values(?,?,?)";
+        String query = "insert into files (Name, Content, ContentType, toolID) values(?,?,?,?)";
 
-        PreparedStatement statement = db.prepareStatement(query3);
+        PreparedStatement statement = db.prepareStatement(query);
         statement.setString(1, file.getName());
-        statement.setBlob(2,  new SerialBlob(file.getContents()));
+        statement.setBlob(2,  new SerialBlob(file.getContent()));
         statement.setString(3, file.getContentType());
+        statement.setInt(4, file.getToolID());
         statement.executeUpdate();
         db.close();
     }
 
-    public FileModel getFile(int id) throws Exception
+    public FileModel getFile(int toolID) throws Exception
     {
-        Class.forName("org.mariadb.jdbc.Driver");
-        Connection db = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-        String query3 = "select Name, Content, ContentType from Files where id = ?";
+        Connection db = DBUtils.getNoErrorConnection();
+        String query3 = "select Name, Content, ContentType,toolID from Files where id = ?";
         PreparedStatement statement = db.prepareStatement(query3);
-        statement.setInt(1, id);
+        statement.setInt(1, toolID);
         ResultSet rs =  statement.executeQuery();
         FileModel model = null;
         if (rs.next()) {
             model = new FileModel(
                     rs.getString("Name"),
                     rs.getBytes("Content"),
-                    rs.getString("ContentType")
+                    rs.getString("ContentType"),
+                    rs.getInt("toolID")
             );
         }
         db.close();

@@ -1,23 +1,27 @@
 package bacit.web.AdminFunctions;
 
+import bacit.web.Modules.Certificate;
+import bacit.web.Modules.FileModel;
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.FileDAO;
 
-import java.sql.Connection;
+import java.nio.file.Paths;
+import java.sql.*;
 import java.io.*;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.LinkedList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-// by Dilan
+// by Dilan changed by paul
 @WebServlet(name = "RegisterTool", value = "/toolregister")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 5, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5)
 public class RegisterTool extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
 
         try {
             HttpSession session=request.getSession(false);
@@ -29,24 +33,15 @@ public class RegisterTool extends HttpServlet {
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
             }
+
             if (AdminAccess.accessRights(email)) {
-                Class.forName("org.mariadb.jdbc.Driver");
-                Connection db = DriverManager.getConnection("jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-                PreparedStatement ps1 = db.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
-                ResultSet rs1 = ps1.executeQuery();
-
-                PreparedStatement ps2 = db.prepareStatement("SELECT * FROM ToolCertificate");
-                ResultSet rs2 = ps2.executeQuery();
-
-                request.setAttribute("regTool1",rs1);
-                request.setAttribute("regTool2",rs2);
-                request.getRequestDispatcher("registerTool").forward(request,response);
-
-                ps1.close();
-                ps2.close();
-                rs1.close();
-                rs2.close();
-                db.close();
+                List<String> categories = getCategories();
+                List<Certificate> certificates = getCertificates();
+                request.setAttribute("categories", categories);
+                request.setAttribute("certificates", certificates);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/registerTool.jsp").forward(request,response);
+            }else {
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
             }
 
         } catch (Exception e) {
@@ -54,37 +49,99 @@ public class RegisterTool extends HttpServlet {
         }
     }
 
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+        try{
+            int toolID = addTool(
+                    request.getParameter("toolname"),
+                    Integer.parseInt(request.getParameter("pricefirst")),
+                    Integer.parseInt(request.getParameter("priceafter")),
+                    request.getParameter("toolCategory"),
+                    Integer.parseInt(request.getParameter("toolcertificate")),
+                    request.getParameter("tooldesc")
+            );
 
-        try {
+            try {
+                addFile(request.getPart("file"), toolID);
+            } catch (Exception e){}
 
-            Connection db = DBUtils.getNoErrorConnection();
-            PreparedStatement statement = db.prepareStatement(
-                    "insert into Tool (toolName, maintenance, priceFirst, priceAfter, toolCategory, certificateID, toolDescription) values(?, ?, ?, ?, ?, ?, ?)");
-            statement.setString(1, request.getParameter("toolname"));
-            statement.setBoolean(2, false);
-            statement.setInt(3, Integer.parseInt(request.getParameter("pricefirst")));
-            statement.setInt(4, Integer.parseInt(request.getParameter("priceafter")));
-            statement.setString(5, request.getParameter("toolCategory"));
-            statement.setString(6, request.getParameter("toolcertificate"));
-            statement.setString(7, request.getParameter("tooldesc"));
-            statement.executeUpdate();
-
-            DBUtils.ReDirFeedback(request,response,"Tool successfully registered");
-
-            statement.close();
-            db.close();
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+            String successfulLine = "<h1>The tool has been registered successfully</h1>";
+            request.setAttribute("successfulLine", successfulLine);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
+        }catch (Exception e){
+            out.println(e.getMessage());
         }
     }
 
+    private List<String> getCategories() throws SQLException {
+        Connection db = DBUtils.getNoErrorConnection();
+        PreparedStatement statement = db.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
+        ResultSet rs = statement.executeQuery();
+        LinkedList<String> categories = new LinkedList<>();
+        while(rs.next()){
+            categories.add(rs.getString("toolCategory"));
+        }
+        rs.close();
+        statement.close();
+        db.close();
+        return categories;
+    }
+
+    private List<Certificate> getCertificates() throws SQLException{
+        Connection db = DBUtils.getNoErrorConnection();
+        PreparedStatement statement = db.prepareStatement("SELECT certificateID, certificateName FROM ToolCertificate;");
+        ResultSet rs = statement.executeQuery();
+        LinkedList<Certificate> certificates = new LinkedList<>();
+        while(rs.next()){
+            certificates.add(new Certificate(
+                    rs.getInt("certificateID"),
+                    rs.getString("certificateName")
+                    ));
+        }
+        rs.close();
+        statement.close();
+        db.close();
+        return certificates;
+    }
+
+    private int addTool(String toolName,int priceFirst, int priceAfter, String toolCategory, int certificateID, String toolDescription) throws SQLException{
+        int result = 0;
+        Connection db = DBUtils.getNoErrorConnection();
+        PreparedStatement statement = db.prepareStatement(
+                "insert into Tool (toolName, maintenance, priceFirst, priceAfter, toolCategory, certificateID, toolDescription) values(?, ?, ?, ?, ?, ?, ?)");
+        statement.setString(1, toolName);
+        statement.setBoolean(2, false);
+        statement.setInt(3, priceFirst);
+        statement.setInt(4, priceAfter);
+        statement.setString(5, toolCategory);
+        statement.setInt(6, certificateID);
+        statement.setString(7, toolDescription);
+        statement.executeUpdate();
+        statement.close();
+        PreparedStatement statement1 = db.prepareStatement("SELECT toolID FROM Tool WHERE toolId = LAST_INSERT_ID();");
+        ResultSet rs = statement1.executeQuery();
+        if(rs.next()) result = rs.getInt("toolID");
+        rs.close();
+        statement1.close();
+        db.close();
+        return result;
+    }
+
+    private void addFile(Part filePart, int toolID) throws Exception {
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        InputStream fileContent = filePart.getInputStream();
+        byte[] fileBytes = fileContent.readAllBytes();
+
+        FileModel fileModel = new FileModel(
+                fileName,
+                fileBytes,
+                filePart.getContentType(),toolID);
+
+        FileDAO dao = new FileDAO();
+        dao.persistFile(fileModel);
+    }
 }
 
 

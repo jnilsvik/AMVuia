@@ -56,9 +56,10 @@ public class RemoveUser extends HttpServlet {
                 boolean success = deleteUser(request.getParameter("input"));
                 List<UserModel> users = getUsers();
 
+                request.setAttribute("user", true);
                 request.setAttribute("success", success);
                 request.setAttribute("users", users);
-                request.getRequestDispatcher("/jspFiles/AdminFunctions/removeUserPost.jsp").forward(request, response);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/removeMessage.jsp").forward(request, response);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

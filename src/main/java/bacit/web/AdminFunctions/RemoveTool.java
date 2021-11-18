@@ -57,15 +57,16 @@ public class RemoveTool extends HttpServlet {
                 Boolean success = deleteRow(id);
                 List<ToolModel> tools = getTools();
 
+                request.setAttribute("user", false);
                 request.setAttribute("success", success);
                 request.setAttribute("tools", tools);
-                request.getRequestDispatcher("/RemoveToolPost.jsp").forward(request,response);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/removeMessage.jsp").forward(request,response);
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }else {
-            request.getRequestDispatcher("/jpsFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
         }
     }
 

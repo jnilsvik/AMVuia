@@ -1,6 +1,8 @@
 package bacit.web.UpAndDownLoadFile;
 
+import bacit.web.AdminFunctions.ToolPicture;
 import bacit.web.Modules.FileModel;
+import bacit.web.utils.FileDAO;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +16,7 @@ import java.util.logging.Logger;
 public class DownloadServlet extends HttpServlet {
 
     @SuppressWarnings("CanBeFinal")
-    Logger logger = Logger.getLogger(String.valueOf(UpLoadServlet.class));
+    Logger logger = Logger.getLogger(String.valueOf(ToolPicture.class));
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         int id = 1;
@@ -38,6 +40,6 @@ public class DownloadServlet extends HttpServlet {
         response.setContentType(model.getContentType());
         response.setHeader("Content-Disposition", "attachment; filename="+model.getName());
         OutputStream outStream = response.getOutputStream();
-        outStream.write(model.getContents());
+        outStream.write(model.getContent());
     }
 }

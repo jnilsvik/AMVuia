@@ -39,7 +39,6 @@ public class ToolMaintenance extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
 
         String toolMaintenance = request.getParameter("toolmaintenance");
         String toolID = request.getParameter("toolID");

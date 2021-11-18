@@ -19,10 +19,10 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 @WebServlet(name = "ToolBookingServlet", value = "/toolbooking")
 public class ToolBookingServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         try {
             HttpSession session=request.getSession(false);
             String email = null;

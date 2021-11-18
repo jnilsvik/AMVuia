@@ -27,7 +27,7 @@
     <br>
     <a href="toolregister">Add equipment to list</a>
     <br>
-<jsp:include page="header.jsp"/>
+<jsp:include page="footer.jsp"/>
 </section>
 </body>
 </html>

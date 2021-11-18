@@ -1,7 +1,8 @@
-package bacit.web.UpAndDownLoadFile;
+package bacit.web.AdminFunctions;
 
 
 import bacit.web.Modules.FileModel;
+import bacit.web.utils.FileDAO;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -14,9 +15,10 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 
-@WebServlet(name = "fileUpload", value = "/fileUpload")
+//by Paul
+@WebServlet(name = "fileUpload", value = "/toolPicture")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 5, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5)
-public class UpLoadServlet extends HttpServlet {
+public class ToolPicture extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -40,12 +42,13 @@ public class UpLoadServlet extends HttpServlet {
             FileModel fileModel = new FileModel(
                     fileName,
                     fileBytes,
-                    filePart.getContentType());
+                    filePart.getContentType(),2);
 
             FileDAO dao = new FileDAO();
-            dao.persistFile(fileModel, out);
+            dao.persistFile(fileModel);
 
-            out.print("Received file with name: "+fileModel.getName()+ "with the length of: "+fileModel.getContents().length+" bytes");
+            String test = request.getParameter("test");
+            out.print("Received file with name: "+fileModel.getName()+ "with the length of: "+fileModel.getContent().length+" bytes"+test);
         }
         catch(Exception ex)
         {
@@ -62,9 +65,11 @@ public class UpLoadServlet extends HttpServlet {
         {
             out.print("<h3>"+errorMessage+"</h3>");
         }
-        out.print("<form action='fileUpload' method='POST' enctype='multipart/form-data'>");
+        out.print("<form action='toolPicture' method='POST' enctype='multipart/form-data'>");
         out.print("<label for='file'>Upload a file</label> ");
         out.print("<input type='file' name='file'/>");
+        out.print("<label for='test'>test</label>");
+        out.print("<input type='text' name='test'/>");
         out.print("<input type='submit' value='Upload file'/>");
         out.print("</form>");
     }

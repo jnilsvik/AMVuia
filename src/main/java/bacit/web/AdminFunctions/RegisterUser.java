@@ -26,7 +26,7 @@ public class RegisterUser extends HttpServlet {
             return;
         }
         if(AdminAccess.accessRights(email)) {
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/register.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/registerUser.jsp").forward(request,response);
         }else {
             request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
         }

@@ -2,14 +2,6 @@ drop schema AMVDatabase;
 create database if not exists AMVDatabase;
 use AMVDatabase;
 
-create table files(
-    id int not null auto_increment unique,
-    name varchar(255),
-    content mediumblob,
-    contentType varchar(255),
-    PRIMARY KEY (id)
-);
-
 CREATE OR REPLACE TABLE ToolCertificate(
     certificateID int NOT NULL auto_increment unique,
     certificateName VARCHAR(50) NOT NULL,
@@ -30,6 +22,16 @@ CREATE OR REPLACE TABLE Tool (
     FOREIGN KEY (certificateID) REFERENCES ToolCertificate(certificateID),
     CHECK(toolCategory in
           ('Various_Tools', 'Nailguns', 'Woodcutting', 'Car_Trailers', 'Large_Equipment'))
+);
+
+CREATE OR REPLACE TABLE files(
+    id int not null auto_increment unique,
+    name varchar(255) not null,
+    content mediumblob not null,
+    contentType varchar(255),
+    toolID int,
+    PRIMARY KEY (id),
+    FOREIGN KEY (toolID) REFERENCES Tool(toolID)
 );
 
 CREATE OR REPLACE TABLE AMVUser (
