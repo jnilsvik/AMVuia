@@ -40,6 +40,7 @@
     <option value='1'> 1 Day</option>
     <option value='2'> 2 Days</option>
     <option value='3'> 3 Days</option>
+    <option value='4'> 4 Days</option>
     </select><br><br>
 
     <input type = 'hidden' value = '" + email + "' name = 'email' readonly>

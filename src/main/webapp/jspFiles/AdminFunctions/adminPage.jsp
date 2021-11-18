@@ -16,6 +16,8 @@
  <br>
  <a href="payment"> <span class=bigbutton> Payment Report </span></a>
  <br>
+ <a href="toolreturnal"> <span class=bigbutton> Return tool </span></a>
+ <br>
  <a href="givecertificate"> <span class=bigbutton> Give Certificate </span></a>
  <br>
  <a href="removetool"> <span class=bigbutton> Remove Tool </span></a>

@@ -34,7 +34,7 @@ public class ToolBookingServlet extends HttpServlet {
                 return;
             }
             int toolID = Integer.parseInt(request.getParameter("tools"));
-            int inputDays = Integer.parseInt(request.getParameter("days"));
+            int inputDays = Integer.parseInt(request.getParameter("days")) - 1;
             int userID = getUserID(email);
             LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
             LocalDate endingDate = StartDateWanted.plusDays(inputDays);
@@ -42,7 +42,7 @@ public class ToolBookingServlet extends HttpServlet {
             ToolModel tool = getTool(toolID);
 
             //getTotalPrice class calculates the total price.
-            int totalPrice =  tool.getPriceFirst() + tool.getPriceAfter() * (inputDays-1);
+            int totalPrice =  tool.getPriceFirst() + tool.getPriceAfter() * (inputDays);
 
             //checkDate class sees if the wanted booked days are already taken. The hasCertificate method checks if the user has the needed certificate.
             if(dateBookedTaken(StartDateWanted, inputDays, toolID)){

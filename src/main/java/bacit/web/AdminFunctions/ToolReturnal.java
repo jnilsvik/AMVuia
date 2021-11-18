@@ -4,13 +4,14 @@ import bacit.web.utils.DBUtils;
 
 import java.io.*;
 import java.sql.*;
+import java.time.LocalDate;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 // by Dilan
-@WebServlet(name = "Payment", value = "/payment")
-public class Payment extends HttpServlet {
+@WebServlet(name = "ToolReturnal", value = "/toolreturnal")
+public class ToolReturnal extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
@@ -30,13 +31,13 @@ public class Payment extends HttpServlet {
             if (AdminAccess.accessRights(email)) {
 
                 Connection db = DBUtils.getNoErrorConnection();
-                String insertUserCommand = "SELECT AMVUser.userID, AMVUser.firstName, AMVUser.lastName, AMVUser.email, AMVUser.phoneNumber, Booking.orderID, Booking.startDate, Booking.endDate, Booking.returnDate, Booking.toolID, Booking.totalPrice FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE paid = false AND returnDate IS NOT NULL";
+                String insertUserCommand = "SELECT AMVUser.userID, AMVUser.firstName, AMVUser.lastName, AMVUser.email, AMVUser.phoneNumber, Booking.orderID, Booking.startDate, Booking.endDate, Booking.returnDate, Booking.toolID, Booking.totalPrice FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE returnDate IS NULL";
                 PreparedStatement st1 = db.prepareStatement(insertUserCommand);
                 st1.executeUpdate();
                 ResultSet rs1 = st1.executeQuery();
 
-                request.setAttribute("unpaid", rs1);
-                request.getRequestDispatcher("/jspFiles/AdminFunctions/payment.jsp").forward(request,response);
+                request.setAttribute("notReturned", rs1);
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/toolReturnal.jsp").forward(request,response);
 
                 rs1.close();
                 st1.close();
@@ -55,23 +56,24 @@ public class Payment extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html");
 
-            String orderID = request.getParameter("orderID");
-            setPaid(orderID);
+        LocalDate returnDate = LocalDate.parse(request.getParameter("returndate"));
+        String orderID = request.getParameter("orderID");
+        setReturned(orderID, returnDate);
 
-            String successfulLine = "<h3 style=\"text-align:center\">Order was successfully marked as paid</h3>" + "<br><br><br>"  + "<a href=\"payment\"> <span class=bigbutton> Go back  </span></a>";
-            request.setAttribute("successfulLine", successfulLine);
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
+        String successfulLine = "<h3 style=\"text-align:center\">Tool was succesfully returned!</h3>" + "<br><br><br>"  + "<a href=\"toolreturnal\"> <span class=bigbutton> Go back  </span></a>";
+        request.setAttribute("successfulLine", successfulLine);
+        request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
 
     }
 
-    public void setPaid(String orderID) {
+    public void setReturned(String orderID, LocalDate returnDate) {
         try {
-
-        Connection db = DBUtils.getNoErrorConnection();
-        String insertUserCommand = "UPDATE Booking SET paid = true WHERE orderID = ?";
-        PreparedStatement statement = db.prepareStatement(insertUserCommand);
-        statement.setString(1, orderID);
-        statement.executeUpdate();
+            Connection db = DBUtils.getNoErrorConnection();
+            String insertUserCommand = "UPDATE Booking SET returnDate = ? WHERE orderID = ?";
+            PreparedStatement statement = db.prepareStatement(insertUserCommand);
+            statement.setObject(1, returnDate);
+            statement.setString(2, orderID);
+            statement.executeUpdate();
 
             statement.close();
             db.close();

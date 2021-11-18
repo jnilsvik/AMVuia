@@ -56,9 +56,9 @@ public class ToolMaintenance extends HttpServlet {
             st1.setString(1, toolID);
             st1.executeUpdate();
 
-            String successfulLine = "Tool was successfully put out in maintenance";
+            String successfulLine = "<h3 style=\"text-align:center\">Tool was successfully put in maintenance!</h3>" + "<br><br><br>"  + "<a href=\"toolmaintenance\"> <span class=bigbutton> Go back  </span></a>";
             request.setAttribute("successfulLine", successfulLine);
-            request.getRequestDispatcher("jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
         }
 
         if (toolMaintenance.equals("ToolInMaintenanceOut")) {
@@ -67,9 +67,9 @@ public class ToolMaintenance extends HttpServlet {
             st2.setString(1, toolID);
             st2.executeUpdate();
 
-            String successfulLine = "Tool was successfully put out of maintenance";
+            String successfulLine = "<h3 style=\"text-align:center\">Tool was successfully put out of maintenance!</h3>" + "<br><br><br>"  + "<a href=\"toolmaintenance\"> <span class=bigbutton> Go back  </span></a>";
             request.setAttribute("successfulLine", successfulLine);
-            request.getRequestDispatcher("jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
         }
         db.close();
 
