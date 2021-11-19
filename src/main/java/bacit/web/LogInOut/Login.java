@@ -49,11 +49,10 @@ public class Login extends HttpServlet {
     }
     public boolean Validation(String email, String pw){
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-            PreparedStatement ps = con.prepareStatement(
-                    "select userID from AMVUser where email=? and passwordHash=?");
+            Connection db = DBUtils.getNoErrorConnection();
+            String insertUserCommand = "select userID from AMVUser where email=? and passwordHash=?";
+            PreparedStatement ps = db.prepareStatement(insertUserCommand);
+
             ps.setString(1, email);
             ps.setString(2, pw);
             ResultSet rs1 = ps.executeQuery();
@@ -61,7 +60,7 @@ public class Login extends HttpServlet {
 
             rs1.close();
             ps.close();
-            con.close();
+            db.close();
         } catch (Exception e){
             e.printStackTrace();
         }
