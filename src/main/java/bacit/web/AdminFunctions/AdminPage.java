@@ -12,17 +12,8 @@ public class AdminPage extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        HttpSession session=request.getSession(false);
-        String email = null;
-        if(session != null){
-            email = (String) session.getAttribute("email");
-        }
-        if(email == null){
-            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-            return;
-        }
 
-        if(AdminAccess.accessRights(email)) {
+        if(SessionCheck.isAdmin(SessionCheck.checkEmail(request,response))){
             try {
                 request.getRequestDispatcher("/jspFiles/AdminFunctions/adminPage.jsp").forward(request, response);
             } catch (ServletException e) {

@@ -5,7 +5,6 @@ import bacit.web.utils.DBUtils;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -26,7 +25,7 @@ public class ToolMaintenance extends HttpServlet {
                 return;
             }
 
-            if (AdminAccess.accessRights(email)) {
+            if (SessionCheck.isAdmin(email)) {
                 request.getRequestDispatcher("jspFiles/AdminFunctions/toolMaintenance.jsp").forward(request,response);
             } else {
                 DBUtils.ReDirFeedback(request,response,"You need to be an administrator to view this");

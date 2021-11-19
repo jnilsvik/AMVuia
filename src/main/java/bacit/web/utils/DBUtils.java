@@ -24,7 +24,6 @@ public class DBUtils {
             Context initCtx = new InitialContext();
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
             DataSource ds = (DataSource)envCtx.lookup("jdbc/database");
-
             return ds.getConnection();
         }
         catch(NamingException ex)

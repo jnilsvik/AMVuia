@@ -19,18 +19,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "RemoveTool", value = "/removetool")
 public class RemoveTool extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("text/html");
-        HttpSession session=request.getSession(false);
-        String email = null;
-        if(session != null){
-            email = (String) session.getAttribute("email");
-        }
-        if(email == null){
-            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-            return;
-        }
-
-        if (AdminAccess.accessRights(email)){
+        if(SessionCheck.isAdmin(SessionCheck.checkEmail(request,response))){
             try {
                 List<ToolModel> tools = getTools();
                 request.setAttribute("tools", tools);
@@ -51,7 +40,7 @@ public class RemoveTool extends HttpServlet {
             return;
         }
         String email = (String) session.getAttribute("email");
-        if(AdminAccess.accessRights(email)){
+        if(SessionCheck.isAdmin(email)){
             try {
                 String id = request.getParameter("input");
                 Boolean success = deleteRow(id);

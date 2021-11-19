@@ -33,7 +33,7 @@ public class ToolHistory extends HttpServlet {
                 response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
                 return;
             }
-            if(AdminAccess.accessRights(email)) {
+            if(SessionCheck.isAdmin(email)) {
                 int toolID = Integer.parseInt(request.getParameter("toolID"));
                 Connection dbConnection = DBUtils.getNoErrorConnection();
                 String history = "select * from Booking WHERE toolID = ? order by orderID desc";

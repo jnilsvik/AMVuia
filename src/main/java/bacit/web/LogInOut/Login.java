@@ -30,8 +30,6 @@ public class Login extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
         String email = request.getParameter("email");
         String password = hashPassword.encryptThisString(request.getParameter("pass"));
         if(Validation(email,password)){
