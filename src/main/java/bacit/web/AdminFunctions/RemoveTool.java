@@ -19,54 +19,31 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "RemoveTool", value = "/removetool")
 public class RemoveTool extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("text/html");
-        HttpSession session=request.getSession(false);
-        String email = null;
-        if(session != null){
-            email = (String) session.getAttribute("email");
-        }
-        if(email == null){
-            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-            return;
-        }
-
-        if (AdminAccess.accessRights(email)){
+        boolean valid = checkSession(request, response);
+        if (valid){
             try {
                 List<ToolModel> tools = getTools();
-                request.setAttribute("tools", tools);
-                request.getRequestDispatcher("/jspFiles/AdminFunctions/removeTool.jsp").forward(request, response);
+                writeGetToJSP(tools, request, response);
             } catch (SQLException | ServletException e) {
                 e.printStackTrace();
             }
-        }else {
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        HttpSession session = request.getSession(false);
-        if(session == null){
-            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-            return;
-        }
-        String email = (String) session.getAttribute("email");
-        if(AdminAccess.accessRights(email)){
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        boolean valid = checkSession(request, response);
+        if(valid){
             try {
-                String id = request.getParameter("input");
-                Boolean success = deleteRow(id);
+                int id = getID(request);
+                boolean success = deleteRow(id);
                 List<ToolModel> tools = getTools();
 
-                request.setAttribute("user", false);
-                request.setAttribute("success", success);
-                request.setAttribute("tools", tools);
-                request.getRequestDispatcher("/jspFiles/AdminFunctions/removeMessage.jsp").forward(request,response);
+                writePostToJSP(tools, success, request, response);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                PrintWriter out = response.getWriter();
+                out.println(e);
             }
-        }else {
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
         }
     }
 
@@ -88,7 +65,7 @@ public class RemoveTool extends HttpServlet {
         return tools;
     }
 
-    private boolean deleteRow(String id) throws SQLException {
+    protected boolean deleteRow(int id) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement statement = db.prepareStatement("DELETE FROM Tool WHERE toolID = ? ");
         statement.setString(1, String.valueOf(id));
@@ -100,6 +77,45 @@ public class RemoveTool extends HttpServlet {
         return noOfAffectedRows != 0;
 
 
+    }
+
+    protected int getID(HttpServletRequest request){
+        try{
+            return Integer.parseInt(request.getParameter("input"));
+        } catch (NullPointerException e){
+            return -1;
+        }
+
+    }
+
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        response.setContentType("text/html");
+        HttpSession session=request.getSession(false);
+        String email = null;
+        if(session != null){
+            email = (String) session.getAttribute("email");
+        }
+        if(email == null){
+            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+            return false;
+        }
+        if (!AdminAccess.accessRights(email)){
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
+            return false;
+        }
+        return true;
+    }
+
+    protected void writeGetToJSP(List<ToolModel> tools, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("tools", tools);
+        request.getRequestDispatcher("/jspFiles/AdminFunctions/removeTool.jsp").forward(request, response);
+    }
+
+    protected void writePostToJSP(List<ToolModel> tools, boolean success, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("user", false);
+        request.setAttribute("success", success);
+        request.setAttribute("tools", tools);
+        request.getRequestDispatcher("/jspFiles/AdminFunctions/removeMessage.jsp").forward(request,response);
     }
 }
 

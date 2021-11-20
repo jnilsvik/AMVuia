@@ -137,7 +137,8 @@ public class RegisterTool extends HttpServlet {
         FileModel fileModel = new FileModel(
                 fileName,
                 fileBytes,
-                filePart.getContentType(),toolID);
+                filePart.getContentType(),
+                toolID);
 
         FileDAO dao = new FileDAO();
         dao.persistFile(fileModel);
