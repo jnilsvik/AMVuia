@@ -70,7 +70,7 @@ public class RemoveTool extends HttpServlet {
         }
     }
 
-    private List<ToolModel> getTools() throws SQLException {
+    protected List<ToolModel> getTools() throws SQLException {
         List<ToolModel> tools = new LinkedList();
         Connection db = DBUtils.getNoErrorConnection();
         String query = "SELECT toolID, toolName FROM Tool;";
