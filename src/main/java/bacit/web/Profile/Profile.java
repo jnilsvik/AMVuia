@@ -18,34 +18,16 @@ import javax.servlet.annotation.*;
 public class Profile extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
-            }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-            List<BookingModel> bookings = getBookings(email, out);
-
-            request.setAttribute("bookings", bookings);
-            request.getRequestDispatcher("/jspFiles/Profile/profile.jsp").forward(request,response);
+            String email = getEmailFromSession(request, response);
+            List<BookingModel> bookings = getBookings(email);
+            printGetToJSP(bookings, request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html");
-    }
-
-    private List<BookingModel> getBookings(String email, PrintWriter out) throws SQLException {
+    protected List<BookingModel> getBookings(String email) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement ps = db.prepareStatement("SELECT orderID, AMVUser.userID, Tool.toolID, startDate, endDate, returnDate FROM ((AMVUser INNER JOIN BOOKING ON AMVUser.userID = Booking.userID) INNER JOIN Tool on Booking.toolID = Tool.toolID) WHERE email = ?;");
         ps.setString(1, email);
@@ -74,6 +56,25 @@ public class Profile extends HttpServlet {
         ps.close();
         db.close();
         return bookings;
+    }
+
+    protected String getEmailFromSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        HttpSession session=request.getSession(false);
+        String email = null;
+        if(session != null){
+            email = (String) session.getAttribute("email");
+        }
+        if(email == null){
+            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
+            return null;
+        }
+        return email;
+    }
+
+    protected void printGetToJSP(List<BookingModel> bookings, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("bookings", bookings);
+        request.getRequestDispatcher("/jspFiles/Profile/profile.jsp").forward(request,response);
     }
 }
 
