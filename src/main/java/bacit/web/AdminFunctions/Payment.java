@@ -27,7 +27,7 @@ public class Payment extends HttpServlet {
             }
 
 
-            if (AdminAccess.isAdmin(email)) {
+            if (PageAccess.isAdmin(request,response)) {
 
                 Connection db = DBUtils.getNoErrorConnection();
                 String insertUserCommand = "SELECT AMVUser.userID, AMVUser.firstName, AMVUser.lastName, AMVUser.email, AMVUser.phoneNumber, Booking.orderID, Booking.startDate, Booking.endDate, Booking.returnDate, Booking.toolID, Booking.totalPrice FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE paid = false AND returnDate IS NOT NULL";

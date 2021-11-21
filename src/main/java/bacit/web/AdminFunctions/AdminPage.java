@@ -11,8 +11,7 @@ import java.io.IOException;
 public class AdminPage extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        if(AdminAccess.isAdmin(AdminAccess.reDirWOAccess(request,response))) {
+        if(PageAccess.isAdmin(request,response)) {
             try {
                 request.getRequestDispatcher("/jspFiles/AdminFunctions/adminPage.jsp").forward(request, response);
             } catch (ServletException e) {

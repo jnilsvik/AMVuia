@@ -1,4 +1,4 @@
-<%@ page import="bacit.web.AdminFunctions.AdminAccess" %>
+<%@ page import="bacit.web.AdminFunctions.PageAccess" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +23,7 @@
                 <li><a href="help" class="nav-link px-2 amv-txc-b">FAQ & HELP</a></li>
                 <%
                     String email = (String) session.getAttribute("email");
-                    if(AdminAccess.isAdmin(email)){
+                    if(PageAccess.isAdmin(request,response)){
                         out.print("<li><a href=\"admin\" class=\"nav-link px-2 amv-txc-b\">ADMIN PAGE</a></li>");
                     }
                 %>

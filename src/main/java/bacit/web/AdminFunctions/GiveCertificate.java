@@ -29,7 +29,7 @@ public class GiveCertificate extends HttpServlet {
                 return;
             }
 
-            if (AdminAccess.isAdmin(email)) {
+            if (PageAccess.isAdmin(request,response)) {
                 List<Certificate> certificates = getCertificates();
 
                 request.setAttribute("certificates", certificates);
@@ -52,9 +52,7 @@ public class GiveCertificate extends HttpServlet {
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
         }
-        String email = (String) session.getAttribute("email");
-
-        if (AdminAccess.isAdmin(email)) {
+        if (PageAccess.isAdmin(request,response)) {
             try {
                 LocalDate accomplishDate = LocalDate.parse(request.getParameter("accomplishdate"));
                 String userID = request.getParameter("userID");

@@ -33,7 +33,7 @@ public class RegisterTool extends HttpServlet {
                 return;
             }
 
-            if (AdminAccess.isAdmin(email)) {
+            if (PageAccess.isAdmin(request,response)) {
                 List<String> categories = getCategories();
                 List<Certificate> certificates = getCertificates();
                 request.setAttribute("categories", categories);

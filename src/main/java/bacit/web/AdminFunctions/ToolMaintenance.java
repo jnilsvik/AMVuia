@@ -25,7 +25,7 @@ public class ToolMaintenance extends HttpServlet {
                 return;
             }
 
-            if (AdminAccess.isAdmin(email)) {
+            if (PageAccess.isAdmin(request,response)) {
                 request.getRequestDispatcher("jspFiles/AdminFunctions/toolMaintenance.jsp").forward(request,response);
             } else {
                 DBUtils.ReDirFeedback(request,response,"You need to be an administrator to view this");

@@ -3,6 +3,7 @@ package bacit.web.ToolBooking;
 import java.sql.SQLException;
 import java.time.*;
 
+import bacit.web.AdminFunctions.PageAccess;
 import bacit.web.Modules.BookingModel;
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
@@ -24,18 +25,11 @@ public class ToolBookingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
-            }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
+            checkSession(request,response);
+
             int toolID = Integer.parseInt(request.getParameter("tools"));
             int inputDays = Integer.parseInt(request.getParameter("days")) - 1;
-            int userID = getUserID(email);
+            int userID = getUserID(PageAccess.getEmail(request,response));
             LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
             LocalDate endingDate = StartDateWanted.plusDays(inputDays);
 
@@ -175,4 +169,11 @@ public class ToolBookingServlet extends HttpServlet {
         }
         return taken;
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            return false;
+        } else return true;
+    }
+
 }
