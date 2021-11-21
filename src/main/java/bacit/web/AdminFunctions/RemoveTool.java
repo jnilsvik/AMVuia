@@ -2,6 +2,7 @@ package bacit.web.AdminFunctions;
 
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import java.io.*;
 import java.sql.Connection;
@@ -47,6 +48,14 @@ public class RemoveTool extends HttpServlet {
         }
     }
 
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            PageAccess.reDirWOAdmin(request,response);
+            return false;
+        } else return true;
+    }
+
     protected List<ToolModel> getTools() throws SQLException {
         List<ToolModel> tools = new LinkedList();
         Connection db = DBUtils.getNoErrorConnection();
@@ -75,8 +84,6 @@ public class RemoveTool extends HttpServlet {
         db.close();
 
         return noOfAffectedRows != 0;
-
-
     }
 
     protected int getID(HttpServletRequest request){
@@ -85,23 +92,6 @@ public class RemoveTool extends HttpServlet {
         } catch (NullPointerException e){
             return -1;
         }
-    }
-
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        HttpSession session=request.getSession(false);
-        String email = null;
-        if(session != null){
-            email = (String) session.getAttribute("email");
-        }
-        if(email == null){
-            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-            return false;
-        }
-        if (!AdminAccess.isAdmin(email)){
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
-            return false;
-        }
-        return true;
     }
 
     protected void writeGetToJSP(List<ToolModel> tools, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

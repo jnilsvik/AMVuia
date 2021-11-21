@@ -2,6 +2,7 @@ package bacit.web.AdminFunctions;
 
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,46 +21,43 @@ import java.util.ArrayList;
 public class ListTools extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO: 10.11.2021 need to implement the non-admin prevention
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
+            if (checkSession(request,response)){
+                Connection dbConnection = DBUtils.getNoErrorConnection();
+                String toolQ = "select * from Tool order by toolID ";
+                PreparedStatement statement = dbConnection.prepareStatement(toolQ);
+                ResultSet rs = statement.executeQuery();
+
+                ArrayList<ToolModel> toolList = new ArrayList<>();
+                while (rs.next()){
+                    toolList.add(
+                            new ToolModel(
+                                    rs.getInt("toolID"),
+                                    rs.getString("toolName"),
+                                    rs.getString("toolCategory"),
+                                    rs.getBoolean("maintenance"),
+                                    rs.getInt("priceFirst"),
+                                    rs.getInt("priceAfter"),
+                                    rs.getInt("certificateID"),
+                                    rs.getString("toolDescription"),
+                                    rs.getString("picturePath")));
+                }
+                request.setAttribute("toolList", toolList); // ! a way to set attributes
+                request.getRequestDispatcher("/jspFiles/AdminFunctions/listTools.jsp").forward(request,response);
+
+                rs.close();
+                statement.close();
+                dbConnection.close();
             }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-
-            Connection dbConnection = DBUtils.getNoErrorConnection();
-            String toolQ = "select * from Tool order by toolID ";
-            PreparedStatement statement = dbConnection.prepareStatement(toolQ);
-            ResultSet rs = statement.executeQuery();
-
-            ArrayList<ToolModel> toolList = new ArrayList<>();
-            while (rs.next()){
-                toolList.add(
-                        new ToolModel(
-                                rs.getInt("toolID"),
-                                rs.getString("toolName"),
-                                rs.getString("toolCategory"),
-                                rs.getBoolean("maintenance"),
-                                rs.getInt("priceFirst"),
-                                rs.getInt("priceAfter"),
-                                rs.getInt("certificateID"),
-                                rs.getString("toolDescription"),
-                                rs.getString("picturePath")));
-            }
-            request.setAttribute("toolList", toolList); // ! a way to set attributes
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/listTools.jsp").forward(request,response);
-
-            rs.close();
-            statement.close();
-            dbConnection.close();
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            PageAccess.reDirWOAdmin(request,response);
+            return false;
+        } else return true;
     }
 }

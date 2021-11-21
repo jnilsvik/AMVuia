@@ -2,6 +2,7 @@ package bacit.web.ToolBooking;
 
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,19 +21,11 @@ public class ToolAllListings extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
+            if (!checkSession(request,response)){
+                GetSetCategories(request);
+                GetSetTools(request);
+                request.getRequestDispatcher("/jspFiles/ToolBooking/toolListAll.jsp").forward(request,response);
             }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-
-            GetSetCategories(request);
-            GetSetTools(request);
-            request.getRequestDispatcher("/jspFiles/ToolBooking/toolListAll.jsp").forward(request,response);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,4 +82,11 @@ public class ToolAllListings extends HttpServlet {
             e.printStackTrace();
         }
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            return false;
+        } else return true;
+    }
+
 }

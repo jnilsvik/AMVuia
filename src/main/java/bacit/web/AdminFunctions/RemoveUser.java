@@ -2,6 +2,7 @@ package bacit.web.AdminFunctions;
 
 import bacit.web.Modules.UserModel;
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import java.io.*;
 import java.sql.Connection;
@@ -18,8 +19,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "RemoveUser", value = "/removeuser")
 public class RemoveUser extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        boolean valid = checkSession(request, response);
-        if(valid) {
+        if(checkSession(request,response)) {
             try {
                 List<UserModel> users = getUsers();
                 writeGetToJSP(users, request, response);
@@ -30,8 +30,7 @@ public class RemoveUser extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean valid = checkSession(request, response);
-        if(valid) {
+        if(checkSession(request,response)) {
             try {
                 String user = getUser(request);
                 boolean success = deleteUser(user);
@@ -74,24 +73,6 @@ public class RemoveUser extends HttpServlet {
         return users;
     }
 
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("text/html");
-        HttpSession session=request.getSession(false);
-        String email = null;
-        if(session != null){
-            email = (String) session.getAttribute("email");
-        }
-        if(email == null){
-            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-            return false;
-        }
-        if (!AdminAccess.isAdmin(email)){
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
-            return false;
-        }
-        return true;
-    }
-
     protected String getUser(HttpServletRequest request){
         return request.getParameter("input");
     }
@@ -108,4 +89,11 @@ public class RemoveUser extends HttpServlet {
         request.getRequestDispatcher("/jspFiles/AdminFunctions/removeUser.jsp").forward(request, response);
     }
 
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            PageAccess.reDirWOAdmin(request,response);
+            return false;
+        } else return true;
+    }
 }

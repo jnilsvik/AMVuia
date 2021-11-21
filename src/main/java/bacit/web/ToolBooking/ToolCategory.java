@@ -1,6 +1,7 @@
 package bacit.web.ToolBooking;
 
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,18 +19,11 @@ import java.sql.SQLException;
 public class ToolCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("CAT", request.getParameter("category"));
-        Connection dbc= DBUtils.getNoErrorConnection();
+
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
-            }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
+            if (!checkSession(request, response))
+            request.setAttribute("CAT", request.getParameter("category"));
+            Connection dbc= DBUtils.getNoErrorConnection();
             PreparedStatement ps3 = dbc.prepareStatement(
                 "select * from Tool where toolCategory =?");
             ps3.setString(1, String.valueOf(request.getParameter("category")));
@@ -38,11 +32,16 @@ public class ToolCategory extends HttpServlet {
             request.setAttribute("toolByCAT", rs3);
 
             request.getRequestDispatcher("jspFiles/ToolBooking/-toolListByCAT.jsp").forward(request,response);
-
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            PageAccess.reDirWOAdmin(request,response);
+            return false;
+        } else return true;
+    }
+
 }

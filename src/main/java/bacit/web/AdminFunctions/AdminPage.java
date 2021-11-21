@@ -1,5 +1,7 @@
 package bacit.web.AdminFunctions;
 
+import bacit.web.utils.PageAccess;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +13,7 @@ import java.io.IOException;
 public class AdminPage extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        if(AdminAccess.isAdmin(AdminAccess.reDirWOAccess(request,response))) {
+        if(PageAccess.isAdmin(request,response)) {
             try {
                 request.getRequestDispatcher("/jspFiles/AdminFunctions/adminPage.jsp").forward(request, response);
             } catch (ServletException e) {

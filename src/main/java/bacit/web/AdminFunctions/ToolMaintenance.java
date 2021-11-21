@@ -1,10 +1,12 @@
 package bacit.web.AdminFunctions;
 
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -13,22 +15,11 @@ import javax.servlet.annotation.*;
 public class ToolMaintenance extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-        response.setContentType("text/html");
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
-            }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-
-            if (AdminAccess.isAdmin(email)) {
+            if (checkSession(request,response)) {
                 request.getRequestDispatcher("jspFiles/AdminFunctions/toolMaintenance.jsp").forward(request,response);
             } else {
-                DBUtils.ReDirFeedback(request,response,"You need to be an administrator to view this");
+                PageAccess.ReDirFeedback(request,response,"You need to be an administrator to view this");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,7 +67,13 @@ public class ToolMaintenance extends HttpServlet {
             e.printStackTrace();
         }
     }
-
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            PageAccess.reDirWOAdmin(request,response);
+            return false;
+        } else return true;
+    }
 }
 
 

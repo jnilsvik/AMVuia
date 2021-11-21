@@ -1,6 +1,7 @@
 package bacit.web.AdminFunctions;
 
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import java.io.*;
 import java.sql.*;
@@ -14,22 +15,8 @@ import javax.servlet.annotation.*;
 public class ToolReturnal extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
-            }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-
-
-            if (AdminAccess.isAdmin(email)) {
-
+            if (checkSession(request,response)) {
                 Connection db = DBUtils.getNoErrorConnection();
                 String insertUserCommand = "SELECT AMVUser.userID, AMVUser.firstName, AMVUser.lastName, AMVUser.email, AMVUser.phoneNumber, Booking.orderID, Booking.startDate, Booking.endDate, Booking.returnDate, Booking.toolID, Booking.totalPrice FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE returnDate IS NULL";
                 PreparedStatement st1 = db.prepareStatement(insertUserCommand);
@@ -82,6 +69,14 @@ public class ToolReturnal extends HttpServlet {
             e.printStackTrace();
         }
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            PageAccess.reDirWOAdmin(request,response);
+            return false;
+        } else return true;
+    }
+
 }
 
 

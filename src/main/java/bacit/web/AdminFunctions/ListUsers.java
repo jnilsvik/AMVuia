@@ -1,6 +1,7 @@
 package bacit.web.AdminFunctions;
 
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,27 +25,26 @@ prints all the users
 public class ListUsers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
-            }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
+            if (checkSession(request,response)){
+                Connection dbConnection = DBUtils.getNoErrorConnection();
+                String userQ = "select * from AMVUser order by userID ";
+                PreparedStatement statement = dbConnection.prepareStatement(userQ);
+                ResultSet rs = statement.executeQuery();
 
-            Connection dbConnection = DBUtils.getNoErrorConnection();
-            String userQ = "select * from AMVUser order by userID ";
-            PreparedStatement statement = dbConnection.prepareStatement(userQ);
-            ResultSet rs = statement.executeQuery();
-
-            request.setAttribute("userList", rs); // ! a way to set attributes
-            request.getRequestDispatcher("jspFiles/AdminFunctions/listUsers.jsp").forward(request,response);
+                request.setAttribute("userList", rs); // ! a way to set attributes
+                request.getRequestDispatcher("jspFiles/AdminFunctions/listUsers.jsp").forward(request,response);
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            PageAccess.reDirWOAdmin(request,response);
+            return false;
+        } else return true;
+    }
+
 }

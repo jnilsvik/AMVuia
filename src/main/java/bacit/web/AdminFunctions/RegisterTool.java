@@ -4,12 +4,14 @@ import bacit.web.Modules.Certificate;
 import bacit.web.Modules.FileModel;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.FileDAO;
+import bacit.web.utils.PageAccess;
 
 import java.nio.file.Paths;
 import java.sql.*;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -20,29 +22,14 @@ public class RegisterTool extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
-            }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-
-            if (AdminAccess.isAdmin(email)) {
+            if (checkSession(request,response)) {
                 List<String> categories = getCategories();
                 List<Certificate> certificates = getCertificates();
                 request.setAttribute("categories", categories);
                 request.setAttribute("certificates", certificates);
                 request.getRequestDispatcher("/jspFiles/AdminFunctions/registerTool.jsp").forward(request,response);
-            }else {
-                request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,8 +37,6 @@ public class RegisterTool extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         try{
             int toolID = addTool(
                     request.getParameter("toolname"),
@@ -70,7 +55,7 @@ public class RegisterTool extends HttpServlet {
             request.setAttribute("successfulLine", successfulLine);
             request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
         }catch (Exception e){
-            out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -142,6 +127,14 @@ public class RegisterTool extends HttpServlet {
         FileDAO dao = new FileDAO();
         dao.persistFile(fileModel);
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            PageAccess.reDirWOAdmin(request,response);
+            return false;
+        } else return true;
+    }
+
 }
 
 

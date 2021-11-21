@@ -2,13 +2,13 @@ package bacit.web.AdminFunctions;
 
 import bacit.web.Modules.BookingModel;
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,17 +23,7 @@ public class ToolHistory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
-            }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-            if(AdminAccess.isAdmin(email)) {
+            if(checkSession(request,response)) {
                 int toolID = Integer.parseInt(request.getParameter("toolID"));
                 Connection dbConnection = DBUtils.getNoErrorConnection();
                 String history = "select orderID, userID, toolID, totalPrice, startDate, endDate, returnDate from Booking WHERE toolID = ? order by orderID desc";
@@ -43,7 +33,6 @@ public class ToolHistory extends HttpServlet {
 
                 ArrayList<BookingModel> bookingList = new ArrayList<>();
                 while (rs.next()) {
-
                     BookingModel model = new BookingModel();
                     model.setOrderID(rs.getInt("orderID"));
                     model.setUserID(rs.getInt("userID"));
@@ -61,9 +50,15 @@ public class ToolHistory extends HttpServlet {
                 request.setAttribute("bookingList", bookingList); // ! a way to set attributes
                 request.getRequestDispatcher("jspFiles/AdminFunctions/toolHistory.jsp").forward(request, response);
             }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            PageAccess.reDirWOAdmin(request,response);
+            return false;
+        } else return true;
     }
 }

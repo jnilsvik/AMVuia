@@ -2,6 +2,7 @@ package bacit.web.AdminFunctions;
 
 import bacit.web.Modules.Certificate;
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import java.sql.*;
 import java.io.*;
@@ -17,19 +18,8 @@ import javax.servlet.annotation.*;
 public class GiveCertificate extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-        response.setContentType("text/html");
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
-            }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-
-            if (AdminAccess.isAdmin(email)) {
+            if (checkSession(request,response)) {
                 List<Certificate> certificates = getCertificates();
 
                 request.setAttribute("certificates", certificates);
@@ -46,15 +36,7 @@ public class GiveCertificate extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html");
-        HttpSession session = request.getSession(false);
-        if(session == null){
-            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-            return;
-        }
-        String email = (String) session.getAttribute("email");
-
-        if (AdminAccess.isAdmin(email)) {
+        if (checkSession(request,response)) {
             try {
                 LocalDate accomplishDate = LocalDate.parse(request.getParameter("accomplishdate"));
                 String userID = request.getParameter("userID");
@@ -100,8 +82,13 @@ public class GiveCertificate extends HttpServlet {
         db.close();
     }
 
-
-
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            PageAccess.reDirWOAdmin(request,response);
+            return false;
+        } else return true;
+    }
 }
 
 

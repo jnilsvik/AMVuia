@@ -3,6 +3,7 @@ package bacit.web.ToolBooking;
 import java.sql.SQLException;
 import java.time.*;
 
+import bacit.web.utils.PageAccess;
 import bacit.web.Modules.BookingModel;
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
@@ -24,36 +25,31 @@ public class ToolBookingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
-            }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-            int toolID = Integer.parseInt(request.getParameter("tools"));
-            int inputDays = Integer.parseInt(request.getParameter("days")) - 1;
-            int userID = getUserID(email);
-            LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
-            LocalDate endingDate = StartDateWanted.plusDays(inputDays);
+            if (!checkSession(request,response)){
+                int toolID = Integer.parseInt(request.getParameter("tools"));
+                int inputDays = Integer.parseInt(request.getParameter("days")) - 1;
+                int userID = getUserID(PageAccess.getEmail(request,response));
+                LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
+                LocalDate endingDate = StartDateWanted.plusDays(inputDays);
 
-            ToolModel tool = getTool(toolID);
+                ToolModel tool = getTool(toolID);
 
-            //getTotalPrice class calculates the total price.
-            int totalPrice =  tool.getPriceFirst() + tool.getPriceAfter() * (inputDays);
+                //getTotalPrice class calculates the total price.
+                int totalPrice =  tool.getPriceFirst() + tool.getPriceAfter() * (inputDays);
 
-            //checkDate class sees if the wanted booked days are already taken. The hasCertificate method checks if the user has the needed certificate.
-            if(dateBookedTaken(StartDateWanted, inputDays, toolID)){
-                DBUtils.ReDirFeedback(request,response,"Sorry, the tools is already been booked for that date");
-            }else if(!hasCertificate(userID, tool.getCertificateID())){
-                DBUtils.ReDirFeedback(request,response,"Sorry, you don't have the needed certificate for this tool.");
-            }else{
-                registerBooking(StartDateWanted, endingDate, totalPrice, userID, toolID);
-                request.setAttribute("booking", new BookingModel(0, userID, toolID, totalPrice, StartDateWanted, StartDateWanted.plusDays(inputDays), null));
-                request.getRequestDispatcher("/jspFiles/ToolBooking/bookingComplete.jsp").forward(request,response);
+                //checkDate class sees if the wanted booked days are already taken. The hasCertificate method checks if the user has the needed certificate.
+                if(dateBookedTaken(StartDateWanted, inputDays, toolID)){
+                    PageAccess.ReDirFeedback(request,response,"Sorry, the tools is already been booked for that date");
+                }else if(!hasCertificate(userID, tool.getCertificateID())){
+                    PageAccess.ReDirFeedback(request,response,"Sorry, you don't have the needed certificate for this tool.");
+                }else{
+                    registerBooking(StartDateWanted, endingDate, totalPrice, userID, toolID);
+                    request.setAttribute("booking", new BookingModel(0, userID, toolID, totalPrice, StartDateWanted, StartDateWanted.plusDays(inputDays), null));
+                    request.getRequestDispatcher("/jspFiles/ToolBooking/bookingComplete.jsp").forward(request,response);
+                }
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -175,4 +171,11 @@ public class ToolBookingServlet extends HttpServlet {
         }
         return taken;
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            return false;
+        } else return true;
+    }
+
 }

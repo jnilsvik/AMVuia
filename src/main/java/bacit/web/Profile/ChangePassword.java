@@ -1,5 +1,6 @@
 package bacit.web.Profile;
 
+import bacit.web.utils.PageAccess;
 import bacit.web.utils.hashPassword;
 import bacit.web.utils.DBUtils;
 
@@ -14,33 +15,20 @@ import javax.servlet.annotation.*;
 public class ChangePassword extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-        response.setContentType("text/html");
-
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
+            if (!checkSession(request,response)){
+                request.getRequestDispatcher("jspFiles/Profile/passwordChange.jsp").forward(request,response);
             }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-
-            request.getRequestDispatcher("jspFiles/Profile/passwordChange.jsp").forward(request,response);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             HttpSession session = request.getSession(false);
             String email = (String) session.getAttribute("email");
+
             Connection db = DBUtils.getNoErrorConnection();
             String oldPassword = hashPassword.encryptThisString(request.getParameter("oldpass"));
             String newPassword1 = hashPassword.encryptThisString(request.getParameter("newpass1"));
@@ -67,10 +55,16 @@ public class ChangePassword extends HttpServlet {
                 request.getRequestDispatcher("jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
             }
         } catch (Exception e) {
-            DBUtils.ReDirFeedback(request,response,"Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
+            PageAccess.ReDirFeedback(request,response,"Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
         }
-
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            return false;
+        } else return true;
+    }
+
 }
 
 

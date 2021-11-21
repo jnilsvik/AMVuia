@@ -2,6 +2,7 @@ package bacit.web.ToolBooking;
 
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 
 import java.io.*;
@@ -20,24 +21,17 @@ import javax.servlet.http.*;
 public class ToolDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-        HttpSession session=request.getSession(false);
-        String email = null;
-        if(session != null){
-            email = (String) session.getAttribute("email");
-        }
-        if(email == null){
-            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-            return;
-        }
-        int toolID = Integer.parseInt(request.getParameter("toolID"));
         try{
-            ToolModel tool = getTool(toolID);
-            List<LocalDate> dates = getBookings(toolID);
+            if (!checkSession(request,response)){
+                int toolID = Integer.parseInt(request.getParameter("toolID"));
 
-            request.setAttribute("tool", tool);
-            request.setAttribute("dates", dates);
-            request.getRequestDispatcher("/jspFiles/ToolBooking/toolDetailed.jsp").forward(request,response);
+                ToolModel tool = getTool(toolID);
+                List<LocalDate> dates = getBookings(toolID);
+
+                request.setAttribute("tool", tool);
+                request.setAttribute("dates", dates);
+                request.getRequestDispatcher("/jspFiles/ToolBooking/toolDetailed.jsp").forward(request,response);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,13 +53,11 @@ public class ToolDetailServlet extends HttpServlet {
                     rs.getInt("priceAfter"),
                     rs.getInt("certificateID"),
                     rs.getString("toolDescription"),
-                    rs.getString("picturePath")
-            );
+                    rs.getString("picturePath"));
         }
         else {
             return null;
         }
-
     }
 
     private List<LocalDate> getBookings(int toolID) throws SQLException {
@@ -83,12 +75,18 @@ public class ToolDetailServlet extends HttpServlet {
                 dateStart = dateStart.plusDays(1);
             }
         }
-
         rs.close();
         ps.close();
         db.close();
         return dates;
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            return false;
+        } else return true;
+    }
+
 }
 
 

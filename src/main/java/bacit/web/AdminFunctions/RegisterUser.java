@@ -1,6 +1,7 @@
 package bacit.web.AdminFunctions;
 
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 import bacit.web.utils.hashPassword;
 
 import java.sql.Connection;
@@ -15,20 +16,8 @@ import javax.servlet.annotation.*;
 public class RegisterUser extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("text/html");
-        HttpSession session=request.getSession(false);
-        String email = null;
-        if(session != null){
-            email = (String) session.getAttribute("email");
-        }
-        if(email == null){
-            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-            return;
-        }
-        if(AdminAccess.isAdmin(email)) {
+        if(checkSession(request,response)) {
             request.getRequestDispatcher("/jspFiles/AdminFunctions/registerUser.jsp").forward(request,response);
-        }else {
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
         }
     }
 
@@ -55,6 +44,13 @@ public class RegisterUser extends HttpServlet {
             e.printStackTrace();
         }
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            return false;
+        } else return true;
+    }
+
 }
 
 

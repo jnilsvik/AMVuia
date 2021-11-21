@@ -1,6 +1,7 @@
 package bacit.web.Profile;
 
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,27 +22,21 @@ public class cancelOrderServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         try {
-            HttpSession session=request.getSession(false);
-            String email = null;
-            if(session != null){
-                email = (String) session.getAttribute("email");
+            if (!checkSession(request,response)){
+                String email = PageAccess.getEmail(request,response);
+                String orderId = request.getParameter("id");
+                String result;
+
+                if(isAllowedToChancel(orderId, email)){
+                    deleteOrder(orderId);
+                    result = "The booking has been successfully removed";
+                } else {
+                    result = "The user is not allowed to cancel this booking";
+                }
+                PageAccess.ReDirFeedback(request,response,result);
             }
-            if(email == null){
-                response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-                return;
-            }
-            String orderId = request.getParameter("id");
-            String result;
-            if(isAllowedToChancel(orderId, email, out)){
-                deleteOrder(orderId);
-                result = "The booking has been successfully removed";
-            } else {
-                result = "The user is not allowed to cancel this booking";
-            }
-            DBUtils.ReDirFeedback(request,response,result);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,7 +52,7 @@ public class cancelOrderServlet extends HttpServlet {
         db.close();
     }
 
-    private boolean isAllowedToChancel(String orderID, String email, PrintWriter out) throws SQLException {
+    private boolean isAllowedToChancel(String orderID, String email) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement ps = db.prepareStatement("SELECT email, orderID from Booking inner JOIN AMVUser AU on Booking.userID = AU.userID WHERE orderID = ?;");
         ps.setString(1, orderID);
@@ -70,4 +65,11 @@ public class cancelOrderServlet extends HttpServlet {
         db.close();
         return result;
     }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (!PageAccess.isAdmin(request,response)){
+            PageAccess.reDirWOUser(request,response);
+            return false;
+        } else return true;
+    }
+
 }

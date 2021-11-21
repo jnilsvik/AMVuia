@@ -2,6 +2,7 @@ package bacit.web.Profile;
 
 import bacit.web.Modules.BookingModel;
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 
 import java.sql.*;
 import java.io.*;
@@ -16,10 +17,9 @@ import javax.servlet.annotation.*;
 // by Dilan changed by Paul
 @WebServlet(name = "Profile", value = "/profile")
 public class Profile extends HttpServlet {
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            String email = getEmailFromSession(request, response);
+            String email = PageAccess.getEmail(request, response);
             List<BookingModel> bookings = getBookings(email);
             printGetToJSP(bookings, request, response);
         } catch (Exception e) {
@@ -56,20 +56,6 @@ public class Profile extends HttpServlet {
         ps.close();
         db.close();
         return bookings;
-    }
-
-    protected String getEmailFromSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-        HttpSession session=request.getSession(false);
-        String email = null;
-        if(session != null){
-            email = (String) session.getAttribute("email");
-        }
-        if(email == null){
-            response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
-            return null;
-        }
-        return email;
     }
 
     protected void printGetToJSP(List<BookingModel> bookings, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

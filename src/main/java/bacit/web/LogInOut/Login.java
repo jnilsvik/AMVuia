@@ -1,6 +1,7 @@
 package bacit.web.LogInOut;
 
 import bacit.web.utils.DBUtils;
+import bacit.web.utils.PageAccess;
 import bacit.web.utils.hashPassword;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,6 @@ import java.sql.ResultSet;
 public class Login extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
         try {
             request.getRequestDispatcher("/jspFiles/LogIn/login.jsp").forward(request,response);
         } catch (ServletException e) {
@@ -29,9 +29,6 @@ public class Login extends HttpServlet {
     }
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
         String email = request.getParameter("email");
         String password = hashPassword.encryptThisString(request.getParameter("pass"));
         if(Validation(email,password)){
@@ -44,7 +41,7 @@ public class Login extends HttpServlet {
                 e.printStackTrace();
             }
         } else {
-            DBUtils.ReDirFeedback(request,response,"Invalid email or password");
+            PageAccess.ReDirFeedback(request,response,"Invalid email or password");
         }
     }
     public boolean Validation(String email, String pw){
