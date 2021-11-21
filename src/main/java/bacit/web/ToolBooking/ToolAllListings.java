@@ -23,7 +23,7 @@ prints all the tools NOW WITH IMAGES!
 @WebServlet(name = "xtl", value = "/xtl")
 public class ToolAllListings extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession session=request.getSession(false);
             String email = null;

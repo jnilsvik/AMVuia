@@ -21,8 +21,6 @@ public class ToolDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-
         HttpSession session=request.getSession(false);
         String email = null;
         if(session != null){
