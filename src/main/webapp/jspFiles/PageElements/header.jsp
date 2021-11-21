@@ -23,7 +23,7 @@
                 <li><a href="help" class="nav-link px-2 amv-txc-b">FAQ & HELP</a></li>
                 <%
                     String email = (String) session.getAttribute("email");
-                    if(AdminAccess.accessRights(email)){
+                    if(AdminAccess.isAdmin(email)){
                         out.print("<li><a href=\"admin\" class=\"nav-link px-2 amv-txc-b\">ADMIN PAGE</a></li>");
                     }
                 %>

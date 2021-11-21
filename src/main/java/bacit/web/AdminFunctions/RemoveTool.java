@@ -85,11 +85,9 @@ public class RemoveTool extends HttpServlet {
         } catch (NullPointerException e){
             return -1;
         }
-
     }
 
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("text/html");
         HttpSession session=request.getSession(false);
         String email = null;
         if(session != null){
@@ -99,7 +97,7 @@ public class RemoveTool extends HttpServlet {
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return false;
         }
-        if (!AdminAccess.accessRights(email)){
+        if (!AdminAccess.isAdmin(email)){
             request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
             return false;
         }

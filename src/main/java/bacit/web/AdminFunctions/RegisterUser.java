@@ -25,7 +25,7 @@ public class RegisterUser extends HttpServlet {
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return;
         }
-        if(AdminAccess.accessRights(email)) {
+        if(AdminAccess.isAdmin(email)) {
             request.getRequestDispatcher("/jspFiles/AdminFunctions/registerUser.jsp").forward(request,response);
         }else {
             request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);

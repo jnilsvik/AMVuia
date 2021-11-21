@@ -1,6 +1,5 @@
 package bacit.web.AdminFunctions;
 
-import bacit.web.Modules.ToolModel;
 import bacit.web.Modules.UserModel;
 import bacit.web.utils.DBUtils;
 
@@ -86,7 +85,7 @@ public class RemoveUser extends HttpServlet {
             response.sendRedirect("/bacit-web-1.0-SNAPSHOT/login");
             return false;
         }
-        if (!AdminAccess.accessRights(email)){
+        if (!AdminAccess.isAdmin(email)){
             request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
             return false;
         }

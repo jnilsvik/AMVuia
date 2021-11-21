@@ -29,7 +29,7 @@ public class GiveCertificate extends HttpServlet {
                 return;
             }
 
-            if (AdminAccess.accessRights(email)) {
+            if (AdminAccess.isAdmin(email)) {
                 List<Certificate> certificates = getCertificates();
 
                 request.setAttribute("certificates", certificates);
@@ -54,7 +54,7 @@ public class GiveCertificate extends HttpServlet {
         }
         String email = (String) session.getAttribute("email");
 
-        if (AdminAccess.accessRights(email)) {
+        if (AdminAccess.isAdmin(email)) {
             try {
                 LocalDate accomplishDate = LocalDate.parse(request.getParameter("accomplishdate"));
                 String userID = request.getParameter("userID");

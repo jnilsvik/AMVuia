@@ -10,7 +10,6 @@ import java.sql.*;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -34,7 +33,7 @@ public class RegisterTool extends HttpServlet {
                 return;
             }
 
-            if (AdminAccess.accessRights(email)) {
+            if (AdminAccess.isAdmin(email)) {
                 List<String> categories = getCategories();
                 List<Certificate> certificates = getCertificates();
                 request.setAttribute("categories", categories);
