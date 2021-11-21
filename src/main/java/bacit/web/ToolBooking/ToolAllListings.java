@@ -15,11 +15,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-by Joachim
-
-prints all the tools NOW WITH IMAGES!
-*/
 @WebServlet(name = "xtl", value = "/xtl")
 public class ToolAllListings extends HttpServlet {
     @Override
@@ -43,14 +38,14 @@ public class ToolAllListings extends HttpServlet {
         }
     }
 
-    void GetSetCategories(HttpServletRequest request){
+    protected void GetSetCategories(HttpServletRequest request){
         try {
             Connection dbc= DBUtils.getNoErrorConnection();
             PreparedStatement ps1 = dbc.prepareStatement(
                     "SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs1 = ps1.executeQuery();
 
-            ArrayList<String> Categories = new ArrayList<String>();
+            ArrayList<String> Categories = new ArrayList<>();
             while (rs1.next()){
                 Categories.add(rs1.getString("toolCategory"));
             }
@@ -64,7 +59,7 @@ public class ToolAllListings extends HttpServlet {
         }
     }
 
-    void GetSetTools(HttpServletRequest request){
+    protected void GetSetTools(HttpServletRequest request){
         try {
             Connection dbc = DBUtils.getNoErrorConnection();
             PreparedStatement ps2 = dbc.prepareStatement(
