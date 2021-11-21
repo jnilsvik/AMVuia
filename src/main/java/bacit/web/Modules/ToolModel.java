@@ -3,10 +3,7 @@ package bacit.web.Modules;
 import bacit.web.utils.DBUtils;
 
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
@@ -21,6 +18,7 @@ public class ToolModel {
     private int certificateID;
     private String description;
     private String picturePath;
+    private Blob imgData;
 
     public ToolModel(int id, String name, String category, boolean maintenance, int priceFirst, int priceAfter, int certificateID, String description, String picturePath) {
         this.toolID = id;
@@ -128,6 +126,14 @@ public class ToolModel {
 
     public void setPicturePath(String picturePath){
         this.picturePath = picturePath;
+    }
+
+    public Blob getImgData() {
+        return imgData;
+    }
+
+    public void setImgData(Blob imgData) {
+        this.imgData = imgData;
     }
 
     public LinkedList<LocalDate> getUsedDates(PrintWriter out) throws SQLException {

@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Booking successful</title>
 </head>
 <body>
 <jsp:include page="../PageElements/header.jsp"/>

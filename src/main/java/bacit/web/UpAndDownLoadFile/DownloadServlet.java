@@ -1,6 +1,5 @@
 package bacit.web.UpAndDownLoadFile;
 
-import bacit.web.AdminFunctions.ToolPicture;
 import bacit.web.Modules.FileModel;
 import bacit.web.utils.FileDAO;
 

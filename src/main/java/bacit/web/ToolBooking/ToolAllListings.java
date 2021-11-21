@@ -1,5 +1,6 @@
 package bacit.web.ToolBooking;
 
+import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 by Joachim
@@ -21,7 +24,6 @@ prints all the tools NOW WITH IMAGES!
 public class ToolAllListings extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         try {
             HttpSession session=request.getSession(false);
             String email = null;
@@ -33,38 +35,61 @@ public class ToolAllListings extends HttpServlet {
                 return;
             }
 
-            GetSetCategories(out, request);
-            GetSetTools(out,request);
+            GetSetCategories(request);
+            GetSetTools(request);
             request.getRequestDispatcher("/jspFiles/ToolBooking/toolListAll.jsp").forward(request,response);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void GetSetCategories(PrintWriter out, HttpServletRequest request){
+    void GetSetCategories(HttpServletRequest request){
         try {
             Connection dbc= DBUtils.getNoErrorConnection();
             PreparedStatement ps1 = dbc.prepareStatement(
                     "SELECT toolCategory FROM Tool GROUP BY toolCategory");
             ResultSet rs1 = ps1.executeQuery();
-            // TODO: 10.11.2021 should make this into string array before sending?
 
-            request.setAttribute("toolCAT", rs1);
+            ArrayList<String> Categories = new ArrayList<String>();
+            while (rs1.next()){
+                Categories.add(rs1.getString("toolCategory"));
+            }
+            request.setAttribute("toolCAT", Categories);
+            dbc.close();
+            ps1.close();
+            rs1.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    void GetSetTools(PrintWriter out, HttpServletRequest request){
+    void GetSetTools(HttpServletRequest request){
         try {
-            Connection dbc= DBUtils.getNoErrorConnection();
+            Connection dbc = DBUtils.getNoErrorConnection();
             PreparedStatement ps2 = dbc.prepareStatement(
                     "select * from Tool order by toolID");
             ResultSet rs2 = ps2.executeQuery();
-            // TODO: 10.11.2021 should make this into model array b4 sending?
-            request.setAttribute("toolALL", rs2);
 
+            ArrayList<ToolModel> toolALL = new ArrayList<>();
+            while (rs2.next()){
+                toolALL.add(
+                        new ToolModel(
+                                rs2.getInt("toolID"),
+                                rs2.getString("toolName"),
+                                rs2.getString("toolCategory"),
+                                rs2.getBoolean("maintenance"),
+                                rs2.getInt("priceFirst"),
+                                rs2.getInt("priceAfter"),
+                                rs2.getInt("certificateID"),
+                                rs2.getString("toolDescription"),
+                                rs2.getString("picturePath")));
+            }
+            request.setAttribute("toolALL", toolALL);
+
+            dbc.close();
+            ps2.close();
+            rs2.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
