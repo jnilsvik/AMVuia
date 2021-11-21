@@ -22,7 +22,7 @@ public class ToolDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{
-            if (!checkSession(request,response)){
+            if (checkSession(request,response)){
                 int toolID = Integer.parseInt(request.getParameter("toolID"));
 
                 ToolModel tool = getTool(toolID);
@@ -81,10 +81,11 @@ public class ToolDetailServlet extends HttpServlet {
         return dates;
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (!PageAccess.isAdmin(request,response)){
-            PageAccess.reDirWOUser(request,response);
-            return false;
-        } else return true;
+        if (PageAccess.isUser(request,response)){
+            return true;
+        }
+        PageAccess.reDirWOUser(request,response);
+        return false;
     }
 
 }

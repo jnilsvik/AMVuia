@@ -21,7 +21,7 @@ public class ToolAllListings extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            if (!checkSession(request,response)){
+            if (checkSession(request,response)){
                 GetSetCategories(request);
                 GetSetTools(request);
                 request.getRequestDispatcher("/jspFiles/ToolBooking/toolListAll.jsp").forward(request,response);
@@ -83,10 +83,10 @@ public class ToolAllListings extends HttpServlet {
         }
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (!PageAccess.isAdmin(request,response)){
-            PageAccess.reDirWOUser(request,response);
-            return false;
-        } else return true;
+        if (PageAccess.isUser(request,response)){
+            return true;
+        }
+        PageAccess.reDirWOUser(request,response);
+        return false;
     }
-
 }

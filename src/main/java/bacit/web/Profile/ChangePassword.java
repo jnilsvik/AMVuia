@@ -16,7 +16,7 @@ public class ChangePassword extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
-            if (!checkSession(request,response)){
+            if (checkSession(request,response)){
                 request.getRequestDispatcher("jspFiles/Profile/passwordChange.jsp").forward(request,response);
             }
         } catch (Exception e) {
@@ -59,12 +59,12 @@ public class ChangePassword extends HttpServlet {
         }
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (!PageAccess.isAdmin(request,response)){
-            PageAccess.reDirWOUser(request,response);
-            return false;
-        } else return true;
+        if (PageAccess.isAdmin(request,response)){
+            return true;
+        }
+        PageAccess.reDirWOUser(request,response);
+        return false;
     }
-
 }
 
 

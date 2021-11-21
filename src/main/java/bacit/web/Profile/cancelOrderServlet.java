@@ -23,7 +23,7 @@ public class cancelOrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            if (!checkSession(request,response)){
+            if (checkSession(request,response)){
                 String email = PageAccess.getEmail(request,response);
                 String orderId = request.getParameter("id");
                 String result;
@@ -66,10 +66,11 @@ public class cancelOrderServlet extends HttpServlet {
         return result;
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (!PageAccess.isAdmin(request,response)){
-            PageAccess.reDirWOUser(request,response);
-            return false;
-        } else return true;
+        if (PageAccess.isAdmin(request,response)){
+            return true;
+        }
+        PageAccess.reDirWOUser(request,response);
+        return true;
     }
 
 }

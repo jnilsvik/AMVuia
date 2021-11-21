@@ -19,12 +19,17 @@ import javax.servlet.annotation.*;
 public class Profile extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            String email = PageAccess.getEmail(request, response);
-            List<BookingModel> bookings = getBookings(email);
-            printGetToJSP(bookings, request, response);
+            if (checkSession(request,response)){
+                String email = getEmailFromSession(request,response);
+                List<BookingModel> bookings = getBookings(email);
+                printGetToJSP(bookings, request, response);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    protected String getEmailFromSession(HttpServletRequest request, HttpServletResponse response){
+        return PageAccess.getEmail(request,response);
     }
 
     protected List<BookingModel> getBookings(String email) throws SQLException {
@@ -61,6 +66,13 @@ public class Profile extends HttpServlet {
     protected void printGetToJSP(List<BookingModel> bookings, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("bookings", bookings);
         request.getRequestDispatcher("/jspFiles/Profile/profile.jsp").forward(request,response);
+    }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (PageAccess.isUser(request,response)){
+            return true;
+        }
+        PageAccess.reDirWOUser(request,response);
+        return false;
     }
 }
 

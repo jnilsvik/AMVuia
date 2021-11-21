@@ -20,8 +20,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "RemoveTool", value = "/removetool")
 public class RemoveTool extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        boolean valid = checkSession(request, response);
-        if (valid){
+        if (checkSession(request, response)){
             try {
                 List<ToolModel> tools = getTools();
                 writeGetToJSP(tools, request, response);
@@ -49,12 +48,14 @@ public class RemoveTool extends HttpServlet {
     }
 
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (!PageAccess.isAdmin(request,response)){
-            PageAccess.reDirWOUser(request,response);
-            PageAccess.reDirWOAdmin(request,response);
-            return false;
-        } else return true;
+        if (PageAccess.isAdmin(request,response)){
+            return true;
+        }
+        PageAccess.reDirWOUser(request,response);
+        PageAccess.reDirWOAdmin(request,response);
+        return false;
     }
+
 
     protected List<ToolModel> getTools() throws SQLException {
         List<ToolModel> tools = new LinkedList();

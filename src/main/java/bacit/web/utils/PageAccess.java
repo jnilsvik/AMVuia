@@ -18,7 +18,7 @@ public class PageAccess {
         return email;
     }
     //not sure about this one atm
-    public static boolean isUser(HttpServletRequest request){
+    public static boolean isUser(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession(false);
         if ((session != null) && (session.getAttribute("email") != null)) {
             return true;

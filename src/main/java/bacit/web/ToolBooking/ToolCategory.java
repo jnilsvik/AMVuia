@@ -21,7 +21,7 @@ public class ToolCategory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
-            if (!checkSession(request, response))
+            if (checkSession(request, response))
             request.setAttribute("CAT", request.getParameter("category"));
             Connection dbc= DBUtils.getNoErrorConnection();
             PreparedStatement ps3 = dbc.prepareStatement(
@@ -37,11 +37,12 @@ public class ToolCategory extends HttpServlet {
         }
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (!PageAccess.isAdmin(request,response)){
-            PageAccess.reDirWOUser(request,response);
-            PageAccess.reDirWOAdmin(request,response);
-            return false;
-        } else return true;
+        if (PageAccess.isUser(request,response)){
+            return true;
+        }
+        PageAccess.reDirWOUser(request,response);
+        PageAccess.reDirWOAdmin(request,response);
+        return false;
     }
 
 }

@@ -25,7 +25,7 @@ public class ToolBookingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         try {
-            if (!checkSession(request,response)){
+            if (checkSession(request,response)){
                 int toolID = Integer.parseInt(request.getParameter("tools"));
                 int inputDays = Integer.parseInt(request.getParameter("days")) - 1;
                 int userID = getUserID(PageAccess.getEmail(request,response));
@@ -48,7 +48,6 @@ public class ToolBookingServlet extends HttpServlet {
                     request.getRequestDispatcher("/jspFiles/ToolBooking/bookingComplete.jsp").forward(request,response);
                 }
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,8 +107,8 @@ public class ToolBookingServlet extends HttpServlet {
     public void registerBooking(LocalDate StartDateWanted, LocalDate endingDate, int totalPrice, int userID, int toolID ) {
         try {
             Connection db = DBUtils.getNoErrorConnection();
-            PreparedStatement statement2 =
-                    db.prepareStatement("insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
+            PreparedStatement statement2 = db.prepareStatement(
+                    "insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
             statement2.setObject(1, StartDateWanted);
             statement2.setObject(2, endingDate);
             statement2.setInt(3, totalPrice);
@@ -162,7 +161,6 @@ public class ToolBookingServlet extends HttpServlet {
                     taken = true;
                 }
             }
-
             rs.close();
             st.close();
             db.close();
@@ -172,10 +170,11 @@ public class ToolBookingServlet extends HttpServlet {
         return taken;
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (!PageAccess.isAdmin(request,response)){
-            PageAccess.reDirWOUser(request,response);
-            return false;
-        } else return true;
+        if (PageAccess.isUser(request,response)){
+            return true;
+        }
+        PageAccess.reDirWOUser(request,response);
+        return false;
     }
 
 }
