@@ -28,6 +28,7 @@ public class Profile extends HttpServlet {
             e.printStackTrace();
         }
     }
+
     protected String getEmailFromSession(HttpServletRequest request, HttpServletResponse response){
         return PageAccess.getEmail(request,response);
     }
