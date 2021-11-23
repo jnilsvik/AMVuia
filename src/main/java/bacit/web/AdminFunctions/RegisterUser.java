@@ -38,11 +38,13 @@ public class RegisterUser extends HttpServlet {
             statement.close();
             db.close();
 
-            request.getRequestDispatcher("login").forward(request,response);
+            request.getRequestDispatcher("/jspFiles/AdminFunctions/adminPage.jsp").forward(request,response);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (PageAccess.isAdmin(request,response)){

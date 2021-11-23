@@ -17,7 +17,7 @@
     DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     BookingModel booking = (BookingModel) request.getAttribute("booking");
 
-    out.print("<h1> Tool has been booked. Here are your the order details: </h1>");
+    out.print("<h1> Tool has been booked. Here are your order details: </h1>");
     out.print("<p>Tool: " + booking.getToolName() + "</p>");
     out.print("<p>Start Date: " + booking.getStartDate().format(formatters) + "</p>");
     out.print("<p>End Date: " + booking.getEndDate().format(formatters) + "</p>");
