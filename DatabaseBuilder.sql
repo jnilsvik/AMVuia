@@ -178,7 +178,7 @@ order by `number of borrows` desc
 limit 3;
 
 -- List all the equipment borrowed by the user with the highest number of equipment borrowed, sorted by date/time
-select toolName, startDate
+select toolName, startDate, userID
 from Tool as t, Booking as b
 where t.toolID = b.toolID and b.userID = (select userID from Booking as b group by b.userID order by count(*) desc limit 1)
 Order by startDate DESC;
@@ -190,7 +190,7 @@ where t.toolID=b.toolID
   and b.returnDate IS NULL;
 
 -- List all overdue equipment with their borrowers
-select toolName, u.userID, firstName, lastName
+select t.toolID, toolName, u.userID, firstName, lastName
 from AMVUser u, Tool t, Booking b
 where t.toolID=b.toolID and b.userID = u.userID
   and b.endDate<current_date()
