@@ -4,20 +4,20 @@ use AMVDatabase;
 
 CREATE OR REPLACE TABLE ToolCertificate(
     certificateID int NOT NULL auto_increment unique,
-    certificateName VARCHAR(50) NOT NULL,
+    certificateName VARCHAR(64) NOT NULL,
     PRIMARY KEY (certificateID)
 );
 
 CREATE OR REPLACE TABLE Tool (
     toolID int NOT NULL auto_increment unique,
-    toolName VARCHAR(50) NOT NULL,
+    toolName VARCHAR(64) NOT NULL,
     maintenance boolean NOT NULL DEFAULT '0',
     priceFirst int NOT NULL,
     priceAfter int NOT NULL,
-    toolCategory VARCHAR(50) NOT NULL,
+    toolCategory VARCHAR(64) NOT NULL,
     certificateID int NOT NULL,
-    toolDescription VARCHAR(2000) DEFAULT 'No description',
-    picturePath varchar(50) DEFAULT 'amv.png',
+    toolDescription VARCHAR(2048) DEFAULT 'No description',
+    picturePath varchar(64) DEFAULT 'amv.png',
     PRIMARY KEY (toolID),
     FOREIGN KEY (certificateID) REFERENCES ToolCertificate(certificateID),
     CHECK(toolCategory in
@@ -36,10 +36,10 @@ CREATE OR REPLACE TABLE files(
 
 CREATE OR REPLACE TABLE AMVUser (
     userID INT NOT NULL auto_increment unique,
-    email VARCHAR(50) NOT NULL unique,
-    passwordHash VARCHAR(250) NOT NULL,
-    firstName VARCHAR(50),
-    lastName VARCHAR(50) NOT NULL,
+    email VARCHAR(64) NOT NULL unique,
+    passwordHash VARCHAR(255) NOT NULL,
+    firstName VARCHAR(64),
+    lastName VARCHAR(64) NOT NULL,
     phoneNumber VARCHAR(16),
     unionMember boolean NOT NULL,
     userAdmin boolean NOT NULL,
@@ -86,7 +86,7 @@ VALUES ('Orbital_Sander', 'Eksentersliper 230V.PNG', 0, 20, 'Various_Tools', '1'
        ('Air_Compressor',default, 0, 20, 'Various_Tools', '1', '0', '• Maks. trykk: 10 bar. Avgitt luftmengde: 255 l/min. Effekt: 1,5 kW.'),
        ('Car_Diagnosis_Tools','Bildiagnose.PNG', 0, 50, 'Various_Tools', '1', '0', null),
        ('Vibrating_Plate','Hoppetusse bensin.PNG', 0, 50, 'Various_Tools', '1', '0', 'Vekt: 86 kg. Bruker ren bensin minimum oktantall 95. Motoroljenivå sjekkes før og etter bruk. Oljetype: Shell Ultra Ect 5W-30 (AMV nr. 0095-0069).'),
-       ('Tile Cutter_Ceramic','Flisekutter keramikk.PNG', 0, 20, 'Various_Tools', '1', '0', null),
+       ('Tile_Cutter_Ceramic','Flisekutter keramikk.PNG', 0, 20, 'Various_Tools', '1', '0', null),
        ('Automatic_Screwer',default, 0, 20, 'Various_Tools', '1', '0', null),
        ('Motorized_Wheelbarrow','Motorisert trillebår.PNG', 0, 50, 'Various_Tools', '1', '0', 'Brukermanual er også lagret i beholder på selve utstyret. Viktig å lese dette før bruk. Bruk kun ren blyfri 95 oktan bensin. Sjekk alltid motoroljenivå før oppstart. Sørg for å få en rask opplæring i bruk av dette utstyret før første gangs bruk.'),
        ('Nailgun_Pressurized_Large',default, 0, 20, 'Nailguns', '1', '0', null),
