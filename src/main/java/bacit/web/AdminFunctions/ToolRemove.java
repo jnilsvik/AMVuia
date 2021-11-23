@@ -17,8 +17,8 @@ import javax.servlet.annotation.*;
 
 
 //made by ? changed to JSP by Paul
-@WebServlet(name = "RemoveTool", value = "/removetool")
-public class RemoveTool extends HttpServlet {
+@WebServlet(name = "ToolRemove", value = "/removetool")
+public class ToolRemove extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (checkSession(request, response)){
             try {

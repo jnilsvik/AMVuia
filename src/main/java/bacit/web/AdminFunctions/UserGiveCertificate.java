@@ -14,8 +14,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 // by Dilan changed to jsp by paul
-@WebServlet(name = "GiveCertificate", value = "/givecertificate")
-public class GiveCertificate extends HttpServlet {
+@WebServlet(name = "UserGiveCertificate", value = "/givecertificate")
+public class UserGiveCertificate extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {

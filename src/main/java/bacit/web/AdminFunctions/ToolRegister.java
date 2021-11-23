@@ -16,9 +16,9 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 // by Dilan changed by paul
-@WebServlet(name = "RegisterTool", value = "/toolregister")
+@WebServlet(name = "ToolRegister", value = "/toolregister")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 5, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5)
-public class RegisterTool extends HttpServlet {
+public class ToolRegister extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

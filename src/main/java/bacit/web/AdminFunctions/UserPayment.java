@@ -10,8 +10,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 // by Dilan
-@WebServlet(name = "Payment", value = "/payment")
-public class Payment extends HttpServlet {
+@WebServlet(name = "UserPayment", value = "/payment")
+public class UserPayment extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {

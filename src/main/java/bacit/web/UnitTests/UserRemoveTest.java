@@ -1,6 +1,6 @@
 package bacit.web.UnitTests;
 
-import bacit.web.AdminFunctions.RemoveUser;
+import bacit.web.AdminFunctions.UserRemove;
 import bacit.web.Modules.UserModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RemoveUserTest {
+public class UserRemoveTest {
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
@@ -32,7 +32,7 @@ public class RemoveUserTest {
     @Test
     void doGet() throws Exception{
         //Arrange
-        FakeRemoveUser unitUnderTest = new FakeRemoveUser();
+        FakeUserRemove unitUnderTest = new FakeUserRemove();
         //Act
         unitUnderTest.doGet(null,null);
 
@@ -44,7 +44,7 @@ public class RemoveUserTest {
     @Test
     void doPost() throws Exception{
         //Arrange
-        FakeRemoveUser unitUnderTest = new FakeRemoveUser();
+        FakeUserRemove unitUnderTest = new FakeUserRemove();
         //Act
         unitUnderTest.doPost(null,null);
 
@@ -58,11 +58,11 @@ public class RemoveUserTest {
     }
 }
 
-class FakeRemoveUser extends RemoveUser {
+class FakeUserRemove extends UserRemove {
 
     List<UserModel> users = new LinkedList<>();
 
-    FakeRemoveUser(){
+    FakeUserRemove(){
         setUser();
     }
 
