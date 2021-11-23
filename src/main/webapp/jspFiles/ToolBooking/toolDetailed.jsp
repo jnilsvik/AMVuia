@@ -20,6 +20,7 @@
 
         out.print("<h1> " + tool.getToolName().replaceAll("_", " ") +
                 " from the Category: " + tool.getToolCategory().replaceAll("_", " ") + "</h1>");
+        // TODO: 22.11.2021 -joachim: this need to be changed to pic. path
         out.print("<img src = 'img/amv.png' width = '156' height = '151'>");
         out.print("<h2>Price the first day: " +  tool.getPriceFirst() + "</h2>");
         out.print("<h2>Price after the first day: " +  tool.getPriceAfter() + "</h2>");
