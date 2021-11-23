@@ -26,6 +26,7 @@ public class ChangePassword extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            // TODO: 23.11.2021 -joachim: this could use some cleaning
             HttpSession session = request.getSession(false);
             String email = (String) session.getAttribute("email");
 

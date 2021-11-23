@@ -61,6 +61,7 @@ public class UserRemove extends HttpServlet {
         PreparedStatement statements = db.prepareStatement(a);
         ResultSet rs = statements.executeQuery();
         while (rs.next()) {
+            // TODO: 23.11.2021 -joachim: just make a Usermodel w/empty constructure and assign the nessesary variabled
             users.add(new UserModel(
                     rs.getInt("userID"),
                     "", "", "", "", false, false,
