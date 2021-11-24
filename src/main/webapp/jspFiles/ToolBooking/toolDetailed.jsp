@@ -74,7 +74,7 @@
             int days = 0;
             int resetWeek = 1;
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            while (days <= 120) {
+            while (days <= 180) {
 
                 //sets colour dependant on availability
                 String status = "Available";
