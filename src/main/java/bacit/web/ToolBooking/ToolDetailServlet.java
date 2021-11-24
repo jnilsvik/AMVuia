@@ -43,8 +43,9 @@ public class ToolDetailServlet extends HttpServlet {
                 "SELECT * FROM Tool WHERE toolID = ?");
         ps.setInt(1, toolID);
         ResultSet rs = ps.executeQuery();
+        ToolModel tool = null;
         if(rs.next()){
-            return new ToolModel(
+            tool = new ToolModel(
                     rs.getInt("toolID"),
                     rs.getString("toolName"),
                     rs.getString("toolCategory"),
@@ -55,9 +56,10 @@ public class ToolDetailServlet extends HttpServlet {
                     rs.getString("toolDescription"),
                     rs.getString("picturePath"));
         }
-        else {
-            return null;
-        }
+        db.close();
+        ps.close();
+        rs.close();
+        return tool;
     }
 
     private List<LocalDate> getBookings(int toolID) throws SQLException {
