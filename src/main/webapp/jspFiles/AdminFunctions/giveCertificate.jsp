@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="bacit.web.Modules.Certificate" %><%--
+<%@ page import="bacit.web.Modules.CertificateModel" %><%--
   Created by IntelliJ IDEA.
   User: Asus
   Date: 14.11.2021
@@ -36,12 +36,12 @@
         </div>
         <div class='form-floating mb-3'>
         <%
-            List<Certificate> certificateNames = (List<Certificate>) request.getAttribute("certificates");
+            List<CertificateModel> certificateNames = (List<CertificateModel>) request.getAttribute("certificates");
             out.print("<h3>Choose Certificate:</h3>");
             out.print("<select name = 'certificateID' id = 'certificateID' class='form-control' placeholder='name'><br>");
             out.print("<label for = 'certificateID'>Tool Certificate: </label><br>");
 
-            for (Certificate cert : certificateNames) {
+            for (CertificateModel cert : certificateNames) {
                 String certificateName = cert.getCertificateName();
                 int certificateID = cert.getCertificateID();
                 out.print("<option value = '" + certificateID + "'> " + certificateName + " </option>");

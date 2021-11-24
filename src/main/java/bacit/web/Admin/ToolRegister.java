@@ -1,6 +1,6 @@
 package bacit.web.Admin;
 
-import bacit.web.Modules.Certificate;
+import bacit.web.Modules.CertificateModel;
 import bacit.web.Modules.FileModel;
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
@@ -26,7 +26,7 @@ public class ToolRegister extends HttpServlet {
         try {
             if (checkSession(request,response)) {
                 List<String> categories = getCategories();
-                List<Certificate> certificates = getCertificates();
+                List<CertificateModel> certificates = getCertificates();
                 printJspGet(request, response, categories, certificates);
             }
         } catch (Exception e) {
@@ -63,13 +63,13 @@ public class ToolRegister extends HttpServlet {
         return categories;
     }
 
-    protected List<Certificate> getCertificates() throws SQLException{
+    protected List<CertificateModel> getCertificates() throws SQLException{
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement statement = db.prepareStatement("SELECT certificateID, certificateName FROM ToolCertificate;");
         ResultSet rs = statement.executeQuery();
-        LinkedList<Certificate> certificates = new LinkedList<>();
+        LinkedList<CertificateModel> certificates = new LinkedList<>();
         while(rs.next()){
-            certificates.add(new Certificate(
+            certificates.add(new CertificateModel(
                     rs.getInt("certificateID"),
                     rs.getString("certificateName")
                     ));
@@ -118,7 +118,7 @@ public class ToolRegister extends HttpServlet {
         dao.persistFile(fileModel);
     }
 
-    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<Certificate> certificates) throws ServletException, IOException {
+    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<CertificateModel> certificates) throws ServletException, IOException {
         request.setAttribute("categories", categories);
         request.setAttribute("certificates", certificates);
         request.getRequestDispatcher("/jspFiles/AdminFunctions/registerTool.jsp").forward(request,response);
