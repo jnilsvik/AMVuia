@@ -63,6 +63,6 @@ public class UserHistoryAdmin extends HttpServlet {
         }
         PageAccess.reDirWOUser(request,response);
         PageAccess.reDirWOAdmin(request,response);
-        return true;
+        return false;
     }
 }

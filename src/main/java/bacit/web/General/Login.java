@@ -1,6 +1,5 @@
 package bacit.web.General;
 
-import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;
 import bacit.web.utils.hashPassword;
@@ -15,12 +14,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
 
 @WebServlet(name = "login", value = "/login")
 public class Login extends HttpServlet {
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
 
         try {
             if (checkSession(request,response)) {
@@ -71,12 +69,7 @@ public class Login extends HttpServlet {
         }
         return false;
     }
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (PageAccess.isUser(request)){
-            return true;
-        }
-        else {
-            return false;
-        }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) {
+        return PageAccess.isUser(request);
     }
 }

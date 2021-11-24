@@ -24,7 +24,7 @@ public class ChangePassword extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
             // TODO: 24.11.2021 -joachim: this could use some refactoring
             HttpSession session = request.getSession(false);
@@ -60,7 +60,7 @@ public class ChangePassword extends HttpServlet {
         }
     }
 
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isUser(request)){
             return true;
         }

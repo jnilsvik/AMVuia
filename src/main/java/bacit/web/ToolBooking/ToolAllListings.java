@@ -9,9 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +17,7 @@ import java.util.List;
 @WebServlet(name = "ToolList", value = "/toolList")
 public class ToolAllListings extends HttpServlet {
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)){
                 List<String> categories = getCategories(request);
@@ -72,7 +70,7 @@ public class ToolAllListings extends HttpServlet {
         return toolALL;
     }
 
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isUser(request)){
             return true;
         }

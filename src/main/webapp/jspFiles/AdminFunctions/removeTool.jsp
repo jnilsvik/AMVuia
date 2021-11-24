@@ -1,13 +1,5 @@
-<%@ page import="java.sql.ResultSet" %>
 <%@ page import="bacit.web.Modules.ToolModel" %>
 <%@ page import="java.util.List" %>
-<%@ page import="javax.tools.Tool" %><%--
-  Created by IntelliJ IDEA.
-  User: Asus
-  Date: 14.11.2021
-  Time: 11:12
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -20,23 +12,24 @@
 <body>
 <jsp:include page="../PageElements/header.jsp"/>
   <h2>Please enter the ID or name of the tool you want to remove</h2>
+  <%// TODO: 24.11.2021 this method dont have a action???%>
   <form method='POST'>
-    <h3>ID:</h3>
-    <textarea id='input' name='input' rows='1' cols='50'></textarea><br><br>
+    <label for="input">ID: </label>
+    <textarea id='input' name='input' rows='1' cols='50'></textarea>
     <input type = 'submit' value = 'Remove!'>
-
-    <table>
-      <%
-        List<ToolModel> tools = (List<ToolModel>) request.getAttribute("tools");
-        for(ToolModel tool : tools){
-          out.print("<tr>" +
-                  "<td>" + tool.getToolID() + "</td>" +
-                  "<td>" + tool.getToolName() + "</td>" +
-                  "</tr>");
-        }
-      %>
-    </table>
-    </form>
+  </form>
+  <table>
+    <%
+      List<ToolModel> tools = (List<ToolModel>) request.getAttribute("tools");
+      for(ToolModel tool : tools){
+        out.print(
+                "<tr>" +
+                        "<td>" + tool.getToolID() + "</td>" +
+                        "<td>" + tool.getToolName() + "</td>" +
+                        "</tr>");
+      }
+    %>
+  </table>
 <jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>

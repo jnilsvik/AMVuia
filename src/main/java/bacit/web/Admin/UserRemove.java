@@ -112,7 +112,7 @@ public class UserRemove extends HttpServlet {
         return false;
     }
 
-    protected void printJspSelfDeletion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void printJspSelfDeletion(HttpServletRequest request, HttpServletResponse response) {
         PageAccess.reDirFeedback(request, response, "You can't delete yourself");
     }
 

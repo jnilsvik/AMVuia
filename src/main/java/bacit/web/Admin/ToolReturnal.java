@@ -14,7 +14,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "ToolReturnal", value = "/toolreturnal")
 public class ToolReturnal extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)) {
                 Connection db = DBUtils.getNoErrorConnection();
@@ -39,8 +39,7 @@ public class ToolReturnal extends HttpServlet {
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         LocalDate returnDate = LocalDate.parse(request.getParameter("returndate"));
         String orderID = request.getParameter("orderID");
         setReturned(orderID, returnDate);

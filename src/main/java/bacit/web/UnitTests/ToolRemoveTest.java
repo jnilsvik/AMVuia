@@ -101,7 +101,7 @@ class FakeToolRemove extends ToolRemove {
     }
 
     @Override
-    protected boolean deleteRow(int id) throws SQLException{
+    protected boolean deleteRow(int id) {
         for(ToolModel tool: tools){
             if(tool.getToolID() == id){
                 tools.remove(tool);

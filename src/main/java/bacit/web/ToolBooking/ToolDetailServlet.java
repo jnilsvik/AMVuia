@@ -20,7 +20,7 @@ import javax.servlet.http.*;
 @WebServlet(name = "ToolDetailServlet", value = "/tooldetail")
 public class ToolDetailServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try{
             if (checkSession(request,response)){
                 int toolID = Integer.parseInt(request.getParameter("toolID"));
@@ -82,7 +82,7 @@ public class ToolDetailServlet extends HttpServlet {
         db.close();
         return dates;
     }
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isUser(request)){
             return true;
         }

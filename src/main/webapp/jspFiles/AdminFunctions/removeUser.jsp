@@ -20,9 +20,9 @@
 <jsp:include page="../PageElements/header.jsp"/>
     <h2>Please enter the email of the user you want to remove</h2>
     <form method='POST'>
-    <h3>Email:</h3>
-    <textarea id='input' name='input' rows='1' cols='50'></textarea><br><br>
-    <input type = 'submit' value = 'Remove!'>
+        <label for="input">Email: </label>
+        <textarea id='input' name='input' rows='1' cols='50'></textarea><br><br>
+        <input type = 'submit' value = 'Remove!'>
     </form>
 
     <table>

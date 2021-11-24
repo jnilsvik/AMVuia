@@ -26,7 +26,7 @@ public class ToolMaintenance extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String toolMaintenance = request.getParameter("toolmaintenance");
         String toolID = request.getParameter("toolID");
         maintainTool(request, response, toolMaintenance, toolID);

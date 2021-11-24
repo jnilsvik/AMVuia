@@ -22,7 +22,7 @@ import javax.servlet.annotation.*;
 public class ToolBookingServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
         try {
             if (checkSession(request,response)){
@@ -169,7 +169,7 @@ public class ToolBookingServlet extends HttpServlet {
         }
         return taken;
     }
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isUser(request)){
             return true;
         }

@@ -1,7 +1,5 @@
 package bacit.web.utils;
 
-import bacit.web.Modules.FileModel;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +38,6 @@ public class GetFile extends HttpServlet {
             outputStream.write(buffer, 0, bytesRead);
         }
         byte[] imageBytes = outputStream.toByteArray();
-        String image = Base64.getEncoder().encodeToString(imageBytes);
-        return image;
+        return Base64.getEncoder().encodeToString(imageBytes);
     }
 }

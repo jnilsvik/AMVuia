@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class CancelOrder extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)){
                 String email = PageAccess.getEmail(request);
@@ -63,12 +63,12 @@ public class CancelOrder extends HttpServlet {
         db.close();
         return result;
     }
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isAdmin(request)){
             return true;
         }
         PageAccess.reDirWOUser(request,response);
-        return true;
+        return false;
     }
 
 }

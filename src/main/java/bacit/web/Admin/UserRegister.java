@@ -46,7 +46,7 @@ public class UserRegister extends HttpServlet {
 
 
     }
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isAdmin(request)){
             return true;
         }

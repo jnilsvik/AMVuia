@@ -13,7 +13,7 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "Payment", value = "/payment")
 public class Payment extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)) {
                 Connection db = DBUtils.getNoErrorConnection();
@@ -37,8 +37,7 @@ public class Payment extends HttpServlet {
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String orderID = request.getParameter("orderID");
         setPaid(orderID);
         PageAccess.reDirFeedback(request,response,"Order was successfully marked as paid");

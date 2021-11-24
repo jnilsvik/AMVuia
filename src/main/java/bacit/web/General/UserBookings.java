@@ -17,7 +17,7 @@ import javax.servlet.annotation.*;
 // by Dilan changed by Paul
 @WebServlet(name = "UserBookings", value = "/profile")
 public class UserBookings extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)){
                 String email = getEmailFromSession(request,response);
@@ -68,7 +68,7 @@ public class UserBookings extends HttpServlet {
         request.setAttribute("bookings", bookings);
         request.getRequestDispatcher("/jspFiles/UserBookings/profile.jsp").forward(request,response);
     }
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isUser(request)){
             return true;
         }

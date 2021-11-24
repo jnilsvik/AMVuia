@@ -22,7 +22,7 @@ import javax.servlet.annotation.*;
 public class ToolRegister extends HttpServlet {
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)) {
                 List<String> categories = getCategories();
@@ -35,8 +35,9 @@ public class ToolRegister extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
         try{
+            // TODO: 24.11.2021 not sure about this, will check later
             /*
             int toolID = addTool(getToolFromRequest(request));
             try {
