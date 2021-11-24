@@ -34,12 +34,9 @@ public class Login extends HttpServlet {
         if(Validation(email,password)){
             HttpSession session= request.getSession();
             session.setAttribute("email",email);
-            try {
-                // TODO: 09.11.2021 make this send you straigth to tools thingy 
-                request.getRequestDispatcher("/jspFiles/PageElements/landing.jsp").forward(request,response);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            }
+
+            response.sendRedirect("xtl");
+
         } else {
             PageAccess.ReDirFeedback(request,response,"Invalid email or password");
         }
