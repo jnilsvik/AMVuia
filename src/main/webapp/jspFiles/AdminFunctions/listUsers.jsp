@@ -40,15 +40,18 @@
             if(rs != null) {
                 try {
                     while (rs.next()) {
-                            out.print("<tr>");
-                            out.print("<td>" + rs.getInt("userID") + "</td>");
-                            out.print("<td>" + rs.getString("email") + "</td>");
-                            out.print("<td>" + rs.getString("firstname") + "</td>");
-                            out.print("<td>" + rs.getString("lastname") + "</td>");
-                            out.print("<td>" + rs.getString("phoneNumber") + "</td>");
-                            out.print("<td>" + rs.getBoolean("unionMember") + "</td>");
-                            out.print("<td>" + rs.getBoolean("userAdmin") + "</td>");
-                            out.print("</tr>");
+                            out.print(
+                            "<FORM action='userhistoryadmin' method='get'>" +
+                            "<tr>" +
+                            "<td>" + rs.getInt("userID") + "</td>" +
+                            "<td>" + rs.getString("email") + "</td>" +
+                            "<td>" + rs.getString("firstname") + "</td>" +
+                            "<td>" + rs.getString("lastname") + "</td>" +
+                            "<td>" + rs.getString("phoneNumber") + "</td>" +
+                            "<td>" + rs.getBoolean("unionMember") + "</td>" +
+                            "<td>" + rs.getBoolean("userAdmin") + "</td>" +
+                            "<td> <button name='userID' type='submit' value='"+rs.getInt("userID")+"'> View User's Tool History </button> </td>" +
+                            "</tr>");
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();

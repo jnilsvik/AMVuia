@@ -1,7 +1,4 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="bacit.web.Modules.ToolModel" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.time.LocalDate" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 
@@ -62,7 +59,7 @@
 <div class='page'>
     <article class='my-3 amv-register' id='floating-labels'>
         <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
-            <h3>Mark order as payed</h3>
+            <h3>Mark order as paid</h3>
         </div>
         <div>
             <div class='bd-example'>
