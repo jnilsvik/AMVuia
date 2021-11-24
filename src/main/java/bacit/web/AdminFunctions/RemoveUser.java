@@ -53,15 +53,8 @@ public class RemoveUser extends HttpServlet {
         return PageAccess.getEmail(request);
     }
 
-    protected boolean deleteUser(String email) throws  SQLException{
-        Connection db = DBUtils.getNoErrorConnection();
-        PreparedStatement statement = db.prepareStatement("DELETE FROM AMVUser WHERE email = ? ");
-        statement.setString(1, String.valueOf(email));
-        int noOfAffectedRows = statement.executeUpdate();
-
-        statement.close();
-        db.close();
-        return noOfAffectedRows != 0;
+    protected String getUser(HttpServletRequest request){
+        return request.getParameter("input");
     }
 
     protected List<UserModel> getUsers() throws SQLException {
@@ -83,12 +76,19 @@ public class RemoveUser extends HttpServlet {
         return users;
     }
 
-    protected boolean checkSelfDeletion(String user, String email){
-        return user.equals(email);
+    protected boolean deleteUser(String email) throws  SQLException{
+        Connection db = DBUtils.getNoErrorConnection();
+        PreparedStatement statement = db.prepareStatement("DELETE FROM AMVUser WHERE email = ? ");
+        statement.setString(1, String.valueOf(email));
+        int noOfAffectedRows = statement.executeUpdate();
+
+        statement.close();
+        db.close();
+        return noOfAffectedRows != 0;
     }
 
-    protected String getUser(HttpServletRequest request){
-        return request.getParameter("input");
+    protected boolean checkSelfDeletion(String user, String email){
+        return user.equals(email);
     }
 
     protected void writePostToJSP(List<UserModel> users, boolean success, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
