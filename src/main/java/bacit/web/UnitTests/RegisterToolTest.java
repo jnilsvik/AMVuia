@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,11 +44,17 @@ public class RegisterToolTest {
 
     @Test
     public void doPost() throws IOException {
-        FakeRegisterTool unitUnderTes = new FakeRegisterTool();
+        FakeRegisterTool unitUnderTest = new FakeRegisterTool();
 
-        unitUnderTes.doPost(null, null);
+        unitUnderTest.doPost(null, null);
 
         assertEquals("Tool1 Tool2 ", outputStreamCaptor.toString());
+
+        unitUnderTest.setNewToolName("error");
+
+        unitUnderTest.doPost(null, null);
+
+        assertEquals("Tool1 Tool2 error", outputStreamCaptor.toString());
     }
 }
 
@@ -56,11 +63,16 @@ class FakeRegisterTool extends RegisterTool{
     List<String> categories = new LinkedList<>();
     List<Certificate> certificates = new LinkedList<>();
     List<ToolModel> tools = new LinkedList<>();
+    String newToolName = "Tool2";
 
     FakeRegisterTool(){
         setCategories();
         setCertificates();
         setTools();
+    }
+
+    public void setNewToolName(String newToolName) {
+        this.newToolName = newToolName;
     }
 
     private void setCategories(){
@@ -113,7 +125,7 @@ class FakeRegisterTool extends RegisterTool{
     protected ToolModel getToolFromRequest(HttpServletRequest request){
         return new ToolModel(
                 2,
-                "Tool2",
+                newToolName,
                 "Cat1",
                 false,
                 0,
@@ -124,7 +136,8 @@ class FakeRegisterTool extends RegisterTool{
     }
 
     @Override
-    protected int addTool(ToolModel tool){
+    protected int addTool(ToolModel tool) throws SQLException {
+        if(tool.getToolName().equals("error")) throw new SQLException();
         tools.add(tool);
         return tool.getToolID();
     }
@@ -134,6 +147,11 @@ class FakeRegisterTool extends RegisterTool{
         for(ToolModel tool: tools){
             System.out.print(tool.getToolName()+" ");
         }
+    }
+
+    @Override
+    protected void printJspError(HttpServletRequest request, HttpServletResponse response){
+        System.out.print("error");
     }
 
     @Override

@@ -45,7 +45,7 @@ public class RegisterTool extends HttpServlet {
 
             printJspPost(request, response);
         }catch (Exception e){
-            e.printStackTrace();
+            printJspError(request, response);
         }
     }
 
@@ -150,6 +150,10 @@ public class RegisterTool extends HttpServlet {
         String successfulLine = "<h1>The tool has been registered successfully</h1>";
         request.setAttribute("successfulLine", successfulLine);
         request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
+    }
+
+    protected void printJspError(HttpServletRequest request, HttpServletResponse response){
+        PageAccess.reDirFeedback(request, response, "Data could not be added to the database");
     }
 
 }
