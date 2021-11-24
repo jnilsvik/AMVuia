@@ -28,7 +28,7 @@ public class ToolBookingServlet extends HttpServlet {
             if (checkSession(request,response)){
                 int toolID = Integer.parseInt(request.getParameter("tools"));
                 int inputDays = Integer.parseInt(request.getParameter("days")) - 1;
-                int userID = getUserID(PageAccess.getEmail(request,response));
+                int userID = getUserID(PageAccess.getEmail(request));
                 LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
                 LocalDate endingDate = StartDateWanted.plusDays(inputDays);
 
@@ -39,9 +39,9 @@ public class ToolBookingServlet extends HttpServlet {
 
                 //checkDate class sees if the wanted booked days are already taken. The hasCertificate method checks if the user has the needed certificate.
                 if(dateBookedTaken(StartDateWanted, inputDays, toolID)){
-                    PageAccess.ReDirFeedback(request,response,"Sorry, the tools is already been booked for that date");
+                    PageAccess.reDirFeedback(request,response,"Sorry, the tools is already been booked for that date");
                 }else if(!hasCertificate(userID, tool.getCertificateID())){
-                    PageAccess.ReDirFeedback(request,response,"Sorry, you don't have the needed certificate for this tool.");
+                    PageAccess.reDirFeedback(request,response,"Sorry, you don't have the needed certificate for this tool.");
                 }else{
                     registerBooking(StartDateWanted, endingDate, totalPrice, userID, toolID);
                     request.setAttribute("booking", new BookingModel(0, userID, toolID, totalPrice, StartDateWanted, StartDateWanted.plusDays(inputDays), null));
@@ -170,7 +170,7 @@ public class ToolBookingServlet extends HttpServlet {
         return taken;
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (PageAccess.isUser(request,response)){
+        if (PageAccess.isUser(request)){
             return true;
         }
         PageAccess.reDirWOUser(request,response);

@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
@@ -51,7 +49,7 @@ public class Login extends HttpServlet {
             response.sendRedirect("toolList");
 
         } else {
-            PageAccess.ReDirFeedback(request,response,"Invalid email or password");
+            PageAccess.reDirFeedback(request,response,"Invalid email or password");
         }
     }
     private boolean Validation(String email, String pw){
@@ -74,7 +72,7 @@ public class Login extends HttpServlet {
         return false;
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (PageAccess.isUser(request,response)){
+        if (PageAccess.isUser(request)){
             return true;
         }
         else {

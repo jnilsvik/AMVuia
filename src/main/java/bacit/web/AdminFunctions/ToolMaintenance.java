@@ -19,7 +19,7 @@ public class ToolMaintenance extends HttpServlet {
             if (checkSession(request,response)) {
                 request.getRequestDispatcher("jspFiles/AdminFunctions/toolMaintenance.jsp").forward(request,response);
             } else {
-                PageAccess.ReDirFeedback(request,response,"You need to be an administrator to view this");
+                PageAccess.reDirFeedback(request,response,"You need to be an administrator to view this");
             }
         } catch (Exception e) {
             e.printStackTrace();
