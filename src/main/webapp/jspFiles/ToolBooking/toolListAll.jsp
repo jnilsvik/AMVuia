@@ -40,13 +40,14 @@
             for (ToolModel tm : model){
                 out.print("<FORM action='tooldetail' method='get'>");
                 out.print("<div class='featured-product-item'>");
-                out.print("<div class='featured-product-item-image' style='background-image: url(img/"+
+                out.print("<img href=\'/getFile\'  alt=\'TEST\' />");
+                /*out.print("<div class='featured-product-item-image' style='background-image: url(img/"+
                         tm.getPicturePath()
                                 .replaceAll(" ","%20")
                                 .replaceAll("æ","%C3%A6")
                                 .replaceAll("ø","%C3%B8")
                                 .replaceAll("å","%C3%A5") +
-                        ");'></div>");
+                        ");'></div>");*/
                 out.print("<p class='title'>"+tm.getToolName().replaceAll("_"," ")+"</p>");
                 out.print("<button name='toolID' type='submit' value='"+tm.getToolID()+"'>");
                 out.print("View item");

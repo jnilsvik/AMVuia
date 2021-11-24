@@ -31,30 +31,24 @@ public class RemoveUserTest {
 
     @Test
     void doGet() throws Exception{
-        //Arrange
         FakeRemoveUser unitUnderTest = new FakeRemoveUser();
-        //Act
+
         unitUnderTest.doGet(null,null);
 
-        assertEquals("email1 email2", outputStreamCaptor.toString()
-                .trim());
-
+        assertEquals("email1 email2 ", outputStreamCaptor.toString());
     }
 
     @Test
     void doPost() throws Exception{
-        //Arrange
         FakeRemoveUser unitUnderTest = new FakeRemoveUser();
-        //Act
+
         unitUnderTest.doPost(null,null);
 
-        assertEquals("true email2", outputStreamCaptor.toString()
-                .trim());
+        assertEquals("true email2 ", outputStreamCaptor.toString());
 
         unitUnderTest.doPost(null, null);
 
-        assertEquals("true email2 false email2", outputStreamCaptor.toString()
-                .trim());
+        assertEquals("true email2 false email2 ", outputStreamCaptor.toString());
     }
 }
 
@@ -107,7 +101,6 @@ class FakeRemoveUser extends RemoveUser {
 
     @Override
     protected void writeGetToJSP(List<UserModel> users, HttpServletRequest request, HttpServletResponse response){
-        System.out.flush();
         for(UserModel user : users){
             System.out.print(user.getEmail() + " ");
         }
@@ -115,7 +108,6 @@ class FakeRemoveUser extends RemoveUser {
 
     @Override
     protected void writePostToJSP(List<UserModel> users, boolean success, HttpServletRequest request, HttpServletResponse response){
-        System.out.flush();
         System.out.print(success + " ");
         for(UserModel user : users){
             System.out.print(user.getEmail() + " ");

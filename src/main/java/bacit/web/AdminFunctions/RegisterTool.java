@@ -2,6 +2,7 @@ package bacit.web.AdminFunctions;
 
 import bacit.web.Modules.Certificate;
 import bacit.web.Modules.FileModel;
+import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.FileDAO;
 import bacit.web.utils.PageAccess;
@@ -26,9 +27,7 @@ public class RegisterTool extends HttpServlet {
             if (checkSession(request,response)) {
                 List<String> categories = getCategories();
                 List<Certificate> certificates = getCertificates();
-                request.setAttribute("categories", categories);
-                request.setAttribute("certificates", certificates);
-                request.getRequestDispatcher("/jspFiles/AdminFunctions/registerTool.jsp").forward(request,response);
+                printJspGet(request, response, categories, certificates);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,30 +35,21 @@ public class RegisterTool extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{
-            int toolID = addTool(
-                    request.getParameter("toolname"),
-                    Integer.parseInt(request.getParameter("pricefirst")),
-                    Integer.parseInt(request.getParameter("priceafter")),
-                    request.getParameter("toolCategory"),
-                    Integer.parseInt(request.getParameter("toolcertificate")),
-                    request.getParameter("tooldesc")
-            );
+            int toolID = addTool(getToolFromRequest(request));
 
-            try {
+            /*try {
                 addFile(request.getPart("file"), toolID);
-            } catch (Exception e){}
+            } catch (Exception e){}*/
 
-            String successfulLine = "<h1>The tool has been registered successfully</h1>";
-            request.setAttribute("successfulLine", successfulLine);
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
+            printJspPost(request, response);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    private List<String> getCategories() throws SQLException {
+    protected List<String> getCategories() throws SQLException {
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement statement = db.prepareStatement("SELECT toolCategory FROM Tool GROUP BY toolCategory");
         ResultSet rs = statement.executeQuery();
@@ -73,7 +63,7 @@ public class RegisterTool extends HttpServlet {
         return categories;
     }
 
-    private List<Certificate> getCertificates() throws SQLException{
+    protected List<Certificate> getCertificates() throws SQLException{
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement statement = db.prepareStatement("SELECT certificateID, certificateName FROM ToolCertificate;");
         ResultSet rs = statement.executeQuery();
@@ -90,18 +80,18 @@ public class RegisterTool extends HttpServlet {
         return certificates;
     }
 
-    private int addTool(String toolName,int priceFirst, int priceAfter, String toolCategory, int certificateID, String toolDescription) throws SQLException{
+    protected int addTool(ToolModel tool) throws SQLException{
         int result = 0;
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement statement = db.prepareStatement(
                 "insert into Tool (toolName, maintenance, priceFirst, priceAfter, toolCategory, certificateID, toolDescription) values(?, ?, ?, ?, ?, ?, ?)");
-        statement.setString(1, toolName);
+        statement.setString(1, tool.getToolName());
         statement.setBoolean(2, false);
-        statement.setInt(3, priceFirst);
-        statement.setInt(4, priceAfter);
-        statement.setString(5, toolCategory);
-        statement.setInt(6, certificateID);
-        statement.setString(7, toolDescription);
+        statement.setInt(3, tool.getPriceFirst());
+        statement.setInt(4, tool.getPriceAfter());
+        statement.setString(5, tool.getToolCategory());
+        statement.setInt(6, tool.getCertificateID());
+        statement.setString(7, tool.getDescription());
         statement.executeUpdate();
         statement.close();
         PreparedStatement statement1 = db.prepareStatement("SELECT toolID FROM Tool WHERE toolId = LAST_INSERT_ID();");
@@ -113,7 +103,7 @@ public class RegisterTool extends HttpServlet {
         return result;
     }
 
-    private void addFile(Part filePart, int toolID) throws Exception {
+    protected void addFile(Part filePart, int toolID) throws Exception {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         InputStream fileContent = filePart.getInputStream();
         byte[] fileBytes = fileContent.readAllBytes();
@@ -127,6 +117,7 @@ public class RegisterTool extends HttpServlet {
         FileDAO dao = new FileDAO();
         dao.persistFile(fileModel);
     }
+
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (PageAccess.isAdmin(request,response)){
             return true;
@@ -134,6 +125,31 @@ public class RegisterTool extends HttpServlet {
         PageAccess.reDirWOUser(request,response);
         PageAccess.reDirWOAdmin(request,response);
         return false;
+    }
+
+    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<Certificate> certificates) throws ServletException, IOException {
+        request.setAttribute("categories", categories);
+        request.setAttribute("certificates", certificates);
+        request.getRequestDispatcher("/jspFiles/AdminFunctions/registerTool.jsp").forward(request,response);
+    }
+
+    protected ToolModel getToolFromRequest(HttpServletRequest request){
+        return new ToolModel(
+                0,
+                request.getParameter("toolname"),
+                request.getParameter("toolCategory"),
+                false,
+                Integer.parseInt(request.getParameter("pricefirst")),
+                Integer.parseInt(request.getParameter("priceafter")),
+                Integer.parseInt(request.getParameter("toolcertificate")),
+                request.getParameter("tooldesc"),
+                "");
+    }
+
+    protected void printJspPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String successfulLine = "<h1>The tool has been registered successfully</h1>";
+        request.setAttribute("successfulLine", successfulLine);
+        request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
     }
 
 }

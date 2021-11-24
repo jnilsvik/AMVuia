@@ -6,10 +6,7 @@ import bacit.web.utils.DBUtils;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class FileDAO {
     public void persistFile(FileModel file) throws Exception{
@@ -25,24 +22,21 @@ public class FileDAO {
         db.close();
     }
 
-    public FileModel getFile(int toolID) throws Exception
+    public Blob getBlob(int imgID) throws Exception
     {
         Connection db = DBUtils.getNoErrorConnection();
-        String query3 = "select Name, Content, ContentType,toolID from Files where id = ?";
+        String query3 = "select Content from Files where id = ?";
         PreparedStatement statement = db.prepareStatement(query3);
-        statement.setInt(1, toolID);
+        statement.setInt(1, imgID);
         ResultSet rs =  statement.executeQuery();
-        FileModel model = null;
+        Blob blob = null;
         if (rs.next()) {
-            model = new FileModel(
-                    rs.getString("Name"),
-                    rs.getBytes("Content"),
-                    rs.getString("ContentType"),
-                    rs.getInt("toolID")
-            );
+            blob = rs.getBlob("Content");
         }
+        rs.close();
+        statement.close();
         db.close();
-        return model;
+        return blob;
     }
 }
 

@@ -31,7 +31,8 @@ public class DownloadServlet extends HttpServlet {
 
     protected FileModel getFile(int id) throws Exception
     {
-        return new FileDAO().getFile(id);
+        //return new FileDAO().getFile(id);
+        return null;
     }
 
     protected void writeFileResult(HttpServletResponse response, FileModel model) throws IOException
