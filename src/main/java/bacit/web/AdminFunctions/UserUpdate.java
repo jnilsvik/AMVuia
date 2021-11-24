@@ -14,13 +14,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(name = "UserUpdate", value = "/userUpdate")
+@WebServlet(name = "xUserUpdate", value = "/xuserUpdate")
 public class UserUpdate extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO: 23.11.2021 set JSP
         try {
+            // TODO: 24.11.2021 change userid
             req.setAttribute("userDetailsOld",getUserDetailsOld("1"));
             req.getRequestDispatcher("UserUpdate.jsp").forward(req,resp);
         } catch (SQLException e) {
@@ -35,7 +35,8 @@ public class UserUpdate extends HttpServlet {
             UserModel uUser = compareNewToOldUserDetails(
                     getUserDetailsNew(req),
                     getUserDetailsOld(req.getParameter("user")));
-            updateDB(uUser);
+            // TODO: 23.11.2021 Remove test field
+            updateDB(uUser, 1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -81,43 +82,86 @@ public class UserUpdate extends HttpServlet {
     UserModel compareNewToOldUserDetails(UserModel newUser, UserModel oldUser){
         UserModel updatedUser = new UserModel();
         //will load the default value into the html prob...
-        // EMAIL
+        //EMAIL
         if ((newUser.getEmail().equals("")) || newUser.getEmail().equals(oldUser.getEmail()) || newUser.getEmail()==null){
             updatedUser.setEmail(oldUser.getEmail());
         } else {
             updatedUser.setEmail(newUser.getEmail());
         }
         //FN
+        if ((newUser.getFirstname().equals("")) || newUser.getFirstname().equals(oldUser.getFirstname()) || newUser.getFirstname()==null){
+            updatedUser.setEmail(oldUser.getFirstname());
+        } else {
+            updatedUser.setEmail(newUser.getFirstname());
+        }
         //LN
+        if ((newUser.getLastname().equals("")) || newUser.getLastname().equals(oldUser.getLastname()) || newUser.getLastname()==null){
+            updatedUser.setEmail(oldUser.getLastname());
+        } else {
+            updatedUser.setEmail(newUser.getLastname());
+        }
         //NMBR
+        if ((newUser.getPhoneNumber().equals("")) || newUser.getPhoneNumber().equals(oldUser.getPhoneNumber()) || newUser.getPhoneNumber()==null){
+            updatedUser.setEmail(oldUser.getPhoneNumber());
+        } else {
+            updatedUser.setEmail(newUser.getPhoneNumber());
+        }
         //UNION
+        /*
+        if (((!newUser.isUnionMember()) || newUser.isUnionMember()) == oldUser.isUnionMember()){
+            updatedUser.setUnionMember(oldUser.isUnionMember());
+        } else {
+            updatedUser.setUnionMember(newUser.isUnionMember());
+        }*/
         //ADMIN
 
         return updatedUser;
     }
 
-    void updateDB(UserModel user) throws SQLException {
+    // TODO: 24.11.2021 make indiv. buttons for each meth
+    void updateDB(UserModel userModel, int userID) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection();
-        changeEmail(user,db);
+        changeEmail(userModel,db,userID);
+        changeFName(userModel,db,userID);
+        changeLName(userModel,db,userID);
+        changePhone(userModel,db,userID);
         //insert the rest once tested
 
     }
 
-
-    void changeEmail(UserModel uUser, Connection db) throws SQLException {
-
+    void changeEmail(UserModel uUser, Connection db, int userID) throws SQLException {
         PreparedStatement st2 = db
                 .prepareStatement("UPDATE AMVUser SET email = ? WHERE userID = ?");
         st2.setString(1, uUser.getEmail());
-        st2.setInt(2, uUser.getUserID());
+        st2.setInt(2, userID);
         st2.executeUpdate();
 
     }
 
-    void changePW(){}
-    void changeFName(){}
-    void changeLName(){}
-    void changePhone(){}
+    void changeFName(UserModel uUser, Connection db, int userID) throws SQLException{
+        PreparedStatement st2 = db
+                .prepareStatement("UPDATE AMVUser SET email = ? WHERE userID = ?");
+        st2.setString(1, uUser.getEmail());
+        st2.setInt(2, userID);
+        st2.executeUpdate();
+    }
+
+    void changeLName(UserModel uUser, Connection db, int userID) throws SQLException{
+        PreparedStatement st2 = db
+                .prepareStatement("UPDATE AMVUser SET email = ? WHERE userID = ?");
+        st2.setString(1, uUser.getEmail());
+        st2.setInt(2, userID);
+        st2.executeUpdate();
+    }
+
+    void changePhone(UserModel uUser, Connection db, int userID) throws SQLException{
+        PreparedStatement st2 = db
+                .prepareStatement("UPDATE AMVUser SET email = ? WHERE userID = ?");
+        st2.setString(1, uUser.getEmail());
+        st2.setInt(2, userID);
+        st2.executeUpdate();
+    }
+
     void changeUnion(){}
     void changeAdmin(){}
 
