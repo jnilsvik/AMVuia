@@ -1,6 +1,6 @@
 package bacit.web.UnitTests;
 
-import bacit.web.AdminFunctions.RegisterTool;
+import bacit.web.AdminFunctions.ToolRegister;
 import bacit.web.Modules.Certificate;
 import bacit.web.Modules.ToolModel;
 import org.junit.jupiter.api.AfterEach;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RegisterToolTest {
+public class ToolRegisterTest {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -35,7 +35,7 @@ public class RegisterToolTest {
 
     @Test
     public void doGet() throws IOException {
-        FakeRegisterTool unitUnderTest = new FakeRegisterTool();
+        FakeToolRegister unitUnderTest = new FakeToolRegister();
 
         unitUnderTest.doGet(null,null);
 
@@ -44,7 +44,7 @@ public class RegisterToolTest {
 
     @Test
     public void doPost() throws IOException {
-        FakeRegisterTool unitUnderTest = new FakeRegisterTool();
+        FakeToolRegister unitUnderTest = new FakeToolRegister();
 
         unitUnderTest.doPost(null, null);
 
@@ -58,14 +58,14 @@ public class RegisterToolTest {
     }
 }
 
-class FakeRegisterTool extends RegisterTool{
+class FakeToolRegister extends ToolRegister {
 
     List<String> categories = new LinkedList<>();
     List<Certificate> certificates = new LinkedList<>();
     List<ToolModel> tools = new LinkedList<>();
     String newToolName = "Tool2";
 
-    FakeRegisterTool(){
+    FakeToolRegister(){
         setCategories();
         setCertificates();
         setTools();

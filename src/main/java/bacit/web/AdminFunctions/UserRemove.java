@@ -16,8 +16,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 //by ? changed to jsp by paul
-@WebServlet(name = "RemoveUser", value = "/removeuser")
-public class RemoveUser extends HttpServlet {
+@WebServlet(name = "UserRemove", value = "/removeuser")
+public class UserRemove extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if(checkSession(request,response)) {
             try {

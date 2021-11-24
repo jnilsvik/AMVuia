@@ -12,8 +12,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 // by Dilan
-@WebServlet(name = "RegisterUser", value = "/register")
-public class RegisterUser extends HttpServlet {
+@WebServlet(name = "UserRegister", value = "/register")
+public class UserRegister extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if(checkSession(request,response)) {
