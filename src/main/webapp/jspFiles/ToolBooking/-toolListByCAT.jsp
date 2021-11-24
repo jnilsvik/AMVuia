@@ -1,10 +1,7 @@
-<%@ page import="java.sql.*" %><%--
-  Created by IntelliJ IDEA.
-  User: Joachim
-  Date: 10.11.2021
-  Time: 19:58
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="bacit.web.utils.DBUtils" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="bacit.web.Modules.ToolModel" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -17,32 +14,30 @@
 <body>
 <jsp:include page="../PageElements/header.jsp"/>
 <section class='featured-products'>
-    <h1>${CAT}</h1>
-    <%
-        try {
-            ResultSet rs2= (ResultSet) request.getAttribute("toolByCAT");
-            while (rs2.next()) {
-                out.print("<FORM action='tooldetail' method='get'>");
-                out.print("<div class='featured-product-item'>");
-                out.print("<div class='featured-product-item-image' style='background-image: url(img/"+
-                        rs2.getString("picturePath")
-                                .replaceAll(" ","%20")
-                                .replaceAll("æ","%C3%A6")
-                                .replaceAll("ø","%C3%B8")
-                                .replaceAll("å","%C3%A5") +
-                        ");'>");
-                out.print("</div>");
-                out.print("<p class='title'>"+rs2.getString("toolName").replaceAll("_"," ")+"</p>");
-                out.print("<button name='toolID' type='submit' value='"+rs2.getInt("toolID")+"'>");
-                out.print("View item");
-                out.print("</button></div></FORM>");
+    <h2>Tools</h2>
+    <section class='featured-products'>
+        <%
+            ArrayList<ToolModel> model = (ArrayList<ToolModel>) request.getAttribute("toolALL1");
+            if(model != null) {
+                for (ToolModel tm : model){
+                    out.print("<FORM action='tooldetail' method='get'>");
+                    out.print("<div class='featured-product-item'>");
+                    out.print("<div class='featured-product-item-image' style='background-image: url(img/"+
+                            tm.getPicturePath()
+                                    .replaceAll(" ","%20")
+                                    .replaceAll("æ","%C3%A6")
+                                    .replaceAll("ø","%C3%B8")
+                                    .replaceAll("å","%C3%A5") +
+                            ");'></div>");
+                    out.print("<p class='title'>"+tm.getToolName().replaceAll("_"," ")+"</p>");
+                    out.print("<button name='toolID' type='submit' value='"+tm.getToolID()+"'>");
+                    out.print("View item");
+                    out.print("</button></div></FORM>");
+                }
             }
-            out.print("</table></section></section></body></html>");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        request.removeAttribute("CAT");
-    %>
+        %>
+    </section>
+
 </section>
 </body>
 </html>
