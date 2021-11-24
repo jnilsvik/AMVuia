@@ -22,12 +22,12 @@
     </div>
 
     <div class='form-floating mb-3'>
-        <input type = 'text' class='form-control' name = 'pricefirst' id="pricefirst">
-        <label for = 'pricefirst'>Price First Day</label>
+        <input type='number' max='1000' min='0' class='form-control' name='pricefirst' id="pricefirst">
+        <label for='pricefirst'>Price First Day</label>
     </div>
 
     <div class='form-floating mb-3'>
-        <input type='text' class='form-control' name='priceafter' id="priceafter">
+        <input type='number' max='1000' min='0' class='form-control' name='priceafter' id="priceafter">
         <label for='priceafter'>Price After First Day</label>
     </div>
 
