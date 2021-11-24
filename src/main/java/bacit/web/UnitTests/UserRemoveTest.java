@@ -90,7 +90,7 @@ class FakeUserRemove extends UserRemove {
     @Override
     protected boolean deleteUser(String email){
         for(UserModel user: users){
-            if(user.getEmail() == email){
+            if(user.getEmail().equals(email)){
                 users.remove(user);
                 return true;
             }

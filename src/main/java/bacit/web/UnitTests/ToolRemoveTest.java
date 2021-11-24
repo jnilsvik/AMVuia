@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 

@@ -3,7 +3,6 @@ package bacit.web.General;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

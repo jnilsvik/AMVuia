@@ -6,7 +6,6 @@ import bacit.web.utils.DBUtils;
 
 import java.sql.*;
 import java.io.*;
-import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 

@@ -32,30 +32,6 @@ public class ToolModel {
         this.picturePath = picturePath;
     }
 
-    public static ToolModel getToolModel(String toolID, PrintWriter out) throws SQLException {
-        Connection db = DBUtils.getNoErrorConnection();
-        String query ="select * from Tool where toolID = ?;";
-        PreparedStatement statement= db.prepareStatement(query);
-        statement.setString(1, toolID);
-
-        ResultSet rs = statement.executeQuery();
-        ToolModel tool = null;
-
-        if(!rs.next()) throw new IllegalArgumentException("No tool with this ID");
-        tool = new ToolModel(
-                rs.getInt("toolID"),
-                rs.getString("toolName"),
-                rs.getString("toolCategory"),
-                rs.getBoolean("maintenance"),
-                rs.getInt("priceFirst"),
-                rs.getInt("priceAfter"),
-                rs.getInt("certificateID"),
-                rs.getString("toolDescription"),
-                rs.getString("picturePath"));
-        db.close();
-        return tool;
-    }
-
     public int getToolID() {
         return toolID;
     }
@@ -136,6 +112,7 @@ public class ToolModel {
         this.imgData = imgData;
     }
 
+    // TODO: 24.11.2021 -j: remove this?
     public LinkedList<LocalDate> getUsedDates(PrintWriter out) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection();
         String query = "SELECT startDate, endDate FROM Booking WHERE toolID = ?;";
@@ -146,19 +123,15 @@ public class ToolModel {
         while(rs.next()){
             LocalDate start = rs.getTimestamp("startDate").toLocalDateTime().toLocalDate();
             LocalDate end = rs.getTimestamp("endDate").toLocalDateTime().toLocalDate();
-            addDatesToLinkedList(dayDates, start, end);
+            while(start.isBefore(end)){
+                start = start.plusDays(1);
+                dayDates.add(start);
+            }
         }
 
         rs.close();
         statement.close();
         db.close();
         return dayDates;
-    }
-
-    private void addDatesToLinkedList(LinkedList<LocalDate> dates, LocalDate start, LocalDate end){
-        while(start.isBefore(end)){
-            start = start.plusDays(1);
-            dates.add(start);
-        }
     }
 }
