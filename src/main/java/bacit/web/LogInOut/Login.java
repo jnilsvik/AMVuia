@@ -41,7 +41,7 @@ public class Login extends HttpServlet {
             PageAccess.ReDirFeedback(request,response,"Invalid email or password");
         }
     }
-    public boolean Validation(String email, String pw){
+    private boolean Validation(String email, String pw){
         try {
             Connection db = DBUtils.getNoErrorConnection();
             String insertUserCommand = "select userID from AMVUser where email=? and passwordHash=?";

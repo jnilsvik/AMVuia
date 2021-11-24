@@ -53,7 +53,7 @@ public class ToolReturnal extends HttpServlet {
 
     }
 
-    public void setReturned(String orderID, LocalDate returnDate) {
+    private void setReturned(String orderID, LocalDate returnDate) {
         try {
             Connection db = DBUtils.getNoErrorConnection();
             String insertUserCommand = "UPDATE Booking SET returnDate = ? WHERE orderID = ?";
