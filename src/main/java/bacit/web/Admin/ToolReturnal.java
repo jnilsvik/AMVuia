@@ -1,4 +1,4 @@
-package bacit.web.AdminFunctions;
+package bacit.web.Admin;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;

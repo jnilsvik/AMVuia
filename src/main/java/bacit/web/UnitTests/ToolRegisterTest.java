@@ -1,6 +1,6 @@
 package bacit.web.UnitTests;
 
-import bacit.web.AdminFunctions.ToolRegister;
+import bacit.web.Admin.ToolRegister;
 import bacit.web.Modules.Certificate;
 import bacit.web.Modules.ToolModel;
 import org.junit.jupiter.api.AfterEach;

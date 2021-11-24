@@ -1,4 +1,4 @@
-package bacit.web.LogInOut;
+package bacit.web.General;
 
 // by Dilan
 import java.io.*;

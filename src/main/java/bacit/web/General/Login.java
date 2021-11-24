@@ -1,4 +1,4 @@
-package bacit.web.LogInOut;
+package bacit.web.General;
 
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;

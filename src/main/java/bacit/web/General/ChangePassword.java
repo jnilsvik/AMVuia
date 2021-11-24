@@ -1,4 +1,4 @@
-package bacit.web.Profile;
+package bacit.web.General;
 
 import bacit.web.utils.PageAccess;
 import bacit.web.utils.hashPassword;
@@ -16,7 +16,7 @@ public class ChangePassword extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)){
-                request.getRequestDispatcher("jspFiles/Profile/passwordChange.jsp").forward(request,response);
+                request.getRequestDispatcher("jspFiles/UserBookings/passwordChange.jsp").forward(request,response);
             }
         } catch (Exception e) {
             e.printStackTrace();

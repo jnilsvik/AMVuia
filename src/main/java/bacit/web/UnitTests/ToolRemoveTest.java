@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static org.junit.jupiter.api.Assertions.*;
 
-import bacit.web.AdminFunctions.ToolRemove;
+import bacit.web.Admin.ToolRemove;
 import bacit.web.Modules.ToolModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

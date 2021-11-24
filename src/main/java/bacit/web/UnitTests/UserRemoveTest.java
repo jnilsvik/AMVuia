@@ -1,6 +1,6 @@
 package bacit.web.UnitTests;
 
-import bacit.web.AdminFunctions.UserRemove;
+import bacit.web.Admin.UserRemove;
 import bacit.web.Modules.UserModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

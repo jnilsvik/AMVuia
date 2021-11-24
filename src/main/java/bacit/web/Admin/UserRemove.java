@@ -1,4 +1,4 @@
-package bacit.web.AdminFunctions;
+package bacit.web.Admin;
 
 import bacit.web.Modules.UserModel;
 import bacit.web.utils.DBUtils;

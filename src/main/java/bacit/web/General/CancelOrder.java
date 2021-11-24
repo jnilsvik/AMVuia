@@ -1,4 +1,4 @@
-package bacit.web.Profile;
+package bacit.web.General;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 
 //by Paul
 @WebServlet(name = "Cancellation", value = "/cancellation")
-public class cancelOrderServlet extends HttpServlet {
+public class CancelOrder extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
