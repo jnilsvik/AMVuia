@@ -11,7 +11,7 @@
     <title></title>
 </head>
 <body>
-<jsp:include page="jspFiles/PageElements/header.jsp"/>
+<jsp:include page="header.jsp"/>
 ${feedback}
 <%
     request.removeAttribute("feedback");
