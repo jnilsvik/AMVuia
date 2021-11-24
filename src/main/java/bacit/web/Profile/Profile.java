@@ -35,7 +35,7 @@ public class Profile extends HttpServlet {
 
     protected List<BookingModel> getBookings(String email) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection();
-        PreparedStatement ps = db.prepareStatement("SELECT orderID, AMVUser.userID, Tool.toolID, startDate, endDate, returnDate FROM ((AMVUser INNER JOIN BOOKING ON AMVUser.userID = Booking.userID) INNER JOIN Tool on Booking.toolID = Tool.toolID) WHERE email = ?;");
+        PreparedStatement ps = db.prepareStatement("SELECT orderID, AMVUser.userID, Tool.toolID, startDate, endDate,totalPrice, returnDate FROM ((AMVUser INNER JOIN BOOKING ON AMVUser.userID = Booking.userID) INNER JOIN Tool on Booking.toolID = Tool.toolID) WHERE email = ?;");
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
         List<BookingModel> bookings = new LinkedList<>();
@@ -53,7 +53,7 @@ public class Profile extends HttpServlet {
                     rs.getInt("orderID"),
                     rs.getInt("userID"),
                     toolID,
-                    0,
+                    rs.getInt("totalPrice"),
                     rs.getDate("startDate").toLocalDate(),
                     rs.getDate("endDate").toLocalDate(),
                     toolReturnDate));
