@@ -28,9 +28,8 @@ public class Payment extends HttpServlet {
                 rs1.close();
                 st1.close();
                 db.close();
-
             } else {
-                request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
+                PageAccess.reDirWOAdmin(request,response);
             }
 
         } catch (Exception e) {

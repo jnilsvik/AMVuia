@@ -10,10 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-// by Dilan
 @WebServlet(name = "ToolMaintenance", value = "/toolmaintenance")
 public class ToolMaintenance extends HttpServlet {
-
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)) {
@@ -25,48 +24,42 @@ public class ToolMaintenance extends HttpServlet {
             e.printStackTrace();
         }
     }
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        response.setContentType("text/html");
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String toolMaintenance = request.getParameter("toolmaintenance");
         String toolID = request.getParameter("toolID");
         maintainTool(request, response, toolMaintenance, toolID);
     }
 
     private void maintainTool(HttpServletRequest request, HttpServletResponse response, String toolMaintenance, String toolID) {
-
         try {
-        Connection db = DBUtils.getNoErrorConnection();
+            Connection db = DBUtils.getNoErrorConnection();
 
-        if (toolMaintenance.equals("ToolInMaintenanceIn")) {
-            String insertUserCommand = "UPDATE Tool SET maintenance = true WHERE toolID = ?";
-            PreparedStatement st1 = db.prepareStatement(insertUserCommand);
-            st1.setString(1, toolID);
-            st1.executeUpdate();
+            if (toolMaintenance.equals("ToolInMaintenanceIn")) {
+                String insertUserCommand = "UPDATE Tool SET maintenance = true WHERE toolID = ?";
+                PreparedStatement st1 = db.prepareStatement(insertUserCommand);
+                st1.setString(1, toolID);
+                st1.executeUpdate();
 
-            String successfulLine = "<h3 style=\"text-align:center\">Tool was successfully put in maintenance!</h3>" + "<br><br><br>"  + "<a href=\"toolmaintenance\"> <span class=bigbutton> Go back  </span></a>";
-            request.setAttribute("successfulLine", successfulLine);
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
-        }
+                PageAccess.reDirFeedback(request,response,"Tool was successfully put in maintenance!");
+            }
 
-        if (toolMaintenance.equals("ToolInMaintenanceOut")) {
-            String insertUserCommand = "UPDATE Tool SET maintenance = false WHERE toolID = ?";
-            PreparedStatement st2 = db.prepareStatement(insertUserCommand);
-            st2.setString(1, toolID);
-            st2.executeUpdate();
+            if (toolMaintenance.equals("ToolInMaintenanceOut")) {
+                String insertUserCommand = "UPDATE Tool SET maintenance = false WHERE toolID = ?";
+                PreparedStatement st2 = db.prepareStatement(insertUserCommand);
+                st2.setString(1, toolID);
+                st2.executeUpdate();
 
-            String successfulLine = "<h3 style=\"text-align:center\">Tool was successfully put out of maintenance!</h3>" + "<br><br><br>"  + "<a href=\"toolmaintenance\"> <span class=bigbutton> Go back  </span></a>";
-            request.setAttribute("successfulLine", successfulLine);
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
-        }
-        db.close();
+                PageAccess.reDirFeedback(request,response,"Tool was successfully removed from maintenance!");
+            }
 
+            db.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (PageAccess.isAdmin(request)){
             return true;

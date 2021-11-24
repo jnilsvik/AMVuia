@@ -21,19 +21,17 @@ import java.util.ArrayList;
 public class ToolCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         try {
             if (checkSession(request,response)){
-                String toolCategory = request.getParameter("category");
-                GetSetTools(request, toolCategory);
-                request.getRequestDispatcher("/jspFiles/ToolBooking/-toolListByCAT.jsp").forward(request,response);
+                GetSetTools(request, request.getParameter("category"));
+
+                request.getRequestDispatcher("jspFiles/ToolBooking/toolCategory.jsp").forward(request,response);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
     protected void GetSetTools(HttpServletRequest request, String toolCategory){
         try {
             Connection dbc = DBUtils.getNoErrorConnection();

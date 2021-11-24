@@ -37,9 +37,9 @@ public class RegisterTool extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try{
+            /*
             int toolID = addTool(getToolFromRequest(request));
-
-            /*try {
+            try {
                 addFile(request.getPart("file"), toolID);
             } catch (Exception e){}*/
 
@@ -118,15 +118,6 @@ public class RegisterTool extends HttpServlet {
         dao.persistFile(fileModel);
     }
 
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (PageAccess.isAdmin(request)){
-            return true;
-        }
-        PageAccess.reDirWOUser(request,response);
-        PageAccess.reDirWOAdmin(request,response);
-        return false;
-    }
-
     protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<Certificate> certificates) throws ServletException, IOException {
         request.setAttribute("categories", categories);
         request.setAttribute("certificates", certificates);
@@ -146,16 +137,22 @@ public class RegisterTool extends HttpServlet {
                 "");
     }
 
-    protected void printJspPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String successfulLine = "<h1>The tool has been registered successfully</h1>";
-        request.setAttribute("successfulLine", successfulLine);
-        request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
+    protected void printJspPost(HttpServletRequest request, HttpServletResponse response){
+        PageAccess.reDirFeedback(request,response, "The tool has been registered successfully");
     }
 
     protected void printJspError(HttpServletRequest request, HttpServletResponse response){
         PageAccess.reDirFeedback(request, response, "Data could not be added to the database");
     }
 
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (PageAccess.isAdmin(request)){
+            return true;
+        }
+        PageAccess.reDirWOUser(request,response);
+        PageAccess.reDirWOAdmin(request,response);
+        return false;
+    }
 }
 
 

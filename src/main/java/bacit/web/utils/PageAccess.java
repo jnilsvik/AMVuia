@@ -55,7 +55,7 @@ public class PageAccess {
 
     public static void reDirWOAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (!isAdmin(request)) {
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request, response);
+            reDirFeedback(request,response,"You tried to access a function which is only accessible by Admins");
         }
     }
     public static void reDirFeedback(HttpServletRequest request, HttpServletResponse response, String feedbackMsg){

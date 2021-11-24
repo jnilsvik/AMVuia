@@ -20,7 +20,7 @@ public class AdminPage extends HttpServlet {
                 e.printStackTrace();
             }
         }else {
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
+            PageAccess.reDirWOAdmin(request,response);
         }
     }
 }

@@ -16,7 +16,6 @@
 </head>
 <body>
 <jsp:include page="../PageElements/header.jsp"/>
-
     <%
        String result = (String)request.getAttribute("result");
        out.print("<h2>"+result+"</h2>");

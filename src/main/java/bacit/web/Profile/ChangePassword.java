@@ -10,10 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-// by Dilan
 @WebServlet(name = "ChangePassword", value = "/changepassword")
 public class ChangePassword extends HttpServlet {
-
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)){
@@ -24,8 +23,10 @@ public class ChangePassword extends HttpServlet {
         }
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            // TODO: 24.11.2021 -joachim: this could use some refactoring
             HttpSession session = request.getSession(false);
             String email = (String) session.getAttribute("email");
 
@@ -33,8 +34,8 @@ public class ChangePassword extends HttpServlet {
             String oldPassword = hashPassword.encryptThisString(request.getParameter("oldpass"));
             String newPassword1 = hashPassword.encryptThisString(request.getParameter("newpass1"));
             String newPassword2 = hashPassword.encryptThisString(request.getParameter("newpass2"));
-            PreparedStatement st1 = db
-                    .prepareStatement("SELECT passwordHash FROM AMVUser WHERE email = ?");
+            PreparedStatement st1 = db.prepareStatement(
+                    "SELECT passwordHash FROM AMVUser WHERE email = ?");
             st1.setString(1, email);
             ResultSet rs = st1.executeQuery();
             boolean isOldPassValid = false;
@@ -50,16 +51,17 @@ public class ChangePassword extends HttpServlet {
                 st2.setString(2, email);
                 st2.executeUpdate();
 
-                String successfulLine = "Password was successfully changed!";
-                request.setAttribute("successfulLine", successfulLine);
-                request.getRequestDispatcher("jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
+                PageAccess.reDirFeedback(request,response,"Password was successfully changed!");
             }
+
+            db.close();
         } catch (Exception e) {
-            PageAccess.reDirFeedback(request,response,"Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
+            PageAccess.reDirFeedback(request,response,"Something went wrong. Either you wrote the wrong current password, or the new passwords didnt match.");
         }
     }
+
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (PageAccess.isAdmin(request)){
+        if (PageAccess.isUser(request)){
             return true;
         }
         PageAccess.reDirWOUser(request,response);
