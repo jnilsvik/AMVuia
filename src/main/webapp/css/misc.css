@@ -61,3 +61,12 @@
 .bigbutton:hover {
     background-color: #11165a;
     color: white; }
+
+.centerContent{
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
