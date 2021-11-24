@@ -43,9 +43,9 @@ public class ToolAllListings extends HttpServlet {
                 Categories.add(rs1.getString("toolCategory"));
             }
             request.setAttribute("toolCAT", Categories);
-            dbc.close();
-            ps1.close();
             rs1.close();
+            ps1.close();
+            dbc.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,9 +75,10 @@ public class ToolAllListings extends HttpServlet {
             }
             request.setAttribute("toolALL", toolALL);
 
-            dbc.close();
-            ps2.close();
             rs2.close();
+            ps2.close();
+            dbc.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
