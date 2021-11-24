@@ -35,7 +35,7 @@ public class Login extends HttpServlet {
             HttpSession session= request.getSession();
             session.setAttribute("email",email);
 
-            response.sendRedirect("xtl");
+            response.sendRedirect("toolList");
 
         } else {
             PageAccess.ReDirFeedback(request,response,"Invalid email or password");
@@ -59,29 +59,5 @@ public class Login extends HttpServlet {
             e.printStackTrace();
         }
         return false;
-    }
-
-    // TODO: 11.11.2021 this could probably be done better
-    void SetUserSessionAttributes(String email, HttpServletRequest request){
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mariadb://172.17.0.1:3308/AMVDatabase", "root", "12345");
-            PreparedStatement ps = con.prepareStatement(
-                    "select * from AMVUser where email=?");
-            ps.setString(1, email);
-            ResultSet rs1 = ps.executeQuery();
-            request.setAttribute("uID", rs1.getInt("userID"));
-            request.setAttribute("ufname", rs1.getString("firstName"));
-            request.setAttribute("ulname", rs1.getString("lastName"));
-            request.setAttribute("uemail", rs1.getString("phoneNumber"));
-            //request.setAttribute("email", rs1.getString("email"));
-
-            rs1.close();
-            ps.close();
-            con.close();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
 }

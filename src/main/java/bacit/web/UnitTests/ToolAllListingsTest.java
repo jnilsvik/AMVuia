@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.List;
 
 class ToolAllListingsTest {
 
@@ -39,26 +40,26 @@ class ToolAllListingsTest {
 }
 
 class FakeTAL extends ToolAllListings {
-    ArrayList<String> toolCAT = new ArrayList<>();
-    ArrayList<ToolModel> toolALL = new ArrayList<>();
+    ArrayList<String> toolCats = new ArrayList<>();
+    ArrayList<ToolModel> tools = new ArrayList<>();
 
     FakeTAL(){
-        toolCAT.add("tc1");
-        toolCAT.add("tc2");
-        toolCAT.add("tc3");
+        toolCats.add("tc1");
+        toolCats.add("tc2");
+        toolCats.add("tc3");
 
-        toolALL.add(new ToolModel(1,"tool1","tc1",false,0,0,0,"no desc","amv.png"));
-        toolALL.add(new ToolModel(2,"tool2","tc2",false,0,0,0,"no desc","amv.png"));
-        toolALL.add(new ToolModel(3,"tool3","tc3",false,0,0,0,"no desc","amv.png"));
+        tools.add(new ToolModel(1,"tool1","tc1",false,0,0,0,"no desc","amv.png"));
+        tools.add(new ToolModel(2,"tool2","tc2",false,0,0,0,"no desc","amv.png"));
+        tools.add(new ToolModel(3,"tool3","tc3",false,0,0,0,"no desc","amv.png"));
     }
 
     @Override
-    protected void GetSetCategories(HttpServletRequest request) {
-
+    protected List<String> getCategories(HttpServletRequest request) {
+        return toolCats;
     }
 
     @Override
-    protected void GetSetTools(HttpServletRequest request) {
-
+    protected List<ToolModel> GetSetTools(HttpServletRequest request) {
+        return tools;
     }
 }

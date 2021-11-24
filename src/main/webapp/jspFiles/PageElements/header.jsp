@@ -18,7 +18,7 @@
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="xtl" class="nav-link px-2 amv-txc-b">TOOL OVERVIEW</a></li>
+                <li><a href="toolList" class="nav-link px-2 amv-txc-b">TOOL OVERVIEW</a></li>
                 <li><a href="profile" class="nav-link px-2 amv-txc-b">RENTALS</a></li>
                 <li><a href="help" class="nav-link px-2 amv-txc-b">FAQ & HELP</a></li>
                 <%
