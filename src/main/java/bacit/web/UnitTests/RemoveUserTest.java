@@ -44,17 +44,27 @@ public class RemoveUserTest {
 
         unitUnderTest.doPost(null,null);
 
-        assertEquals("true email2 ", outputStreamCaptor.toString());
+        assertEquals("Self deletion ", outputStreamCaptor.toString());
+
+        unitUnderTest.setEmailToDelete("email2");
 
         unitUnderTest.doPost(null, null);
 
-        assertEquals("true email2 false email2 ", outputStreamCaptor.toString());
+        //Deletion should work so true was added
+        assertEquals("Self deletion true email1 ", outputStreamCaptor.toString());
+
+        unitUnderTest.doPost(null, null);
+
+        //Deletion should not work so false gets added because email1 is not in the list anymore
+        assertEquals("Self deletion true email1 false email1 ", outputStreamCaptor.toString());
     }
 }
 
 class FakeRemoveUser extends RemoveUser {
 
     List<UserModel> users = new LinkedList<>();
+    String emailLoggedIn = "email1";
+    String emailToDelete = "email1";
 
     FakeRemoveUser(){
         setUser();
@@ -73,6 +83,10 @@ class FakeRemoveUser extends RemoveUser {
         );
     }
 
+    public void setEmailToDelete(String emailToDelete){
+        this.emailToDelete = emailToDelete;
+    }
+
     @Override
     protected boolean deleteUser(String email){
         for(UserModel user: users){
@@ -85,13 +99,18 @@ class FakeRemoveUser extends RemoveUser {
     }
 
     @Override
+    protected String getEmail(HttpServletRequest request){
+        return emailLoggedIn;
+    }
+
+    @Override
     protected List<UserModel> getUsers(){
         return users;
     }
 
     @Override
     protected String getUser(HttpServletRequest request){
-        return "email1";
+        return emailToDelete;
     }
 
     @Override
@@ -116,11 +135,6 @@ class FakeRemoveUser extends RemoveUser {
 
     @Override
     protected void printJspSelfDeletion(HttpServletRequest request, HttpServletResponse response){
-        System.out.print("Self deletion");
-    }
-
-    @Override
-    protected String getEmail(HttpServletRequest request){
-        return "email1";
+        System.out.print("Self deletion ");
     }
 }
