@@ -1,5 +1,6 @@
 package bacit.web.LogInOut;
 
+import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;
 import bacit.web.utils.hashPassword;
@@ -16,17 +17,29 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 @WebServlet(name = "login", value = "/login")
 public class Login extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         try {
-            request.getRequestDispatcher("/jspFiles/LogIn/login.jsp").forward(request,response);
-        } catch (ServletException e) {
+            if (checkSession(request,response)) {
+                response.sendRedirect("toolList");
+            }
+            else {
+                try {
+                    request.getRequestDispatcher("/jspFiles/LogIn/login.jsp").forward(request,response);
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String email = request.getParameter("email");
@@ -59,5 +72,13 @@ public class Login extends HttpServlet {
             e.printStackTrace();
         }
         return false;
+    }
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (PageAccess.isUser(request,response)){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
