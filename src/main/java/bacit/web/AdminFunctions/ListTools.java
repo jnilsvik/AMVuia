@@ -54,7 +54,7 @@ public class ListTools extends HttpServlet {
         }
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (PageAccess.isAdmin(request,response)){
+        if (PageAccess.isAdmin(request)){
             return true;
         }
         PageAccess.reDirWOUser(request,response);

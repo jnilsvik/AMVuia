@@ -21,7 +21,7 @@
                 <%
                     String email = (String)
                     session.getAttribute("email");
-                    if(PageAccess.isUser(request,response)){
+                    if(PageAccess.isUser(request)){
                         out.print("<li><a href=\"toolList\" class=\"nav-link px-2 amv-txc-b\">TOOL OVERVIEW</a></li>");
                         out.print("<li><a href=\"profile\" class=\"nav-link px-2 amv-txc-b\">RENTALS</a></li>");
                     }
@@ -29,7 +29,7 @@
                     <li><a href="help" class="nav-link px-2 amv-txc-b">FAQ & HELP</a></li>
                 <%
                     session.getAttribute("email");
-                    if(PageAccess.isAdmin(request,response)){
+                    if(PageAccess.isAdmin(request)){
                         out.print("<li><a href=\"admin\" class=\"nav-link px-2 amv-txc-b\">ADMIN PAGE</a></li>");
                     }
                 %>
