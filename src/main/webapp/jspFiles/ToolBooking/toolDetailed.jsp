@@ -18,41 +18,48 @@
 <jsp:include page="../PageElements/header.jsp"/>
 
 <div class ="centerContent">
+<div>
     <%
         ToolModel tool = (ToolModel) request.getAttribute("tool");
         List<LocalDate> dates = (List<LocalDate>) request.getAttribute("dates");
-
-        out.print("<h1> " + tool.getToolName().replaceAll("_", " ") +
-                " from the Category: " + tool.getToolCategory().replaceAll("_", " ") + "</h1>");
+        out.print("<h1> " + tool.getToolName().replaceAll("_", " ") + "</h1>" +
+                "<h1> from the Category: " + tool.getToolCategory().replaceAll("_", " ") + "</h1>");
         // TODO: 22.11.2021 -joachim: this need to be changed to pic. path
         out.print("<img src = 'img/amv.png' width = '156' height = '151'>");
         out.print("<h2>Price the first day: " +  tool.getPriceFirst() + "</h2>");
         out.print("<h2>Price after the first day: " +  tool.getPriceAfter() + "</h2>");
-        out.print("<p>" + tool.getDescription()+"</p>");
-        out.print("<br><br>");
+        if(tool.getDescription() == null) {
+            out.print("<p></p>");
+        }
+        else {
+            out.print("<p>" + tool.getDescription() + "</p>");
+        }
+
     %>
     <form action = 'toolbooking' method = 'POST'>
         <%
             out.print("<input type = 'hidden' value = '" + tool.getToolID() + "' name = 'tools' readonly>");
             out.print("<label for = 'date'> Choose start date:</label>");
         %>
-<%
-    request.setAttribute("today", LocalDate.now());
-%>
-    <input type = 'date' id = 'date' name = 'date' min = '${today}'><br>
-    <br>
-    <label for='days'>Choose how many days:</label>
+        <%
+            request.setAttribute("today", LocalDate.now());
+        %>
+        <input type = 'date' id = 'date' name = 'date' min = '${today}'><br>
+        <br>
+        <label for='days'>Choose how many days:</label>
 
-    <select id='days' name = 'days'>
-    <option value='1'> 1 Day</option>
-    <option value='2'> 2 Days</option>
-    <option value='3'> 3 Days</option>
-    <option value='4'> 4 Days</option>
-    </select><br><br>
+        <select id='days' name = 'days'>
+            <option value='1'> 1 Day</option>
+            <option value='2'> 2 Days</option>
+            <option value='3'> 3 Days</option>
+            <option value='4'> 4 Days</option>
+        </select><br><br>
 
-    <input type = 'hidden' value = '" + email + "' name = 'email' readonly>
-    <input type = 'submit' value = 'Submit'>
+        <input type = 'hidden' value = '" + email + "' name = 'email' readonly>
+        <input type = 'submit' value = 'Submit'>
     </form>
+
+
 
     <h2>Available dates</h2>
     <table>
@@ -64,50 +71,44 @@
             <th>Friday</th>
             <th>Saturday</th>
             <th>Sunday</th>
-            </tr>
+        </tr>
         <tr>
 
-        <%
-            LocalDate currentDate = LocalDate.now();
-            currentDate = currentDate.with(TemporalAdjusters.firstDayOfMonth());
-            currentDate = currentDate.with(DayOfWeek.MONDAY);
-            LocalDate dateToday = LocalDate.now();
-
-            int days = 0;
-            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            while (days <= 180) {
-
-                //sets colour dependant on availability
-                String status = "Available";
-                String color = "#00FF00";
-
-                if (dates.contains(currentDate)) {
-                    status = "Booked";
-                    color = "#FF0000";
+            <%
+                LocalDate currentDate = LocalDate.now();
+                currentDate = currentDate.with(TemporalAdjusters.firstDayOfMonth());
+                currentDate = currentDate.with(DayOfWeek.MONDAY);
+                LocalDate dateToday = LocalDate.now();
+                int days = 0;
+                DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                while (days <= 180) {
+                    //sets colour dependant on availability
+                    String status = "Available";
+                    String color = "#00FF00";
+                    if (dates.contains(currentDate)) {
+                        status = "Booked";
+                        color = "#FF0000";
+                    }
+                    if (currentDate.isBefore(dateToday)) {
+                        status = "Passed";
+                        color = "#808080";
+                    }
+                    //Print the actual line
+                    if (currentDate == currentDate.with(DayOfWeek.MONDAY)) {
+                        out.print("</tr>");
+                        out.print("<tr>");
+                    }
+                    String currentDateFormat = currentDate.format(formatters);
+                    out.print("<td bgcolor=" + color + ">" + currentDateFormat + "<br>" + status + "</td>");
+                    //resets the week (amount of days per columns)
+                    currentDate = currentDate.plusDays(1);
+                    days++;
                 }
-
-                if (currentDate.isBefore(dateToday)) {
-                    status = "Passed";
-                    color = "#808080";
-
-                }
-                //Print the actual line
-                if (currentDate == currentDate.with(DayOfWeek.MONDAY)) {
-                    out.print("</tr>");
-                    out.print("<tr>");
-
-                }
-                String currentDateFormat = currentDate.format(formatters);
-                out.print("<td bgcolor=" + color + ">" + currentDateFormat + "<br>" + status + "</td>");
-                //resets the week (amount of days per columns)
-
-                currentDate = currentDate.plusDays(1);
-                days++;
-            }
-
-        %>
+            %>
         </tr>
     </table>
+
+</div>
 </div>
 <jsp:include page="../PageElements/footer.jsp"/>
 </body>

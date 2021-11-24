@@ -61,7 +61,7 @@ public class PageAccess {
     public static void reDirFeedback(HttpServletRequest request, HttpServletResponse response, String feedbackMsg){
         try {
             request.setAttribute("feedback",feedbackMsg);
-            request.getRequestDispatcher("feedback.jsp").forward(request,response);
+            request.getRequestDispatcher("jspFiles/PageElements/feedback.jsp").forward(request,response);
         } catch (ServletException | IOException e) {
             e.printStackTrace();
         }

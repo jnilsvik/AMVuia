@@ -21,7 +21,7 @@
     out.print("<p>Tool: " + booking.getToolName() + "</p>");
     out.print("<p>Start Date: " + booking.getStartDate().format(formatters) + "</p>");
     out.print("<p>End Date: " + booking.getEndDate().format(formatters) + "</p>");
-    out.print("<p>Total price: " + booking.getTotalPrice() + "</p>");
+    out.print("<p>Total price: " + booking.getTotalPrice() + " NOK</p>");
 
 %>
 <jsp:include page="../PageElements/footer.jsp"/>
