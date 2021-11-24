@@ -35,7 +35,7 @@ public class ToolMaintenance extends HttpServlet {
         maintainTool(request, response, toolMaintenance, toolID);
     }
 
-    public void maintainTool(HttpServletRequest request, HttpServletResponse response, String toolMaintenance, String toolID) {
+    private void maintainTool(HttpServletRequest request, HttpServletResponse response, String toolMaintenance, String toolID) {
 
         try {
         Connection db = DBUtils.getNoErrorConnection();

@@ -54,7 +54,7 @@ public class ToolBookingServlet extends HttpServlet {
         }
     }
 
-    public static int getUserID(String email) {
+    private static int getUserID(String email) {
         int userID = 0;
         try {
             Connection db = DBUtils.getNoErrorConnection();
@@ -74,7 +74,7 @@ public class ToolBookingServlet extends HttpServlet {
         return userID;
     }
 
-    public boolean hasCertificate(int userID, int toolCertificateID) {
+    private boolean hasCertificate(int userID, int toolCertificateID) {
         if(toolCertificateID == 1) return true;
         boolean hasTheCertificate = false;
         try {
@@ -104,7 +104,7 @@ public class ToolBookingServlet extends HttpServlet {
         return hasTheCertificate;
     }
 
-    public void registerBooking(LocalDate StartDateWanted, LocalDate endingDate, int totalPrice, int userID, int toolID ) {
+    private void registerBooking(LocalDate StartDateWanted, LocalDate endingDate, int totalPrice, int userID, int toolID ) {
         try {
             Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement statement2 = db.prepareStatement(
@@ -146,7 +146,7 @@ public class ToolBookingServlet extends HttpServlet {
         return tool;
     }
 
-    public static boolean dateBookedTaken(LocalDate StartDateWanted, int inputDays, int toolID) {
+    private static boolean dateBookedTaken(LocalDate StartDateWanted, int inputDays, int toolID) {
         boolean taken = false;
         try {
             Connection db = DBUtils.getNoErrorConnection();

@@ -38,22 +38,19 @@ public class ProfileTest {
         //Act
         unitUnderTest.doGet(null,null);
 
-        assertEquals("1 1 1 2", outputStreamCaptor.toString()
-                .trim());
+        assertEquals("1 1 1 2 ", outputStreamCaptor.toString());
 
         unitUnderTest.setUserID(2);
 
         unitUnderTest.doGet(null,null);
 
-        assertEquals("1 1 1 2 2 3", outputStreamCaptor.toString()
-                .trim());
+        assertEquals("1 1 1 2 2 3 ", outputStreamCaptor.toString());
 
         unitUnderTest.setUserID(3);
 
         unitUnderTest.doGet(null,null);
 
-        assertEquals("1 1 1 2 2 3", outputStreamCaptor.toString()
-                .trim());
+        assertEquals("1 1 1 2 2 3 ", outputStreamCaptor.toString());
     }
 }
 

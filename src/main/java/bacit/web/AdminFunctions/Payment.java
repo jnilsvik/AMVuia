@@ -45,7 +45,7 @@ public class Payment extends HttpServlet {
         PageAccess.ReDirFeedback(request,response,"Order was successfully marked as paid");
     }
 
-    public void setPaid(String orderID) {
+    private void setPaid(String orderID) {
         try {
             Connection db = DBUtils.getNoErrorConnection();
             String insertUserCommand = "UPDATE Booking SET paid = true WHERE orderID = ?";
