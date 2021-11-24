@@ -16,6 +16,8 @@
 </head>
 <body>
 <jsp:include page="../PageElements/header.jsp"/>
+
+<div class ="centerContent">
     <%
         ToolModel tool = (ToolModel) request.getAttribute("tool");
         List<LocalDate> dates = (List<LocalDate>) request.getAttribute("dates");
@@ -72,7 +74,6 @@
             LocalDate dateToday = LocalDate.now();
 
             int days = 0;
-            int resetWeek = 1;
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             while (days <= 180) {
 
@@ -107,6 +108,7 @@
         %>
         </tr>
     </table>
+</div>
 <jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>
