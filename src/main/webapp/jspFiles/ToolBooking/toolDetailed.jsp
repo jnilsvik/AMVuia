@@ -3,6 +3,8 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.DayOfWeek" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.temporal.TemporalAdjuster" %>
+<%@ page import="java.time.temporal.TemporalAdjusters" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -65,12 +67,15 @@
 
         <%
             LocalDate currentDate = LocalDate.now();
+            currentDate = currentDate.with(TemporalAdjusters.firstDayOfMonth());
             currentDate = currentDate.with(DayOfWeek.MONDAY);
             LocalDate dateToday = LocalDate.now();
+
             int days = 0;
             int resetWeek = 1;
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            while (days <= 120) {
+            while (days <= 180) {
+
                 //sets colour dependant on availability
                 String status = "Available";
                 String color = "#00FF00";
@@ -81,23 +86,25 @@
                 }
 
                 if (currentDate.isBefore(dateToday)) {
+                    status = "Passed";
                     color = "#808080";
+
                 }
                 //Print the actual line
-                String currentDateFormat = currentDate.format(formatters);
-                out.print("<td bgcolor=" + color + ">" + currentDateFormat + "<br>" + status + "</td>");
-                //resets the week (amount of days per coloums
-                if (resetWeek == 7) {
+                if (currentDate == currentDate.with(DayOfWeek.MONDAY)) {
                     out.print("</tr>");
                     out.print("<tr>");
-                    resetWeek = 0;
+
                 }
+                String currentDateFormat = currentDate.format(formatters);
+                out.print("<td bgcolor=" + color + ">" + currentDateFormat + "<br>" + status + "</td>");
+                //resets the week (amount of days per columns)
+
                 currentDate = currentDate.plusDays(1);
                 days++;
-                resetWeek++;
             }
-        %>
 
+        %>
         </tr>
     </table>
 <jsp:include page="../PageElements/footer.jsp"/>
