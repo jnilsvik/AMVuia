@@ -1,6 +1,4 @@
 package bacit.web.utils;
-import bacit.web.utils.DBUtils;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +7,7 @@ import java.io.IOException;
 import java.sql.*;
 
 public class PageAccess {
-    public static String getEmail(HttpServletRequest request, HttpServletResponse response){
+    public static String getEmail(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         String email = null;
         if(session != null){
@@ -18,7 +16,7 @@ public class PageAccess {
         return email;
     }
     //not sure about this one atm
-    public static boolean isUser(HttpServletRequest request, HttpServletResponse response){
+    public static boolean isUser(HttpServletRequest request){
         HttpSession session = request.getSession(false);
         if ((session != null) && (session.getAttribute("email") != null)) {
             return true;
@@ -32,7 +30,7 @@ public class PageAccess {
             Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement statement = db.prepareStatement(
                     "select userAdmin from AMVUser where email=?");
-            statement.setString(1, getEmail(request,response)
+            statement.setString(1, getEmail(request)
             );
             ResultSet rs = statement.executeQuery();
 
@@ -50,7 +48,7 @@ public class PageAccess {
     }
 
     public static void reDirWOUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (getEmail(request,response) == null) {
+        if (getEmail(request) == null) {
             response.sendRedirect("login");
         }
     }
@@ -60,7 +58,7 @@ public class PageAccess {
             request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request, response);
         }
     }
-    public static void ReDirFeedback(HttpServletRequest request, HttpServletResponse response, String feedbackMsg){
+    public static void reDirFeedback(HttpServletRequest request, HttpServletResponse response, String feedbackMsg){
         try {
             request.setAttribute("feedback",feedbackMsg);
             request.getRequestDispatcher("feedback.jsp").forward(request,response);

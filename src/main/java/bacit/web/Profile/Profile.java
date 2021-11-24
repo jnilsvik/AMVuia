@@ -30,7 +30,7 @@ public class Profile extends HttpServlet {
     }
 
     protected String getEmailFromSession(HttpServletRequest request, HttpServletResponse response){
-        return PageAccess.getEmail(request,response);
+        return PageAccess.getEmail(request);
     }
 
     protected List<BookingModel> getBookings(String email) throws SQLException {
@@ -69,7 +69,7 @@ public class Profile extends HttpServlet {
         request.getRequestDispatcher("/jspFiles/Profile/profile.jsp").forward(request,response);
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (PageAccess.isUser(request,response)){
+        if (PageAccess.isUser(request)){
             return true;
         }
         PageAccess.reDirWOUser(request,response);

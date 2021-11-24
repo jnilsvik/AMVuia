@@ -55,7 +55,7 @@ public class ChangePassword extends HttpServlet {
                 request.getRequestDispatcher("jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
             }
         } catch (Exception e) {
-            PageAccess.ReDirFeedback(request,response,"Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
+            PageAccess.reDirFeedback(request,response,"Something went wrong. Either you wrote the wrong current password, or the 2 new passwords didnt match.");
         }
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

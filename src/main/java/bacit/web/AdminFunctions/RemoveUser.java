@@ -33,6 +33,12 @@ public class RemoveUser extends HttpServlet {
         if(checkSession(request,response)) {
             try {
                 String user = getUser(request);
+                String email = getEmail(request);
+                boolean selfDeletion = checkSelfDeletion(user, email);
+                if(selfDeletion){
+                    printJspSelfDeletion(request, response);
+                    return;
+                }
                 boolean success = deleteUser(user);
                 List<UserModel> users = getUsers();
 
@@ -41,6 +47,10 @@ public class RemoveUser extends HttpServlet {
                 e.printStackTrace();
             }
         }
+    }
+
+    protected String getEmail(HttpServletRequest request){
+        return PageAccess.getEmail(request);
     }
 
     protected boolean deleteUser(String email) throws  SQLException{
@@ -73,6 +83,10 @@ public class RemoveUser extends HttpServlet {
         return users;
     }
 
+    protected boolean checkSelfDeletion(String user, String email){
+        return user.equals(email);
+    }
+
     protected String getUser(HttpServletRequest request){
         return request.getParameter("input");
     }
@@ -96,6 +110,10 @@ public class RemoveUser extends HttpServlet {
         PageAccess.reDirWOUser(request,response);
         PageAccess.reDirWOAdmin(request,response);
         return false;
+    }
+
+    protected void printJspSelfDeletion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PageAccess.reDirFeedback(request, response, "You can't delete yourself");
     }
 
 }
