@@ -8,11 +8,14 @@ import org.junit.jupiter.api.Test;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ToolAllListingsTest {
 
@@ -31,11 +34,11 @@ class ToolAllListingsTest {
 
     @Test
     void doGet() throws ServletException, IOException {
-        //Arrange
         FakeTAL unitUnderTest = new FakeTAL();
-        //Act
+
         unitUnderTest.doGet(null,null);
-        //Assert
+
+        assertEquals("Tool1 Tool2 Tool3 Cat1 Cat2 Cat3 ", outputStreamCaptor.toString());
     }
 }
 
@@ -44,13 +47,13 @@ class FakeTAL extends ToolAllListings {
     ArrayList<ToolModel> tools = new ArrayList<>();
 
     FakeTAL(){
-        toolCats.add("tc1");
-        toolCats.add("tc2");
-        toolCats.add("tc3");
+        toolCats.add("Cat1");
+        toolCats.add("Cat2");
+        toolCats.add("Cat3");
 
-        tools.add(new ToolModel(1,"tool1","tc1",false,0,0,0,"no desc","amv.png"));
-        tools.add(new ToolModel(2,"tool2","tc2",false,0,0,0,"no desc","amv.png"));
-        tools.add(new ToolModel(3,"tool3","tc3",false,0,0,0,"no desc","amv.png"));
+        tools.add(new ToolModel(1,"Tool1","Cat1",false,0,0,0,"no desc","amv.png"));
+        tools.add(new ToolModel(2,"Tool2","Cat2",false,0,0,0,"no desc","amv.png"));
+        tools.add(new ToolModel(3,"Tool3","Cat3",false,0,0,0,"no desc","amv.png"));
     }
 
     @Override
@@ -61,5 +64,20 @@ class FakeTAL extends ToolAllListings {
     @Override
     protected List<ToolModel> GetSetTools(HttpServletRequest request) {
         return tools;
+    }
+
+    @Override
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response){
+        return true;
+    }
+
+    @Override
+    protected void printJsp(List<String> categories, List<ToolModel> tools, HttpServletRequest request, HttpServletResponse response){
+        for(ToolModel tool : tools){
+            System.out.print(tool.getToolName() + " ");
+        }
+        for(String cat: categories){
+            System.out.print(cat + " ");
+        }
     }
 }
