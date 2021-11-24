@@ -32,8 +32,10 @@
             out.print("<input type = 'hidden' value = '" + tool.getToolID() + "' name = 'tools' readonly>");
             out.print("<label for = 'date'> Choose start date:</label>");
         %>
-
-    <input type = 'date' id = 'date' name = 'date'><br>
+<%
+    request.setAttribute("today", LocalDate.now());
+%>
+    <input type = 'date' id = 'date' name = 'date' min = '${today}'><br>
     <br>
     <label for='days'>Choose how many days:</label>
 
@@ -64,6 +66,7 @@
         <%
             LocalDate currentDate = LocalDate.now();
             currentDate = currentDate.with(DayOfWeek.MONDAY);
+            LocalDate dateToday = LocalDate.now();
             int days = 0;
             int resetWeek = 1;
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -71,9 +74,14 @@
                 //sets colour dependant on availability
                 String status = "Available";
                 String color = "#00FF00";
+
                 if (dates.contains(currentDate)) {
                     status = "Booked";
                     color = "#FF0000";
+                }
+
+                if (currentDate.isBefore(dateToday)) {
+                    color = "#808080";
                 }
                 //Print the actual line
                 String currentDateFormat = currentDate.format(formatters);
