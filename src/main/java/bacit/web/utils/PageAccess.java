@@ -24,7 +24,7 @@ public class PageAccess {
         return false;
     }
 
-    public static boolean isAdmin(HttpServletRequest request, HttpServletResponse response) {
+    public static boolean isAdmin(HttpServletRequest request) {
         boolean isAdmin = false;
         try {
             Connection db = DBUtils.getNoErrorConnection();
@@ -54,7 +54,7 @@ public class PageAccess {
     }
 
     public static void reDirWOAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (!isAdmin(request,response)) {
+        if (!isAdmin(request)) {
             request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request, response);
         }
     }
