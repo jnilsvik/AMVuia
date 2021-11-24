@@ -1,5 +1,6 @@
 package bacit.web.ToolBooking;
 
+import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;
 
@@ -14,28 +15,58 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet(name = "xtc", value = "/xtc")
 public class ToolCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        try {
-            if (checkSession(request, response))
-            request.setAttribute("CAT", request.getParameter("category"));
-            Connection dbc= DBUtils.getNoErrorConnection();
-            PreparedStatement ps3 = dbc.prepareStatement(
-                "select * from Tool where toolCategory =?");
-            ps3.setString(1, String.valueOf(request.getParameter("category")));
-            ResultSet rs3 = ps3.executeQuery();
-            // TODO: 10.11.2021 should make this into model array b4 sendeing?
-            request.setAttribute("toolByCAT", rs3);
 
-            request.getRequestDispatcher("jspFiles/ToolBooking/-toolListByCAT.jsp").forward(request,response);
+        try {
+            if (checkSession(request,response)){
+                String toolCategory = request.getParameter("category");
+                GetSetTools(request, toolCategory);
+                request.getRequestDispatcher("/jspFiles/ToolBooking/-toolListByCAT.jsp").forward(request,response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    protected void GetSetTools(HttpServletRequest request, String toolCategory){
+        try {
+            Connection dbc = DBUtils.getNoErrorConnection();
+            PreparedStatement ps2 = dbc.prepareStatement(
+                    "select * from Tool where toolCategory = ? ");
+            ps2.setString(1, toolCategory);
+            ResultSet rs2 = ps2.executeQuery();
+
+            ArrayList<ToolModel> toolALL1 = new ArrayList<>();
+            while (rs2.next()){
+                toolALL1.add(
+                        new ToolModel(
+                                rs2.getInt("toolID"),
+                                rs2.getString("toolName"),
+                                rs2.getString("toolCategory"),
+                                rs2.getBoolean("maintenance"),
+                                rs2.getInt("priceFirst"),
+                                rs2.getInt("priceAfter"),
+                                rs2.getInt("certificateID"),
+                                rs2.getString("toolDescription"),
+                                rs2.getString("picturePath")));
+            }
+            request.setAttribute("toolALL1", toolALL1);
+
+            rs2.close();
+            ps2.close();
+            dbc.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (PageAccess.isUser(request,response)){
             return true;
