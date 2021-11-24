@@ -8,9 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +22,7 @@ public class cancelOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             if (checkSession(request,response)){
-                String email = PageAccess.getEmail(request,response);
+                String email = PageAccess.getEmail(request);
                 String orderId = request.getParameter("id");
                 String result;
 
@@ -34,7 +32,7 @@ public class cancelOrderServlet extends HttpServlet {
                 } else {
                     result = "The user is not allowed to cancel this booking";
                 }
-                PageAccess.ReDirFeedback(request,response,result);
+                PageAccess.reDirFeedback(request,response,result);
             }
 
         } catch (Exception e) {

@@ -113,4 +113,14 @@ class FakeRemoveUser extends RemoveUser {
             System.out.print(user.getEmail() + " ");
         }
     }
+
+    @Override
+    protected void printJspSelfDeletion(HttpServletRequest request, HttpServletResponse response){
+        System.out.print("Self deletion");
+    }
+
+    @Override
+    protected String getEmail(HttpServletRequest request){
+        return "email1";
+    }
 }

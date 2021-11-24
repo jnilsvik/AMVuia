@@ -68,7 +68,7 @@ public class ToolCategory extends HttpServlet {
     }
 
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (PageAccess.isUser(request,response)){
+        if (PageAccess.isUser(request)){
             return true;
         }
         PageAccess.reDirWOUser(request,response);

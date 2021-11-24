@@ -42,7 +42,7 @@ public class Payment extends HttpServlet {
             throws ServletException, IOException {
         String orderID = request.getParameter("orderID");
         setPaid(orderID);
-        PageAccess.ReDirFeedback(request,response,"Order was successfully marked as paid");
+        PageAccess.reDirFeedback(request,response,"Order was successfully marked as paid");
     }
 
     private void setPaid(String orderID) {
