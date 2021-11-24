@@ -48,32 +48,28 @@ public class ToolAllListings extends HttpServlet {
     }
 
     protected List<ToolModel> GetSetTools(HttpServletRequest request) throws SQLException {
-
-        Connection dbc = DBUtils.getNoErrorConnection();
-        PreparedStatement ps2 = dbc.prepareStatement(
+        Connection db = DBUtils.getNoErrorConnection();
+        PreparedStatement ps = db.prepareStatement(
                     "select * from Tool order by toolID");
-        ResultSet rs2 = ps2.executeQuery();
-
+        ResultSet rs = ps.executeQuery();
         ArrayList<ToolModel> toolALL = new ArrayList<>();
-        while (rs2.next()){
+        while (rs.next()){
             toolALL.add(
                 new ToolModel(
-                    rs2.getInt("toolID"),
-                    rs2.getString("toolName"),
-                    rs2.getString("toolCategory"),
-                    rs2.getBoolean("maintenance"),
-                    rs2.getInt("priceFirst"),
-                    rs2.getInt("priceAfter"),
-                    rs2.getInt("certificateID"),
-                    rs2.getString("toolDescription"),
-                    rs2.getString("picturePath")));
+                    rs.getInt("toolID"),
+                    rs.getString("toolName"),
+                    rs.getString("toolCategory"),
+                    rs.getBoolean("maintenance"),
+                    rs.getInt("priceFirst"),
+                    rs.getInt("priceAfter"),
+                    rs.getInt("certificateID"),
+                    rs.getString("toolDescription"),
+                    rs.getString("picturePath")));
             }
-
-        rs2.close();
-        ps2.close();
-        dbc.close();
+        rs.close();
+        ps.close();
+        db.close();
         return toolALL;
-
     }
 
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
