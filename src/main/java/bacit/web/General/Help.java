@@ -10,7 +10,7 @@ import javax.servlet.annotation.*;
 public class Help extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        request.getRequestDispatcher("/jspFiles/UserBookings/help.jsp").forward(request,response);
+        request.getRequestDispatcher("/jspFiles/Profile/help.jsp").forward(request,response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -18,7 +18,7 @@ public class Help extends HttpServlet {
         request.setAttribute("name", request.getParameter("name"));
         request.setAttribute("message", request.getParameter("message"));
         request.setAttribute("email", request.getParameter("email"));
-        request.getRequestDispatcher("/jspFiles/UserBookings/helpPost.jsp").forward(request,response);
+        request.getRequestDispatcher("/jspFiles/Profile/helpPost.jsp").forward(request,response);
     }
 
 }
