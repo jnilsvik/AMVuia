@@ -1,4 +1,4 @@
-package bacit.web.AdminFunctions;
+package bacit.web.Admin;
 
 import bacit.web.Modules.BookingModel;
 import bacit.web.utils.DBUtils;
@@ -18,17 +18,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 
-@WebServlet(name = "User History", value = "/userhistoryadmin")
-public class UserHistoryAdmin extends HttpServlet {
+@WebServlet(name = "Tool History", value = "/toolhistory")
+public class ToolHistory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             if(checkSession(request,response)) {
-                int userID = Integer.parseInt(request.getParameter("userID"));
+                int toolID = Integer.parseInt(request.getParameter("toolID"));
                 Connection dbConnection = DBUtils.getNoErrorConnection();
-                String history = "select orderID, userID, toolID, totalPrice, startDate, endDate, returnDate from Booking WHERE userID = ? order by orderID desc";
+                String history = "select orderID, userID, toolID, totalPrice, startDate, endDate, returnDate from Booking WHERE toolID = ? order by orderID desc";
                 PreparedStatement statement = dbConnection.prepareStatement(history);
-                statement.setInt(1, userID);
+                statement.setInt(1, toolID);
                 ResultSet rs = statement.executeQuery();
 
                 ArrayList<BookingModel> bookingList = new ArrayList<>();
@@ -63,6 +63,6 @@ public class UserHistoryAdmin extends HttpServlet {
         }
         PageAccess.reDirWOUser(request,response);
         PageAccess.reDirWOAdmin(request,response);
-        return true;
+        return false;
     }
 }

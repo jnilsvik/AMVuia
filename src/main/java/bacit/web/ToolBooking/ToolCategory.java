@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,20 +19,18 @@ import java.util.ArrayList;
 @WebServlet(name = "xtc", value = "/xtc")
 public class ToolCategory extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)){
-                String toolCategory = request.getParameter("category");
-                GetSetTools(request, toolCategory);
-                request.getRequestDispatcher("/jspFiles/ToolBooking/-toolListByCAT.jsp").forward(request,response);
+                GetSetTools(request, request.getParameter("category"));
+
+                request.getRequestDispatcher("jspFiles/ToolBooking/toolCategory.jsp").forward(request,response);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
     protected void GetSetTools(HttpServletRequest request, String toolCategory){
         try {
             Connection dbc = DBUtils.getNoErrorConnection();

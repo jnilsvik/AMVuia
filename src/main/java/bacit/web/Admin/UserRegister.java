@@ -1,4 +1,4 @@
-package bacit.web.AdminFunctions;
+package bacit.web.Admin;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;
@@ -12,8 +12,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 // by Dilan
-@WebServlet(name = "RegisterUser", value = "/register")
-public class RegisterUser extends HttpServlet {
+@WebServlet(name = "UserRegister", value = "/register")
+public class UserRegister extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if(checkSession(request,response)) {
@@ -46,7 +46,7 @@ public class RegisterUser extends HttpServlet {
 
 
     }
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isAdmin(request)){
             return true;
         }

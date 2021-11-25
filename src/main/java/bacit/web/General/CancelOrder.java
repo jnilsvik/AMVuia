@@ -1,9 +1,8 @@
-package bacit.web.Profile;
+package bacit.web.General;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +15,10 @@ import java.sql.SQLException;
 
 //by Paul
 @WebServlet(name = "Cancellation", value = "/cancellation")
-public class cancelOrderServlet extends HttpServlet {
+public class CancelOrder extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)){
                 String email = PageAccess.getEmail(request);
@@ -63,12 +62,12 @@ public class cancelOrderServlet extends HttpServlet {
         db.close();
         return result;
     }
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isAdmin(request)){
             return true;
         }
         PageAccess.reDirWOUser(request,response);
-        return true;
+        return false;
     }
 
 }

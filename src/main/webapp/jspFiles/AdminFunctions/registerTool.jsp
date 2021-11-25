@@ -1,6 +1,6 @@
 
 <%@ page import="java.util.List" %>
-<%@ page import="bacit.web.Modules.Certificate" %>
+<%@ page import="bacit.web.Modules.CertificateModel" %>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
@@ -35,7 +35,7 @@
         <select name='toolCategory' id='toolCategory' class="form-select">
             <%
                 List<String> categories = (List<String>) request.getAttribute("categories");
-                List<Certificate> certificates = (List<Certificate>) request.getAttribute("certificates");
+                List<CertificateModel> certificates = (List<CertificateModel>) request.getAttribute("certificates");
 
                 for(String cat : categories){
                     out.print("<option value = '" + cat + "'> " + cat + " </option>");
@@ -48,7 +48,7 @@
     <div class='form-floating mb-3'>
         <select name='toolcertificate' id='toolcertificate' class="form-select">
             <%
-                for(Certificate cert : certificates){
+                for(CertificateModel cert : certificates){
                     out.print("<option value = '" + cert.getCertificateID() + "'> " + cert.getCertificateName() + " </option>");
                 }
             %>

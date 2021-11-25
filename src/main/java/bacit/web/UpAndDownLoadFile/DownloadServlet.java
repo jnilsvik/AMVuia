@@ -1,7 +1,6 @@
 package bacit.web.UpAndDownLoadFile;
 
 import bacit.web.Modules.FileModel;
-import bacit.web.utils.FileDAO;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +28,7 @@ public class DownloadServlet extends HttpServlet {
         }
     }
 
-    protected FileModel getFile(int id) throws Exception
-    {
+    protected FileModel getFile(int id) {
         //return new FileDAO().getFile(id);
         return null;
     }

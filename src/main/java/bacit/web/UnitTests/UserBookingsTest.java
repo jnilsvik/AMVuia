@@ -1,7 +1,7 @@
 package bacit.web.UnitTests;
 
 import bacit.web.Modules.BookingModel;
-import bacit.web.Profile.Profile;
+import bacit.web.General.UserBookings;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ProfileTest {
+public class UserBookingsTest {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -34,7 +34,7 @@ public class ProfileTest {
     @Test
     void doGet() throws Exception{
         //Arrange
-        FakeProfile unitUnderTest = new FakeProfile();
+        FakeUserBookings unitUnderTest = new FakeUserBookings();
         //Act
         unitUnderTest.doGet(null,null);
 
@@ -54,12 +54,12 @@ public class ProfileTest {
     }
 }
 
-class FakeProfile extends Profile {
+class FakeUserBookings extends UserBookings {
 
     private List<BookingModel> bookings = new LinkedList<>();
     private int userID = 1;
 
-    FakeProfile(){
+    FakeUserBookings(){
         setBookings();
     }
 

@@ -18,10 +18,7 @@ public class PageAccess {
     //not sure about this one atm
     public static boolean isUser(HttpServletRequest request){
         HttpSession session = request.getSession(false);
-        if ((session != null) && (session.getAttribute("email") != null)) {
-            return true;
-        }
-        return false;
+        return (session.getAttribute("email") != null);
     }
 
     public static boolean isAdmin(HttpServletRequest request) {
@@ -53,9 +50,9 @@ public class PageAccess {
         }
     }
 
-    public static void reDirWOAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public static void reDirWOAdmin(HttpServletRequest request, HttpServletResponse response) {
         if (!isAdmin(request)) {
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request, response);
+            reDirFeedback(request,response,"You tried to access a function which is only accessible by Admins");
         }
     }
     public static void reDirFeedback(HttpServletRequest request, HttpServletResponse response, String feedbackMsg){

@@ -1,4 +1,4 @@
-package bacit.web.AdminFunctions;
+package bacit.web.Admin;
 
 import bacit.web.Modules.UserModel;
 import bacit.web.utils.DBUtils;
@@ -16,8 +16,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 //by ? changed to jsp by paul
-@WebServlet(name = "RemoveUser", value = "/removeuser")
-public class RemoveUser extends HttpServlet {
+@WebServlet(name = "UserRemove", value = "/removeuser")
+public class UserRemove extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if(checkSession(request,response)) {
             try {
@@ -112,7 +112,7 @@ public class RemoveUser extends HttpServlet {
         return false;
     }
 
-    protected void printJspSelfDeletion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void printJspSelfDeletion(HttpServletRequest request, HttpServletResponse response) {
         PageAccess.reDirFeedback(request, response, "You can't delete yourself");
     }
 

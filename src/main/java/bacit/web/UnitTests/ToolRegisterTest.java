@@ -1,7 +1,7 @@
 package bacit.web.UnitTests;
 
-import bacit.web.AdminFunctions.RegisterTool;
-import bacit.web.Modules.Certificate;
+import bacit.web.Admin.ToolRegister;
+import bacit.web.Modules.CertificateModel;
 import bacit.web.Modules.ToolModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RegisterToolTest {
+public class ToolRegisterTest {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -35,7 +35,7 @@ public class RegisterToolTest {
 
     @Test
     public void doGet() throws IOException {
-        FakeRegisterTool unitUnderTest = new FakeRegisterTool();
+        FakeToolRegister unitUnderTest = new FakeToolRegister();
 
         unitUnderTest.doGet(null,null);
 
@@ -44,7 +44,7 @@ public class RegisterToolTest {
 
     @Test
     public void doPost() throws IOException {
-        FakeRegisterTool unitUnderTest = new FakeRegisterTool();
+        FakeToolRegister unitUnderTest = new FakeToolRegister();
 
         unitUnderTest.doPost(null, null);
 
@@ -58,14 +58,14 @@ public class RegisterToolTest {
     }
 }
 
-class FakeRegisterTool extends RegisterTool{
+class FakeToolRegister extends ToolRegister {
 
     List<String> categories = new LinkedList<>();
-    List<Certificate> certificates = new LinkedList<>();
+    List<CertificateModel> certificates = new LinkedList<>();
     List<ToolModel> tools = new LinkedList<>();
     String newToolName = "Tool2";
 
-    FakeRegisterTool(){
+    FakeToolRegister(){
         setCategories();
         setCertificates();
         setTools();
@@ -81,8 +81,8 @@ class FakeRegisterTool extends RegisterTool{
     }
 
     private void setCertificates(){
-        certificates.add(new Certificate(1, "Cert1"));
-        certificates.add(new Certificate(2, "Cert2"));
+        certificates.add(new CertificateModel(1, "Cert1"));
+        certificates.add(new CertificateModel(2, "Cert2"));
     }
 
     private void setTools(){
@@ -104,16 +104,16 @@ class FakeRegisterTool extends RegisterTool{
     }
 
     @Override
-    protected List<Certificate> getCertificates(){
+    protected List<CertificateModel> getCertificates(){
         return certificates;
     }
 
     @Override
-    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<Certificate> certificates){
+    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<CertificateModel> certificates){
         for(String cat : categories){
             System.out.print(cat + " ");
         }
-        for(Certificate cert: certificates){
+        for(CertificateModel cert: certificates){
             System.out.print(cert.getCertificateName() + " ");
         }
         for(ToolModel tool: tools){

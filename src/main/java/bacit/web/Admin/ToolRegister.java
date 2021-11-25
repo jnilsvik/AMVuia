@@ -1,6 +1,6 @@
-package bacit.web.AdminFunctions;
+package bacit.web.Admin;
 
-import bacit.web.Modules.Certificate;
+import bacit.web.Modules.CertificateModel;
 import bacit.web.Modules.FileModel;
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
@@ -17,16 +17,16 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 // by Dilan changed by paul
-@WebServlet(name = "RegisterTool", value = "/toolregister")
+@WebServlet(name = "ToolRegister", value = "/toolregister")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 5, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5)
-public class RegisterTool extends HttpServlet {
+public class ToolRegister extends HttpServlet {
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)) {
                 List<String> categories = getCategories();
-                List<Certificate> certificates = getCertificates();
+                List<CertificateModel> certificates = getCertificates();
                 printJspGet(request, response, categories, certificates);
             }
         } catch (Exception e) {
@@ -35,11 +35,12 @@ public class RegisterTool extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
         try{
+            // TODO: 24.11.2021 not sure about this, will check later
+            /*
             int toolID = addTool(getToolFromRequest(request));
-
-            /*try {
+            try {
                 addFile(request.getPart("file"), toolID);
             } catch (Exception e){}*/
 
@@ -63,13 +64,13 @@ public class RegisterTool extends HttpServlet {
         return categories;
     }
 
-    protected List<Certificate> getCertificates() throws SQLException{
+    protected List<CertificateModel> getCertificates() throws SQLException{
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement statement = db.prepareStatement("SELECT certificateID, certificateName FROM ToolCertificate;");
         ResultSet rs = statement.executeQuery();
-        LinkedList<Certificate> certificates = new LinkedList<>();
+        LinkedList<CertificateModel> certificates = new LinkedList<>();
         while(rs.next()){
-            certificates.add(new Certificate(
+            certificates.add(new CertificateModel(
                     rs.getInt("certificateID"),
                     rs.getString("certificateName")
                     ));
@@ -118,16 +119,7 @@ public class RegisterTool extends HttpServlet {
         dao.persistFile(fileModel);
     }
 
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (PageAccess.isAdmin(request)){
-            return true;
-        }
-        PageAccess.reDirWOUser(request,response);
-        PageAccess.reDirWOAdmin(request,response);
-        return false;
-    }
-
-    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<Certificate> certificates) throws ServletException, IOException {
+    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<CertificateModel> certificates) throws ServletException, IOException {
         request.setAttribute("categories", categories);
         request.setAttribute("certificates", certificates);
         request.getRequestDispatcher("/jspFiles/AdminFunctions/registerTool.jsp").forward(request,response);
@@ -146,16 +138,22 @@ public class RegisterTool extends HttpServlet {
                 "");
     }
 
-    protected void printJspPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String successfulLine = "<h1>The tool has been registered successfully</h1>";
-        request.setAttribute("successfulLine", successfulLine);
-        request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
+    protected void printJspPost(HttpServletRequest request, HttpServletResponse response){
+        PageAccess.reDirFeedback(request,response, "The tool has been registered successfully");
     }
 
     protected void printJspError(HttpServletRequest request, HttpServletResponse response){
         PageAccess.reDirFeedback(request, response, "Data could not be added to the database");
     }
 
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if (PageAccess.isAdmin(request)){
+            return true;
+        }
+        PageAccess.reDirWOUser(request,response);
+        PageAccess.reDirWOAdmin(request,response);
+        return false;
+    }
 }
 
 

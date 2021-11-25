@@ -1,6 +1,6 @@
-package bacit.web.AdminFunctions;
+package bacit.web.Admin;
 
-import bacit.web.Modules.Certificate;
+import bacit.web.Modules.CertificateModel;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;
 
@@ -20,12 +20,12 @@ public class GiveCertificate extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)) {
-                List<Certificate> certificates = getCertificates();
+                List<CertificateModel> certificates = getCertificates();
 
                 request.setAttribute("certificates", certificates);
                 request.getRequestDispatcher("/jspFiles/AdminFunctions/giveCertificate.jsp").forward(request,response);
             } else {
-                request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
+                PageAccess.reDirWOAdmin(request,response);
             }
 
         } catch (Exception e) {
@@ -43,23 +43,21 @@ public class GiveCertificate extends HttpServlet {
                 String certificateID = request.getParameter("certificateID");
                 addCertificate(userID, certificateID, accomplishDate);
 
-                String successfulLine = "<h3 style=\"text-align:center\">Certificate was given successfully!</h3>" + "<br><br><br>"  + "<a href=\"givecertificate\"> <span class=bigbutton> Go back  </span></a>";
-                request.setAttribute("successfulLine", successfulLine);
-                request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
+                PageAccess.reDirFeedback(request,response,"Certificate was given successfully!");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request, response);
+            PageAccess.reDirWOAdmin(request,response);
         }
     }
-    private List<Certificate> getCertificates() throws SQLException {
-        List<Certificate> certificateNames = new LinkedList<>();
+    private List<CertificateModel> getCertificates() throws SQLException {
+        List<CertificateModel> certificateNames = new LinkedList<>();
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement ps = db.prepareStatement("SELECT certificateID, certificateName FROM ToolCertificate");
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-           certificateNames.add(new Certificate(
+           certificateNames.add(new CertificateModel(
                    rs.getInt("certificateId"),
                    rs.getString("certificateName")));
         }

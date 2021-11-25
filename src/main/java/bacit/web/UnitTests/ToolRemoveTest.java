@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static org.junit.jupiter.api.Assertions.*;
 
-import bacit.web.AdminFunctions.RemoveTool;
+import bacit.web.Admin.ToolRemove;
 import bacit.web.Modules.ToolModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,11 +12,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RemoveToolTest {
+public class ToolRemoveTest {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -34,7 +33,7 @@ public class RemoveToolTest {
     @Test
     void doGet() throws Exception{
         //Arrange
-        FakeRemoveTool unitUnderTest = new FakeRemoveTool();
+        FakeToolRemove unitUnderTest = new FakeToolRemove();
         //Act
         unitUnderTest.doGet(null,null);
 
@@ -45,7 +44,7 @@ public class RemoveToolTest {
     @Test
     void doPost() throws Exception{
         //Arrange
-        FakeRemoveTool unitUnderTest = new FakeRemoveTool();
+        FakeToolRemove unitUnderTest = new FakeToolRemove();
         //Act
         unitUnderTest.doPost(null,null);
 
@@ -59,11 +58,11 @@ public class RemoveToolTest {
     }
 }
 
-class FakeRemoveTool extends RemoveTool {
+class FakeToolRemove extends ToolRemove {
 
     List<ToolModel> tools = new LinkedList<>();
 
-    FakeRemoveTool(){
+    FakeToolRemove(){
         setTools();
     }
 
@@ -101,7 +100,7 @@ class FakeRemoveTool extends RemoveTool {
     }
 
     @Override
-    protected boolean deleteRow(int id) throws SQLException{
+    protected boolean deleteRow(int id) {
         for(ToolModel tool: tools){
             if(tool.getToolID() == id){
                 tools.remove(tool);

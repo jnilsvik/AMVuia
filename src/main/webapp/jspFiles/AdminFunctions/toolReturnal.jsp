@@ -1,5 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="bacit.web.Modules.ToolModel" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.sql.ResultSet" %>
@@ -14,21 +12,19 @@
 </head>
 <body>
 <jsp:include page="../PageElements/header.jsp"/>
-
 <table style = 'width:100%'>
     <tr>
+        <th>Order ID</th>
         <th>User ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
         <th>Phone Number</th>
-        <th>Order ID</th>
         <th>Start Date</th>
         <th>End Date</th>
         <th>Tool ID</th>
         <th>Total Price</th>
     </tr>
-
     <%
         ResultSet rs1 = (ResultSet) request.getAttribute("notReturned");
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -37,16 +33,16 @@
             while(rs1.next()) {
                 if(rs1.getDate("endDate").toLocalDate().isBefore(LocalDate.now().plusDays(1))) {
                     out.print("<tr>");
-                    out.print("<td>" + rs1.getInt("userID") + "</td> ");
-                    out.print("<td>" + rs1.getString("firstName") + "</td> ");
-                    out.print("<td>" + rs1.getString("lastName") + "</td> ");
-                    out.print("<td>" + rs1.getString("email") + "</td> ");
-                    out.print("<td>" + rs1.getString("phoneNumber") + "</td> ");
-                    out.print("<td>" + rs1.getInt("orderID") + "</td> ");
-                    out.print("<td>" + rs1.getDate("startDate").toLocalDate().format(formatters) + "</td> ");
-                    out.print("<td>" + rs1.getDate("endDate").toLocalDate().format(formatters) + "</td> ");
-                    out.print("<td>" + rs1.getInt("toolID") + "</td> ");
-                    out.print("<td>" + rs1.getInt("totalPrice") + "</td> ");
+                    out.print(  "<td>" + rs1.getInt("orderID") + "</td> ");
+                    out.print(  "<td>" + rs1.getInt("userID") + "</td> ");
+                    out.print(  "<td>" + rs1.getString("firstName") + "</td> ");
+                    out.print(  "<td>" + rs1.getString("lastName") + "</td> ");
+                    out.print(  "<td>" + rs1.getString("email") + "</td> ");
+                    out.print(  "<td>" + rs1.getString("phoneNumber") + "</td> ");
+                    out.print(  "<td>" + rs1.getDate("startDate").toLocalDate().format(formatters) + "</td> ");
+                    out.print(  "<td>" + rs1.getDate("endDate").toLocalDate().format(formatters) + "</td> ");
+                    out.print(  "<td>" + rs1.getInt("toolID") + "</td> ");
+                    out.print(  "<td>" + rs1.getInt("totalPrice") + "</td> ");
                     out.print("</tr>");
                 }
             }
@@ -57,7 +53,6 @@
         request.removeAttribute("notReturned");
     %>
 </table>
-<br>
 
 <div class='page'>
     <article class='my-3 amv-register' id='floating-labels'>
@@ -73,7 +68,8 @@
                     </div>
                     <div class='form-floating mb-3'>
                         <input type = 'date' name = 'returndate' id = 'returndate' class='form-control'><br>
-                        <%--@declare id="accomplishdate"--%><label for = 'returndate'>Return Date: </label>
+                        <%--@declare id="accomplishdate"--%>
+                        <label for = 'returndate'>Return Date: </label>
                     </div>
                     <div class='col-12' >
                         <button class='btn btn-primary' style='width: 100%'  type='submit'>Submit</button>
@@ -83,6 +79,8 @@
         </div>
     </article>
 </div>
+
+
 <jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>
