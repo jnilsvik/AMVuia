@@ -69,14 +69,12 @@
                 <%
                     // TODO: 24.11.2021 could prob. be refacd
                     List<LocalDate> dates = (List<LocalDate>) request.getAttribute("dates");
-                    LocalDate currentDate = LocalDate.now();
-                    LocalDate dateToday = LocalDate.now();
-                    currentDate = currentDate.with(TemporalAdjusters.firstDayOfMonth());
+                    LocalDate currentDate = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
                     currentDate = currentDate.with(DayOfWeek.MONDAY);
-                    int days = 0;
+                    LocalDate dateToday = LocalDate.now();
                     DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-                    while (days <= 180) {
+                    while (currentDate.isBefore(dateToday.plusDays(180))) {
                         // sets colour dependant on availability
                         String status = "Available";
                         String color = "#00FF00";
@@ -88,16 +86,17 @@
                             status = "Passed";
                             color = "#808080";
                         }
-                        //Print the actual line
+
+                        //resets the week (amount of days per columns)
                         if (currentDate == currentDate.with(DayOfWeek.MONDAY)) {
                             out.print("</tr>");
                             out.print("<tr>");
                         }
+
+                        //Print the actual line
                         String currentDateFormat = currentDate.format(formatters);
                         out.print("<td bgcolor=" + color + ">" + currentDateFormat + status + "</td>");
-                        //resets the week (amount of days per columns)
                         currentDate = currentDate.plusDays(1);
-                        days++;
                     }
                 %>
             </tr>
