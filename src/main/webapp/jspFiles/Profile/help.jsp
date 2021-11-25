@@ -18,14 +18,25 @@
 <body>
 <jsp:include page="../PageElements/header.jsp"/>
 <h2>How can we help?</h2>
+<style>
+    .hide {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: 1px;
+        height: 1px;
+    }
+</style>
+
+<iframe name="hiddenFrame" class="hide"></iframe>
 <form action='https://script.google.com/a/hsu.edu.hk/macros/s/AKfycbxfqBQo0UkCet0kkVLK8CDMtPBpann19xu0mI10/exec'
-      method='POST' data-email='cheuklong20010212@gmail.com'>
+      method='POST' data-email='cheuklong20010212@gmail.com' target="hiddenFrame">
     <label for="name">Name: </label><br>
     <textarea id='name' name='name' rows='2' cols='50'></textarea><br>
     <label for="email">Email: </label><br>
     <textarea id='email' name='email' rows='2' cols='50'></textarea><br>
     <label for="message">Message: </label><br>
-    <textarea id='message' name='message' rows='10' cols='50'></textarea><br>
+    <textarea id='message' name='message' rows='10' cols='50'></textarea><br><br>
     <input type='submit' value='Send Help!'>
 </form>
 <jsp:include page="../PageElements/footer.jsp"/>
