@@ -22,30 +22,24 @@ import javax.servlet.annotation.*;
 public class ToolBookingServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        setContentType(response);
         try {
             if (checkSession(request,response)){
-                int toolID = Integer.parseInt(request.getParameter("tools"));
-                int inputDays = Integer.parseInt(request.getParameter("days")) - 1;
-                int userID = getUserID(PageAccess.getEmail(request));
-                LocalDate StartDateWanted = LocalDate.parse(request.getParameter("date"));
-                LocalDate endingDate = StartDateWanted.plusDays(inputDays);
+                int toolID = getToolID(request);
 
                 ToolModel tool = getTool(toolID);
 
-                //getTotalPrice class calculates the total price.
-                int totalPrice =  tool.getPriceFirst() + tool.getPriceAfter() * (inputDays);
+                BookingModel booking = getBooking(tool, request);
 
                 //checkDate class sees if the wanted booked days are already taken. The hasCertificate method checks if the user has the needed certificate.
-                if(dateBookedTaken(StartDateWanted, inputDays, toolID)){
-                    PageAccess.reDirFeedback(request,response,"Sorry, the tools is already been booked for that date");
-                }else if(!hasCertificate(userID, tool.getCertificateID())){
-                    PageAccess.reDirFeedback(request,response,"Sorry, you don't have the needed certificate for this tool.");
+                if(dateBookedTaken(booking)){
+                    printFeedBackJSP("Sorry, the tools is already been booked for that date", request,response);
+                }else if(!hasCertificate(booking.getUserID(), tool.getCertificateID())){
+                    printFeedBackJSP("Sorry, you don't have the needed certificate for this tool.", request,response);
                 }else{
-                    registerBooking(StartDateWanted, endingDate, totalPrice, userID, toolID);
-                    request.setAttribute("booking", new BookingModel(0, userID, toolID, totalPrice, StartDateWanted, StartDateWanted.plusDays(inputDays), null));
-                    request.getRequestDispatcher("/jspFiles/ToolBooking/bookingComplete.jsp").forward(request,response);
+                    registerBooking(booking);
+                    printSuccessJSP(booking, request, response);
                 }
             }
 
@@ -54,7 +48,15 @@ public class ToolBookingServlet extends HttpServlet {
         }
     }
 
-    private static int getUserID(String email) {
+    protected void setContentType(HttpServletResponse response) {
+        response.setContentType("text/html");
+    }
+
+    protected int getToolID(HttpServletRequest request) {
+        return Integer.parseInt(request.getParameter("tools"));
+    }
+
+    protected int getUserID(String email) {
         int userID = 0;
         try {
             Connection db = DBUtils.getNoErrorConnection();
@@ -74,7 +76,7 @@ public class ToolBookingServlet extends HttpServlet {
         return userID;
     }
 
-    private boolean hasCertificate(int userID, int toolCertificateID) {
+    protected boolean hasCertificate(int userID, int toolCertificateID) {
         if(toolCertificateID == 1) return true;
         boolean hasTheCertificate = false;
         try {
@@ -104,26 +106,23 @@ public class ToolBookingServlet extends HttpServlet {
         return hasTheCertificate;
     }
 
-    private void registerBooking(LocalDate StartDateWanted, LocalDate endingDate, int totalPrice, int userID, int toolID ) {
-        try {
+    protected void registerBooking(BookingModel booking) throws SQLException {
             Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement statement2 = db.prepareStatement(
                     "insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
-            statement2.setObject(1, StartDateWanted);
-            statement2.setObject(2, endingDate);
-            statement2.setInt(3, totalPrice);
-            statement2.setInt(4, userID);
-            statement2.setInt(5, toolID);
+            statement2.setObject(1, booking.getStartDate());
+            statement2.setObject(2, booking.getEndDate());
+            statement2.setInt(3, booking.getTotalPrice());
+            statement2.setInt(4, booking.getUserID());
+            statement2.setInt(5, booking.getToolID());
             statement2.executeUpdate();
 
             statement2.close();
             db.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
-    private ToolModel getTool(int toolID) throws SQLException {
+    protected ToolModel getTool(int toolID) throws SQLException {
         ToolModel tool = null;
         Connection db = DBUtils.getNoErrorConnection();
         String query = "SELECT toolID, toolName, priceFirst, priceAfter, certificateID FROM Tool WHERE toolID = ?;";
@@ -146,18 +145,27 @@ public class ToolBookingServlet extends HttpServlet {
         return tool;
     }
 
-    private static boolean dateBookedTaken(LocalDate StartDateWanted, int inputDays, int toolID) {
+    protected BookingModel getBooking(ToolModel tool, HttpServletRequest request) {
+        int inputDays = Integer.parseInt(request.getParameter("days")) - 1;
+        int userID = getUserID(PageAccess.getEmail(request));
+        LocalDate startDate = LocalDate.parse(request.getParameter("date"));
+        LocalDate endDate = startDate.plusDays(inputDays);
+        int totalPrice =  tool.getPriceFirst() + tool.getPriceAfter() * (inputDays);
+        return new BookingModel(0,userID, tool.getToolID(), totalPrice, startDate, endDate, null);
+    }
+
+    protected boolean dateBookedTaken(BookingModel booking) {
         boolean taken = false;
         try {
             Connection db = DBUtils.getNoErrorConnection();
             PreparedStatement st = db.prepareStatement("SELECT startDate, endDate FROM Booking WHERE toolID = ?");
-            st.setInt(1, toolID);
+            st.setInt(1, booking.getToolID());
             ResultSet rs = st.executeQuery();
 
             while (rs.next() && !taken) {
                 LocalDate dateStart = rs.getDate("startDate").toLocalDate();
                 LocalDate dateEnd = rs.getDate("endDate").toLocalDate();
-                if(!dateEnd.isBefore(StartDateWanted) && !dateStart.isAfter(StartDateWanted.plusDays(inputDays))){
+                if(!dateEnd.isBefore(booking.getStartDate()) && !dateStart.isAfter(booking.getEndDate())){
                     taken = true;
                 }
             }
@@ -169,12 +177,22 @@ public class ToolBookingServlet extends HttpServlet {
         }
         return taken;
     }
+
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (PageAccess.isUser(request)){
             return true;
         }
         PageAccess.reDirWOUser(request,response);
         return false;
+    }
+
+    protected void printFeedBackJSP(String message, HttpServletRequest request, HttpServletResponse response){
+        PageAccess.reDirFeedback(request,response,message);
+    }
+
+    protected void printSuccessJSP(BookingModel booking, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("booking", booking);
+        request.getRequestDispatcher("/jspFiles/ToolBooking/bookingComplete.jsp").forward(request,response);
     }
 
 }

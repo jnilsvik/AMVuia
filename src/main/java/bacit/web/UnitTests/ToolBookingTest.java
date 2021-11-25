@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -94,7 +93,7 @@ class ToolBookingFake extends ToolBookingServlet{
     }
 
     @Override
-    protected boolean dateBookedTaken(LocalDate startDate, LocalDate endDate, int toolID){
+    protected boolean dateBookedTaken(BookingModel booking){
         if(toolID == 1) return true;
         return false;
     }
