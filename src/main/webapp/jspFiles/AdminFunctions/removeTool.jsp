@@ -11,7 +11,7 @@
 </head>
 <body>
 <jsp:include page="../PageElements/header.jsp"/>
-  <h2>Please enter the ID or name of the tool you want to remove</h2>
+  <h2>Please enter the ID of the tool you want to remove</h2>
   <%// TODO: 24.11.2021 this method dont have a action???%>
   <form method='POST'>
     <label for="input">ID: </label>

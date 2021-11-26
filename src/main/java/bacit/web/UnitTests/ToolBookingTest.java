@@ -123,6 +123,11 @@ class ToolBookingFake extends ToolBookingServlet{
     }
 
     @Override
+    protected boolean isUnionMember(int userID){
+        return false;
+    }
+
+    @Override
     protected int getUserID(String email){
         return userID;
     }

@@ -11,27 +11,6 @@
 </head>
 <body>
 <jsp:include page="../PageElements/header.jsp"/>
-<div class='page'>
-    <article class='my-3 amv-register' id='floating-labels'>
-        <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
-            <h3>Mark order as paid</h3>
-        </div>
-        <div>
-            <div class='bd-example'>
-                <form action = 'payment' method = 'POST'>
-                    <div class='form-floating mb-3'>
-                        <input type = 'text' class='form-control' name = 'orderID' id="orderID" placeholder='name'>
-                        <label for ='orderID' >Order ID: </label>
-                    </div>
-                    <div class='col-12' >
-                        <button class='btn btn-primary' style='width: 100%'  type='submit'>Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </article>
-</div>
-
 <table style='width:100%'>
     <tr>
         <th>Order ID</th>
@@ -53,23 +32,25 @@
 
         try {
             while(rs1.next()) {
-                out.print("<tr>");
-                out.print(  "<td>" + rs1.getInt("orderID") + "</td>");
-                out.print(  "<td>" + rs1.getInt("userID") + "</td>");
-                out.print(  "<td>" + rs1.getString("firstName") + "</td>");
-                out.print(  "<td>" + rs1.getString("lastName") + "</td>");
-                out.print(  "<td>" + rs1.getString("email") + "</td>");
-                if (rs1.getString("phoneNumber") == null){
-                    out.print(  "<td></td>");
-                } else {
-                    out.print(  "<td>" + rs1.getString("phoneNumber") + "</td>");
+                if (rs1.getInt("totalprice") != 0) {
+                    out.print("<tr>");
+                    out.print("<td>" + rs1.getInt("orderID") + "</td>");
+                    out.print("<td>" + rs1.getInt("userID") + "</td>");
+                    out.print("<td>" + rs1.getString("firstName") + "</td>");
+                    out.print("<td>" + rs1.getString("lastName") + "</td>");
+                    out.print("<td>" + rs1.getString("email") + "</td>");
+                    if (rs1.getString("phoneNumber") == null) {
+                        out.print("<td></td>");
+                    } else {
+                        out.print("<td>" + rs1.getString("phoneNumber") + "</td>");
+                    }
+                    out.print("<td>" + rs1.getDate("startDate").toLocalDate().format(formatters) + "</td>");
+                    out.print("<td>" + rs1.getDate("endDate").toLocalDate().format(formatters) + "</td>");
+                    out.print("<td>" + rs1.getDate("returnDate").toLocalDate().format(formatters) + "</td>");
+                    out.print("<td>" + rs1.getInt("toolID") + "</td>");
+                    out.print("<td>" + rs1.getInt("totalPrice") + "</td>");
+                    out.print("</tr>");
                 }
-                out.print(  "<td>" + rs1.getDate("startDate").toLocalDate().format(formatters)+ "</td>");
-                out.print(  "<td>" + rs1.getDate("endDate").toLocalDate().format(formatters) + "</td>");
-                out.print(  "<td>" + rs1.getDate("returnDate").toLocalDate().format(formatters) + "</td>");
-                out.print(  "<td>" + rs1.getInt("toolID") + "</td>");
-                out.print(  "<td>" + rs1.getInt("totalPrice") + "</td>");
-                out.print("</tr>");
             }
         }  catch (Exception e) {
             e.printStackTrace();
@@ -77,6 +58,27 @@
         request.removeAttribute("unpaid");
     %>
 </table>
+
+<div class='page'>
+    <article class='my-3 amv-register' id='floating-labels'>
+        <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
+            <h3>Mark order as paid</h3>
+        </div>
+        <div>
+            <div class='bd-example'>
+                <form action = 'payment' method = 'POST'>
+                    <div class='form-floating mb-3'>
+                        <input type = 'text' class='form-control' name = 'orderID' id="orderID" placeholder='name'>
+                        <label for ='orderID' >Order ID: </label>
+                    </div>
+                    <div class='col-12' >
+                        <button class='btn btn-primary' style='width: 100%'  type='submit'>Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</div>
 <jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>

@@ -55,9 +55,6 @@
                     <div class='col-12' >
                         <button class='btn btn-primary' style='width: 100%' type='submit'>Register</button>
                     </div>
-                    <div style='text-align:center'>
-                        <a href='login'>Already have an account? Login here!</a>
-                    </div>
                 </form>
             </div>
         </div>

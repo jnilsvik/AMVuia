@@ -96,4 +96,9 @@ class FakeUserBookings extends UserBookings {
             System.out.print(booking.getUserID()+" " + booking.getOrderID() + " ");
         }
     }
+
+    @Override
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response){
+        return true;
+    }
 }
