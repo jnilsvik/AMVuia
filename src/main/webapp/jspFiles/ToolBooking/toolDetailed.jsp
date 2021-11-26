@@ -23,8 +23,8 @@
             out.print("<h1> " + tool.getToolName().replaceAll("_", " ") + "</h1>");
             out.print("<h1> Category: " + tool.getToolCategory().replaceAll("_", " ") + "</h1>");
             out.print("<img src = 'img/"+ tool.getPicturePath()+ "' width = '156' height = '151'>");
-            out.print("<h2>Price the first day: " + tool.getPriceFirst() + "</h2>");
-            out.print("<h2>Price after the first day: " + tool.getPriceAfter() + "</h2>");
+            out.print("<h2>Price the first day: " + tool.getPriceFirst() + "kr" + "</h2>");
+            out.print("<h2>Price after the first day: " + tool.getPriceAfter() + "kr" + "</h2>");
 
             if(tool.getDescription() == null) {
                 out.print("<p></p>");
