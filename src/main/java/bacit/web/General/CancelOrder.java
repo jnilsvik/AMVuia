@@ -22,10 +22,10 @@ public class CancelOrder extends HttpServlet {
         try {
             if (checkSession(request,response)){
                 String email = PageAccess.getEmail(request);
-                String orderId = request.getParameter("id");
+                String orderId = request.getParameter("ID");
                 String result;
 
-                if(isAllowedToChancel(orderId, email)){
+                if(isAllowedToCancel(orderId, email)){
                     deleteOrder(orderId);
                     result = "The booking has been successfully removed";
                 } else {
@@ -49,7 +49,7 @@ public class CancelOrder extends HttpServlet {
         db.close();
     }
 
-    private boolean isAllowedToChancel(String orderID, String email) throws SQLException {
+    private boolean isAllowedToCancel(String orderID, String email) throws SQLException {
         Connection db = DBUtils.getNoErrorConnection();
         PreparedStatement ps = db.prepareStatement("SELECT email, orderID from Booking inner JOIN AMVUser AU on Booking.userID = AU.userID WHERE orderID = ?;");
         ps.setString(1, orderID);
@@ -63,7 +63,7 @@ public class CancelOrder extends HttpServlet {
         return result;
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (PageAccess.isAdmin(request)){
+        if (PageAccess.isUser(request)){
             return true;
         }
         PageAccess.reDirWOUser(request,response);

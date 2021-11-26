@@ -27,6 +27,7 @@
         <%
             List<BookingModel> bookings = (List<BookingModel>) request.getAttribute("bookings");
             for(BookingModel booking : bookings){
+                    out.print("<FORM action='cancellation' method='get'>");
                     out.print("<tr>");
                     out.print("<td>" + booking.getOrderID() + "</td> ");
                     out.print("<td>" + booking.getToolName() + "</td> ");
@@ -35,9 +36,7 @@
                     out.print("<td>" + booking.getTotalPrice() + "</td> ");
                     out.print("<td>" + booking.getReturnDate() + "</td> ");
                     if(booking.getStartDate().isAfter(LocalDate.now())){
-                        out.print("<td>");
-                            out.print("<a href=\"cancellation?id="+booking.getOrderID()+"\">cancel</a>");
-                        out.print("</td>");
+                            out.print("<td> <button name='ID' type='submit' value='"+booking.getOrderID()+"'> Cancel Booking </button> </td>");
                     }else{
                         if(booking.getEndDate().isAfter(LocalDate.now())){
                             out.print("<td>Booking started</td>");
