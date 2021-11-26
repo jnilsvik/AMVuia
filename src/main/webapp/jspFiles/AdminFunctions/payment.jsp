@@ -11,27 +11,6 @@
 </head>
 <body>
 <jsp:include page="../PageElements/header.jsp"/>
-<div class='page'>
-    <article class='my-3 amv-register' id='floating-labels'>
-        <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
-            <h3>Mark order as paid</h3>
-        </div>
-        <div>
-            <div class='bd-example'>
-                <form action = 'payment' method = 'POST'>
-                    <div class='form-floating mb-3'>
-                        <input type = 'text' class='form-control' name = 'orderID' id="orderID" placeholder='name'>
-                        <label for ='orderID' >Order ID: </label>
-                    </div>
-                    <div class='col-12' >
-                        <button class='btn btn-primary' style='width: 100%'  type='submit'>Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </article>
-</div>
-
 <table style='width:100%'>
     <tr>
         <th>Order ID</th>
@@ -77,6 +56,27 @@
         request.removeAttribute("unpaid");
     %>
 </table>
+
+<div class='page'>
+    <article class='my-3 amv-register' id='floating-labels'>
+        <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
+            <h3>Mark order as paid</h3>
+        </div>
+        <div>
+            <div class='bd-example'>
+                <form action = 'payment' method = 'POST'>
+                    <div class='form-floating mb-3'>
+                        <input type = 'text' class='form-control' name = 'orderID' id="orderID" placeholder='name'>
+                        <label for ='orderID' >Order ID: </label>
+                    </div>
+                    <div class='col-12' >
+                        <button class='btn btn-primary' style='width: 100%'  type='submit'>Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</div>
 <jsp:include page="../PageElements/footer.jsp"/>
 </body>
 </html>
