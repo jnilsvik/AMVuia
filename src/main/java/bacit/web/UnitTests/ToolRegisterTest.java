@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -109,6 +110,11 @@ class FakeToolRegister extends ToolRegister {
     }
 
     @Override
+    protected Part getPart(HttpServletRequest request){
+        return null;
+    }
+
+    @Override
     protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<CertificateModel> certificates){
         for(String cat : categories){
             System.out.print(cat + " ");
@@ -133,6 +139,11 @@ class FakeToolRegister extends ToolRegister {
                 1,
                 "Description",
                 "");
+    }
+
+    @Override
+    protected void addFile(Part filePart, int toolID){
+
     }
 
     @Override
