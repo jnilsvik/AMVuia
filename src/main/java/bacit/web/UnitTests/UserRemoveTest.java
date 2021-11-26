@@ -1,6 +1,6 @@
 package bacit.web.UnitTests;
 
-import bacit.web.AdminFunctions.RemoveUser;
+import bacit.web.Admin.UserRemove;
 import bacit.web.Modules.UserModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RemoveUserTest {
+public class UserRemoveTest {
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
@@ -31,7 +31,7 @@ public class RemoveUserTest {
 
     @Test
     void doGet() throws Exception{
-        FakeRemoveUser unitUnderTest = new FakeRemoveUser();
+        FakeUserRemove unitUnderTest = new FakeUserRemove();
 
         unitUnderTest.doGet(null,null);
 
@@ -40,7 +40,7 @@ public class RemoveUserTest {
 
     @Test
     void doPost() throws Exception{
-        FakeRemoveUser unitUnderTest = new FakeRemoveUser();
+        FakeUserRemove unitUnderTest = new FakeUserRemove();
 
         unitUnderTest.doPost(null,null);
 
@@ -60,13 +60,13 @@ public class RemoveUserTest {
     }
 }
 
-class FakeRemoveUser extends RemoveUser {
+class FakeUserRemove extends UserRemove {
 
     List<UserModel> users = new LinkedList<>();
     String emailLoggedIn = "email1";
     String emailToDelete = "email1";
 
-    FakeRemoveUser(){
+    FakeUserRemove(){
         setUser();
     }
 
@@ -90,7 +90,7 @@ class FakeRemoveUser extends RemoveUser {
     @Override
     protected boolean deleteUser(String email){
         for(UserModel user: users){
-            if(user.getEmail() == email){
+            if(user.getEmail().equals(email)){
                 users.remove(user);
                 return true;
             }

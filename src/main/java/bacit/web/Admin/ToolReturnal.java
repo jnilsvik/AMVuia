@@ -1,4 +1,4 @@
-package bacit.web.AdminFunctions;
+package bacit.web.Admin;
 
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;
@@ -14,12 +14,14 @@ import javax.servlet.annotation.*;
 @WebServlet(name = "ToolReturnal", value = "/toolreturnal")
 public class ToolReturnal extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)) {
                 Connection db = DBUtils.getNoErrorConnection();
-                String insertUserCommand = "SELECT AMVUser.userID, AMVUser.firstName, AMVUser.lastName, AMVUser.email, AMVUser.phoneNumber, Booking.orderID, Booking.startDate, Booking.endDate, Booking.returnDate, Booking.toolID, Booking.totalPrice FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE returnDate IS NULL";
-                PreparedStatement st1 = db.prepareStatement(insertUserCommand);
+                PreparedStatement st1 = db.prepareStatement(
+                        "SELECT AMVUser.userID, AMVUser.firstName, AMVUser.lastName, AMVUser.email, AMVUser.phoneNumber, " +
+                            "Booking.orderID, Booking.startDate, Booking.endDate, Booking.returnDate, Booking.toolID, Booking.totalPrice " +
+                            "FROM Booking INNER JOIN AMVUser ON Booking.userID = AMVUser.userID WHERE returnDate IS NULL");
                 st1.executeUpdate();
                 ResultSet rs1 = st1.executeQuery();
 
@@ -29,35 +31,27 @@ public class ToolReturnal extends HttpServlet {
                 rs1.close();
                 st1.close();
                 db.close();
-
             } else {
-                request.getRequestDispatcher("/jspFiles/AdminFunctions/noAdminAccount.jsp").forward(request,response);
+                PageAccess.reDirWOAdmin(request,response);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html");
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         LocalDate returnDate = LocalDate.parse(request.getParameter("returndate"));
         String orderID = request.getParameter("orderID");
         setReturned(orderID, returnDate);
 
-        String successfulLine = "<h3 style=\"text-align:center\">Tool was succesfully returned!</h3>" + "<br><br><br>"  + "<a href=\"toolreturnal\"> <span class=bigbutton> Go back  </span></a>";
-        request.setAttribute("successfulLine", successfulLine);
-        request.getRequestDispatcher("/jspFiles/AdminFunctions/successfulLine.jsp").forward(request,response);
-
+        PageAccess.reDirFeedback(request,response,"Tool was succesfully returned" );
     }
 
     private void setReturned(String orderID, LocalDate returnDate) {
         try {
             Connection db = DBUtils.getNoErrorConnection();
-            String insertUserCommand = "UPDATE Booking SET returnDate = ? WHERE orderID = ?";
-            PreparedStatement statement = db.prepareStatement(insertUserCommand);
+            PreparedStatement statement = db.prepareStatement(
+                    "UPDATE Booking SET returnDate = ? WHERE orderID = ?");
             statement.setObject(1, returnDate);
             statement.setString(2, orderID);
             statement.executeUpdate();

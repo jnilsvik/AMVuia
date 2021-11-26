@@ -1,4 +1,4 @@
-package bacit.web.Profile;
+package bacit.web.General;
 
 import java.io.*;
 import javax.servlet.ServletException;

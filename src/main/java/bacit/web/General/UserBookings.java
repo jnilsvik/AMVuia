@@ -1,4 +1,4 @@
-package bacit.web.Profile;
+package bacit.web.General;
 
 import bacit.web.Modules.BookingModel;
 import bacit.web.utils.DBUtils;
@@ -15,9 +15,9 @@ import javax.servlet.annotation.*;
 
 // TODO: 11.11.2021 -joachim: id like to point out that this has a horribly unintuitive name
 // by Dilan changed by Paul
-@WebServlet(name = "Profile", value = "/profile")
-public class Profile extends HttpServlet {
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+@WebServlet(name = "UserBookings", value = "/profile")
+public class UserBookings extends HttpServlet {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (checkSession(request,response)){
                 String email = getEmailFromSession(request,response);
@@ -68,7 +68,7 @@ public class Profile extends HttpServlet {
         request.setAttribute("bookings", bookings);
         request.getRequestDispatcher("/jspFiles/Profile/profile.jsp").forward(request,response);
     }
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isUser(request)){
             return true;
         }

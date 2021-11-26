@@ -1,7 +1,7 @@
 package bacit.web.UnitTests;
 
-import bacit.web.AdminFunctions.RegisterTool;
-import bacit.web.Modules.Certificate;
+import bacit.web.Admin.ToolRegister;
+import bacit.web.Modules.CertificateModel;
 import bacit.web.Modules.ToolModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,12 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RegisterToolTest {
+public class ToolRegisterTest {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -34,7 +35,7 @@ public class RegisterToolTest {
 
     @Test
     public void doGet() throws IOException {
-        FakeRegisterTool unitUnderTest = new FakeRegisterTool();
+        FakeToolRegister unitUnderTest = new FakeToolRegister();
 
         unitUnderTest.doGet(null,null);
 
@@ -43,24 +44,35 @@ public class RegisterToolTest {
 
     @Test
     public void doPost() throws IOException {
-        FakeRegisterTool unitUnderTes = new FakeRegisterTool();
+        FakeToolRegister unitUnderTest = new FakeToolRegister();
 
-        unitUnderTes.doPost(null, null);
+        unitUnderTest.doPost(null, null);
 
         assertEquals("Tool1 Tool2 ", outputStreamCaptor.toString());
+
+        unitUnderTest.setNewToolName("error");
+
+        unitUnderTest.doPost(null, null);
+
+        assertEquals("Tool1 Tool2 error", outputStreamCaptor.toString());
     }
 }
 
-class FakeRegisterTool extends RegisterTool{
+class FakeToolRegister extends ToolRegister {
 
     List<String> categories = new LinkedList<>();
-    List<Certificate> certificates = new LinkedList<>();
+    List<CertificateModel> certificates = new LinkedList<>();
     List<ToolModel> tools = new LinkedList<>();
+    String newToolName = "Tool2";
 
-    FakeRegisterTool(){
+    FakeToolRegister(){
         setCategories();
         setCertificates();
         setTools();
+    }
+
+    public void setNewToolName(String newToolName) {
+        this.newToolName = newToolName;
     }
 
     private void setCategories(){
@@ -69,8 +81,8 @@ class FakeRegisterTool extends RegisterTool{
     }
 
     private void setCertificates(){
-        certificates.add(new Certificate(1, "Cert1"));
-        certificates.add(new Certificate(2, "Cert2"));
+        certificates.add(new CertificateModel(1, "Cert1"));
+        certificates.add(new CertificateModel(2, "Cert2"));
     }
 
     private void setTools(){
@@ -92,16 +104,16 @@ class FakeRegisterTool extends RegisterTool{
     }
 
     @Override
-    protected List<Certificate> getCertificates(){
+    protected List<CertificateModel> getCertificates(){
         return certificates;
     }
 
     @Override
-    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<Certificate> certificates){
+    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<CertificateModel> certificates){
         for(String cat : categories){
             System.out.print(cat + " ");
         }
-        for(Certificate cert: certificates){
+        for(CertificateModel cert: certificates){
             System.out.print(cert.getCertificateName() + " ");
         }
         for(ToolModel tool: tools){
@@ -113,7 +125,7 @@ class FakeRegisterTool extends RegisterTool{
     protected ToolModel getToolFromRequest(HttpServletRequest request){
         return new ToolModel(
                 2,
-                "Tool2",
+                newToolName,
                 "Cat1",
                 false,
                 0,
@@ -124,7 +136,8 @@ class FakeRegisterTool extends RegisterTool{
     }
 
     @Override
-    protected int addTool(ToolModel tool){
+    protected int addTool(ToolModel tool) throws SQLException {
+        if(tool.getToolName().equals("error")) throw new SQLException();
         tools.add(tool);
         return tool.getToolID();
     }
@@ -134,6 +147,11 @@ class FakeRegisterTool extends RegisterTool{
         for(ToolModel tool: tools){
             System.out.print(tool.getToolName()+" ");
         }
+    }
+
+    @Override
+    protected void printJspError(HttpServletRequest request, HttpServletResponse response){
+        System.out.print("error");
     }
 
     @Override

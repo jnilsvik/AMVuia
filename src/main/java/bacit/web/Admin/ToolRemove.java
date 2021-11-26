@@ -1,4 +1,4 @@
-package bacit.web.AdminFunctions;
+package bacit.web.Admin;
 
 import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
@@ -17,8 +17,8 @@ import javax.servlet.annotation.*;
 
 
 //made by ? changed to JSP by Paul
-@WebServlet(name = "RemoveTool", value = "/removetool")
-public class RemoveTool extends HttpServlet {
+@WebServlet(name = "ToolRemove", value = "/removetool")
+public class ToolRemove extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (checkSession(request, response)){
             try {

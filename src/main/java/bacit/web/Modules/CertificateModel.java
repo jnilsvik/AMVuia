@@ -1,12 +1,12 @@
 package bacit.web.Modules;
 
 @SuppressWarnings({"FieldMayBeFinal", "CanBeFinal"})
-public class Certificate {
+public class CertificateModel {
 
     private int certificateID;
     private String certificateName;
 
-    public Certificate(int certificateID, String certificateName) {
+    public CertificateModel(int certificateID, String certificateName) {
         this.certificateID = certificateID;
         this.certificateName = certificateName;
     }
