@@ -13,8 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
-// TODO: 11.11.2021 -joachim: id like to point out that this has a horribly unintuitive name
-// by Dilan changed by Paul
 @WebServlet(name = "UserBookings", value = "/profile")
 public class UserBookings extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
