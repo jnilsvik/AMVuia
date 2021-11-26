@@ -1,28 +1,61 @@
 package bacit.web.Admin;
 
+import bacit.web.Modules.ToolModel;
 import bacit.web.utils.DBUtils;
 import bacit.web.utils.PageAccess;
 
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
+// by Dilan
 @WebServlet(name = "ToolMaintenance", value = "/toolmaintenance")
 public class ToolMaintenance extends HttpServlet {
-    @Override
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
-            if (checkSession(request,response)) {
-                request.getRequestDispatcher("jspFiles/AdminFunctions/toolMaintenance.jsp").forward(request,response);
+            if (checkSession(request, response)) {
+                Connection dbConnection = DBUtils.getNoErrorConnection();
+                String toolQ = "select * from Tool order by toolID ";
+                PreparedStatement statement = dbConnection.prepareStatement(toolQ);
+                ResultSet rs = statement.executeQuery();
+
+                ArrayList<ToolModel> toolList = new ArrayList<>();
+                while (rs.next()) {
+                    toolList.add(
+                            new ToolModel(
+                                    rs.getInt("toolID"),
+                                    rs.getString("toolName"),
+                                    rs.getString("toolCategory"),
+                                    rs.getBoolean("maintenance"),
+                                    rs.getInt("priceFirst"),
+                                    rs.getInt("priceAfter"),
+                                    rs.getInt("certificateID"),
+                                    rs.getString("toolDescription"),
+                                    rs.getString("picturePath")));
+                }
+                request.setAttribute("toolList", toolList); // ! a way to set attributes
+                request.getRequestDispatcher("jspFiles/AdminFunctions/toolMaintenance.jsp").forward(request, response);
+
+                rs.close();
+                statement.close();
+                dbConnection.close();
             } else {
-                PageAccess.reDirFeedback(request,response,"You need to be an administrator to view this");
+                PageAccess.reDirFeedback(request, response, "You need to be an administrator to view this");
             }
-        } catch (Exception e) {
+        }
+        catch(
+                Exception e)
+
+        {
             e.printStackTrace();
         }
+
     }
 
     @Override

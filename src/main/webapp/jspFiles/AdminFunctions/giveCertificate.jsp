@@ -34,7 +34,7 @@
                                 List<CertificateModel> certificateNames = (List<CertificateModel>) request.getAttribute("certificates");
 
                                 for (CertificateModel cert : certificateNames) {
-                                    out.print("<option value='" + cert.getCertificateName() + "'> " + cert.getCertificateName() + "</option>");
+                                    out.print("<option value='" + cert.getCertificateID() + "'> " + cert.getCertificateName() + "</option>");
                                 }
                             %>
                         </select>

@@ -21,6 +21,35 @@
 <body>
 <jsp:include page="../PageElements/header.jsp"/>
 
+<table class="table-sortable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>in Maintenance?</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%
+        ArrayList<ToolModel> model = (ArrayList<ToolModel>) request.getAttribute("toolList");
+        if(model != null) {
+            for (ToolModel tm : model){
+                out.print(
+                                "<tr>" +
+                                "<td>" + tm.getToolID() + "</td>" +
+                                "<td>" + tm.getToolName() + "</td>" +
+                                "<td>" + tm.getToolCategory() + "</td>" +
+                                "<td>" + tm.getMaintenance() + "</td>" +
+                                "</tr>");
+            }
+        }
+    %>
+    </tbody>
+</table>
+
+<script src="js/tabelsort.js"></script>
+
 <div class='page'>
     <article class='my-3 amv-register' id='floating-labels'>
         <div class='bd-heading sticky-xl-top align-self-start mb-3 mt-xl-0 mb-xl-2'>
