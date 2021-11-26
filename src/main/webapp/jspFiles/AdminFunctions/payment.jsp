@@ -32,23 +32,25 @@
 
         try {
             while(rs1.next()) {
-                out.print("<tr>");
-                out.print(  "<td>" + rs1.getInt("orderID") + "</td>");
-                out.print(  "<td>" + rs1.getInt("userID") + "</td>");
-                out.print(  "<td>" + rs1.getString("firstName") + "</td>");
-                out.print(  "<td>" + rs1.getString("lastName") + "</td>");
-                out.print(  "<td>" + rs1.getString("email") + "</td>");
-                if (rs1.getString("phoneNumber") == null){
-                    out.print(  "<td></td>");
-                } else {
-                    out.print(  "<td>" + rs1.getString("phoneNumber") + "</td>");
+                if (rs1.getInt("totalprice") != 0) {
+                    out.print("<tr>");
+                    out.print("<td>" + rs1.getInt("orderID") + "</td>");
+                    out.print("<td>" + rs1.getInt("userID") + "</td>");
+                    out.print("<td>" + rs1.getString("firstName") + "</td>");
+                    out.print("<td>" + rs1.getString("lastName") + "</td>");
+                    out.print("<td>" + rs1.getString("email") + "</td>");
+                    if (rs1.getString("phoneNumber") == null) {
+                        out.print("<td></td>");
+                    } else {
+                        out.print("<td>" + rs1.getString("phoneNumber") + "</td>");
+                    }
+                    out.print("<td>" + rs1.getDate("startDate").toLocalDate().format(formatters) + "</td>");
+                    out.print("<td>" + rs1.getDate("endDate").toLocalDate().format(formatters) + "</td>");
+                    out.print("<td>" + rs1.getDate("returnDate").toLocalDate().format(formatters) + "</td>");
+                    out.print("<td>" + rs1.getInt("toolID") + "</td>");
+                    out.print("<td>" + rs1.getInt("totalPrice") + "</td>");
+                    out.print("</tr>");
                 }
-                out.print(  "<td>" + rs1.getDate("startDate").toLocalDate().format(formatters)+ "</td>");
-                out.print(  "<td>" + rs1.getDate("endDate").toLocalDate().format(formatters) + "</td>");
-                out.print(  "<td>" + rs1.getDate("returnDate").toLocalDate().format(formatters) + "</td>");
-                out.print(  "<td>" + rs1.getInt("toolID") + "</td>");
-                out.print(  "<td>" + rs1.getInt("totalPrice") + "</td>");
-                out.print("</tr>");
             }
         }  catch (Exception e) {
             e.printStackTrace();
