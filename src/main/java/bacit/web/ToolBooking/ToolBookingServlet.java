@@ -38,6 +38,8 @@ public class ToolBookingServlet extends HttpServlet {
                 }else if(!hasCertificate(booking.getUserID(), tool.getCertificateID())){
                     printFeedBackJSP("Sorry, you don't have the needed certificate for this tool.", request,response);
                 }else{
+                    boolean isUnionMember = isUnionMember(booking.getUserID());
+                    if(isUnionMember) booking.setTotalPrice(0);
                     registerBooking(booking);
                     printSuccessJSP(booking, request, response);
                 }
@@ -108,18 +110,17 @@ public class ToolBookingServlet extends HttpServlet {
 
     protected void registerBooking(BookingModel booking) throws SQLException {
             Connection db = DBUtils.getNoErrorConnection();
-            PreparedStatement statement2 = db.prepareStatement(
+            PreparedStatement statement = db.prepareStatement(
                     "insert into Booking (startDate, endDate, totalPrice, userID, toolID) values(?, ?, ?, ?, ?)");
-            statement2.setObject(1, booking.getStartDate());
-            statement2.setObject(2, booking.getEndDate());
-            statement2.setInt(3, booking.getTotalPrice());
-            statement2.setInt(4, booking.getUserID());
-            statement2.setInt(5, booking.getToolID());
-            statement2.executeUpdate();
+            statement.setObject(1, booking.getStartDate());
+            statement.setObject(2, booking.getEndDate());
+            statement.setInt(3, booking.getTotalPrice());
+            statement.setInt(4, booking.getUserID());
+            statement.setInt(5, booking.getToolID());
+            statement.executeUpdate();
 
-            statement2.close();
+            statement.close();
             db.close();
-
     }
 
     protected ToolModel getTool(int toolID) throws SQLException {
@@ -152,6 +153,18 @@ public class ToolBookingServlet extends HttpServlet {
         LocalDate endDate = startDate.plusDays(inputDays);
         int totalPrice =  tool.getPriceFirst() + tool.getPriceAfter() * (inputDays);
         return new BookingModel(0,userID, tool.getToolID(), totalPrice, startDate, endDate, null);
+    }
+
+    protected boolean isUnionMember(int userID) throws SQLException {
+        Connection db = DBUtils.getNoErrorConnection();
+        PreparedStatement statement = db.prepareStatement("SELECT unionMember FROM AMVUser WHERE userID = ?;");
+        statement.setInt(1, userID);
+        ResultSet rs = statement.executeQuery();
+        if(rs.next()){
+            return rs.getBoolean("unionMember");
+        } else{
+            return false;
+        }
     }
 
     protected boolean dateBookedTaken(BookingModel booking) {
