@@ -46,11 +46,12 @@ public class UserRegister extends HttpServlet {
 
 
     }
-    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (PageAccess.isAdmin(request)){
             return true;
         }
         PageAccess.reDirWOUser(request,response);
+        PageAccess.reDirWOAdmin(request,response);
         return false;
     }
 
