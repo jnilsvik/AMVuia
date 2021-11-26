@@ -95,7 +95,7 @@
 
                         //Print the actual line
                         String currentDateFormat = currentDate.format(formatters);
-                        out.print("<td bgcolor=" + color + ">" + currentDateFormat + status + "</td>");
+                        out.print("<td bgcolor=" + color + ">" + currentDateFormat + "<br>" + status + "</td>");
                         currentDate = currentDate.plusDays(1);
                     }
                 %>

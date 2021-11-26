@@ -142,9 +142,7 @@ class FakeToolRegister extends ToolRegister {
     }
 
     @Override
-    protected void addFile(Part filePart, int toolID){
-
-    }
+    protected void addFile(Part filePart, int toolID){}
 
     @Override
     protected int addTool(ToolModel tool) throws SQLException {
