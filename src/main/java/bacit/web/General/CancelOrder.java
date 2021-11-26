@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-//by Paul
 @WebServlet(name = "Cancellation", value = "/cancellation")
 public class CancelOrder extends HttpServlet {
 
@@ -33,7 +32,6 @@ public class CancelOrder extends HttpServlet {
                 }
                 PageAccess.reDirFeedback(request,response,result);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
