@@ -64,7 +64,7 @@ public class UserBookings extends HttpServlet {
 
     protected void printGetToJSP(List<BookingModel> bookings, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("bookings", bookings);
-        request.getRequestDispatcher("/jspFiles/UserBookings/profile.jsp").forward(request,response);
+        request.getRequestDispatcher("/jspFiles/Profile/profile.jsp").forward(request,response);
     }
     protected boolean checkSession(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (PageAccess.isUser(request)){
