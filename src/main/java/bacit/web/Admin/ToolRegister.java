@@ -38,11 +38,10 @@ public class ToolRegister extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         try{
             // TODO: 24.11.2021 not sure about this, will check later
-            /*
+
             int toolID = addTool(getToolFromRequest(request));
-            try {
-                addFile(request.getPart("file"), toolID);
-            } catch (Exception e){}*/
+            Part part = getPart(request);
+            addFile(part, toolID);
 
             printJspPost(request, response);
         }catch (Exception e){
@@ -105,6 +104,7 @@ public class ToolRegister extends HttpServlet {
     }
 
     protected void addFile(Part filePart, int toolID) throws Exception {
+        if(filePart == null) return;
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         InputStream fileContent = filePart.getInputStream();
         byte[] fileBytes = fileContent.readAllBytes();
@@ -117,6 +117,10 @@ public class ToolRegister extends HttpServlet {
 
         FileDAO dao = new FileDAO();
         dao.persistFile(fileModel);
+    }
+
+    protected Part getPart(HttpServletRequest request) throws ServletException, IOException {
+        return request.getPart("file");
     }
 
     protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<CertificateModel> certificates) throws ServletException, IOException {
