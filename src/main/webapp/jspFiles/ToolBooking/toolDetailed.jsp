@@ -67,7 +67,6 @@
             </tr>
             <tr>
                 <%
-                    // TODO: 24.11.2021 could prob. be refacd
                     List<LocalDate> dates = (List<LocalDate>) request.getAttribute("dates");
                     LocalDate currentDate = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
                     currentDate = currentDate.with(DayOfWeek.MONDAY);

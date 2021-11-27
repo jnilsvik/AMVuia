@@ -41,8 +41,7 @@ public class ToolRemove extends HttpServlet {
                 writePostToJSP(tools, success, request, response);
 
             } catch (Exception e) {
-                PrintWriter out = response.getWriter();
-                out.println(e);
+                e.printStackTrace();
             }
         }
     }
@@ -55,7 +54,6 @@ public class ToolRemove extends HttpServlet {
         PageAccess.reDirWOAdmin(request,response);
         return false;
     }
-
 
     protected List<ToolModel> getTools() throws SQLException {
         List<ToolModel> tools = new LinkedList();
@@ -72,6 +70,7 @@ public class ToolRemove extends HttpServlet {
         rs.close();
         statement.close();
         db.close();
+
         return tools;
     }
 

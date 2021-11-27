@@ -112,26 +112,4 @@ public class ToolModel {
         this.imgData = imgData;
     }
 
-    // TODO: 24.11.2021 -j: remove this?
-    public LinkedList<LocalDate> getUsedDates(PrintWriter out) throws SQLException {
-        Connection db = DBUtils.getNoErrorConnection();
-        String query = "SELECT startDate, endDate FROM Booking WHERE toolID = ?;";
-        PreparedStatement statement = db.prepareStatement(query);
-        statement.setInt(1, toolID);
-        LinkedList<LocalDate> dayDates = new LinkedList<>();
-        ResultSet rs = statement.executeQuery();
-        while(rs.next()){
-            LocalDate start = rs.getTimestamp("startDate").toLocalDateTime().toLocalDate();
-            LocalDate end = rs.getTimestamp("endDate").toLocalDateTime().toLocalDate();
-            while(start.isBefore(end)){
-                start = start.plusDays(1);
-                dayDates.add(start);
-            }
-        }
-
-        rs.close();
-        statement.close();
-        db.close();
-        return dayDates;
-    }
 }

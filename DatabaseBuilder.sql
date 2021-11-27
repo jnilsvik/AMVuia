@@ -31,7 +31,7 @@ CREATE OR REPLACE TABLE files(
     contentType varchar(255),
     toolID int,
     PRIMARY KEY (id),
-    FOREIGN KEY (toolID) REFERENCES Tool(toolID)
+    FOREIGN KEY (toolID) REFERENCES Tool(toolID) on DELETE CASCADE
 );
 
 CREATE OR REPLACE TABLE AMVUser (

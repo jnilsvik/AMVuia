@@ -31,6 +31,7 @@
                     out.print(
                             "<FORM action='toolhistory' method='get'>" +
                             "<tr>" +
+                            "<td>" + tm.getToolID() + "</td>" +
                             "<td>" + tm.getToolName() + "</td>" +
                             "<td>" + tm.getToolCategory() + "</td>" +
                             "<td>" + tm.getPriceFirst() + "</td>" +
