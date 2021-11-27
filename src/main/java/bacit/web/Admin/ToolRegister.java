@@ -37,8 +37,6 @@ public class ToolRegister extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         try{
-            // TODO: 24.11.2021 not sure about this, will check later
-
             int toolID = addTool(getToolFromRequest(request));
             Part part = getPart(request);
             addFile(part, toolID);

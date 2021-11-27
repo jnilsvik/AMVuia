@@ -25,7 +25,6 @@ public class ChangePassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
-            // TODO: 24.11.2021 -joachim: this could use some refactoring
             HttpSession session = request.getSession(false);
             String email = (String) session.getAttribute("email");
 

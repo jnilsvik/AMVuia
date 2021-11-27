@@ -24,9 +24,9 @@
       for(ToolModel tool : tools){
         out.print(
                 "<tr>" +
-                        "<td>" + tool.getToolID() + "</td>" +
-                        "<td>" + tool.getToolName() + "</td>" +
-                        "</tr>");
+                "<td>" + tool.getToolID() + "</td>" +
+                "<td>" + tool.getToolName() + "</td>" +
+                "</tr>");
       }
     %>
   </table>

@@ -23,7 +23,7 @@ public class ListTools extends HttpServlet {
         try {
             if (checkSession(request,response)){
                 Connection dbConnection = DBUtils.getNoErrorConnection();
-                String toolQ = "select * from Tool order by toolID ";
+                String toolQ = "select * from Tool order by toolID";
                 PreparedStatement statement = dbConnection.prepareStatement(toolQ);
                 ResultSet rs = statement.executeQuery();
 
@@ -41,7 +41,7 @@ public class ListTools extends HttpServlet {
                                     rs.getString("toolDescription"),
                                     rs.getString("picturePath")));
                 }
-                request.setAttribute("toolList", toolList); // ! a way to set attributes
+                request.setAttribute("toolList", toolList);
                 request.getRequestDispatcher("/jspFiles/AdminFunctions/listTools.jsp").forward(request,response);
 
                 rs.close();
