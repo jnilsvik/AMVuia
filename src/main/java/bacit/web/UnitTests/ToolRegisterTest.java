@@ -40,7 +40,7 @@ public class ToolRegisterTest {
 
         unitUnderTest.doGet(null,null);
 
-        assertEquals("Cat1 Cat2 Cert1 Cert2 Tool1 ", outputStreamCaptor.toString());
+        assertEquals("Cat1 Cat2 Cert1 Cert2 ", outputStreamCaptor.toString());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ToolRegisterTest {
 
         assertEquals("Tool1 Tool2 ", outputStreamCaptor.toString());
 
-        unitUnderTest.setNewToolName("error");
+        unitUnderTest.setNewToolName("wrong Data");
 
         unitUnderTest.doPost(null, null);
 
@@ -115,19 +115,6 @@ class FakeToolRegister extends ToolRegister {
     }
 
     @Override
-    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<CertificateModel> certificates){
-        for(String cat : categories){
-            System.out.print(cat + " ");
-        }
-        for(CertificateModel cert: certificates){
-            System.out.print(cert.getCertificateName() + " ");
-        }
-        for(ToolModel tool: tools){
-            System.out.print(tool.getToolName() + " ");
-        }
-    }
-
-    @Override
     protected ToolModel getToolFromRequest(HttpServletRequest request){
         return new ToolModel(
                 2,
@@ -146,9 +133,20 @@ class FakeToolRegister extends ToolRegister {
 
     @Override
     protected int addTool(ToolModel tool) throws SQLException {
-        if(tool.getToolName().equals("error")) throw new SQLException();
+        //error in the database gets simulated
+        if(tool.getToolName().equals("wrong Data")) throw new SQLException();
         tools.add(tool);
         return tool.getToolID();
+    }
+
+    @Override
+    protected void printJspGet(HttpServletRequest request, HttpServletResponse response, List<String> categories, List<CertificateModel> certificates){
+        for(String cat : categories){
+            System.out.print(cat + " ");
+        }
+        for(CertificateModel cert: certificates){
+            System.out.print(cert.getCertificateName() + " ");
+        }
     }
 
     @Override
