@@ -1,5 +1,3 @@
-<%@ page import="bacit.web.utils.DBUtils" %>
-<%@ page import="java.sql.*" %>
 <%@ page import="bacit.web.Modules.ToolModel" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -19,7 +17,6 @@
         try {
             ArrayList<String> Categories = (ArrayList<String>) request.getAttribute("toolCAT");
                 for (String c: Categories) {
-                    // TODO: 30.10.2021 find out how to filter
                     out.print("<FORM action='xtc' method='get'");
                     out.print("<div class='category-item' style='background-image: url(img/amv.png);'>");
                     out.print("<div class='category-item-inner'>");

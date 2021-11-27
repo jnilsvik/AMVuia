@@ -35,7 +35,7 @@ public class ToolCategory extends HttpServlet {
         try {
             Connection dbc = DBUtils.getNoErrorConnection();
             PreparedStatement ps2 = dbc.prepareStatement(
-                    "select * from Tool where toolCategory = ? ");
+                    "select * from Tool where toolCategory = ?");
             ps2.setString(1, toolCategory);
             ResultSet rs2 = ps2.executeQuery();
 

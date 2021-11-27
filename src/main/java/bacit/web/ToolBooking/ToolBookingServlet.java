@@ -44,7 +44,6 @@ public class ToolBookingServlet extends HttpServlet {
                     printSuccessJSP(booking, request, response);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
