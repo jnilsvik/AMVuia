@@ -32,29 +32,26 @@ public class ToolRemoveTest {
 
     @Test
     void doGet() throws Exception{
-        //Arrange
+
         FakeToolRemove unitUnderTest = new FakeToolRemove();
-        //Act
+
         unitUnderTest.doGet(null,null);
 
-        assertEquals("TEST1 TEST2", outputStreamCaptor.toString()
-                .trim());
+        assertEquals("TEST1 TEST2 ", outputStreamCaptor.toString());
     }
 
     @Test
     void doPost() throws Exception{
-        //Arrange
+
         FakeToolRemove unitUnderTest = new FakeToolRemove();
-        //Act
-        unitUnderTest.doPost(null,null);
-
-        assertEquals("true TEST2", outputStreamCaptor.toString()
-                .trim());
 
         unitUnderTest.doPost(null,null);
 
-        assertEquals("true TEST2 false TEST2", outputStreamCaptor.toString()
-                .trim());
+        assertEquals("true TEST2 ", outputStreamCaptor.toString());
+
+        unitUnderTest.doPost(null,null);
+
+        assertEquals("true TEST2 false TEST2 ", outputStreamCaptor.toString());
     }
 }
 
