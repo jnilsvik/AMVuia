@@ -18,7 +18,7 @@ public class PageAccess {
     //not sure about this one atm
     public static boolean isUser(HttpServletRequest request){
         HttpSession session = request.getSession(false);
-        return (session.getAttribute("email") != null);
+        return session != null;
     }
 
     public static boolean isAdmin(HttpServletRequest request) {
@@ -45,7 +45,7 @@ public class PageAccess {
     }
 
     public static void reDirWOUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (getEmail(request) == null) {
+        if (!isUser(request)) {
             response.sendRedirect("login");
         }
     }
