@@ -47,15 +47,19 @@ public class ToolRegisterTest {
     public void doPost() throws IOException {
         FakeToolRegister unitUnderTest = new FakeToolRegister();
 
+        unitUnderTest.printTools();
+
+        assertEquals("Tool1 || ", outputStreamCaptor.toString());
+
         unitUnderTest.doPost(null, null);
 
-        assertEquals("Tool1 Tool2 ", outputStreamCaptor.toString());
+        assertEquals("Tool1 || Tool1 Tool2 || ", outputStreamCaptor.toString());
 
         unitUnderTest.setNewToolName("wrong Data");
 
         unitUnderTest.doPost(null, null);
 
-        assertEquals("Tool1 Tool2 error", outputStreamCaptor.toString());
+        assertEquals("Tool1 || Tool1 Tool2 || error || ", outputStreamCaptor.toString());
     }
 }
 
@@ -97,6 +101,13 @@ class FakeToolRegister extends ToolRegister {
                 1,
                 "Description",
                 ""));
+    }
+
+    public void printTools(){
+        for(ToolModel tool : tools){
+            System.out.print(tool.getToolName() + " ");
+        }
+        System.out.print("|| ");
     }
 
     @Override
@@ -154,11 +165,12 @@ class FakeToolRegister extends ToolRegister {
         for(ToolModel tool: tools){
             System.out.print(tool.getToolName()+" ");
         }
+        System.out.print("|| ");
     }
 
     @Override
     protected void printJspError(HttpServletRequest request, HttpServletResponse response){
-        System.out.print("error");
+        System.out.print("error || ");
     }
 
     @Override
